@@ -97,9 +97,16 @@ section {
 	position: absolute;
 	left: 150px;
 	top: 27.5px;
-	fill: #fff;
+	filter: brightness(0) saturate(100%) invert(26%) sepia(76%) saturate(1356%) hue-rotate(219deg) brightness(91%) contrast(87%);
 }
 
+.project_list_unlock {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	left:  150px;
+	top: 150px;
+}
 
 
 
