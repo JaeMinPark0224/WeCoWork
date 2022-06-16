@@ -1,0 +1,127 @@
+@charset "UTF-8";
+
+section {
+	font-size: 0;
+	width : 1320px;
+}
+
+#project_wrap {
+	margin-top: 105px;
+	margin-left: 125px;
+	margin-right: 125px;
+}
+
+#project_title {
+	
+}
+
+#project_tap_menu {
+	margin-top: 70px;
+	margin-bottom: 60px;
+}
+
+.project_tap {
+	display: inline-block;
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	margin-right: 50px;
+}
+
+#project_list_text_box_wrap {
+	display: inline-block;	
+	float: right;
+}
+
+#project_list_text_box {
+}
+
+#project_list_wrap {
+	display: grid;
+	grid-template-columns: 190px 190px 190px 190px 190px;
+	grid-template-rows: 190px 190px 190px 190px 190px;
+	gap: 30px;
+}
+
+.project_list_block {
+	width: 190px;
+	height: 190px;
+	border-radius: 15px;
+	background-color: rgb(244, 244, 244); 
+	overflow: hidden;
+	position: relative;
+}
+
+.project_list_color {
+	width: 15px;
+	height: 190px;
+	background-color: rgb(75, 77, 178); 
+	position: absolute;
+	left: 0;
+}
+
+.project_list_title {
+	font-size: 15px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+	position: absolute;
+	left: 35px;
+	top: 30px;
+}
+
+.project_list_update {
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	position: absolute;
+	left: 35px;
+	top: 100px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.project_list_dept {
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	position: absolute;
+	left: 35px;
+	top: 120px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.project_list_fix {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	left: 150px;
+	top: 27.5px;
+	fill: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

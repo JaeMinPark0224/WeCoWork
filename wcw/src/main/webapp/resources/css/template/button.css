@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+
+.btn_format_mini {
+	width: 90px;
+	height: 30px;
+	background-color: #4B4DB2;
+	font-size: 12px;
+	color: white;
+}
+

@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+.font_B {
+	font-family: NotoSansBlack;
+}
+
+.font_b {
+	font-family: NotoSansB;
+}
+
+.font_l {
+	font-family: NotoSansL;
+}
+
+.font_m {
+	font-family: NotoSansM;
+}
+
+.font_r {
+	font-family: NotoSansR;
+}
+
+.font_t {
+	font-family: NotoSansT;
+}
+
+.font_12px {
+	font-size: 12px;
+}
+
+.font_13px {
+	font-size: 13px;	
+}
+
+.font_14px {
+	font-size: 14px;	
+}
+
+.font_white {
+	color: white;
+}
+
+.font_gray127 {
+	color: rgb(127, 127, 127);
+}
+
+.font_gray94 {
+	color: rgb(94, 94, 94);	
+}
+
+.font_purple {
+	color: #4B4DB2;
+}

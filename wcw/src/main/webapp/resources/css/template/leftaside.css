@@ -1,0 +1,100 @@
+@charset "UTF-8";
+#left_aside {
+	width: 300px;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: rgb(244, 244, 244);
+}
+
+#logo {
+	width: 147px;
+	display: block;
+	margin: 65px auto 65px;
+}
+
+#login_info {
+	margin: 0 auto;
+	width: fit-content;
+}
+
+.profile_circle {
+	width: 85px;
+	height: 85px;
+	border-radius: 50%;
+	background-color: rgb(230, 230, 230);
+	margin: 0 auto 15px;
+}
+
+.company_info {
+	width: fit-content;
+	margin-bottom: 15px;
+}
+
+.person_info {
+	width: fit-content;
+	margin-bottom: 15px;
+}
+
+.logout_btn {
+	display: block;
+	margin: 0 auto;
+}
+
+#left_menu{
+	margin-left: 70px;
+	font-size: 0px;
+	font-family: NotoSansB;
+	user-select:none;
+}
+
+.left_menu_1depth {
+	margin-top: 15px;
+}
+
+.left_menu_1depth_title {
+	font-size: 14px;
+	cursor: pointer;
+	width: fit-content;
+}
+
+.left_menu_2depth {
+	display: block;
+	height: 0px;
+	overflow: hidden;
+	transition: height 0.3s ease-out;
+}
+
+.left_menu_2depth_content {
+	margin-left: 20px;
+	margin-top: 15px;
+	font-size: 14px;
+	font-family: NotoSansR;
+	color: rgb(127, 127, 127);
+	cursor: pointer;
+	width: fit-content;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
