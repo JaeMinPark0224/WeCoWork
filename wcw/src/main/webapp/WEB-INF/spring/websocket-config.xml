@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+	<websocket:handlers allowed-origins="*">
+		<websocket:mapping handler="handlerChat" path="/chat"/>
+		<websocket:sockjs websocket-enabled="true" />
+	</websocket:handlers>
+
+	<bean id="handlerChat" class="kh.spring.wcw.chat.test3.handler3.HandlerChat3"></bean>
+
+</beans>
