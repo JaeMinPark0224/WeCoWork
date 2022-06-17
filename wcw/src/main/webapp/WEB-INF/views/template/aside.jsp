@@ -45,7 +45,7 @@
 			</div>
 			<!-- test3채팅삭제할거에요 걱정마세요 여기부터-->
 			<div class="left_menu_1depth_title">
-				<a href="<%=request.getContextPath()%>/chat.do">test3채팅</a> 
+				<a href="<%=request.getContextPath()%>/chat.do" target="_blank">test3채팅</a> 
 			</div>
 			<!-- test3채팅 여기까지 삭제-->
 		</div>
