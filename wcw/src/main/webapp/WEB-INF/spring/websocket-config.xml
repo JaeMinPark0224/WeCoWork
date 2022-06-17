@@ -15,4 +15,16 @@
 
 	<bean id="handlerChat" class="kh.spring.wcw.chat.test3.handler3.HandlerChat3"></bean>
 
+	<websocket:handlers allowed-origins="*">
+		<websocket:mapping handler="handlerChat5" path="/chat5"/>
+		<websocket:sockjs websocket-enabled="true"/>
+	</websocket:handlers>
+	
+	<bean id="handlerChat5" class="kh.spring.wcw.chat.test5.handler5.HandlerChat5"></bean>
+
+
+
+
+
+
 </beans>
