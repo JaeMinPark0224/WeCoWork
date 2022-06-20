@@ -5,6 +5,14 @@ section {
 	width : 1320px;
 }
 
+/* 리스트페이지 */
+/* 리스트페이지 */
+/* 리스트페이지 */
+/* 리스트페이지 */
+/* 리스트페이지 */
+/* 리스트페이지 */
+/* 리스트페이지 */
+
 #project_wrap {
 	margin-top: 105px;
 	margin-left: 125px;
@@ -100,6 +108,11 @@ section {
 	filter: brightness(0) saturate(100%) invert(26%) sepia(76%) saturate(1356%) hue-rotate(219deg) brightness(91%) contrast(87%);
 }
 
+.project_list_fix2 {
+	color: black;
+	font-size: 100px;
+}
+
 .project_list_unlock {
 	width: 20px;
 	height: 20px;
@@ -109,26 +122,156 @@ section {
 }
 
 
+/* 메인페이지 */
+/* 메인페이지 */
+/* 메인페이지 */
+/* 메인페이지 */
+/* 메인페이지 */
+/* 메인페이지 */
+/* 메인페이지 */
 
+#project_main_wrap {
+	margin: 105px 125px 0px 125px;
+}
 
+#project_main_menu_title {
+	font-size: 14px;
+	font-family: NotoSansB;
+	color: #4B4DB2;
+}
 
+#project_main_header_btn_wrap {
+	font-size: 0px;
+	position: relative;
+}
 
+#project_main_header_btn_wrap {
+	height: 70px;
+}
 
+.btn_main_purple {
+	width: 115px;
+	height: 40px;
+	background-color: #4B4DB2;
+	font-size: 12px;
+	color: white;
+	font-family: NotoSansR;
+}
 
+.btn_main_gray {
+	width: 115px;
+	height: 40px;
+	background-color: rgb(230, 230, 230);
+	font-size: 12px;
+	font-family: NotoSansR;
+}
 
+.btn_main_float {
+	margin-bottom: 15px;
+	margin-top: 15px;
+	margin-left: 20px;
+	float: right;
+}
 
+#project_main_title {
+	font-size: 14px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+	margin-bottom: 30px;
+}
 
+#project_main_tab_wrap {
+	font-size: 0px;
+	display: flex;
+	flex-direction: row;
+	gap: 30px;
+	margin-bottom: 45px;
+}
 
+.project_main_tab {
+	font-size: 13px;
+	color: rgb(94, 94, 94);
+	font-family: NotoSansR;
+}
 
+#project_main_container {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	gap: 45px;
+}
 
+#project_main_box_title {
+	width: 1070px;
+	height: 240px;
+	background-color: rgb(159, 197, 232);
+	padding: 60px 100px;
+	box-sizing: border-box;
+}
 
+.project_main_box {
+	width: 1070px;
+	height: 255px;
+	background-color: rgb(244, 244, 244);
+}
 
+.project_main_box_top {
+	width: 1070px;
+	height: 60px;
+	background-color: rgb(224, 224, 224);	
+}
 
+.project_main_box_title {
+	height: 60px;
+	line-height: 60px;
+	font-size: 12px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+	text-align : center;
+}
 
+.project_main_box_container {
+	margin: 35px 85px;
+	display: grid;
+	grid-template-columns: 650px 250px;
+	grid-template-rows: repeat(5, 25px);
+}
 
+.project_main_box_content_title {
+	font-size: 13px;
+	font-family: NotoSansR;
+	line-height: 25px;
+	color: rgb(94, 94, 94);
+}
 
+.project_main_box_content_date {
+	font-size: 13px;
+	font-family: NotoSansR;
+	line-height: 25px;
+	color: rgb(94, 94, 94);
+	text-align: right;
+}
 
+#project_main_box_title_title {
+	font-size: 37px;
+	font-family: NotoSansB;
+	color: white;
+}
 
+#project_main_box_title_content {
+	height: 69px;
+	font-size: 14px;
+	font-family: NotoSansR;
+	color: white;
+}
 
+#project_main_box_title_company {
+	font-size: 14px;
+	font-family: NotoSansB;
+	color: white;
+}
 
+#project_main_box_title_participant {
+	
+}
 

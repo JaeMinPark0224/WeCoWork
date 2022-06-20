@@ -31,11 +31,43 @@
 				<div class="project_list_title">프로젝트 제목</div>
 				<div class="project_list_update">업데이트 : 2022 06 16</div>
 				<div class="project_list_dept">디자인팀 외 1</div>
+				<img class="project_list_fix" src="<%= request.getContextPath()%>/resources/images/bahai-full.svg">
+				<img class="project_list_unlock" src="<%= request.getContextPath()%>/resources/images/unlock.png">
+			</div>
+			<div class="project_list_block">
+				<div class="project_list_color"></div>
+				<div class="project_list_title">프로젝트 제목</div>
+				<div class="project_list_update">업데이트 : 2022 06 16</div>
+				<div class="project_list_dept">디자인팀 외 1</div>
+				<img class="project_list_fix" src="<%= request.getContextPath()%>/resources/images/bahai-full.svg">
+				<img class="project_list_unlock" src="<%= request.getContextPath()%>/resources/images/unlock.png">
+			</div>
+			<div class="project_list_block">
+				<div class="project_list_color"></div>
+				<div class="project_list_title">프로젝트 제목</div>
+				<div class="project_list_update">업데이트 : 2022 06 16</div>
+				<div class="project_list_dept">디자인팀 외 1</div>
+				<img class="project_list_fix" src="<%= request.getContextPath()%>/resources/images/bahai-empty.svg">
+				<img class="project_list_unlock" src="<%= request.getContextPath()%>/resources/images/unlock.png">
+			</div>
+			<div class="project_list_block">
+				<div class="project_list_color"></div>
+				<div class="project_list_title">프로젝트 제목</div>
+				<div class="project_list_update">업데이트 : 2022 06 16</div>
+				<div class="project_list_dept">디자인팀 외 1</div>
 				<img class="project_list_fix" src="<%= request.getContextPath()%>/resources/images/bahai-empty.svg">
 				<img class="project_list_unlock" src="<%= request.getContextPath()%>/resources/images/unlock.png">
 			</div>
 		</div>
 	</div>
 </section>
+<script type="text/javascript">
+	$('.project_list_fix').on('mouseenter', function() {
+		
+	});
+	$('.project_list_fix').on('mouseleave', function() {
+		
+	});
+</script>
 </body>
 </html>

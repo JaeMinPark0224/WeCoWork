@@ -13,5 +13,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
+<section>
+</section>
 </body>
 </html>

@@ -8,77 +8,136 @@
 		<div class="person_info"><span class="font_b font_gray94 font_13px">박재민&nbsp;</span><span class="font_r font_gray94 font_13px">사원</span></div>
 		<button class="btn_format_mini logout_btn">로그아웃</button>
 	</div>
-	<div id="left_menu">
-		<div class="left_menu_1depth">
-			<div class="left_menu_1depth_title">사원 관리</div>
-			<div class="left_menu_2depth" open_chk="false">
-				<div class="left_menu_2depth_content">직원 조회</div>
-				<div class="left_menu_2depth_content">직원 가입 관리</div>
+	<div id="left_menu_scroll">
+	
+		<div id="left_menu">
+			<div class="left_menu_wrap">
+				<div class="left_menu_title">
+					<div class="left_menu_hr"></div>
+					<div class="left_menu_hr_title">0dpeth title</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="left_menu_1depth">
-			<div class="left_menu_1depth_title">회사 관리</div>
-			<div class="left_menu_2depth" open_chk="false">
-				<div class="left_menu_2depth_content">직원 조회</div>
-				<div class="left_menu_2depth_content">직원 가입 관리</div>
+			<div class="left_menu_wrap">
+				<div class="left_menu_title">
+					<div class="left_menu_hr"></div>
+					<div class="left_menu_hr_title">0dpeth title</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="left_menu_1depth">
-			<div class="left_menu_1depth_title">근태 관리</div>
-			<div class="left_menu_2depth" open_chk="false">
-				<div class="left_menu_2depth_content">직원 조회</div>
-				<div class="left_menu_2depth_content">직원 가입 관리</div>
+			<div class="left_menu_wrap">
+				<div class="left_menu_title">
+					<div class="left_menu_hr"></div>
+					<div class="left_menu_hr_title">0dpeth title</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="left_menu_1depth">
-			<div class="left_menu_1depth_title">공지 관리</div>
-			<div class="left_menu_2depth" open_chk="false">
-				<div class="left_menu_2depth_content">직원 조회</div>
-				<div class="left_menu_2depth_content">직원 가입 관리</div>
-			</div>
-		</div>
-		<div class="left_menu_1depth">
-			<div class="left_menu_1depth_title">회사 관리</div>
-			<div class="left_menu_2depth" open_chk="false">
-				<div class="left_menu_2depth_content">직원 조회</div>
-				<div class="left_menu_2depth_content">직원 가입 관리</div>
-			</div>
-			<!-- test3채팅삭제할거에요 걱정마세요 여기부터-->
-			<div class="left_menu_1depth_title">
-				<a href="<%=request.getContextPath()%>/chat.do" target="_blank">test3채팅</a> 
-			</div>
-			<!-- test3채팅 여기까지 삭제-->
-			<!-- test5채팅삭제할거에요 걱정마세요 여기부터-->
-			<div class="left_menu_1depth_title">
-				<a href="<%=request.getContextPath()%>/chat5.do" target="_blank">test5채팅</a> 
-			</div>
-			<!-- test3채팅 여기까지 삭제-->
 		</div>
 	</div>
 </aside>
 <script type="text/javascript">
-	$(".left_menu_1depth").on("click", function(event) {
-		console.log(event.target);
-		console.log(event.target.className);
-		if(event.target.className == "left_menu_1depth_title") {
-			if($(this).children(".left_menu_2depth").attr("open_chk") == "false") {
-				var heightTemp = $(this).find(".left_menu_2depth_content").length * 29 + "px";
-				$(this).children(".left_menu_2depth").css("height", heightTemp);
-				$(this).children(".left_menu_2depth").attr("open_chk", "true");
-			} else if($(this).children(".left_menu_2depth").attr("open_chk") == "true") {
-				$(this).children(".left_menu_2depth").css("height", "0px");
-				$(this).children(".left_menu_2depth").attr("open_chk", "false");
-			}
+	$(".left_menu_1depth_title").on("mouseenter", function() {
+		$(this).css("backgroundColor", "rgba(67, 89, 113, 0.04)");
+	});
+	$(".left_menu_1depth_title").on("mouseleave", function() {
+		if($(this).attr("open_chk") == "f") {
+			$(this).css("backgroundColor", "transparent");
 		}
 	});
-	$(".left_menu_2depth_content").on("mouseenter", function() {
-		$2depth = $(".left_menu_2depth_content");
-		for (var i = 0; i < $2depth.length; i++) {
-			$2depth.eq(i).css("color", "rgb(127, 127, 127)");
-			$2depth.eq(i).css("font-family", "NotoSansR");
+	
+	$(".left_menu_1depth_title").on("click", function() {
+		for(var i = 0; i < $(".left_menu_1depth_title").length; i++) {
+			if($(this)[0] == $('.left_menu_1depth_title')[i]) {
+				continue;
+			} else {
+				$('.left_menu_1depth_title').eq(i).css("backgroundColor", "transparent");
+				$('.left_menu_1depth_title').eq(i).css("margin-bottom", "0px");
+				$('.left_menu_1depth_title').eq(i).children(".dpeth_arrow").css("transform", "rotate(0deg)");
+				$('.left_menu_1depth_title').eq(i).parent().css("height", "30px");
+				$('.left_menu_1depth_title').eq(i).attr("open_chk", "f");
+			}
 		}
-		$(this).css("color", "#4B4DB2");
-		$(this).css("font-family", "NotoSansB");
+		if($(this).attr("open_chk") == "f") {
+			$(this).css("backgroundColor", "rgba(67, 89, 113, 0.04)");
+			$(this).css("margin-bottom", "5px");
+			$(this).children(".dpeth_arrow").css("transform", "rotate(90deg)");
+			var heightTemp = $(this).next(".left_menu_2depth_content_wrap").children(".left_menu_2depth_content").length * 30 + 35 +"px";
+			$(this).parent().css("height", heightTemp);
+			$(this).attr("open_chk", "t");
+		} else if($(this).attr("open_chk") == "t") {
+			$(this).css("backgroundColor", "transparent");
+			$(this).css("margin-bottom", "0px");
+			$(this).children(".dpeth_arrow").css("transform", "rotate(0deg)");
+			$(this).parent().css("height", "30px");
+			$(this).attr("open_chk", "f");
+		}
+	});
+	
+	$(".left_menu_1depth_content").on("mouseenter", function() {
+		$(this).css("backgroundColor", "rgba(67, 89, 113, 0.04)");
+	});
+	$(".left_menu_1depth_content").on("mouseleave", function() {
+		$(this).css("backgroundColor", "transparent");
 	});
 	
 </script>

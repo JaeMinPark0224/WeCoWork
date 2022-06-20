@@ -14,4 +14,10 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@RequestMapping("/main")
+	public ModelAndView readProject(ModelAndView mv) {
+		mv.setViewName("project/main");
+		return mv;
+	}
+	
 }
