@@ -9,15 +9,43 @@
 		<button class="btn_format_mini logout_btn">로그아웃</button>
 	</div>
 	<div id="left_menu_scroll">
-	
 		<div id="left_menu">
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
-					<div class="left_menu_hr_title">0dpeth title</div>
+					<div class="left_menu_hr_title">Favorite</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">즐겨찾기 페이지 폴더 이름<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">즐겨찾기 페이지 폴더 이름2<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
+					</div>
+				</div>
+			</div>
+			<div class="left_menu_wrap">
+				<div class="left_menu_title">
+					<div class="left_menu_hr"></div>
+					<div class="left_menu_hr_title">Notice</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">공지사항<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -28,7 +56,7 @@
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">알림<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -41,22 +69,12 @@
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
-					<div class="left_menu_hr_title">0dpeth title</div>
+					<div class="left_menu_hr_title">Project</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">프로젝트<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-					</div>
-				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -68,10 +86,10 @@
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
-					<div class="left_menu_hr_title">0dpeth title</div>
+					<div class="left_menu_hr_title">Office</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">결재<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -82,8 +100,20 @@
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">근태관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">2depth content</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">인사정보<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -185,5 +215,22 @@
 			$(".chat_btn_arrow").removeClass("fa-chevron-right");
 			$(".chat_btn_arrow").addClass("fa-chevron-left");
 		}
+	});
+</script>
+<aside id="favorite_btn_aside">
+	<i class="fa-solid fa-star" id="favorite_btn"></i>
+</aside>
+<script>
+	$("#favorite_btn").on('mouseenter', function() {
+		console.log("test1");
+		$(this).css({
+			"color": "#4B4DB2"
+		});
+	});
+	
+	$("#favorite_btn").on('mouseleave', function() {
+		$(this).css({
+			"color": "white"
+		});
 	});
 </script>

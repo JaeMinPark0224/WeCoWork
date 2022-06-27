@@ -62,3 +62,23 @@
 	height: 100%;
 	background-color: rgb(244, 244, 244); 
 }
+
+/* 즐겨찾기 버튼 */
+/* 즐겨찾기 버튼 */
+/* 즐겨찾기 버튼 */
+/* 즐겨찾기 버튼 */
+/* 즐겨찾기 버튼 */
+
+#favorite_btn_aside {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+}
+
+#favorite_btn {
+	font-size: 20px;
+	color: white;
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: #4B4DB2;
+	transition: 0.15s ease;
+}
