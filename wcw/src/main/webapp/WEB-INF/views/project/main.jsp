@@ -16,23 +16,7 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="project_section">
 	<div id="project_main_wrap">
-		<div id="project_main_header">
-			<div id="project_main_menu_title">프로젝트 요약</div>
-			<div id="project_main_header_btn_wrap">
-				<button class="btn_main_gray btn_main_float" id="btn_main_delete">삭제하기</button>
-				<button class="btn_main_purple btn_main_float" id="btn_main_complete">완료하기</button>
-				<button class="btn_main_purple btn_main_float" id="btn_main_update">수정하기</button>
-			</div>
-			<div id="project_main_title">프로젝트 제목</div>
-			<div id="project_main_tab_wrap">
-				<div class="project_main_tab">게시판</div>
-				<div class="project_main_tab">업무</div>
-				<div class="project_main_tab">할 일</div>
-				<div class="project_main_tab">캘린더</div>
-				<div class="project_main_tab">파일</div>
-				<div class="project_main_tab">참여자</div>
-			</div>
-		</div>
+	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 		<div id="project_main_container">
 			<div id="project_main_box_title">
 				<div id="project_main_box_title_title">프로젝트 제목</div>
