@@ -82,9 +82,11 @@
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">1depth title<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">공지사항<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">2depth content</div>
+					<div class="noticelistBtn">
+						<div class="left_menu_2depth_content"><a href="<%=request.getContextPath()%>/noticelist" target="_blank">공지사항 리스트</a></div>
+					</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -151,7 +153,16 @@
 				<div class="chat_header_tap">TODO</div>
 			</div>
 		</div>
-		<div id="chat_body"></div>
+		<div id="chat_body">
+			<div>
+				<a href="<%=request.getContextPath()%>/chat5.do" target="_blank"
+				 style="font-size: 30px;">test5채팅방생성</a>
+			 </div>
+			 <div>
+				<a href="<%=request.getContextPath()%>/chat.do" target="_blank"
+				 style="font-size: 30px;">test3채팅방생성</a>
+			 </div>
+		</div>
 	</div>
 </aside>
 <script type="text/javascript">
