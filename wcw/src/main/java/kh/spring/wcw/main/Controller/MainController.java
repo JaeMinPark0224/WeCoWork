@@ -13,4 +13,10 @@ public class MainController {
 		return mv;
 	}
 	
+	@GetMapping("/login")
+	public ModelAndView login(ModelAndView mv) {
+		mv.setViewName("login/login");
+		return mv;
+	}
+	
 }

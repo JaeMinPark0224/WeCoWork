@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+#section{
+	margin: 0 auto;
+	width: 1200px;
+}
+
+		#top{
+            margin-top: 160px;
+            width: 1200px;
+            height: 58px;
+            background-color: #4B4DB2;
+            text-align: center;
+        }
+        #top_text{
+            color: white;
+            font-size: 12px;
+            font-family: NotoSansB;
+            margin-top: 20px;
+            display: block;
+            padding-top: 22px;
+        }
+        #mid{
+            width: 1200px;
+            height: 640px;
+            background-color: rgb(244, 244, 244);
+        }
+        #mid_text{
+            padding-top: 170px;
+            margin-bottom: 60px;
+            text-align: center;
+            font-size: 17px;
+            font-family: NotoSansB;
+            color: #5E5E5E;
+        }
+        #f_section{
+            display: block;
+            margin: 0 auto;
+            width: 380px;
+        }
+        #id, #pwd{
+            width: 380px;
+            height: 40px;
+            margin-bottom: 10px;
+            border: 1px solid rgb(158, 158, 158);
+            border-radius: 3px;
+        }
+        #id::placeholder, #pwd::placeholder{
+            font-family: NotoSansR;
+            font-size: 12px;
+            padding-left: 5px;
+        }
+        #m_section{
+            width: 380px;
+            font-size: 12px;
+            position: relative;
+            margin: 0 auto;
+            margin-bottom: 23px;
+            display: block;
+            font-family: NotoSansR;
+            font-size: 12px;
+        }
+        #autoLogin{
+            margin-right: 3px;
+        }
+        #saveId{
+            margin-left: 20px;
+        }
+        #findPwd{
+            float: right;
+            display: inline;
+            color: #4B4DB2;
+            margin-top: 3px;
+        }
+        #login{
+            width: 380px;
+            height: 40px;
+            background-color: rgb(230, 230, 230);
+            color: rgb(94, 94, 94);
+            border: 0px;
+            font-size: 12px;
+            font-family: NotoSansB;
+            margin: 0 auto;
+            margin-bottom: 100px;
+            display: block;
+        }
+
+        #last{
+            width: 380px;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+        }
+        .last_text{
+            font-family: NotoSansR;
+            color: rgb(190, 190, 190);
+            font-size: 12px;
+        }
+        #last_text_2{
+            margin-left: 20px;
+        }
