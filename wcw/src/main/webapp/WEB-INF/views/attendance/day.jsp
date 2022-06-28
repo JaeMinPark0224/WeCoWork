@@ -11,6 +11,12 @@
 <meta charset="UTF-8">
 <title>WCW</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+
+<style type="text/css">
+.attendance_main_box_first_container {
+	flex-grow: 1;
+}
+</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
@@ -23,44 +29,63 @@
 		</div>
 		
 		<div id="attendance_main_container">
-			<div id="attendance_main_box_title">
-				<div id="attendance_main_box_title_1">프로젝트 제목</div>
-				<div id="attendance_main_box_title_2"></div>
-				<div id="attendance_main_box_title_3">머슬톡톡</div>
-				<div id="attendance_main_box_title_participant"></div>
-			</div>
-			<div class="attendance_main_box">
-				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">공지</div>
+			<div id="attendance_main_box_first">
+				<div class="attendance_main_box_first_container">
+					<div>일일근태등록</div>
+					<div>
+						<button>출근</button>
+						<button>퇴근</button>
+					</div>
 				</div>
-				<div class="attendance_main_box_container">
-					<div class="attendance_main_box_content_title">공지 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">공지 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">공지 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">공지 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">공지 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
+				<div class="attendance_main_box_first_container">
+					<div>출근시간 : </div>
+					<div>퇴근시간 : </div>
+					<div>출근 IP : </div>
+					<div>퇴근 IP : </div>
+				</div>
+				<div class="attendance_main_box_first_container">
+					현시각
 				</div>
 			</div>
 			<div class="attendance_main_box">
 				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">게시판</div>
+					<div class="attendance_main_box_title">근태정보조회</div>
 				</div>
 				<div class="attendance_main_box_container">
-					<div class="attendance_main_box_content_title">게시판 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">게시판 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">게시판 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">게시판 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
-					<div class="attendance_main_box_content_title">게시판 제목 제목 제목 [댓글수]</div>
-					<div class="attendance_main_box_content_date">2022.06.17</div>
+					<div class="attendance_main_box_content">
+						근무일자
+						<button>조회</button>
+					</div>
+					<div class="attendance_main_box_content">
+						<table>
+							<tr>
+								<td>근무일자</td>
+								<td>사번</td>
+								<td>성명</td>
+								<td>출근시간</td>
+								<td>퇴근시간</td>
+								<td>출근IP</td>
+								<td>퇴근IP</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="attendance_main_box">
+				<div class="attendance_main_box_top">
+					<div class="attendance_main_box_title">근태조정요청</div>
+				</div>
+				<div class="attendance_main_box_container">
+					<div class="attendance_main_box_content">
+						<form action="">
+							조정 근무 일자<input type="text">
+							조정 출근 시간<input type="text">
+							조정 퇴근 시간<input type="text">
+							조정 사유<input type="text">
+							<button type="submit">요청</button>
+						</form>
+					</div>
+					
 				</div>
 			</div>
 		</div>
