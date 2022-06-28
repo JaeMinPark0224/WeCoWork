@@ -44,4 +44,10 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@RequestMapping("/work/read")
+	public ModelAndView readWorkProject(ModelAndView mv) {
+		mv.setViewName("project/work/read");
+		return mv;
+	}
+	
 }
