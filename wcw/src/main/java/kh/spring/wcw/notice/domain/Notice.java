@@ -1,5 +1,6 @@
 package kh.spring.wcw.notice.domain;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Notice {
@@ -14,7 +15,7 @@ public class Notice {
 	private int cp_no;
 	private String nt_title;
 	private String nt_content;
-	private Timestamp nt_date;
+	private Date nt_date;
 	private	int nt_cnt;
 	
 	@Override
@@ -55,11 +56,11 @@ public class Notice {
 		this.nt_content = nt_content;
 	}
 
-	public Timestamp getNt_date() {
+	public Date getNt_date() {
 		return nt_date;
 	}
 
-	public void setNt_date(Timestamp nt_date) {
+	public void setNt_date(Date nt_date) {
 		this.nt_date = nt_date;
 	}
 
@@ -70,6 +71,8 @@ public class Notice {
 	public void setNt_cnt(int nt_cnt) {
 		this.nt_cnt = nt_cnt;
 	}
+	
+	
 	
 	
 	

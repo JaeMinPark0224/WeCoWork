@@ -3,7 +3,7 @@
 <mapper namespace="Notice">
 
 <select id="selectNotice" resultType="Notice">
-	select * from tb_notice
+	select * from tb_notice order by nt_no desc
 </select>
 
 
