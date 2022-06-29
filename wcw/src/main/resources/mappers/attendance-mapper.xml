@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Attendance">
+
+<!-- //	ATT_NO          NOT NULL NUMBER       
+//	EMP_NO          NOT NULL NUMBER       
+//	ATT_DATE        NOT NULL DATE         
+//	ATT_CLOCK_IN    NOT NULL DATE         
+//	ATT_CLOCK_OUT            DATE         
+//	IP_CLOCK_IN     NOT NULL VARCHAR2(20) 
+//	IP_CLOCK_OUT             VARCHAR2(20) 
+//	ATT_MODIFY_DATE          DATE         
+//	ATT_DELETE_YN            VARCHAR2(1)   -->
+<insert id="insertAttendance">
+	insert into tb_attendance(
+	ATT_NO, EMP_NO, ATT_DATE, 
+	ATT_CLOCK_IN, ATT_CLOCK_OUT, 
+	IP_CLOCK_IN, IP_CLOCK_OUT,
+	ATT_MODIFY_DATE, ATT_DELETE_YN
+	) values(
+	select to_char(sysdate, 'yyyymmdd')||'01'||'100'
+	, 100, sysdate
+	, sysdate, null
+	, '127.0.0.1', null
+	, null, 'N'
+	
+	)
+</insert>
+
+</mapper>
