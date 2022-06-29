@@ -182,24 +182,7 @@ INSERT INTO TB_JOB_TITLE
 INSERT INTO TB_JOB_TITLE
     (JOB_TITLE_NO, JOB_TITLE, JOB_LEVEL, CP_NO)
     VALUES
-    ((SELECT NVL(MAX(JOB_TITLE_NO), 0)+1 FROM TB_JOB_TITLE), '인턴', 9, 1);     
-    
-CREATE TABLE TB_EMPLOYEE (
-	EMP_NO	        NUMBER		                    NOT NULL,
-	EMAIL	        VARCHAR2(100)		            NOT NULL,
-	PWD	            VARCHAR2(256)		            NOT NULL,
-	NAME	        VARCHAR2(30)		            NOT NULL,
-	INTL_NO	        VARCHAR2(30)		            NOT NULL,
-	PHONE	        VARCHAR2(30)		            NOT NULL,
-	PROFILE	        VARCHAR2(600)		            NULL,
-	SIGN	        VARCHAR2(600)		            NULL,
-	IP	            VARCHAR2(30)		            NOT NULL,
-	JOIN_DATE	    DATE	        DEFAULT SYSDATE	NOT NULL,
-	RESIGN_DATE	    DATE	        DEFAULT SYSDATE	NULL,
-	RESIGN_YN	    VARCHAR2(1)	    DEFAULT 'N'	    NOT NULL,
-	DEPT_NO     	NUMBER		                    NOT NULL,
-	JOB_TITLE_NO	NUMBER		                    NOT NULL
-);    
+    ((SELECT NVL(MAX(JOB_TITLE_NO), 0)+1 FROM TB_JOB_TITLE), '인턴', 9, 1);       
     
 INSERT INTO TB_EMPLOYEE
     (EMP_NO, EMAIL, PWD
