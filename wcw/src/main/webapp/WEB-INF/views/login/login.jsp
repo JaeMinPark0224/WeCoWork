@@ -21,14 +21,14 @@
 	    </div>
 	    <div id="mid">
 	        <p id="mid_text">WeCoWork 로그인</p>
-	        <form>
+	        <form action="login.do" method="post">
 	            <div id="f_section">
-	                <input type="text" placeholder=" 이메일(아이디)" name="id" id="id" required></input><br>
+	                <input type="text" placeholder=" 이메일(아이디)" name="email" id="email" required></input><br>
 	                <input type="password" placeholder=" 비밀번호" name="pwd" id="pwd" required></input><br>
 	            </div>
 	            <div id="m_section">
-	                <input type="checkbox" name="autoLogin" id="autoLogin"><label for="autoLogin">자동 로그인</label>
-	                <input type="checkbox" name="saveId" id="saveId"><label for="saveId">아이디 저장</label>
+	                <input type="checkbox" name="autoLogin" id="autoLogin"><label for="autoLogin"> 자동 로그인</label>
+	                <input type="checkbox" name="saveId" id="saveId"><label for="saveId"> 아이디 저장</label>
 	                <span id="findPwd">비밀번호 찾기</span>
 	            </div>
 	            <input type="submit" id="login" name="login" value="로그인">
@@ -44,5 +44,10 @@
 	    </div>
     </div>
 </section>
+<script>
+	$("#findPwd").click(function(){
+		location.href="/wcw/find/pwd";
+	})
+</script>
 </body>
 </html>

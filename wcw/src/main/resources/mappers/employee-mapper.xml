@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="employeeMapper">
+
+<select id="selectEmployee" parameterType="hashmap" resultType="Employee">
+	SELECT * 
+	FROM TB_EMPLOYEE 
+		JOIN TB_DEPARTMENT USING(DEPT_NO) 
+		JOIN TB_COMPANY USING(CP_NO)
+		JOIN TB_JOB_TITLE USING(JOB_TITLE_NO)
+	where email=#{email} and pwd=#{pwd}
+</select>
+
+</mapper>

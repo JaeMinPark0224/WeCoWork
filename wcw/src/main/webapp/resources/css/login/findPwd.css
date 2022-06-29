@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+#section{
+           margin: 0 auto;
+           width: 1200px;
+       }
+       #mid{
+            margin-top: 170px;
+           width: 1200px;
+           height: 698px;
+           background-color: rgb(244, 244, 244);
+       }
+       #mid_text{
+           padding-top: 170px;
+           margin-bottom: 60px;
+           text-align: center;
+           font-size: 17px;
+           font-family: NotoSansB;
+           color: #5E5E5E;
+       }
+       #email_btn_1{
+            float: left;
+            width: 299px;
+            position: absolute;
+            top: 50.5px;
+            right: -130px;
+            width: 115px;
+            height: 40px;
+            /* background-color: #4B4DB2;
+            color: rgb(230, 230, 230); */
+            background-color: rgb(230, 230, 230);
+            color: rgb(51, 51, 51);
+            border: 0;
+            font-size: 12px;
+            font-family: NotoSansR;
+       }
+       #email_btn_2{
+       		float: left;
+            width: 299px;
+            position: absolute;
+            top: 50.5px;
+            right: -130px;
+            width: 115px;
+            height: 40px;
+            background-color: #4B4DB2;
+            color: rgb(230, 230, 230);
+            border: 0;
+            font-size: 12px;
+            font-family: NotoSansR;
+            display: none;
+       }
+       #f_section{
+           display: block;
+           margin: 0 auto;
+           width: 380px;
+           position: relative;
+       }
+       #cp, #email, #name{
+           width: 380px;
+           height: 40px;
+           margin-bottom: 10px;
+           border: 1px solid rgb(158, 158, 158);
+           border-radius: 3px;
+           box-sizing: border-box;
+       }
+       #email::placeholder, #name::placeholder, #cp::placeholder{
+           font-family: NotoSansR;
+           font-size: 12px;
+           padding-left: 5px;
+       }
+       #cancel, #find_pwd{
+           width: 180px;
+           height: 40px;
+           border: 0px;
+           font-size: 11px;
+           font-family: NotoSansR;
+           margin: 0 auto;
+           margin-bottom: 100px;
+       }
+       #cancel{
+            background-color: white;
+            color: #4B4DB2;
+            border: 1px solid #4B4DB2;;
+       }
+       #find_pwd{
+            background-color: #4B4DB2;
+            color: white;
+       }
+       #f_btn{
+            display: block;
+            margin: 0 auto;
+            width: 380px;
+       }
+       #find_pwd{
+        margin-left: 12.5px;
+       }
+       #last{
+           width: 380px;
+           margin: 0 auto;
+           display: block;
+           text-align: center;
+           margin-top: 47px;
+       }
+       .last_text{
+           font-family: NotoSansR;
+           color: rgb(190, 190, 190);
+           font-size: 12px;
+       }
+       #last_text_2{
+           margin-left: 20px;
+       }

@@ -38,17 +38,17 @@
             margin: 0 auto;
             width: 380px;
         }
-        #id, #pwd{
+        #email, #pwd{
             width: 380px;
             height: 40px;
             margin-bottom: 10px;
             border: 1px solid rgb(158, 158, 158);
             border-radius: 3px;
         }
-        #id::placeholder, #pwd::placeholder{
+        #email::placeholder, #pwd::placeholder{
             font-family: NotoSansR;
             font-size: 12px;
-            padding-left: 5px;
+            padding-left: 4px;
         }
         #m_section{
             width: 380px;
@@ -59,18 +59,34 @@
             display: block;
             font-family: NotoSansR;
             font-size: 12px;
+            
         }
         #autoLogin{
             margin-right: 3px;
+            font-size: 12px;
+            color: rgb(94, 94, 94);
+            font-family: NotoSansR;
         }
+        input[id="autoLogin"] {
+		  position: relative;
+		  top: 2px;
+		}
         #saveId{
-            margin-left: 20px;
+            margin-left: 22px;
+            font-size: 12px;
+            color: rgb(94, 94, 94);
+            font-family: NotoSansR;
         }
+        input[id="saveId"] {
+		  position: relative;
+		  top: 2px;
+		}
         #findPwd{
             float: right;
-            display: inline;
             color: #4B4DB2;
-            margin-top: 3px;
+            margin-top: 4px;
+			font-family: NotoSansB;
+			cursor: pointer;
         }
         #login{
             width: 380px;
