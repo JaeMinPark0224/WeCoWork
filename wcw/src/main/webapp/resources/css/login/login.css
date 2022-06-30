@@ -44,6 +44,8 @@
             margin-bottom: 10px;
             border: 1px solid rgb(158, 158, 158);
             border-radius: 3px;
+            font-size: 12px;
+            font-family: NotoSansR;
         }
         #email::placeholder, #pwd::placeholder{
             font-family: NotoSansR;

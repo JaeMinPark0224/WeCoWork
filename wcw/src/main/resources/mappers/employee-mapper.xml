@@ -11,4 +11,14 @@
 	where email=#{email} and pwd=#{pwd}
 </select>
 
+<select id="selectEmployeePwd" parameterType="hashmap" resultType="string">
+	select pwd 
+	from tb_employee 
+   		join tb_department using(dept_no) 
+    	join tb_company using(cp_no)
+	where cp_name = #{cp_name}
+    	and email = #{email}
+    	and name = #{name}
+</select>
+
 </mapper>

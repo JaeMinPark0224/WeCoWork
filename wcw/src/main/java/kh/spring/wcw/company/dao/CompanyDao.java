@@ -23,7 +23,7 @@ public class CompanyDao {
 		map.put("email", email);
 		map.put("pwd", password);
 		
-		return sqlsession.selectOne("employeeMapper.selectEmployee", map);
+		return sqlsession.selectOne("companyMapper.selectCompany", map);
 	}
 	
 }

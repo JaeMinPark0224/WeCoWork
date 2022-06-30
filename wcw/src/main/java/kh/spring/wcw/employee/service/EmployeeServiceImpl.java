@@ -20,7 +20,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.selectEmployee(id, password);
 	}
 	
-	
+	@Override
+	public Employee selectEmployeePwd(String cp_name, String id, String name) {
+		return dao.selectEmployeePwd(cp_name, id, name);
+	}
 
 	
 }
