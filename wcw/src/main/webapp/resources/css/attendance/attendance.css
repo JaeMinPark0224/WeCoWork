@@ -227,7 +227,7 @@ section {
 .attendance_main_box_title {
 	height: 60px;
 	line-height: 60px;
-	font-size: 12px;
+	font-size: 13px;
 	font-family: NotoSansB;
 	color: rgb(94, 94, 94);
 	text-align : center;
@@ -278,4 +278,6 @@ section {
 #attendance_main_box_title_participant {
 	
 }
+
+
 

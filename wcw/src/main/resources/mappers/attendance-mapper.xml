@@ -18,12 +18,11 @@
 	IP_CLOCK_IN, IP_CLOCK_OUT,
 	ATT_MODIFY_DATE, ATT_DELETE_YN
 	) values(
-	select to_char(sysdate, 'yyyymmdd')||'01'||'100'
+	(select to_char(sysdate, 'yyyymmdd')||'01'||'100' from dual)
 	, 100, sysdate
 	, sysdate, null
 	, '127.0.0.1', null
 	, null, 'N'
-	
 	)
 </insert>
 
