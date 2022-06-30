@@ -50,4 +50,28 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@RequestMapping("/todo/list")
+	public ModelAndView selectTodoProject(ModelAndView mv) {
+		mv.setViewName("project/todo/list");
+		return mv;
+	}
+	
+	@RequestMapping("/calendar/list")
+	public ModelAndView selectCalendarProject(ModelAndView mv) {
+		mv.setViewName("project/calendar/list");
+		return mv;
+	}
+	
+	@RequestMapping("/file/list")
+	public ModelAndView selectFileProject(ModelAndView mv) {
+		mv.setViewName("project/file/list");
+		return mv;
+	}
+	
+	@RequestMapping("/participant/list")
+	public ModelAndView selectParticipantProject(ModelAndView mv) {
+		mv.setViewName("project/participant/list");
+		return mv;
+	}
+	
 }

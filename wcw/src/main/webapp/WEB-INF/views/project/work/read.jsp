@@ -85,6 +85,10 @@
 				<div class="project_work_read_content_left">댓글</div>
 				<div class="project_work_read_content_right">
 					<div class="project_work_read_comment_profile"></div>
+					<div class="project_work_read_comment_input_wrap">
+						<input type="text" class="project_work_read_comment_input_text">
+						<button class="project_work_read_comment_insert_btn">등록</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -92,7 +96,6 @@
 	</div>
 </section>
 <script type="text/javascript">
-	console.log($("#project_main_tab_wrap"));
 	$("#project_main_tab_wrap").append("<button id='project_work_update_btn'>업무 수정</button>");
 	$("#project_main_tab_wrap").append("<button id='project_work_delete_btn'>업무 삭제</button>");
 </script>

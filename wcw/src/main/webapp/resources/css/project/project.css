@@ -869,13 +869,125 @@ section {
 	height: 40px;
 	border-radius: 50%;
 	background-color: rgb(230, 230, 230);
+	position: relative;
+	top: -5px;
+}
+
+.project_work_read_comment_input_wrap {
+	position: relative;
+	margin-top: 10px;
+}
+
+.project_work_read_comment_input_text {
+	width: 600px;
+	height: 30px;
+	border: 1px solid #ccc;
 }
 
 
+.project_work_read_comment_input_text:focus {
+	outline: none;
+	border: 1px solid #555;	
+}
 
+.project_work_read_comment_insert_btn {
+	font-size: 12px;
+	color: rgb(94, 94, 94);
+	font-family: NotoSansR;
+	width: 90px;
+	height: 30px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
 
+#project_todo_header_wrap {
+	margin-top: 35px;
+	font-size: 0px;
+	position: relative;
+	height: 50px;
+}
 
+#project_todo_header_date {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	font-size: 15px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+	height: 20px;
+	line-height: 20px;
+}
 
+#project_todo_header_progress {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	font-size: 15px;
+	font-family: NotoSansB;
+	color: rgb(75, 77, 178);
+	height: 20px;
+	line-height: 20px;
+}
+
+#project_todo_header_progress_bar_wrap {
+	position: absolute;
+	top: 25px;
+	width: 100%;
+	height: 25px;
+	background-color: rgb(230, 230, 230);
+}
+
+#project_todo_header_progress_bar {
+	position: relative;
+	top: 0px;
+	width: 50%;
+	height: 25px;
+	background-color: rgb(75, 77, 178);
+}
+
+#project_todo_content_wrap {
+	margin-top: 45px;
+}
+
+#project_todo_content_flex_box {
+	display: flex;
+	flex-direction: column;
+}
+
+#project_todo_content_flex_box_head {
+	width: 1070px;
+	height: 60px;
+	background-color: rgb(224, 224, 224);
+}
+
+#project_todo_content_flex_box_body {
+	width: 1070px;
+	background-color: rgb(244, 244, 244);
+	padding: 40px 70px;
+	font-size: 0px;
+	display: grid;
+	grid-template-columns: 20px 880px;
+	row-gap: 15px;
+	column-gap: 30px;
+	box-sizing: border-box;
+}
+
+.project_todo_chk_box {
+	width: 20px;
+	height: 20px;
+	border: 2px solid gray;
+	box-sizing: border-box;
+	border-radius: 5px;
+}
+
+.project_todo_list_title {
+	font-size: 13px;
+	color: rgb(94, 94, 94);
+	font-family: NotoSansR;
+	height: 20px;
+	line-height: 20px;
+}
 
 
 
