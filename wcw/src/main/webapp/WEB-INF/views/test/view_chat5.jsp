@@ -67,7 +67,7 @@
 	</script>	
 	<script type="text/javascript">
         $(window).on('load', function () {
-			webSocket.init({ url: '<c:url value="/chat5" />' });	
+			webSocket.init({ url: '<c:url value="/chat5?bang_id=${bang_id}" />' });	
 		});
 	</script>
 </head>

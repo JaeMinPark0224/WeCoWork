@@ -16,8 +16,14 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	
 	@Override
-	public List<Notice> selectNotice(){
-		return dao.selectNotice();
+	public List<Notice> selectNotice(int currentPage, int pageSize){
+		return dao.selectNotice(currentPage,pageSize);
+	}
+	
+	@Override
+	public Notice readNotice(int nt_no) {
+		
+		return dao.readNotice(nt_no);
 	}
 	
 	

@@ -6,7 +6,9 @@
 	select * from tb_notice order by nt_no desc
 </select>
 
-
+<select id="readNotice" resultType="Notice">
+	select * from tb_notice where nt_no=#{nt_no}
+</select>
 
 
 </mapper>

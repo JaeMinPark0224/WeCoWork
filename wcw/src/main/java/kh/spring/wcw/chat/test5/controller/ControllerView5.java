@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.socket.WebSocketSession;
 
 @Controller
 public class ControllerView5 {
-	// 채팅방 입장
+	// 채팅방 생성
 		@RequestMapping(value = "/chat5.do", method = RequestMethod.GET)
 		public ModelAndView view_chat5(HttpServletRequest request
 				, HttpServletResponse response
 				, ModelAndView mv
 				, @RequestParam(name="bang_id",defaultValue = "0") String bang_id
+//				, WebSocketSession session
 				) throws Exception {
 			
 			

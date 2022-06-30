@@ -16,10 +16,14 @@
 	margin-left: 65px;
 	font-family: NotoSansB;
 }
+.noticeTable a{
+	color: rgb(94, 94, 94);
+}
 .noticeBoard{
-	height: 740px;
+	height: 800px;
 	width: 1070px;
 	background-color: rgb(244, 244, 244);
+	margin-bottom: 220px;
 }
 
 #noticePageTitle {
@@ -31,11 +35,34 @@
 }
 .noticeTable{
 	text-align: center;
+	border-collapse: separate;
+  	border-spacing: 0 30px;
+}
+
+.noticeDate{
+	padding-left: 180px;
+	width: 149px;
+}
+.noticeTableDiv{
+	text-align: center;
 	width: 1070px;
 }
 .noticeNo{
 	width: 59px;
+    padding-left: 108px;
 } 
+.noticeTitle{
+	padding-left: 128px;
+	width: 376px;
+}
+.noticeNoDiv{
+	width: 59px;
+	margin-left: 115px;
+	margin-right: 300px;
+}
+.noticeDateDiv{
+	margin-left: 365px;
+}
 .noticeTableFirstTr .noticeTitle{
 	width: 59px;
 	
@@ -59,9 +86,8 @@
 	font-size: 12px;
 	color: rgb(94, 94, 94);
 	background-color: rgb(244, 244, 244);
-	height: 30px;
-	line-height: 30px;
-	
+	height: 20px;
+	line-height: 20px;
 }
 .noticeTableContent td{
 	text-align: center;
@@ -69,12 +95,22 @@
 .noticeTableContent .noticeNo{
 	/* padding-right: 126px; */
 }
-.noticeTableContent .noticeTitle{
-	/* padding-right: 150px; */
-	width: 300px;
-}
 .noticeTableContent .noticeDate{
 	width: 80px;
+}
+.noticeTitleDiv{
+	font-size: 12px;
+	color: rgb(94, 94, 94);
+	background-color: rgb(224, 224, 224);
+	height: 60px;
+	box-sizing: border-box;
+	line-height: 60px;
+}
+.paging{
+	text-align: center;
+	position: absolute;
+    top: 830px;
+    left: 535px;
 }
 </style>
 
@@ -90,22 +126,43 @@
 					<div>작성된 글이 없습니다.</div>
 				</c:when>
 				<c:otherwise>
+				<div class="noticeTitleDiv">
+					<span class="noticeNoDiv">
+						공지번호
+					</span>
+					<span class="noticeTitleDiv">
+						공지제목
+					</span>
+					<span class="noticeDateDiv">
+						공지일
+					</span>
+				</div>
 					<table class="noticeTable">
-						<tr class="noticeTableFirstTr">
-							<td class="noticeNo">공지번호</td>
-							<td class="noticeTitle">공지제목</td>
-							<td class="noticeDate">공지일</td>
-						</tr>
 						<c:forEach items="${noticelist }" var="notice">
 							<tr class="noticeTableContent">
-								<td class="noticeNo">${notice.nt_no }</td>
-								<td class="noticeTitle">${notice.nt_title }</td>
+								<td class="noticeNo">
+								<a href="<%= request.getContextPath() %>/notice/read<%-- ?nt_no=${notice.nt_no } --%>">
+									${notice.nt_no }</a></td>
+								<td class="noticeTitle">
+								<a href="<%= request.getContextPath() %>/notice/read?nt_no=${notice.nt_no }">
+									${notice.nt_title }</a></td>
 								<td class="noticeDate">${notice.nt_date }</td>
 							</tr>
 						</c:forEach>
 					</table>
 				</c:otherwise>
 			</c:choose>
+			<p class="paging">
+				<c:if test="${startPage > 1 }">
+					<a href="noticelist?page=${startPage-1 }">이전</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				</c:if>
+				<c:forEach begin="${startPage }" end="${endpage }" var="p">
+					<a href="noticelist?page=${p }">${p }</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				</c:forEach>
+				<c:if test="${endpage < totalpageCnt}">
+					<a href="noticelist?page=${endpage+1 }">다음</a>
+				</c:if>
+			</p>
 		</div>
 
 

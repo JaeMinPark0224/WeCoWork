@@ -50,7 +50,7 @@ public class HandlerChat5 extends TextWebSocketHandler{
 							Map<String, String> mapToSend = new HashMap<String, String>();
 							mapToSend.put("bang_id", bang_id);
 							mapToSend.put("cmd", "CMD_ENTER");
-							mapToSend.put("msg", session.getId() +  "님이 입장 했습니다.");
+							mapToSend.put("msg", session.getId() +  "님이 chat5입장 했습니다.");
 							
 							String jsonStr = objectMapper.writeValueAsString(mapToSend);
 							sess.sendMessage(new TextMessage(jsonStr));

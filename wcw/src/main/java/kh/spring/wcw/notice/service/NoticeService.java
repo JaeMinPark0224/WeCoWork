@@ -6,6 +6,6 @@ import kh.spring.wcw.notice.domain.Notice;
 
 public interface NoticeService {
 	
-	public List<Notice> selectNotice();
-
+	public List<Notice> selectNotice(int currentPage,int pageSize);
+	public Notice readNotice(int nt_no);
 }
