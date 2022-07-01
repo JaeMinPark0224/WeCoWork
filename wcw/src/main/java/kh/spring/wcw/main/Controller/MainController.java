@@ -26,7 +26,12 @@ public class MainController {
 	private CompanyService CompanyService;
 	
 	@GetMapping("/")
-	public ModelAndView mainController(ModelAndView mv) {
+	public ModelAndView mainController(ModelAndView mv
+			, HttpSession session) {
+		if(session.getAttribute("loginSSInfo") == null) {
+			mv.setViewName("redirect:/login"); //TODO 첫화면 만들예정
+			return mv;
+		}
 		mv.setViewName("main/main");
 		return mv;
 	}
@@ -57,7 +62,7 @@ public class MainController {
 		
 		// 퇴사 했을 경우 로그인 불가
 		if(result.getResign_yn() == "Y") {
-			mv.setViewName("redirect:/login/login");
+			mv.setViewName("redirect:/login");
 			return mv;
 		// 퇴사 하지 않았다면 로그인 가능
 		} else {

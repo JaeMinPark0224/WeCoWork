@@ -4,8 +4,8 @@
 	<img src="<%= request.getContextPath() %>/resources/images/logo.png" id="logo">
 	<div id="login_info">
 		<div class="profile_circle"></div>
-		<div class="company_info font_r font_gray94 font_12px">가나다컴퍼니</div>
-		<div class="person_info"><span class="font_b font_gray94 font_13px">박재민&nbsp;</span><span class="font_r font_gray94 font_13px">사원</span></div>
+		<div class="company_info font_r font_gray94 font_12px">${loginSSInfo.cp_name }</div>
+		<div class="person_info"><span class="font_b font_gray94 font_13px">${loginSSInfo.name }&nbsp;</span><span class="font_r font_gray94 font_13px">${loginSSInfo.job_title }</span></div>
 		<button class="btn_format_mini logout_btn">로그아웃</button>
 	</div>
 	<div id="left_menu_scroll">
@@ -106,7 +106,7 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">근태관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content" id="attendance_day">일일근태 관리</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -236,5 +236,22 @@
 		$(this).css({
 			"color": "white"
 		});
+	});
+</script>
+<script>
+console.log($(window).height());
+console.log(window.innerHeight);
+
+	$('#left_menu_scroll').css('height', $(window).height() - $('#left_menu_scroll').offset().top);
+	$(window).resize(function() {
+		$('#left_menu_scroll').css('height', $(window).height() - $('#left_menu_scroll').offset().top);
+		console.log(window.innerHeight - $('#left_menu_scroll').offset().top);
+		console.log(window.innerHeight);
+		console.log("test1");
+	});
+</script>
+<script>
+	$('#attendance_day').click(function() {
+		location.href = '<%= request.getContextPath()%>/attendance/day';
 	});
 </script>
