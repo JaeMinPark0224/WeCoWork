@@ -29,23 +29,75 @@
 #insert_attendance_box_bottom{
 	width: 240px;
 	height: 64px;
-	line-height: 64px;
 	border-left: 2px solid rgb(224, 224, 224);
 	border-right: 2px solid rgb(224, 224, 224);
 	border-bottom: 2px solid rgb(224, 224, 224);
 	border-top: 0px;
 	text-align: center;
-	
+	display: flex;
+	align-items: center;
 }
+#insert_box_bottom_buttons{
+	margin: auto;
+}
+
 
 .first_box_text{
 	margin-bottom: 13px;
+}
+
+#search_date_range{
+	display: flex;
+	gap: 30px;
+}
+
+#att_appr_clock_in, #att_appr_clock_out{
+	border: 1px solid rgb(224, 224, 224);
+	width: 138px; height:25px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);	
+}
+#att_modify_reason_text{
+	border: 1px solid rgb(224, 224, 224);
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+}
+
+/* grid box~! */
+#attendance_modify_grid_container{
+	display: grid;
+	grid-template-columns: 1fr 1.5fr 1fr 1.5fr 1fr 1.5fr;
+	grid-template-rows: 1fr 3fr 1fr;
+	row-gap: 30px;
+	
+}
+#att_modify_reason_text{
+	
+	grid-column: 2 / 7;
+	grid-row: 2 / 3;
+
+}
+.attendance_modify_grid_first_row{
+	align-self: center;
 }
 
 /* 같은 폰트 적용 */
 .font_title{
 	font-size: 13px;
 	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+}
+.font_content{
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+}
+
+#clock{
+	font-size: 13px;
+	font-family: NotoSansR;
 	color: rgb(94, 94, 94);
 }
 
@@ -66,8 +118,10 @@
 				<div class="attendance_main_box_first_container">
 					<div id="insert_attendance_box_top" class="font_title">일일근태등록</div>
 					<div id="insert_attendance_box_bottom">
-						<button type="button" id="btn_clock_in">출근</button>
-						<button type="button" id="btn_clock_out">퇴근</button>
+						<div id="insert_box_bottom_buttons">
+						<button type="button" id="btn_clock_in" class="btn_format_mini">출근</button>
+						<button type="button" id="btn_clock_out" class="btn_format_mini">퇴근</button>
+						</div>
 					</div>
 				</div>
 				<div class="attendance_main_box_first_container">
@@ -77,7 +131,7 @@
 					<div class="font_title first_box_text">퇴근 IP : </div>
 				</div>
 				<div class="attendance_main_box_first_container">
-					<div class="font_title">현시각</div>
+					<div class="font_title first_box_text">현시각</div>
 					<div id="clock">00:00</div>
 				</div>
 			</div>
@@ -87,11 +141,16 @@
 				</div>
 				<div class="attendance_main_box_container">
 					<div class="attendance_main_box_content">
-						<div class="font_title">근무일자</div>
-						<button>조회</button>
+						<div id="search_date_range">
+							<div class="font_title">근무일자</div>
+							<input type="date" id="att_date_start" name="att_date_start">
+							<div class="font_content">~</div>
+							<input type="date" id="att_date_end" name="att_date_end">
+							<button type="submit" class="btn_format_mini_gray" >조회</button>
+						</div>
 					</div>
 					<div class="attendance_main_box_content">
-						<table>
+						<table class="attendance_main_box_content_table">
 							<tr>
 								<td>근무일자</td>
 								<td>사번</td>
@@ -111,13 +170,17 @@
 				</div>
 				<div class="attendance_main_box_container">
 					<div class="attendance_main_box_content">
-						<form action="">
-							조정 근무 일자<input type="text">
-							조정 출근 시간<input type="text">
-							조정 퇴근 시간<input type="text">
-							조정 사유<input type="text">
-							<button type="submit">요청</button>
-						</form>
+						<div id="attendance_modify_grid_container">
+							<div class="font_title attendance_modify_grid_first_row">조정 근무 일자</div>
+							<input type="date" id="att_date_start" name="att_modify_date" class="attendance_modify_grid_first_row">
+							<div class="font_title attendance_modify_grid_first_row">조정 출근 시간</div>
+							<input type="time" id="att_appr_clock_in" name="att_appr_clock_in" class="attendance_modify_grid_first_row">
+							<div class="font_title attendance_modify_grid_first_row">조정 퇴근 시간</div>
+							<input type="time" id="att_appr_clock_out" name="att_appr_clock_out" class="attendance_modify_grid_first_row">
+							<div class="font_title">조정 사유</div>
+							<input type="text" id="att_modify_reason_text">
+							<button type="submit" class="btn_format_mini">요청</button>
+						</div>
 					</div>
 					
 				</div>
@@ -148,12 +211,13 @@ var clockTarget = document.getElementById("clock");
 function clock() {
     var date = new Date();
     // date Object를 받아오고 
+    var year = date.getFullYear();
     var month = date.getMonth();
+    month = ((month+1) < 10) ? '0'+(month+1) : (month+1);
     // 달을 받아옵니다 
     var clockDate = date.getDate();
-    // 몇일인지 받아옵니다 
-    var day = date.getDay();
-    // 요일을 받아옵니다. 
+    clockDate = (clockDate < 10) ? '0'+clockDate : clockDate;
+    // 몇일인지 받아옵니다  
     var week = ['일', '월', '화', '수', '목', '금', '토'];
     // 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다. 
     var hours = date.getHours();
@@ -165,7 +229,8 @@ function clock() {
     var seconds = date.getSeconds();
     seconds = (seconds < 10) ? '0'+seconds : seconds;
     // 초까지 받아온후 
-    $("#clock").text(month+1+'월 '+ clockDate +'일 ' + week[day] + '요일 '  + hours + ':' + minutes+':'+seconds);
+    console.log(year);
+    $("#clock").text(year+'-'+month+'-'+ clockDate + ' / '  + hours + ':' + minutes+':'+seconds);
     //':${minutes < 10 ? '0${minutes }'  : minutes }:${seconds < 10 ? '0${seconds }'  : seconds }'
     //clockTarget.innerText = '${month+1}월 ${clockDate}일 ${week[day]}요일' +
     //'${hours < 10 ? '0${hours}' : hours}:${minutes < 10 ? '0${minutes }'  : minutes }:${seconds < 10 ? '0${seconds }'  : seconds }';

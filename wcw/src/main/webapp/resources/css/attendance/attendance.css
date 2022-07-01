@@ -234,7 +234,7 @@ section {
 }
 
 .attendance_main_box_container {
-	margin: 35px 35px;
+	margin: 57.5px 57.5px;
 	/* display: grid; 
 	grid-template-columns: 650px 250px;
 	grid-template-rows: repeat(5, 25px);
@@ -275,9 +275,37 @@ section {
 	color: white;
 }
 
-#attendance_main_box_title_participant {
-	
+#search_date_range:first-child {
+	height: 25px;
+	line-height: 25px;
 }
 
+#att_date_start, #att_date_end{
+	border: 1px solid rgb(224, 224, 224);
+	width: 138px; height:25px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);	
+}
 
-
+.attendance_main_box_content_table{
+	margin-top: 30px;
+	border-top: 2px solid rgb(224, 224, 224);
+	border-left: 2px solid rgb(224, 224, 224);
+	border-bottom: 2px solid rgb(224, 224, 224);
+	width: 955px;
+}
+.attendance_main_box_content_table tr{
+	height: 38px;
+}
+.attendance_main_box_content_table tr:first-child{
+	background-color: rgb(230, 230, 230);
+}
+.attendance_main_box_content_table td{
+	text-align: center;
+	line-height: 38px;
+	font-size: 12px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);	
+	border-right: 2px solid rgb(224, 224, 224);
+}
