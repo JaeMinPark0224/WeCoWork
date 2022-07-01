@@ -24,10 +24,15 @@
            margin: 0 auto;
            width: 380px;
            position: relative;
+           text-align: center;
+           margin-bottom: 60px;
        }
-       #id_text, pwd_text{
-           font-family: NotoSansB;
+       #id_text, #pwd_text{
+           font-family: NotoSansR;
            font-size: 12px;
+       }
+       #id_text{
+       		margin-bottom: 10px;
        }
        
        #go_login, #ok{

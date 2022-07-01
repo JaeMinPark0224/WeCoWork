@@ -6,21 +6,21 @@ import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.notice.domain.Notice;
 
 /**
- *   Á÷¿ø ¼­ºñ½º 
+ *   ì§ì› ì„œë¹„ìŠ¤ 
  *   */
 public interface EmployeeService {
 	/**
 	 * @param id(email), pwd
-	 * @return Á÷¿ø Á¤º¸
+	 * @return ì§ì› ì •ë³´
 	 * @author ybseo
 	 */
 	public Employee selectEmployee(String id, String password);
 	
 	/**
-	 * @param cp_name(È¸»ç¸í), id(email), name(¼º¸í)
-	 * @return Á÷¿ø ºñ¹Ğ¹øÈ£ Á¤º¸
+	 * @param cp_name(íšŒì‚¬ëª…), id(email), name(ì„±ëª…)
+	 * @return ì§ì› ë¹„ë°€ë²ˆí˜¸ ì •ë³´
 	 * @author ybseo
 	 */
-	public Employee selectEmployeePwd(String cp_name, String id, String name);
+	public String selectEmployeePwd(String cp_name, String email, String name);
 
 }

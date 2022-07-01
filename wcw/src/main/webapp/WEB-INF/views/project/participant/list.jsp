@@ -17,7 +17,6 @@
 <section id="project_section">
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
-	
 	</div>
 </section>
 </body>

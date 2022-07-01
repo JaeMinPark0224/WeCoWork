@@ -64,7 +64,7 @@ public class MainController {
 		if(result.getResign_yn() == "Y") {
 			mv.setViewName("redirect:/login");
 			return mv;
-		// 퇴사 하지 않았다면 로그인 가능
+		// 퇴사하지 않았다면 로그인 가능
 		} else {
 			session.setAttribute("loginSSInfo", result);
 			mv.setViewName("redirect:/");
@@ -85,7 +85,10 @@ public class MainController {
 			, @RequestParam(name="email") String email
 			, @RequestParam(name="name") String name) {
 		
-		Employee result = EmployeeService.selectEmployeePwd(cp_name, email, name);
+		String result = EmployeeService.selectEmployeePwd(cp_name, email, name);
+		
+		mv.addObject("emailInfo", email);
+		mv.addObject("pwdInfo", result);
 		mv.setViewName("login/findPwdSC");
 		return mv;
 	}

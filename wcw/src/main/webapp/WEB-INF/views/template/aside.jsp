@@ -129,6 +129,12 @@
 		</div>
 	</div>
 </aside>
+<script>
+	$()"#logout_btn").on("click", function(){
+		location.href=""
+	})
+</script>
+
 <script type="text/javascript">
 	$(".left_menu_1depth_title").on("mouseenter", function() {
 		$(this).css("backgroundColor", "rgba(67, 89, 113, 0.04)");

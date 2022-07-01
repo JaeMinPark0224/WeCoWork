@@ -21,8 +21,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public Employee selectEmployeePwd(String cp_name, String id, String name) {
-		return dao.selectEmployeePwd(cp_name, id, name);
+	public String selectEmployeePwd(String cp_name, String email, String name) {
+		return dao.selectEmployeePwd(cp_name, email, name);
 	}
 
 	

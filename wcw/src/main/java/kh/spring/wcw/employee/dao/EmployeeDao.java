@@ -25,11 +25,10 @@ public class EmployeeDao {
 		return sqlsession.selectOne("employeeMapper.selectEmployee", map);
 	}
 	
-	public Employee selectEmployeePwd(String cp_name, String id, String name){
-		Employee result = null;
+	public String selectEmployeePwd(String cp_name, String email, String name){
 		HashMap<String, String> map= new HashMap<>();
 		map.put("cp_name", cp_name);
-		map.put("id", id);
+		map.put("email", email);
 		map.put("name", name);
 		
 		return sqlsession.selectOne("employeeMapper.selectEmployeePwd", map);
