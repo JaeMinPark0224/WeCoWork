@@ -19,7 +19,7 @@
             <div id="mid">
                 <p id="mid_text">비밀번호 찾기</p>
                     <div id="f_section">
-                        <p id="id_text">아이디: ${emailInfo }</p>
+                        <p id="id_text">아이디: ${emailInfo}</p>
                         <p id="pwd_text">비밀번호: ${pwdInfo}</p>
                     </div>
                     <div id="f_btn">

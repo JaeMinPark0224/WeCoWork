@@ -43,7 +43,9 @@
         </div>
     </section>
 <script>
-
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
 </script>
 </body>
 </html>

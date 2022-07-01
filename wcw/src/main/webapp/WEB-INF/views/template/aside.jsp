@@ -6,7 +6,7 @@
 		<div class="profile_circle"></div>
 		<div class="company_info font_r font_gray94 font_12px">${loginSSInfo.cp_name }</div>
 		<div class="person_info"><span class="font_b font_gray94 font_13px">${loginSSInfo.name }&nbsp;</span><span class="font_r font_gray94 font_13px">${loginSSInfo.job_title }</span></div>
-		<button class="btn_format_mini logout_btn">로그아웃</button>
+		<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
 	</div>
 	<div id="left_menu_scroll">
 		<div id="left_menu">
@@ -130,8 +130,8 @@
 	</div>
 </aside>
 <script>
-	$()"#logout_btn").on("click", function(){
-		location.href=""
+	$("#logout_btn").on("click", function(){
+		location.href="<%= request.getContextPath()%>/logout";
 	})
 </script>
 
