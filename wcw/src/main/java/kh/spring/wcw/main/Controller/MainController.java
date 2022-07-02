@@ -1,6 +1,9 @@
 package kh.spring.wcw.main.Controller;
 
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.support.RequestPartServletServerHttpRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,10 +52,13 @@ public class MainController {
 	@PostMapping("/login.do")
 	public ModelAndView loginDo(
 			ModelAndView mv
-			, HttpSession session 
+			, HttpSession session
+			, HttpServletResponse response
 			, RedirectAttributes rttr
 			, @RequestParam(name="email") String email
-			, @RequestParam(name="pwd") String pwd) {
+			, @RequestParam(name="pwd") String pwd
+			, @RequestParam(value = "autoLogin", required = false) String autoLogin
+			) {
 		Company result2 = null;
 		
 		// 직원 로그인
@@ -68,17 +73,34 @@ public class MainController {
 			}
 			session.setAttribute("CompanySSinfo", result2);
 			mv.setViewName("redirect:/"); //TODO 최고 관리자용 메인 페이지로 이동 예정
+			
+			// TODO 자동로그인을 체크했다면 세션 추가
+//			if (autoLogin != null){ 
+//				Cookie cookie = new Cookie("loginCookie", session.getId());
+//				cookie.setPath("/");
+//				cookie.setMaxAge(60*60*24*7);
+//				response.addCookie(cookie);
+//			}
+			
 			return mv;
 		}
 		
-		// 퇴사 했을 경우 로그인 불가
-		if(result.getResign_yn() == "Y") {
+		// 퇴사했을 경우 로그인 불가
+		if(result.getResign_yn().equals("Y")) {
 			mv.setViewName("redirect:/login");
 			return mv;
 		// 퇴사하지 않았다면 로그인 가능
 		} else {
-			session.setAttribute("loginSSInfo", result);
-			mv.setViewName("redirect:/");
+			// 관리자 권한이 있다면
+			if(result.getHr_yn().equals("Y")) {
+				session.setAttribute("loginSSInfo", result);
+				mv.setViewName("redirect:/"); //TODO 직원(인사) 관리자용 페이지로 이동
+			}
+			// 관리자 권한이 없다면
+			if(result.getHr_yn().equals("N")) {
+				session.setAttribute("loginSSInfo", result);
+				mv.setViewName("redirect:/");
+			}
 			return mv;
 		}
 	}

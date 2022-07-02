@@ -23,6 +23,7 @@ public class Employee {
 	private String cp_name;
 	private String dept_name;
 	private String job_title;
+	private String hr_yn;
 	
 	@Override
 	public String toString() {
@@ -30,7 +31,7 @@ public class Employee {
 				+ intl_no + ", phone=" + phone + ", profile=" + profile + ", sign=" + sign + ", ip=" + ip
 				+ ", join_date=" + join_date + ", resign_date=" + resign_date + ", resign_yn=" + resign_yn
 				+ ", dept_no=" + dept_no + ", job_title_no=" + job_title_no + ", cp_name=" + cp_name + ", dept_name="
-				+ dept_name + ", job_title=" + job_title + "]";
+				+ dept_name + ", job_title=" + job_title + ", hr_yn=" + hr_yn + "]";
 	}
 
 	public int getEmp_no() {
@@ -167,6 +168,14 @@ public class Employee {
 
 	public void setJob_title(String job_title) {
 		this.job_title = job_title;
+	}
+
+	public String getHr_yn() {
+		return hr_yn;
+	}
+
+	public void setHr_yn(String hr_yn) {
+		this.hr_yn = hr_yn;
 	}
 	
 }

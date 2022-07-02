@@ -101,12 +101,8 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">결재<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">기안함</div>
+						<div class="left_menu_2depth_content">결재함</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
