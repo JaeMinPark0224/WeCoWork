@@ -1,82 +1,82 @@
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명1', 'www.회사명1.com', DEFAULT
-    , '담당자1 이름', 'admin1@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자1 이름', 'admin1@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
 
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명2', 'www.회사명2.com', DEFAULT
-    , '담당자2 이름', 'admin2@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자2 이름', 'admin2@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
 
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명3', 'www.회사명3.com', DEFAULT
-    , '담당자3 이름', 'admin3@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자3 이름', 'admin3@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
 
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명4', 'www.회사명4.com', DEFAULT
-    , '담당자4 이름', 'admin4@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자4 이름', 'admin4@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
     
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명5', 'www.회사명5.com', DEFAULT
-    , '담당자5 이름', 'admin5@email.com', '010-0000-0000', DEFAULT, '1234');    
+    , '담당자5 이름', 'admin5@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);    
 
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명6', 'www.회사명6.com', DEFAULT
-    , '담당자6 이름', 'admin6@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자6 이름', 'admin6@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
     
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명7', 'www.회사명7.com', DEFAULT
-    , '담당자7 이름', 'admin7@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자7 이름', 'admin7@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
     
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명8', 'www.회사명8.com', DEFAULT
-    , '담당자8 이름', 'admin8@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자8 이름', 'admin8@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
     
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명9', 'www.회사명9.com', DEFAULT
-    , '담당자9 이름', 'admin9@email.com', '010-0000-0000', DEFAULT, '1234');
+    , '담당자9 이름', 'admin9@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);
     
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE
     , CP_JOIN_NAME, CP_JOIN_EMAIL, CP_JOIN_PHONE
-    , CP_APPR_YN, CP_PWD)
+    , CP_APPR_YN, CP_PWD, HR_YN)
     VALUES
     ((SELECT NVL(MAX(CP_NO),0)+1 FROM TB_COMPANY), '회사명10', 'www.회사명10.com', DEFAULT
-    , '담당자10 이름', 'admin10@email.com', '010-0000-0000', DEFAULT, '1234');       
+    , '담당자10 이름', 'admin10@email.com', '010-0000-0000', DEFAULT, '1234', DEFAULT);       
 
 INSERT INTO TB_DEPARTMENT
     (DEPT_NO, CP_NO, DEPT_NAME
