@@ -39,14 +39,18 @@ public class NoticeController {
 	@GetMapping("/read")
 	public ModelAndView readNotice(
 			ModelAndView mv,
-			@RequestParam(name="nt_no", defaultValue = "0") int nt_no
+			@RequestParam(name="no", defaultValue = "0") int nt_no
 			) {
 		if(nt_no == 0) {
 			mv.setViewName("redirect:list");
 			return mv;
 		}
 		Notice result = service.readNotice(nt_no);
+		
+		int cnt = service.countNotice(nt_no);
+		
 		mv.addObject("notice", result);
+		mv.addObject("nt_cnt", cnt);
 		mv.setViewName("notice/read");
 		
 		return mv;

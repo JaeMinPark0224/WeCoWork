@@ -9,6 +9,9 @@
 <select id="readNotice" resultType="Notice">
 	select * from tb_notice where nt_no=#{nt_no}
 </select>
+<update id="countNotice" parameterType="_int">
+	update tb_notice set nt_cnt = nt_cnt+1 where nt_no=#{nt_no}
+</update>
 
 
 </mapper>
