@@ -141,10 +141,10 @@
 						<c:forEach items="${noticelist }" var="notice">
 							<tr class="noticeTableContent">
 								<td class="noticeNo">
-								<a href="<%= request.getContextPath() %>/notice/read<%-- ?nt_no=${notice.nt_no } --%>">
+								<a href="<%= request.getContextPath() %>/notice/read?no=${notice.nt_no }">
 									${notice.nt_no }</a></td>
 								<td class="noticeTitle">
-								<a href="<%= request.getContextPath() %>/notice/read?nt_no=${notice.nt_no }">
+								<a href="<%= request.getContextPath() %>/notice/read?no=${notice.nt_no }">
 									${notice.nt_title }</a></td>
 								<td class="noticeDate">${notice.nt_date }</td>
 							</tr>

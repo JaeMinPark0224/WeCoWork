@@ -25,6 +25,11 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return dao.readNotice(nt_no);
 	}
+
+	@Override
+	public int countNotice(int nt_no) {
+		return dao.countNotice(nt_no);
+	}
 	
 	
 

@@ -8,7 +8,31 @@
 	font-size: 12px;
 	color: white;
 	font-family: NotoSansR;
+	cursor: pointer;
 }
+
+.btn_format_mini:hover {
+	width: 90px;
+	height: 30px;
+	background-color: white;
+	border: 1px solid #4B4DB2;
+	box-sizing: border-box;
+	font-size: 12px;
+	color: #4B4DB2;
+	font-family: NotoSansR;
+	cursor: pointer;
+}
+
+.btn_format_mini_gray {
+	width: 90px;
+	height: 25px;
+	background-color: rgb(230, 230, 230);
+	font-size: 12px;
+	color: rgb(51, 51, 51);
+	font-family: NotoSansR;
+	cursor: pointer;
+}
+
 
 
 

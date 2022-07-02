@@ -6,7 +6,7 @@
 		<div class="profile_circle"></div>
 		<div class="company_info font_r font_gray94 font_12px">${loginSSInfo.cp_name }</div>
 		<div class="person_info"><span class="font_b font_gray94 font_13px">${loginSSInfo.name }&nbsp;</span><span class="font_r font_gray94 font_13px">${loginSSInfo.job_title }</span></div>
-		<button class="btn_format_mini logout_btn">로그아웃</button>
+		<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
 	</div>
 	<div id="left_menu_scroll">
 		<div id="left_menu">
@@ -48,7 +48,7 @@
 					<div class="left_menu_1depth_title" open_chk="f">공지사항<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content">
-							<a href="<%=request.getContextPath()%>/list" target="_blank">
+							<a href="<%= request.getContextPath() %>/notice/list" target="_blank">
 								공지 리스트
 							</a>
 						</div>
@@ -60,9 +60,15 @@
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">알림<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">
+					알림
+					<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content">
+						<a href="<%= request.getContextPath() %>/notification/list" target="_blank">
+							알림리스트
+						</a>
+						</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -130,8 +136,8 @@
 	</div>
 </aside>
 <script>
-	$()"#logout_btn").on("click", function(){
-		location.href=""
+	$("#logout_btn").on("click", function(){
+		location.href="<%= request.getContextPath()%>/logout";
 	})
 </script>
 

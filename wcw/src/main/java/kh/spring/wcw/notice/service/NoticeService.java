@@ -8,4 +8,5 @@ public interface NoticeService {
 	
 	public List<Notice> selectNotice(int currentPage,int pageSize);
 	public Notice readNotice(int nt_no);
+	public int countNotice(int nt_no);
 }

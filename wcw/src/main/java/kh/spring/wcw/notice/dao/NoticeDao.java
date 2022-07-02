@@ -24,4 +24,8 @@ public class NoticeDao {
 		return sqlsession.selectOne("Notice.readNotice",nt_no);
 	}
 	
+	public int countNotice(int nt_no) {
+		return sqlsession.update("Notice.countNotice",nt_no);
+	}
+	
 }
