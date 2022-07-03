@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="employeeMapper">
 
+<!-- 로그인 -->
 <select id="selectEmployee" parameterType="hashmap" resultType="Employee">
 	SELECT * 
 	FROM TB_EMPLOYEE 
@@ -11,6 +12,18 @@
 	where email=#{email} and pwd=#{pwd}
 </select>
 
+<!-- 자동 로그인 설정 -->
+<update id="autologin" parameterType="hashmap">
+	update TB_EMPLOYEE set sessionKey = #{sessionId}, sessionLimit = #{next} 
+	where email=#{email}
+</update>
+
+<select id="checkSessionKey" parameterType="string" resultType="Employee">        
+	select * from TB_EMPLOYEE 
+	where sessionKey = #{sessionId} and sessionLimit > now()    
+</select>
+
+<!-- 바밀번호 찾기 -->
 <select id="selectEmployeePwd" parameterType="hashmap" resultType="string">
 	select pwd 
 	from tb_employee 
@@ -19,6 +32,20 @@
 	where cp_name = #{cp_name}
     	and email = #{email}
     	and name = #{name}
+</select>
+
+<!-- 난수 insert -->
+<insert id="insertRandomNum" parameterType="string">
+	insert into tb_forjoin (email, random_num)
+	values (#{email}, (select round(dbms_random.value()*1000000)+1 as RandomNum from dual))
+</insert>
+
+<!-- 난수 select -->
+<select id="selectRandomNum" parameterType="string" resultType="string">
+	select random_num 
+	from tb_forjoin
+	where email = #{email}
+
 </select>
 
 </mapper>

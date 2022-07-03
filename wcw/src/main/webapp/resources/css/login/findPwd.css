@@ -5,7 +5,7 @@
            width: 1200px;
        }
        #mid{
-            margin-top: 170px;
+           margin-top: 165px;
            width: 1200px;
            height: 698px;
            background-color: rgb(244, 244, 244);
@@ -33,6 +33,23 @@
             border: 0;
             font-size: 12px;
             font-family: NotoSansR;
+            cursor: pointer;
+       }
+       #do_btn{
+       		float: left;
+       		width: 299px;
+            position: absolute;
+            top: 100.5px;
+            right: -130px;
+            width: 115px;
+            height: 40px;
+            background-color: rgb(230, 230, 230);
+            color: rgb(51, 51, 51);
+            border: 0;
+            font-size: 12px;
+            font-family: NotoSansR;
+            display: none;
+            cursor: pointer;
        }
        #email_btn_2{
        		float: left;
@@ -48,6 +65,7 @@
             font-size: 12px;
             font-family: NotoSansR;
             display: none;
+            cursor: pointer;
        }
        #f_section{
            display: block;
@@ -55,7 +73,7 @@
            width: 380px;
            position: relative;
        }
-       #cp, #email, #name{
+       #cp, #email, #name, #num{
            width: 380px;
            height: 40px;
            margin-bottom: 10px;
@@ -64,11 +82,15 @@
            box-sizing: border-box;
            font-size: 12px;
            font-family: NotoSansR;
+           cursor: pointer;
        }
-       #email::placeholder, #name::placeholder, #cp::placeholder{
+       #email::placeholder, #name::placeholder, #cp::placeholder, #num::placeholder{
            font-family: NotoSansR;
            font-size: 12px;
            padding-left: 5px;
+       }
+       #num{
+       	   display: none;
        }
        #cancel, #find_pwd{
            width: 180px;
@@ -82,19 +104,19 @@
        #cancel{
             background-color: white;
             color: #4B4DB2;
-            border: 1px solid #4B4DB2;;
+            border: 1px solid #4B4DB2;
+            cursor: pointer;
        }
        #find_pwd{
             background-color: #4B4DB2;
             color: white;
+            cursor: pointer;
+            margin-left: 12.5px;
        }
        #f_btn{
             display: block;
             margin: 0 auto;
             width: 380px;
-       }
-       #find_pwd{
-        margin-left: 12.5px;
        }
        #last{
            width: 380px;

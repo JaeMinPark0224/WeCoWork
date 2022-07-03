@@ -129,9 +129,10 @@ $(function(){
 </section>
 <script>
 <c:if test="${not empty msg}">
-alert("${msg}");
+	alert("${msg}");
 </c:if>
 
+	// 비밀번호 찾기 버튼 클릭 시 
 	$("#findPwd").click(function(){
 		location.href="/wcw/find/pwd";
 	})
