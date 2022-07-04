@@ -214,7 +214,7 @@ section {
 
 .attendance_main_box {
 	width: 1070px;
-	height: 255px;
+
 	background-color: rgb(244, 244, 244);
 }
 
@@ -298,14 +298,21 @@ section {
 .attendance_main_box_content_table tr{
 	height: 38px;
 }
-.attendance_main_box_content_table tr:first-child{
-	background-color: rgb(230, 230, 230);
-}
 .attendance_main_box_content_table td{
 	text-align: center;
 	line-height: 38px;
 	font-size: 12px;
-	font-family: NotoSansB;
+	font-family: NotoSansR;
 	color: rgb(94, 94, 94);	
 	border-right: 2px solid rgb(224, 224, 224);
+}
+.attendance_main_box_content_table tr:first-child td{
+	background-color: rgb(230, 230, 230);
+	font-size: 12px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);	
+}
+
+.table_content_white{
+	background-color: white;
 }

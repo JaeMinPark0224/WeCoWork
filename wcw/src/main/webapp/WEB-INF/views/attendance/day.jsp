@@ -83,6 +83,13 @@
 	align-self: center;
 }
 
+#attendance_modify_submit_btn{
+	grid-column: 6 / 7;
+	grid-row: 3 / 4;
+	justify-self: end;
+	
+}
+
 /* 같은 폰트 적용 */
 .font_title{
 	font-size: 13px;
@@ -146,19 +153,19 @@
 							<input type="date" id="att_date_start" name="att_date_start">
 							<div class="font_content">~</div>
 							<input type="date" id="att_date_end" name="att_date_end">
-							<button type="submit" class="btn_format_mini_gray" >조회</button>
+							<button type="submit" class="btn_format_mini_gray" id="att_date_search_btn">조회</button>
 						</div>
 					</div>
 					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table">
+						<table class="attendance_main_box_content_table" id="att_date_search_table">
 							<tr>
-								<td>근무일자</td>
-								<td>사번</td>
-								<td>성명</td>
-								<td>출근시간</td>
-								<td>퇴근시간</td>
-								<td>출근IP</td>
-								<td>퇴근IP</td>
+								<td style="width: 14%">근무일자</td>
+								<td style="width: 10%">사번</td>
+								<td style="width: 10%">성명</td>
+								<td style="width: 19%">출근시간</td>
+								<td style="width: 19%">퇴근시간</td>
+								<td style="width: 14%">출근IP</td>
+								<td style="width: 14%">퇴근IP</td>
 							</tr>
 						</table>
 					</div>
@@ -179,10 +186,42 @@
 							<input type="time" id="att_appr_clock_out" name="att_appr_clock_out" class="attendance_modify_grid_first_row">
 							<div class="font_title">조정 사유</div>
 							<input type="text" id="att_modify_reason_text">
-							<button type="submit" class="btn_format_mini">요청</button>
+							<button type="submit" class="btn_format_mini" id="attendance_modify_submit_btn">요청</button>
 						</div>
 					</div>
 					
+				</div>
+			</div>
+			<div class="attendance_main_box">
+				<div class="attendance_main_box_top">
+					<div class="attendance_main_box_title">근태조정 신청내역</div>
+				</div>
+				<div class="attendance_main_box_container">
+					<div class="attendance_main_box_content">
+						<div id="search_date_range">
+							<div class="font_title">근무일자</div>
+							<input type="date" id="att_date_start" name="att_date_start">
+							<div class="font_content">~</div>
+							<input type="date" id="att_date_end" name="att_date_end">
+							<button type="button" class="btn_format_mini_gray">조회</button>
+						</div>
+					</div>
+					<div class="attendance_main_box_content">
+						<table class="attendance_main_box_content_table">
+							<tr>
+								<td>근무일</td>
+								<td>사번</td>
+								<td>성명</td>
+								<td>출근시간</td>
+								<td>퇴근시간</td>
+								<td>수정요청 출근시간</td>
+								<td>수정요청 퇴근시간</td>
+								<td>결재 상태</td>
+								<td>승인 여부</td>
+							</tr>
+							
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -203,6 +242,55 @@
 			}
 		});
 	});
+	
+	$("#btn_clock_out").click(function(){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/attendance/update",
+			type: "post",
+			success: function(result){
+				alert(result)
+			},
+			error: function(error){
+				alert(result) 
+			}
+		});
+	});
+	
+	$("#att_date_search_btn").click(function(){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/attendance/read",
+			type: "post",
+			data: {att_date_start:$('#att_date_start').val()
+				, att_date_end:$('#att_date_end').val()} ,
+			dataType:"json",
+			success: function(result){
+				console.log("test1111");
+				console.log(result);
+				console.log("test1111");
+				var html = "";
+				for(var i = 0; i < result.length; i++){
+					var vo = result[i];
+					html += '<tr class="table_content_white">';
+                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
+                    html += '<td >'+vo.emp_no+'</td>';
+                    html += '<td >'+'${loginSSInfo.name}'+'</td>';
+                    html += '<td >'+vo.att_clock_in+'</td>';
+                    html += '<td >'+vo.att_clock_out+'</td>';
+                    html += '<td >'+vo.ip_clock_in+'</td>';
+                    html += '<td >'+vo.ip_clock_out+'</td>';
+                    html += '</tr>';
+                    $('#att_date_search_table').append(html);
+				}
+			},
+			error: function(error){
+				alert(result) 
+			}
+		});
+	});
+	
+	function dateFormatExclude(date) {
+		
+	}
 	
 
 /* 시계~! */

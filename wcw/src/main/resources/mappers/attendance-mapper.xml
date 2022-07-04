@@ -11,19 +11,35 @@
 //	IP_CLOCK_OUT             VARCHAR2(20) 
 //	ATT_MODIFY_DATE          DATE         
 //	ATT_DELETE_YN            VARCHAR2(1)   -->
-<insert id="insertAttendance">
+<insert id="insertAttendance" parameterType="Attendance">
 	insert into tb_attendance(
 	ATT_NO, EMP_NO, ATT_DATE, 
 	ATT_CLOCK_IN, ATT_CLOCK_OUT, 
 	IP_CLOCK_IN, IP_CLOCK_OUT,
 	ATT_MODIFY_DATE, ATT_DELETE_YN
 	) values(
-	(select to_char(sysdate, 'yyyymmdd')||'01'||'100' from dual)
-	, 100, sysdate
+	(select to_char(sysdate, 'yyyymmdd')||'01'||#{emp_no} from dual)
+	, #{emp_no}, sysdate
 	, sysdate, null
-	, '127.0.0.1', null
+	, #{ip_clock_in}, null
 	, null, 'N'
 	)
 </insert>
+<update id="updateAttendance" parameterType="Attendance">
+	update tb_attendance set
+	ATT_CLOCK_OUT = sysdate,
+	IP_CLOCK_OUT = #{ip_clock_out}
+	where att_no in 
+	(select att_no from tb_attendance 
+		where emp_no = #{emp_no}  ) 
+	and ATT_CLOCK_IN = (select max(ATT_CLOCK_IN) from (select * from tb_attendance 
+		where emp_no = #{emp_no})  )
+</update>
+
+<select id="readAttendance" parameterType="Attendance" resultType="Attendance">
+	select * from tb_attendance
+	where emp_no = #{emp_no}
+	and ATT_CLOCK_IN between #{att_date_start} and #{att_date_end}
+</select>
 
 </mapper>

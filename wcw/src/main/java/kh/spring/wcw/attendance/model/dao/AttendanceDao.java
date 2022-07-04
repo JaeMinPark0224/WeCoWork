@@ -1,5 +1,7 @@
 package kh.spring.wcw.attendance.model.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,7 +13,15 @@ public class AttendanceDao {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	public int insertAttendance(Attendance Attendance) {
-		return sqlsession.insert("Attendance.insertAttendance", Attendance);
+	public int insertAttendance(Attendance attendance) {
+		return sqlsession.insert("Attendance.insertAttendance", attendance);
+	}
+	
+	public int updateAttendance(Attendance attendance) {
+		return sqlsession.update("Attendance.updateAttendance", attendance);
+	}
+	
+	public List<Attendance> readAttendance(Attendance attendance){
+		return sqlsession.selectList("Attendance.readAttendance", attendance);
 	}
 }
