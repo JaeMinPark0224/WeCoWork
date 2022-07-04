@@ -18,5 +18,9 @@ public class NotificationDao {
 		return sqlsession.selectList("Notification.selectNotification");
 	}
 	
+	public int deleteNotification(List<String> deletecheckArr) {
+		return sqlsession.delete("Notification.deleteNotification",deletecheckArr);
+	}
+	
 
 }

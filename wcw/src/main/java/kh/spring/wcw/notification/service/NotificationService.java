@@ -8,4 +8,6 @@ public interface NotificationService {
 	
 	public List<Notification> selectNotification();
 
+	public int deleteNotification(List<String> deletecheckArr);
+
 }

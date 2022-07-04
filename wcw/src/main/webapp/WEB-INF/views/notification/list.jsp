@@ -127,6 +127,9 @@ label{
 	margin-left: 35px;
 	margin-right: 25px;
 }
+.allNotificationText{
+	color: black;
+}
 </style>
 </head>
 <body>
@@ -139,7 +142,7 @@ label{
 					<div class="verLine"></div>
 					<div class="DeleteText">
 						<label for="deleteBtn">삭제</label> 
-						<input type="button" id="deleteBtn">
+						<input type="button" id="deleteBtn" name="deleteNo">
 					</div>
 					<div class="verLine"></div>
 					<div class="AllReadText">
@@ -179,7 +182,7 @@ label{
 						<c:forEach items="${notificationlist }" var="notification">
 							<tr class="notificationTableContent">
 								<td>
-									<input type="checkbox" name="chk">
+									<input type="checkbox" name="chk" value='${notification.noti_no }'>
 								</td>
 								<td class="notificationSort">
 									${notification.noti_sort }
@@ -219,10 +222,56 @@ label{
 			else $(".AllCheck").prop("checked", true);
 		});
 	    
+<%-- 		$("#deleteBtn").click(function() {
+			$.ajax({
+				url:"<%=request.getContextPath()%>/notification/delete",
+				type:"post",
+				data: {}
+				
+			});
+		}); --%>
+		
+ 		// 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
+		$("#deleteBtn").click(function(){
+			/*
+		  var deletecheckArr = []; 
+		  $("input:checkbox[name=chk]:checked").each(function() {
+			  deletecheckArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+			  console.log(deletecheckArr);
+			});
+		  console.log(deletecheckArr);
+		  */
+		  var checkVal = $("input[name=chk]").serialize();
+		  console.log(checkVal);
+		  $.ajax({
+		      url: "<%=request.getContextPath()%>/notification/delete",
+		      type: "post",
+		      //data: {deletecheckArr : deletecheckArr},    // folder seq 값을 가지고 있음.
+		      data: checkVal,
+		      success: function(result){
+		      	console.log(result);
+		      },
+		      error: function(error) {
+		      	alert(error);
+		      }  
+		   });
+		  
+		  
+		  
+		});
+		
+		
 	</script>
 
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 

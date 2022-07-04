@@ -18,6 +18,11 @@ public class NotificationServiceImpl implements NotificationService {
 	public List<Notification> selectNotification(){
 		return dao.selectNotification();
 	}
+
+	@Override
+	public int deleteNotification(List<String> deletecheckArr) {
+		return dao.deleteNotification(deletecheckArr);
+	}
 	
 	
 }
