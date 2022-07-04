@@ -1,0 +1,126 @@
+@charset "UTF-8";
+#section{
+	margin: 0 auto;
+	width: 1200px;
+}
+
+#txt{
+            margin-top: 170px;
+            text-align: center;
+            color: rgb(94,94,94);
+        }
+        #main_txt{
+            font-family: NotoSansB;
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+        .mid_txt{
+            font-family: NotoSansR;
+            font-size: 13px;
+        }
+        #f_txt{
+        	margin-bottom: 7px;
+        	display: inline-block;
+        }
+        #m_txt{
+            display: block;
+        }
+        .btn_name{
+            text-align: left;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        #btn{
+            margin: 0 auto;
+            margin-top: 110px;
+            width: 380px;
+            font-size: 13px;
+            font-family: NotoSansB;
+            color: rgb(94,94,94);
+        }
+        .text{
+            width: 380px;
+            height: 35px;
+            margin-bottom: 40px;
+            border: 1px solid rgb(158, 158, 158);
+            border-radius: 3px;
+        }
+        .text1{
+            width: 380px;
+            height: 38px;
+            /* margin-bottom: 10px; */
+            border: 1px solid rgb(158, 158, 158);
+            border-radius: 3px;
+        }
+        .text2{
+            width: 380px;
+            height: 38px;
+            border: 1px solid rgb(158, 158, 158);
+            border-radius: 3px;
+            display: none;
+        }
+        .text::placeholder, .text1::placeholder, .text2::placeholder{
+            font-family: NotoSansR;
+            font-size: 12px;
+            padding-left: 4px;
+        }
+        .e_b{
+            right: -140px;
+        }
+        #email_btn_1{
+            float: left;
+            position: absolute;
+            width: 115px;
+            height: 40px;
+            background-color: rgb(230, 230, 230);
+            color: rgb(51, 51, 51);
+            border: 0;
+            font-size: 12px;
+            font-family: NotoSansR;
+            cursor: pointer;
+        }
+        #email_btn_2{
+            float: left;
+            position: absolute;
+            width: 115px;
+            height: 40px;
+            background-color: rgb(75, 77, 178);
+            color:white;
+            border: 0;
+            font-size: 12px;
+            font-family: NotoSansR;
+            cursor: pointer;
+            display: none;
+        }
+        #do_btn{
+            float: left;
+            position: absolute;
+            width: 115px;
+            height: 40px;
+            background-color: rgb(230, 230, 230);
+            color: rgb(51, 51, 51);
+            border: 0;
+            font-size: 12px;
+            font-family: NotoSansR;
+            display: none;
+            cursor: pointer;
+        }
+        .email_area{
+            position: relative;
+        }
+        #pwd_txt{
+            margin-top: 40px;
+        }
+        #submit{
+            width: 115px;
+            height: 40px;
+            background-color: rgb(75, 77, 178);
+            color:white;
+            font-size: 12px;
+            font-family: NotoSansR;
+            border: 0px;
+            margin: 0 auto;
+            display: block;
+            margin-top: 70px;
+            margin-bottom: 220px;
+        }

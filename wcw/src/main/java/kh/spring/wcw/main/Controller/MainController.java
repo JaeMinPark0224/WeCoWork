@@ -175,7 +175,7 @@ public class MainController {
 
 		String randomNum = EmployeeService.selectRandomNum(email);
 		
-		// 해당 이메일이 테이블에 없다면
+		// 해당 이메일이 테이블에 없다면 새로운 난수 insert
 		if(randomNum == null) {
 			int result = EmployeeService.insertRandomNum(email);
 			if(result > 0) {
@@ -185,7 +185,7 @@ public class MainController {
 				Mail.sendMailForPwd(email, randomNum);
 			}
 		}
-		// 해당 이메일이 테이블에 있다면
+		// 해당 이메일이 테이블에 있다면 기존 난수 update
 		else {
 			int result2 = EmployeeService.updateRandomNum(email);
 			if(result2 > 0) {
@@ -235,5 +235,14 @@ public class MainController {
 		return mv;
 	}
 
-	
+	// 비즈니스 회원가입 페이지로 이동
+	@GetMapping("/join")
+	public ModelAndView join(ModelAndView mv) {
+		mv.setViewName("join/join");
+		return mv;
+	}
+		
+		
+		
+		
 }
