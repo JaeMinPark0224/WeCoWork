@@ -40,12 +40,18 @@
 	values (#{email}, (select round(dbms_random.value()*1000000)+1 as RandomNum from dual))
 </insert>
 
+<!-- 난수 update -->
+<update id="updateRandomNum" parameterType="string">
+	update tb_forjoin
+	set random_num = (select round(dbms_random.value()*1000000)+1 as RandomNum from dual)
+	where email = #{email}
+</update>
+
 <!-- 난수 select -->
 <select id="selectRandomNum" parameterType="string" resultType="string">
 	select random_num 
 	from tb_forjoin
 	where email = #{email}
-
 </select>
 
 </mapper>

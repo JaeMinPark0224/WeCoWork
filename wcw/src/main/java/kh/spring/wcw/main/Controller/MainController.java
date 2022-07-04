@@ -172,16 +172,47 @@ public class MainController {
 	@ResponseBody
 	public String insertRandomNum(
 			@RequestParam(name="employeeEmail") String email) throws Throwable{
+
+		String randomNum = EmployeeService.selectRandomNum(email);
 		
-		int result = EmployeeService.insertRandomNum(email);
-		if(result > 0) {
-			// 난수 번호 찾기
-			String randomNum = EmployeeService.selectRandomNum(email);
-			// 난수 번호를 메일로 보내기
-			Mail.sendMailForPwd(email, randomNum);
+		// 해당 이메일이 테이블에 없다면
+		if(randomNum == null) {
+			int result = EmployeeService.insertRandomNum(email);
+			if(result > 0) {
+				// 난수 번호 찾기
+				randomNum = EmployeeService.selectRandomNum(email);
+				// 난수 번호를 메일로 보내기
+				Mail.sendMailForPwd(email, randomNum);
+			}
 		}
-		return "난수 저장 및 전송 완료";
+		// 해당 이메일이 테이블에 있다면
+		else {
+			int result2 = EmployeeService.updateRandomNum(email);
+			if(result2 > 0) {
+				// 난수 번호 찾기
+				randomNum = EmployeeService.selectRandomNum(email);
+				// 난수 번호를 메일로 보내기
+				Mail.sendMailForPwd(email, randomNum);
+			}
+		}
+		return randomNum;
 	}
+	
+	// 비밀번호 찾기용 난수 삭제
+		@PostMapping(value = "/deleteRandomNum", produces = "text/plain;charset=UTF-8")
+		@ResponseBody
+		public String deleteRandomNum(
+				@RequestParam(name="employeeEmail") String email) throws Throwable{
+			
+			int result = EmployeeService.insertRandomNum(email);
+			if(result > 0) {
+				// 난수 번호 찾기
+				String randomNum = EmployeeService.selectRandomNum(email);
+				// 난수 번호를 메일로 보내기
+				Mail.sendMailForPwd(email, randomNum);
+			}
+			return "난수 저장 및 전송 완료";
+		}
 	
 	// 비밀번호 찾기 기능
 	@PostMapping("find/pwd.do")

@@ -60,6 +60,11 @@ public class EmployeeDao {
 		return sqlsession.insert("employeeMapper.insertRandomNum", email);
 	}
 	
+	// 난수 번호 update
+	public int updateRandomNum(String email) {
+		return sqlsession.update("employeeMapper.updateRandomNum", email);
+	}
+	
 	// 난수 번호 select
 	public String selectRandomNum(String email) {
 		return sqlsession.selectOne("employeeMapper.selectRandomNum", email);

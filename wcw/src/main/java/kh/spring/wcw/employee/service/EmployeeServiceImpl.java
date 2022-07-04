@@ -45,11 +45,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.insertRandomNum(email);
 	}
 	
+	public int updateRandomNum(String email) {
+		return dao.updateRandomNum(email);
+	}
+	
 	// 난수 select
-		@Override
-		public String selectRandomNum(String email) {
-			return dao.selectRandomNum(email);
-		}
+	@Override
+	public String selectRandomNum(String email) {
+		return dao.selectRandomNum(email);
+	}
 
 	
 }

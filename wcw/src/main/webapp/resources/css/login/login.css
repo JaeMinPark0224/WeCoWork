@@ -93,14 +93,18 @@
         #login{
             width: 380px;
             height: 40px;
-            background-color: rgb(230, 230, 230);
-            color: rgb(94, 94, 94);
-            border: 0px;
+            background-color: white;
+            color: rgb(75, 77, 178);
+            border: 1px solid rgb(75, 77, 178);
             font-size: 12px;
             font-family: NotoSansB;
             margin: 0 auto;
             margin-bottom: 100px;
             display: block;
+        }
+        #login:hover{
+        	background-color: rgb(75, 77, 178);
+            color: white;
         }
 
         #last{

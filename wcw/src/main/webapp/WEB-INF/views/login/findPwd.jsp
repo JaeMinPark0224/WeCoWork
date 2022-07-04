@@ -51,10 +51,11 @@
 </script>
 <script>
 	// cancel를 누르면 로그인 페이지로
-	$("#findPwd").click(function(){
+	$("#cancel").click(function(){
 		location.href="/wcw/login";
 	})
 	
+	var randomNum = "";
 	$("#email_btn_1").click(function(){
 		employeeEmail = $("#email").val();
 		
@@ -79,11 +80,9 @@
 			            $("#num").hide();
 				        $("#do_btn").hide();
 				        $("#email_btn_1").show();
-				        // TODO 난수 번호 지우기
+				        $("#email").off("click");
 			        }));
-			        
-			        // 난수 insert 및 이메일 발송 성공 후, 입력한 인증번호가 맞는지 체크
-			        // TODO
+			        randomNum = Number(result);
 	        },
 	       	error: function(result){
 	       		console.log(error);
@@ -91,6 +90,37 @@
 	       	}
 		})
 	})
+	
+	// 인증하기 버튼 클릭 시 인증번호 일치 여부 확인
+	$("#do_btn").on("click", (function(){
+		num = $("#num").val();
+		if(num == ""){
+			alert("인증번호 입력 후 인증해 주세요.");
+			return;
+		}
+		
+		if(num == randomNum){
+			$("#num").hide();
+	        $("#do_btn").hide();
+	        $("#email_btn_2").show();
+	        $("#email").attr("readonly", "readonly");
+		} else if(num != randomNum){
+			alert("인증번호가 일치하지 않습니다. 확인 후 다시 입력해 주세요.");
+		}
+	}))
+	
+	// 최종 확인 버튼 클릭 시
+	$("#find_pwd").on("click", (function(){
+		if($("#do_btn").is(":visible")){
+            alert("아메일 인증을 완료해주세요.");
+            return;
+        }
+		if($("#email_btn_1").is(":visible")){
+            alert("아메일 인증을 완료해주세요.");
+            return;
+        }
+	}));
+	
 </script>
 </body>
 </html>
