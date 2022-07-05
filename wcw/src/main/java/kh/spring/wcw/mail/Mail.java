@@ -35,9 +35,9 @@ public class Mail {
 	            InternetAddress to = new InternetAddress(mail);
 	            msg.setRecipient(Message.RecipientType.TO, to);
 	            // 이메일 제목
-	            msg.setSubject("[WCW] 비밀번호 찾기용 이메일 전송", "UTF-8");
+	            msg.setSubject("[WCW] 인증번호 안내드립니다.", "UTF-8");
 	            // 이메일 내용
-	            msg.setText("안녕하세요, WCW입니다. 비밀번호 찾기를 위해 인증 번호를 입력해주세요. \n 인증번호: " + randomNum, "UTF-8"); //TODO 난수 번호 전송 메세지 입력
+	            msg.setText("안녕하세요, WCW입니다. \n 인증번호: " + randomNum, "UTF-8");
 	            // 이메일 헤더
 	            msg.setHeader("content-Type", "text/html");
 	            //메일보내기

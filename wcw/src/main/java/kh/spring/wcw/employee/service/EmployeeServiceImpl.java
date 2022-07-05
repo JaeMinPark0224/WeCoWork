@@ -49,6 +49,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.updateRandomNum(email);
 	}
 	
+	// 난수 delete
+	@Override
+	public int deleteRandomNum(String email) {
+		return dao.deleteRandomNum(email);
+	}
+	
 	// 난수 select
 	@Override
 	public String selectRandomNum(String email) {

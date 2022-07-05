@@ -48,6 +48,13 @@ public interface EmployeeService {
 	
 	/**
 	 * @param id(email)
+	 * @return 난수 DELETE 후 결과값 - 성공 여부(int)
+	 * @author ybseo
+	 */
+	public int deleteRandomNum(String email);
+	
+	/**
+	 * @param id(email)
 	 * @return 이메일에 맞는 난수 값
 	 * @author ybseo
 	 */

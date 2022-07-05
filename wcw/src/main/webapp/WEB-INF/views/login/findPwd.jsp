@@ -104,6 +104,28 @@
 	        $("#do_btn").hide();
 	        $("#email_btn_2").show();
 	        $("#email").attr("readonly", "readonly");
+	        
+	        // 난수 번호 삭제
+	        $.ajax({
+				url: "<%=request.getContextPath()%>/deleteRandomNum",
+		        type: "post",
+		        data: {employeeEmail: $("#email").val()},
+		        success: function(result){
+		        	if(result >0){
+		        		console.log("난수 delete 성공");	
+		        	}
+		        	else{
+		        		alert("인증에 실패했습니다. 다시 시도해 주세요.");
+		        		$("#num").hide();
+				        $("#do_btn").hide();
+				        $("#email_btn_1").show();
+		        	}
+		        },
+		       	error: function(result){
+		       		console.log(error);
+		       		console.log("Delete Ajax error");
+		       	}
+			})
 		} else if(num != randomNum){
 			alert("인증번호가 일치하지 않습니다. 확인 후 다시 입력해 주세요.");
 		}

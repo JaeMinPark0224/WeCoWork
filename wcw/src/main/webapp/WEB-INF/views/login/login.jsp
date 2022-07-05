@@ -91,8 +91,7 @@ $(function(){
 	    }
 	    return val;
  }
- 
- </script>
+</script>
 </script>
 
 <body>

@@ -36,7 +36,7 @@ public class MainController {
 	
 	// 메인 페이지로 이동
 	@GetMapping("/")
-	public ModelAndView mainController(ModelAndView mv
+	public ModelAndView readMain(ModelAndView mv
 			, HttpSession session) {
 		if(session.getAttribute("loginSSInfo") == null) {
 			mv.setViewName("redirect:/login"); //TODO 첫화면 만들예정
@@ -199,20 +199,15 @@ public class MainController {
 	}
 	
 	// 비밀번호 찾기용 난수 삭제
-		@PostMapping(value = "/deleteRandomNum", produces = "text/plain;charset=UTF-8")
-		@ResponseBody
-		public String deleteRandomNum(
-				@RequestParam(name="employeeEmail") String email) throws Throwable{
+	@PostMapping(value = "/deleteRandomNum", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public int deleteRandomNum(
+	@RequestParam(name="employeeEmail") String email) throws Throwable{
 			
-			int result = EmployeeService.insertRandomNum(email);
-			if(result > 0) {
-				// 난수 번호 찾기
-				String randomNum = EmployeeService.selectRandomNum(email);
-				// 난수 번호를 메일로 보내기
-				Mail.sendMailForPwd(email, randomNum);
-			}
-			return "난수 저장 및 전송 완료";
-		}
+		int result = -1;
+
+		return result = EmployeeService.deleteRandomNum(email);
+	}
 	
 	// 비밀번호 찾기 기능
 	@PostMapping("find/pwd.do")
@@ -237,12 +232,9 @@ public class MainController {
 
 	// 비즈니스 회원가입 페이지로 이동
 	@GetMapping("/join")
-	public ModelAndView join(ModelAndView mv) {
+	public ModelAndView insertBusiness(ModelAndView mv) {
 		mv.setViewName("join/join");
 		return mv;
 	}
-		
-		
-		
 		
 }

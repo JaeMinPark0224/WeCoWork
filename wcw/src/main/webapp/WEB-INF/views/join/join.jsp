@@ -21,10 +21,10 @@
         <span class="mid_txt" id="m_txt">비즈니스 계정 생성을 위해 정보를 입력해 주세요.</span><br>
         <span class="mid_txt">회원가입 완료 후, 빠른 시일 내 최종 승인을 위해 연락처로 연락드리겠습니다.</span>
     </div>
-    <form action="" method="" id="btn">
+    <form action="join.do" method="post" id="btn">
         <span class="btn_name">회사명 *</span><br>
         <input type="text" placeholder=" 회사명을 입력해 주세요." required class="text"><br>
-        <span class="btn_name">이메일(아이디) *</span><br> 
+        <span class="btn_name" id="email">이메일(아이디) *</span><br> 
         <div class="email_area">
             <input type="text" placeholder=" 연락 가능한 이메일을 입력해 주세요." required  class="text1">
             <input type="button" value="메일전송" id="email_btn_1" class="e_b">
@@ -47,5 +47,57 @@
         <input type="submit" id="submit" value="회원가입 요청">
     </div>
 </section>
+<script>
+	// 메일전송 버튼 클릭 시 
+	$("#email_btn_1").click(function(){
+		employeeEmail = $("#email").val();
+		
+		// 이메일을 입력하지 않았을 경우
+		if(employeeEmail == ""){
+			alert("이메일(아이디) 입력 후 인증해 주세요.");
+			return;
+		}
+		
+		// 이메일 전송을 위한 난수 insert 및 이메일 발송
+		$.ajax({
+			url: "<%=request.getContextPath()%>/insertRandomNum",
+	        type: "post",
+	        data: {employeeEmail: $("#email").val()},
+	        success: function(result){
+	        	console.log("난수 insert 및 이메일 발송 성공");	
+	        	$("#num").show();
+	        	$("#do_btn").show();
+	        	$("#email_btn_1").hide();
+	        		
+	        		// email 입력칸 수정 시
+	        		$("#email").on("input", (function(){
+			            $("#num").hide();
+				        $("#do_btn").hide();
+				        $("#email_btn_1").show();
+				        $("#email").off("click");
+			        }));
+			        randomNum = Number(result);
+	        },
+	       	error: function(result){
+	       		console.log(error);
+	       		console.log("Ajax error");
+	       	}
+		})
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
 </body>
 </html>

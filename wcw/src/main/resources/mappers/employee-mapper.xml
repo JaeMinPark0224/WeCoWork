@@ -47,6 +47,12 @@
 	where email = #{email}
 </update>
 
+<!-- 난수 delete -->
+<update id="deleteRandomNum" parameterType="string">
+	delete from tb_forjoin
+	where email = #{email}
+</update>
+
 <!-- 난수 select -->
 <select id="selectRandomNum" parameterType="string" resultType="string">
 	select random_num 
