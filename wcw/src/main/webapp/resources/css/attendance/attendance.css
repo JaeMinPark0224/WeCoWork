@@ -131,7 +131,7 @@ section {
 /* 메인페이지 */
 
 #attendance_main_wrap {
-	margin: 105px 125px 0px 125px;
+	margin: 105px 125px 220px 125px;
 }
 
 #attendance_main_menu_title {
@@ -280,7 +280,7 @@ section {
 	line-height: 25px;
 }
 
-#att_date_start, #att_date_end{
+.att_date_form{
 	border: 1px solid rgb(224, 224, 224);
 	width: 138px; height:25px;
 	font-size: 12px;

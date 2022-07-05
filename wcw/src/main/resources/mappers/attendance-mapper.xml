@@ -16,13 +16,13 @@
 	ATT_NO, EMP_NO, ATT_DATE, 
 	ATT_CLOCK_IN, ATT_CLOCK_OUT, 
 	IP_CLOCK_IN, IP_CLOCK_OUT,
-	ATT_MODIFY_DATE, ATT_DELETE_YN
+	ATT_status
 	) values(
 	(select to_char(sysdate, 'yyyymmdd')||'01'||#{emp_no} from dual)
 	, #{emp_no}, sysdate
 	, sysdate, null
 	, #{ip_clock_in}, null
-	, null, 'N'
+	, 'N'
 	)
 </insert>
 <update id="updateAttendance" parameterType="Attendance">
@@ -39,7 +39,45 @@
 <select id="readAttendance" parameterType="Attendance" resultType="Attendance">
 	select * from tb_attendance
 	where emp_no = #{emp_no}
-	and ATT_CLOCK_IN between #{att_date_start} and #{att_date_end}
+	and ATT_date between #{att_date_start} and #{att_date_end}
+</select>
+
+<!-- 
+	ATT_APPR_NO        NOT NULL VARCHAR2(255) 
+	ATT_NO             NOT NULL NUMBER        
+	EMP_NO                      NUMBER        
+	ATT_APPR_CONTENT   NOT NULL VARCHAR2(300) 
+	ATT_APPR_result      NOT NULL VARCHAR2(1)   
+	ATT_APPR_CLOCK_IN  NOT NULL DATE          
+	ATT_APPR_CLOCK_OUT NOT NULL DATE 
+	Date att_appr_date;
+	Date att_attr_req_date;
+ -->
+<insert id="insertApprovalAttendance" parameterType="Attendance">
+	insert into tb_attendance_approval(
+	ATT_APPR_NO
+	, ATT_NO
+	, EMP_NO
+	, ATT_APPR_CONTENT, ATT_APPR_result
+	, ATT_APPR_CLOCK_IN, ATT_APPR_CLOCK_OUT
+	, att_appr_date, att_appr_req_date
+	) values (
+	(select nvl(max(ATT_APPR_NO),0)+1 from tb_attendance_approval)
+	, (select att_no from tb_attendance where to_char(ATT_DATE, 'YYYY-MM-DD') = #{att_appr_req_date}
+		and emp_no = #{emp_no})
+	, null
+	, #{att_appr_content}, '3'
+	, #{att_appr_clock_in}, #{att_appr_clock_out}
+	, null, sysdate
+	)
+</insert>
+
+<select id="readApprovalAttendance" parameterType="Attendance" resultType="Attendance">
+	select att_appr_req_date, att.emp_no, att.att_clock_in, att.att_clock_out, appr.att_appr_clock_in, appr.att_appr_clock_out, att_appr_result
+	from tb_attendance_approval appr
+	join tb_attendance att on att.att_no = appr.att_no
+	where att.emp_no = #{emp_no}
+	and ATT_appr_req_date between #{att_date_start} and #{att_date_end}
 </select>
 
 </mapper>

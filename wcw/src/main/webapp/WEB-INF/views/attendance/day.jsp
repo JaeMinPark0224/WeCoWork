@@ -90,6 +90,7 @@
 	
 }
 
+
 /* 같은 폰트 적용 */
 .font_title{
 	font-size: 13px;
@@ -150,15 +151,15 @@
 					<div class="attendance_main_box_content">
 						<div id="search_date_range">
 							<div class="font_title">근무일자</div>
-							<input type="date" id="att_date_start" name="att_date_start">
+							<input type="date" class="att_date_form" id="att_date_start" name="att_date_start">
 							<div class="font_content">~</div>
-							<input type="date" id="att_date_end" name="att_date_end">
+							<input type="date" class="att_date_form" id="att_date_end" name="att_date_end">
 							<button type="submit" class="btn_format_mini_gray" id="att_date_search_btn">조회</button>
 						</div>
 					</div>
 					<div class="attendance_main_box_content">
 						<table class="attendance_main_box_content_table" id="att_date_search_table">
-							<tr>
+							<tr class="table_title">
 								<td style="width: 14%">근무일자</td>
 								<td style="width: 10%">사번</td>
 								<td style="width: 10%">성명</td>
@@ -179,7 +180,7 @@
 					<div class="attendance_main_box_content">
 						<div id="attendance_modify_grid_container">
 							<div class="font_title attendance_modify_grid_first_row">조정 근무 일자</div>
-							<input type="date" id="att_date_start" name="att_modify_date" class="attendance_modify_grid_first_row">
+							<input type="date" id="att_appr_req_date" name="att_appr_req_date" class="attendance_modify_grid_first_row att_date_form">
 							<div class="font_title attendance_modify_grid_first_row">조정 출근 시간</div>
 							<input type="time" id="att_appr_clock_in" name="att_appr_clock_in" class="attendance_modify_grid_first_row">
 							<div class="font_title attendance_modify_grid_first_row">조정 퇴근 시간</div>
@@ -200,24 +201,23 @@
 					<div class="attendance_main_box_content">
 						<div id="search_date_range">
 							<div class="font_title">근무일자</div>
-							<input type="date" id="att_date_start" name="att_date_start">
+							<input type="date" id="att_appr_date_start" class="att_date_form" name="att_appr_date_start">
 							<div class="font_content">~</div>
-							<input type="date" id="att_date_end" name="att_date_end">
-							<button type="button" class="btn_format_mini_gray">조회</button>
+							<input type="date" id="att_appr_date_end" class="att_date_form" name="att_appr_date_end">
+							<button type="button" class="btn_format_mini_gray" id="att_appr_date_search_btn">조회</button>
 						</div>
 					</div>
 					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table">
-							<tr>
-								<td>근무일</td>
-								<td>사번</td>
-								<td>성명</td>
-								<td>출근시간</td>
-								<td>퇴근시간</td>
-								<td>수정요청 출근시간</td>
-								<td>수정요청 퇴근시간</td>
-								<td>결재 상태</td>
-								<td>승인 여부</td>
+						<table class="attendance_main_box_content_table" id="att_appr_date_search_table">
+							<tr class="table_title">
+								<td style="width: 10%">근무일</td>
+								<td style="width: 7.5%">사번</td>
+								<td style="width: 7.5%">성명</td>
+								<td style="width: 17%">출근시간</td>
+								<td style="width: 17%">퇴근시간</td>
+								<td style="width: 17%">수정요청 출근시간</td>
+								<td style="width: 17%">수정요청 퇴근시간</td>
+								<td style="width: 7%">승인 결과</td>
 							</tr>
 							
 						</table>
@@ -235,10 +235,10 @@
 			url: "<%=request.getContextPath()%>/attendance/insert",
 			type: "post",
 			success: function(result){
-				alert(result)
+				alert(result);
 			},
 			error: function(error){
-				alert(result) 
+				alert(error) ;
 			}
 		});
 	});
@@ -248,15 +248,16 @@
 			url: "<%=request.getContextPath()%>/attendance/update",
 			type: "post",
 			success: function(result){
-				alert(result)
+				alert(result);
 			},
 			error: function(error){
-				alert(result) 
+				alert(error) ;
 			}
 		});
 	});
 	
 	$("#att_date_search_btn").click(function(){
+		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/attendance/read",
 			type: "post",
@@ -264,12 +265,11 @@
 				, att_date_end:$('#att_date_end').val()} ,
 			dataType:"json",
 			success: function(result){
-				console.log("test1111");
 				console.log(result);
-				console.log("test1111");
-				var html = "";
+				var html;
 				for(var i = 0; i < result.length; i++){
 					var vo = result[i];
+					html = "";
 					html += '<tr class="table_content_white">';
                     html += '<td >'+vo.att_date.substr(0,10)+'</td>';
                     html += '<td >'+vo.emp_no+'</td>';
@@ -283,15 +283,74 @@
 				}
 			},
 			error: function(error){
-				alert(result) 
+				alert(error); 
 			}
 		});
 	});
 	
-	function dateFormatExclude(date) {
-		
-	}
+	$(attendance_modify_submit_btn).click(function(){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/attendance/approval/insert",
+			type: "post",
+			data: {att_appr_req_date:$('#att_appr_req_date').val()
+				, att_appr_clock_in_str:$('#att_appr_clock_in').val()
+				, att_appr_clock_out_str:$('#att_appr_clock_out').val()
+				, att_modify_reason_text:$('#att_modify_reason_text').val()
+			},
+			
+			success: function(result){
+				alert("요청이 완료되었습니다. result = " + result);
+				$('#att_appr_req_date').val('');
+				$('#att_appr_clock_in').val('');
+				$('#att_appr_clock_out').val('');
+				$('#att_modify_reason_text').val('');
+			},
+			error: function(error){
+				alert("요청 실패") ;
+			}
+		});
+	});
 	
+	$("#att_appr_date_search_btn").click(function(){
+		$(".table_title").eq(1).nextAll().remove();
+		$.ajax({
+			url: "<%=request.getContextPath()%>/attendance/approval/read",
+			type: "post",
+			data: {att_date_start_str:$('#att_appr_date_start').val()
+				, att_date_end_str:$('#att_appr_date_end').val()} ,
+			dataType:"json",
+			success: function(result){
+				console.log(result);
+				var html;
+				for(var i = 0; i < result.length; i++){
+					var vo = result[i];
+					html = "";
+					html += '<tr class="table_content_white">';
+                    html += '<td >'+vo.att_appr_req_date.substr(0,10)+'</td>';
+                    html += '<td >'+vo.emp_no+'</td>';
+                    html += '<td >'+'${loginSSInfo.name}'+'</td>';
+                    html += '<td >'+vo.att_clock_in+'</td>';
+                    html += '<td >'+vo.att_clock_out+'</td>';
+                    html += '<td >'+vo.att_appr_clock_in+'</td>';
+                    html += '<td >'+vo.att_appr_clock_out+'</td>';
+                    html += '<td >';
+                    if(vo.att_appr_result == 1) {
+                    	html += "승인";
+                    } else if (vo.att_appr_result == 2) {
+						html += "반려";
+                    } else if (vo.att_appr_result == 3) {
+						html += "대기";
+                    }
+                    html += '</td>';
+                    html += '</tr>';
+                    $('#att_appr_date_search_table').append(html);
+				}
+			},
+			error: function(error){
+				alert(error); 
+			}
+		});
+	});
 
 /* 시계~! */
 var clockTarget = document.getElementById("clock");
@@ -317,7 +376,6 @@ function clock() {
     var seconds = date.getSeconds();
     seconds = (seconds < 10) ? '0'+seconds : seconds;
     // 초까지 받아온후 
-    console.log(year);
     $("#clock").text(year+'-'+month+'-'+ clockDate + ' / '  + hours + ':' + minutes+':'+seconds);
     //':${minutes < 10 ? '0${minutes }'  : minutes }:${seconds < 10 ? '0${seconds }'  : seconds }'
     //clockTarget.innerText = '${month+1}월 ${clockDate}일 ${week[day]}요일' +

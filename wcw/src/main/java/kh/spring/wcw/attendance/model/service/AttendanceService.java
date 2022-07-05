@@ -25,4 +25,12 @@ public class AttendanceService {
 	public List<Attendance> readAttendance(Attendance attendance){
 		return dao.readAttendance(attendance);
 	}
+	
+	public int insertApprovalAttendance(Attendance attendance) {
+		return dao.insertApprovalAttendance(attendance);
+	}
+	
+	public List<Attendance> readApprovalAttendance(Attendance attendance){
+		return dao.readApprovalAttendance(attendance);
+	}
 }

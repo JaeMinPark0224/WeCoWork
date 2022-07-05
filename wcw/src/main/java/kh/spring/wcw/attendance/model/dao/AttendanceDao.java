@@ -24,4 +24,12 @@ public class AttendanceDao {
 	public List<Attendance> readAttendance(Attendance attendance){
 		return sqlsession.selectList("Attendance.readAttendance", attendance);
 	}
+	
+	public int insertApprovalAttendance(Attendance attendance) {
+		return sqlsession.insert("Attendance.insertApprovalAttendance", attendance);
+	}
+	
+	public List<Attendance> readApprovalAttendance(Attendance attendance){
+		return sqlsession.selectList("Attendance.readApprovalAttendance", attendance);
+	}
 }
