@@ -23,6 +23,11 @@ public class NotificationServiceImpl implements NotificationService {
 	public int deleteNotification(List<String> deletecheckArr) {
 		return dao.deleteNotification(deletecheckArr);
 	}
+
+	@Override
+	public int checkNotification(List<String> checkArr) {
+		return dao.checkNotification(checkArr);
+	}
 	
 	
 }

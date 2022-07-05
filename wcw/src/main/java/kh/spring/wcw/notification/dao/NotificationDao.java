@@ -22,5 +22,9 @@ public class NotificationDao {
 		return sqlsession.delete("Notification.deleteNotification",deletecheckArr);
 	}
 	
+	public int checkNotification(List<String> checkArr) {
+		return sqlsession.update("Notification.checkNotification",checkArr);
+	}
+	
 
 }

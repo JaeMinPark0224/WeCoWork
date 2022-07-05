@@ -107,6 +107,7 @@ tr input[type=checkbox] {
 	text-align: center;
 	padding-left: 95px;
 	padding-right: 131px;
+	cursor: pointer;
 }
 .notificationDate{
 	width: 87px;
@@ -127,7 +128,7 @@ label{
 	margin-left: 35px;
 	margin-right: 25px;
 }
-.allNotificationText{
+.unchkNotificationText label {
 	color: black;
 }
 </style>
@@ -175,12 +176,16 @@ label{
 				<div class="notificationList">
 					<c:choose>
 						<c:when test="${empty notificationlist}">
-							<div>작성된 글이 없습니다.</div>
+							<div>알림이 없습니다.</div>
 						</c:when>
 					<c:otherwise>
 						<table class="notificationTable">
 						<c:forEach items="${notificationlist }" var="notification">
-							<tr class="notificationTableContent">
+							<tr class="notificationTableContent" style="
+							<c:if test="${notification.noti_status == 'Y' }">
+								color: rgb(94, 94, 94);
+							</c:if>
+							">
 								<td>
 									<input type="checkbox" name="chk" value='${notification.noti_no }'>
 								</td>
@@ -204,6 +209,10 @@ label{
 			</div>
 
 	</section>
+	
+	
+	
+	
 	<script type="text/javascript">
 		//전체선택 클릭시 전체선택됨 
 	    $('.AllCheck').click(function(){
@@ -221,46 +230,38 @@ label{
 			if(total != checked)$(".AllCheck").prop("checked", false);
 			else $(".AllCheck").prop("checked", true);
 		});
-	    
-<%-- 		$("#deleteBtn").click(function() {
-			$.ajax({
-				url:"<%=request.getContextPath()%>/notification/delete",
-				type:"post",
-				data: {}
-				
-			});
-		}); --%>
 		
+	    <!-- 삭제 -->
  		// 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
 		$("#deleteBtn").click(function(){
-			/*
-		  var deletecheckArr = []; 
-		  $("input:checkbox[name=chk]:checked").each(function() {
-			  deletecheckArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-			  console.log(deletecheckArr);
-			});
-		  console.log(deletecheckArr);
-		  */
 		  var checkVal = $("input[name=chk]").serialize();
 		  console.log(checkVal);
 		  $.ajax({
 		      url: "<%=request.getContextPath()%>/notification/delete",
 		      type: "post",
-		      //data: {deletecheckArr : deletecheckArr},    // folder seq 값을 가지고 있음.
 		      data: checkVal,
 		      success: function(result){
-		      	console.log(result);
+		    	alert('알림을 삭제 했습니다.');
+		      	location.href = "<%=request.getContextPath()%>/notification/list";
 		      },
 		      error: function(error) {
 		      	alert(error);
 		      }  
 		   });
-		  
-		  
-		  
 		});
-		
-		
+ 		
+ 		$("#allReadBtn").click(function() {
+ 			var checkVal = $("input[name=chk]").serialize();
+ 			$.ajax({
+ 				url: "<%=request.getContextPath()%>/notification/check",
+ 				type: "post",
+ 				data: checkVal,
+ 				success: function(result) {
+ 					alert('모두읽음');
+ 					location.href = "<%=request.getContextPath()%>/notification/list";
+				}
+ 			});
+		});
 	</script>
 
 </body>

@@ -10,4 +10,5 @@ public interface NotificationService {
 
 	public int deleteNotification(List<String> deletecheckArr);
 
+	public int checkNotification(List<String> checkArr);
 }
