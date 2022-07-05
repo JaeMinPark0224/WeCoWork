@@ -261,6 +261,19 @@ INSERT INTO TB_EMPLOYEE
     , NULL, NULL, '127.0.0.1'
     , DEFAULT, NULL, DEFAULT
     , 10, 6, DEFAULT);    
+
+INSERT INTO TB_EMPLOYEE
+    (EMP_NO, EMAIL, PWD
+    , NAME, INTL_NO, PHONE
+    , PROFILE, SIGN, IP
+    , JOIN_DATE, RESIGN_DATE, RESIGN_YN
+    , DEPT_NO, JOB_TITLE_NO, HR_YN)
+    VALUES
+    ((SELECT NVL(MAX(EMP_NO), 99)+1 FROM TB_EMPLOYEE), 'jaeminpark0224@gmail.com', 1234
+    , '박재민', '0006', '010-0000-0000'
+    , NULL, NULL, '127.0.0.1'
+    , DEFAULT, NULL, DEFAULT
+    , 10, 6, DEFAULT);   
     
 commit;    
     

@@ -7,6 +7,21 @@
 		<div class="company_info font_r font_gray94 font_12px">${loginSSInfo.cp_name }</div>
 		<div class="person_info"><span class="font_b font_gray94 font_13px">${loginSSInfo.name }&nbsp;</span><span class="font_r font_gray94 font_13px">${loginSSInfo.job_title }</span></div>
 		<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
+		<div id="test_login_btn_wrap">
+			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
+			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
+			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
+			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
+			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
+			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
+			<!-- <button class="btn_format_mini test_login_btn">서유빈</button>
+			<button class="btn_format_mini test_login_btn">이진정</button>
+			<button class="btn_format_mini test_login_btn">민승택</button> -->
+		</div>
+		<form action="<%= request.getContextPath()%>/login.do" method="post" class="test_login_form">
+			<input type="hidden" name="email" value="emp1@email.com">
+			<input type="hidden" name="pwd" value="1234">
+		</form>
 	</div>
 	<div id="left_menu_scroll">
 		<div id="left_menu">
@@ -261,5 +276,11 @@ console.log(window.innerHeight);
 <script>
 	$('#attendance_day').click(function() {
 		location.href = '<%= request.getContextPath()%>/attendance/day';
+	});
+</script>
+<script>
+	$('.test_login_btn').click(function() {
+		$('.test_login_form').children().eq(0).val('emp'+($(this).index()+1)+'@email.com');
+		$('.test_login_form').submit();
 	});
 </script>

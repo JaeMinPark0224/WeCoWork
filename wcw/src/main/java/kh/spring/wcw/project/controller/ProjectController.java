@@ -20,6 +20,12 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@RequestMapping("/insert")
+	public ModelAndView insertProject(ModelAndView mv) {
+		mv.setViewName("project/insert");
+		return mv;
+	}
+	
 	@RequestMapping("/board/list")
 	public ModelAndView selectBoardProject(ModelAndView mv) {
 		mv.setViewName("project/board/list");
