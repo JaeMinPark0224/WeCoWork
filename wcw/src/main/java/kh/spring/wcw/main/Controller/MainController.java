@@ -236,5 +236,35 @@ public class MainController {
 		mv.setViewName("join/join");
 		return mv;
 	}
+	
+	// 비즈니스 회원가입 기능
+	@PostMapping("/join.do")
+	public ModelAndView insertBusinessDo(
+			ModelAndView mv
+			, Company company
+			, RedirectAttributes rttr
+			, @RequestParam(name="cp_name") String cp_name
+			, @RequestParam(name="email") String cp_join_email
+			, @RequestParam(name="pwd") String cp_pwd
+			, @RequestParam(name="cp_join_name") String cp_join_name
+			, @RequestParam(name="cp_join_phone") String cp_join_phone
+			, @RequestParam(name="cp_url", defaultValue = "") String cp_url) {
+		company.setCp_name(cp_name);
+		company.setCp_join_email(cp_join_email);
+		company.setCp_pwd(cp_pwd);
+		company.setCp_join_name(cp_join_name);
+		company.setCp_join_phone(cp_join_phone);
+		company.setCp_url(cp_url);
+		
+		int result = CompanyService.insertBusiness(company);
+		
+		if(result > 0 ) {
+			rttr.addAttribute("msg" , "회원가입이 완료되었습니다. 심사 후 입력하신 연락처로 연락드리겠습니다.");
+			mv.setViewName("redirect:/");
+			return mv;
+		}
+		
+		return mv;
+	}
 		
 }

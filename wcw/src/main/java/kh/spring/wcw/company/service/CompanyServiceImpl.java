@@ -21,7 +21,10 @@ public class CompanyServiceImpl implements CompanyService {
 		return dao.selectCompany(id, password);
 	}
 	
-	
+	@Override
+	public int insertBusiness(Company company) {
+		return dao.insertBusiness(company);
+	}
 
 	
 }

@@ -30,7 +30,7 @@
             display: inline-block;
             margin-bottom: 8px;
         }
-        #btn{
+        #submit{
             margin: 0 auto;
             margin-top: 110px;
             width: 380px;
@@ -44,13 +44,16 @@
             margin-bottom: 40px;
             border: 1px solid rgb(158, 158, 158);
             border-radius: 3px;
+            font-family: NotoSansR;
+            font-size: 12px;
         }
         .text1{
             width: 380px;
             height: 38px;
-            /* margin-bottom: 10px; */
             border: 1px solid rgb(158, 158, 158);
             border-radius: 3px;
+            font-family: NotoSansR;
+            font-size: 12px;
         }
         .text2{
             width: 380px;
@@ -58,6 +61,8 @@
             border: 1px solid rgb(158, 158, 158);
             border-radius: 3px;
             display: none;
+            font-family: NotoSansR;
+            font-size: 12px;
         }
         .text::placeholder, .text1::placeholder, .text2::placeholder{
             font-family: NotoSansR;
@@ -111,7 +116,7 @@
         #pwd_txt{
             margin-top: 40px;
         }
-        #submit{
+        #ok{
             width: 115px;
             height: 40px;
             background-color: rgb(75, 77, 178);

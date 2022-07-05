@@ -16,5 +16,12 @@ public interface CompanyService {
 	 * @author ybseo
 	 */
 	public Company selectCompany(String id, String password);
+	
+	/**
+	 * @param company
+	 * @return INSERT 후 성공 여부(int)
+	 * @author ybseo
+	 */
+	public int insertBusiness(Company company);
 
 }

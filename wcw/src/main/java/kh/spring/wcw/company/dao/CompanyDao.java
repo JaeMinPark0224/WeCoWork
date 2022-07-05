@@ -26,4 +26,14 @@ public class CompanyDao {
 		return sqlsession.selectOne("companyMapper.selectCompany", map);
 	}
 	
+	public int insertBusiness(Company company) {
+		int result = -1;
+		if(company.getCp_url() == "") {
+			result= sqlsession.insert("companyMapper.insertBusiness1", company);
+		} else {
+			result= sqlsession.insert("companyMapper.insertBusiness2", company);
+		}
+		return result;
+	}
+	
 }

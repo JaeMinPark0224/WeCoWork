@@ -8,4 +8,14 @@
 	where cp_join_email=#{email} and cp_pwd=#{pwd}
 </select>
 
+<insert id="insertBusiness1" parameterType="Company">
+	insert into tb_company (cp_no, cp_name, cp_date, cp_join_name, cp_join_email, cp_join_phone, cp_appr_yn, cp_pwd)
+	values ((select nvl(max(cp_no),0)+1 from tb_company), #{cp_name}, default, #{cp_join_name}, #{cp_join_email}, #{cp_join_phone}, default, #{cp_pwd})
+</insert>
+
+<insert id="insertBusiness2" parameterType="Company">
+	insert into tb_company (cp_no, cp_name, cp_url, cp_date, cp_join_name, cp_join_email, cp_join_phone, cp_appr_yn, cp_pwd)
+	values ((select nvl(max(cp_no),0)+1 from tb_company), #{cp_name}, #{cp_url}, default, #{cp_join_name}, #{cp_join_email}, #{cp_join_phone}, default, #{cp_pwd})
+</insert>
+
 </mapper>
