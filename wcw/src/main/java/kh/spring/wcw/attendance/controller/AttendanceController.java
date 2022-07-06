@@ -34,9 +34,9 @@ public class AttendanceController {
 	@Autowired
 	private WCWUtill util;
 	
-	@RequestMapping("/day")
-	public ModelAndView selectDayAttendance(ModelAndView mv) {
-		mv.setViewName("attendance/day");
+	@RequestMapping("/daily")
+	public ModelAndView selectDailyAttendance(ModelAndView mv) {
+		mv.setViewName("attendance/daily");
 		return mv;
 	}
 	
@@ -138,5 +138,11 @@ public class AttendanceController {
 				
 	}
 	
+	///////////////////////////////////////주간 근태 관리//////////////////////////////////
 	
+	@RequestMapping("/weekly")
+	public ModelAndView selectWeeklyAttendance(ModelAndView mv) {
+		mv.setViewName("attendance/weekly");
+		return mv;
+	}
 }

@@ -123,8 +123,8 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">근태관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content" id="attendance_day">일일근태 관리</div>
-						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content" id="attendance_daily">일일 근태 관리</div>
+						<div class="left_menu_2depth_content" id="attendance_weekly">주간 근태 관리</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -274,8 +274,11 @@ console.log(window.innerHeight);
 	});
 </script>
 <script>
-	$('#attendance_day').click(function() {
-		location.href = '<%= request.getContextPath()%>/attendance/day';
+	$('#attendance_daily').click(function() {
+		location.href = '<%= request.getContextPath()%>/attendance/daily';
+	});
+	$('#attendance_weekly').click(function() {
+		location.href = '<%= request.getContextPath()%>/attendance/weekly';
 	});
 </script>
 <script>
