@@ -1,0 +1,155 @@
+@charset "UTF-8";
+#section{
+	width: 1200px;
+    font-family: NotoSansR;
+    font-size: 13px;
+    margin-left: 60px;
+	}
+	#all{
+            margin: 105px 65px 220px 65px;
+            position: relative;
+        }
+
+        /* 페이지 타이틀 */
+        #title{
+            font-family: NotoSansB;
+            font-size: 14px;
+            color: rgb(75, 77, 178);
+            display: inline-block;
+            margin-bottom: 70px;
+            width: 1200px;
+        }
+        /* 프로필 사진 */
+        #profile{
+            float: left;
+            width: 115px;
+            margin-right: 210px;
+            height: 900px; /* 알아서 수정 */
+        }
+        #prof_img{
+            width: 115px;
+            height: 115px;
+            background-color: rgb(230, 230, 230);
+            border-radius: 50%;
+        }
+        #prof_btn{
+            font-family: NotoSansR;
+            font-size: 12px;
+            color: rgb(51, 51, 51);
+            background-color: rgb(230, 230, 230);
+            width: 115px;
+            height: 40px;
+            border: 0px;
+            margin-top: 25px;
+            cursor: pointer;
+        }
+        
+        /* 정보 */
+        #content{
+            float: left;
+            width: 650px;
+            color:rgb(94, 94, 94);
+            margin-bottom: 100px;
+        }
+        .tab{
+            font-family: NotoSansB;
+            width: 280px;
+            display: inline-block;
+            margin-bottom: 38px;
+            vertical-align: top;
+        }
+        .last{
+            margin-bottom: 90px;
+        }
+        .pwd{
+            width: 200px;
+            height: 25px;
+            border: 0px;
+            background-color: rgb(230, 230, 230);
+            font-family: NotoSansR;
+            font-size: 12px;
+        }
+        .pwd::placeholder{
+            font-family: NotoSansR;
+            font-size: 12px;
+            padding-left: 5px;
+        }
+
+        /* 서명 */
+        #sign_section{
+            display: inline-block;
+            position: relative;
+        }
+        #sign_img{
+            width: 280px;
+            height: 180px;
+            display: inline-block;
+            border: 1px solid rgb(191, 191, 191);
+        }
+        #sign_btn{
+            width: 115px;
+            height: 40px;
+            font-family: NotoSansR;
+            font-size: 12px;
+            border: 0;
+            margin-left: 20px;
+            bottom: 3px;
+            background-color: rgb(230, 230, 230);
+            display: inline-block;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        #canvas_container{
+            position: absolute;
+            bottom: -30px;
+            left: 500px;
+            width: 330PX;
+            height: 330px;
+            border: 1px solid rgb(100, 100, 100);
+            background-color: white;
+            display: none;
+        }
+        #canvas{
+            width: 300px;
+            height: 200px;
+            border: 1px solid rgb(191, 191, 191);
+            margin-left: 14px;
+        }
+        #cc_txt {
+            text-align: center;
+            margin: 20px 0;
+        }
+        #cc_btn{
+            text-align: center;
+            margin-top: 20px;
+        }
+        #cancel, #save, #erase{
+            font-family: NotoSansR;
+            font-size: 11px;
+            width: 75px;
+            height: 30px;
+            border: 0px;
+            background-color: rgb(75, 77, 178);
+            color: white;
+            cursor: pointer;
+        }
+        #cancel{
+            color: rgb(51, 51, 51);
+            background-color: rgb(230, 230, 230);
+        }
+
+        #edit{
+            width: 115px;
+            height: 40px;
+            background-color: rgb(75, 77, 178);
+            color: white;
+            text-align: center;
+            border: 0;
+            font-family: NotoSansR;
+            font-size: 12px;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 220px;
+            cursor: pointer;
+        }

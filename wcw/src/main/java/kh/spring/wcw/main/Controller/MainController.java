@@ -266,5 +266,12 @@ public class MainController {
 		
 		return mv;
 	}
+	
+	// 마이페이지로 이동
+	@GetMapping("/mypage")
+	public ModelAndView mypage(ModelAndView mv) {
+		mv.setViewName("mypage/mypage");
+		return mv;
+	}
 		
 }

@@ -72,7 +72,7 @@
 	        
 			$("#pwd_1").focusout(function(){
 			
-		    	var pwd = /^[0-9a-zA-Z]{4,20}$/;
+		    	var pwd = /^[0-9a-zA-Z]{8,20}$/;
 		    	var pwdVal = $("#pwd_1").val();
 		    		
 		    	if(!pwd.test(pwdVal)){
@@ -92,7 +92,7 @@
 	        
 			$("#pwd_2").focusout(function(){
 			
-		    	var pwdCk = /^[0-9a-zA-Z]{4,20}$/;
+		    	var pwdCk = /^[0-9a-zA-Z]{8,20}$/;
 		    	var pwdCkVal = $("#pwd_2").val();
 		    		
 		    	if(!pwdCk.test(pwdCkVal)){
@@ -227,7 +227,7 @@
             return rt = false;
         }
 		if(chkPwd == false){
-			alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 4~20자)");
+			alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 8~20자)");
 			return rt = false;
 		}
 		if(chkPwd2 == false){
