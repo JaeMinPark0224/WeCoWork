@@ -6,8 +6,26 @@
 	select * from TB_NOTIFICATION order by noti_Date desc 
 </select>
 
+<delete id="deleteNotification" parameterType="list">
+	delete from TB_NOTIFICATION
+	<where>
+		1 != 1 
+		<foreach collection="list" item="item" open="OR" separator="OR">
+		 noti_no=#{item}
+		</foreach>
+	 </where>
 
+</delete>
 
+<update id="checkNotification">
+	update TB_NOTIFICATION set noti_status = 'Y'
+	<where>
+		1 != 1
+		<foreach collection="list" item="item" open="OR" separator="OR">
+			noti_no=#{item}
+		</foreach>
+	</where>
+</update>
 
 
 </mapper>
