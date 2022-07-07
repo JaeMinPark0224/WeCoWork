@@ -48,14 +48,14 @@ public class MainController {
 	
 	// 로그인 페이지로 이동
 	@GetMapping("/login")
-	public ModelAndView login(ModelAndView mv) {
+	public ModelAndView viewlogin(ModelAndView mv) {
 		mv.setViewName("login/login");
 		return mv;
 	}
 	
 	// 로그인 기능
 	@PostMapping("/login.do")
-	public ModelAndView loginDo(
+	public ModelAndView selectLogin(
 			ModelAndView mv
 			, HttpSession session
 			, HttpServletResponse response
@@ -130,7 +130,7 @@ public class MainController {
 	
 	// 로그아웃
 	@GetMapping("/logout")
-	public ModelAndView logout(
+	public ModelAndView viewLogout(
 			ModelAndView mv
 			, HttpSession session
 			, HttpServletRequest request
@@ -162,7 +162,7 @@ public class MainController {
 	
 	// 비밀번호 찾기 페이지로 이동
 	@GetMapping("/find/pwd")
-	public ModelAndView findPwd(ModelAndView mv) {
+	public ModelAndView viewFindPwd(ModelAndView mv) {
 		mv.setViewName("login/findPwd");
 		return mv;
 	}
@@ -211,7 +211,7 @@ public class MainController {
 	
 	// 비밀번호 찾기 기능
 	@PostMapping("find/pwd.do")
-	public ModelAndView findPwdDo(
+	public ModelAndView selectFindPwd(
 			ModelAndView mv
 			, RedirectAttributes rttr
 			, @RequestParam(name="cp") String cp_name
@@ -232,14 +232,14 @@ public class MainController {
 
 	// 비즈니스 회원가입 페이지로 이동
 	@GetMapping("/join")
-	public ModelAndView insertBusiness(ModelAndView mv) {
+	public ModelAndView viewBusiness(ModelAndView mv) {
 		mv.setViewName("join/join");
 		return mv;
 	}
 	
 	// 비즈니스 회원가입 기능
 	@PostMapping("/join.do")
-	public ModelAndView insertBusinessDo(
+	public ModelAndView insertBusiness(
 			ModelAndView mv
 			, Company company
 			, RedirectAttributes rttr
@@ -269,7 +269,7 @@ public class MainController {
 	
 	// 마이페이지로 이동
 	@GetMapping("/mypage")
-	public ModelAndView mypage(ModelAndView mv) {
+	public ModelAndView viewMypage(ModelAndView mv) {
 		mv.setViewName("mypage/mypage");
 		return mv;
 	}
