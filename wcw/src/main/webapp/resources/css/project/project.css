@@ -5,6 +5,129 @@ section {
 	width : 1320px;
 }
 
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+/* 생성 페이지 */
+
+#project_insert_wrap {
+	margin: 75px auto 0px;
+	width: 380px;
+	font-size: 0px;
+}
+
+.project_insert_text_title {
+	font-size: 13px;
+	height: 20px;
+	line-height: 20px;
+	color: rgb(94, 94, 94);
+	font-family: NotoSansB;
+	margin-bottom: 10px;
+}
+
+#project_insert_text {
+	width: 380px;
+	height: 40px;
+	font-family: NotoSansR;
+	padding-left: 10px;
+	margin-bottom: 60px;
+	border: 1px solid #4B4DB2; 
+}
+
+#project_insert_text:focus {
+	outline-color: #4B4DB2; 
+}
+
+#project_insert_textarea {
+	width: 380px;
+	height: 300px;
+	resize: none;
+	margin-bottom: 60px;
+	font-family: NotoSansR;
+	padding-left: 10px;
+	border: 1px solid #4B4DB2;
+	outline-color: #4B4DB2;
+}
+
+.project_insert_menu_wrap {
+	display: grid;
+	grid-template-columns: 120px 220px 50px;
+	grid-template-rows: 20px;
+	margin-bottom: 10px;
+}
+
+.project_insert_question_mark {
+	width: 20px;
+	height: 20px;
+	justify-items: start;
+	font-size: 15px;
+	position: relative;
+}
+
+.circle_question {
+	margin-top: 2.5px;
+	color: #4B4DB2;
+	cursor: pointer;
+}
+
+.project_insert_question_content {
+	position: absolute;
+	top: 25px;
+	width: 260px;
+	background-color: white;
+	display: none;
+	z-index: 1;
+	border: 2px solid #4B4DB2;
+	border-radius: 2px;
+	font-family: NotoSansR;
+	font-size: 12px;
+	line-height: 20px;
+}
+
+
+
+.project_insert_toggle_btn_wrap {
+	height: 20px;
+	width: 40px;
+	background-color: gray;
+	border-radius: 10px;
+	position: relative;
+	cursor: pointer;
+	transition: background-color 0.1s ease;
+}
+
+.project_insert_toggle_btn_circle {
+	position: absolute;
+	top: 2.5px;
+	left: 2.5px;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background-color: white;
+	transition: left 0.1s ease;
+}
+
+#project_insert_btn {
+	display: block;
+	width: 115px;
+	height: 40px;
+	background-color: #4B4DB2;
+	color: white;
+	font-size: 12px;
+	font-family: NotoSansR;
+	margin: auto;
+	text-align: center;
+	line-height: 40px;
+	margin-top: 70px;
+}
+
+
 /* 리스트페이지 */
 /* 리스트페이지 */
 /* 리스트페이지 */

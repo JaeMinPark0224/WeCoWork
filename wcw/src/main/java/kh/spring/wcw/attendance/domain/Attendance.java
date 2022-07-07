@@ -85,6 +85,7 @@ public class Attendance {
 		return att_clock_in;
 	}
 
+
 	public Timestamp getAtt_clock_out() {
 		return att_clock_out;
 	}
