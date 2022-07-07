@@ -259,7 +259,7 @@
 	$("#att_date_search_btn").click(function(){
 		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/read",
+			url: "<%=request.getContextPath()%>/attendance/select",
 			type: "post",
 			data: {att_date_start:$('#att_date_start').val()
 				, att_date_end:$('#att_date_end').val()} ,
@@ -275,9 +275,21 @@
                     html += '<td >'+vo.emp_no+'</td>';
                     html += '<td >'+'${loginSSInfo.name}'+'</td>';
                     html += '<td >'+vo.att_clock_in+'</td>';
-                    html += '<td >'+vo.att_clock_out+'</td>';
+                    html += '<td >';
+	                    if(vo.att_clock_out == null) {
+	                    	html += "-";}
+	                    else{
+	                    	html += vo.att_clock_out;
+	                    }
+                    html += '</td>';
                     html += '<td >'+vo.ip_clock_in+'</td>';
-                    html += '<td >'+vo.ip_clock_out+'</td>';
+                    html += '<td >';
+	                    if(vo.ip_clock_out == null) {
+	                    	html += "-";}
+	                    else{
+	                    	html += vo.ip_clock_out;
+	                    }
+                    html += '</td>';
                     html += '</tr>';
                     $('#att_date_search_table').append(html);
 				}
@@ -314,7 +326,7 @@
 	$("#att_appr_date_search_btn").click(function(){
 		$(".table_title").eq(1).nextAll().remove();
 		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/approval/read",
+			url: "<%=request.getContextPath()%>/attendance/approval/select",
 			type: "post",
 			data: {att_date_start_str:$('#att_appr_date_start').val()
 				, att_date_end_str:$('#att_appr_date_end').val()} ,

@@ -22,15 +22,19 @@ public class AttendanceService {
 		return dao.updateAttendance(attendance);
 	}
 	
-	public List<Attendance> readAttendance(Attendance attendance){
-		return dao.readAttendance(attendance);
+	public List<Attendance> selectAttendance(Attendance attendance){
+		return dao.selectAttendance(attendance);
 	}
 	
 	public int insertApprovalAttendance(Attendance attendance) {
 		return dao.insertApprovalAttendance(attendance);
 	}
 	
-	public List<Attendance> readApprovalAttendance(Attendance attendance){
-		return dao.readApprovalAttendance(attendance);
+	public List<Attendance> selectApprovalAttendance(Attendance attendance){
+		return dao.selectApprovalAttendance(attendance);
+	}
+	
+	public List<Attendance> selectWeeklyAttendance(Attendance attendance){
+		return dao.selectWeeklyAttendance(attendance);
 	}
 }

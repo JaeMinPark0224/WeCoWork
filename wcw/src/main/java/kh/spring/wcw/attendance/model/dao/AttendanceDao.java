@@ -21,15 +21,21 @@ public class AttendanceDao {
 		return sqlsession.update("Attendance.updateAttendance", attendance);
 	}
 	
-	public List<Attendance> readAttendance(Attendance attendance){
-		return sqlsession.selectList("Attendance.readAttendance", attendance);
+	public List<Attendance> selectAttendance(Attendance attendance){
+		return sqlsession.selectList("Attendance.selectAttendance", attendance);
 	}
 	
 	public int insertApprovalAttendance(Attendance attendance) {
 		return sqlsession.insert("Attendance.insertApprovalAttendance", attendance);
 	}
 	
-	public List<Attendance> readApprovalAttendance(Attendance attendance){
-		return sqlsession.selectList("Attendance.readApprovalAttendance", attendance);
+	public List<Attendance> selectApprovalAttendance(Attendance attendance){
+		return sqlsession.selectList("Attendance.selectApprovalAttendance", attendance);
 	}
+	
+	public List<Attendance> selectWeeklyAttendance(Attendance attendance){
+		return sqlsession.selectList("Attendance.selectWeeklyAttendance", attendance);
+	}
+	
+	
 }

@@ -36,7 +36,7 @@
 		where emp_no = #{emp_no})  )
 </update>
 
-<select id="readAttendance" parameterType="Attendance" resultType="Attendance">
+<select id="selectAttendance" parameterType="Attendance" resultType="Attendance">
 	select * from tb_attendance
 	where emp_no = #{emp_no}
 	and ATT_date between #{att_date_start} and #{att_date_end}
@@ -72,12 +72,20 @@
 	)
 </insert>
 
-<select id="readApprovalAttendance" parameterType="Attendance" resultType="Attendance">
+<select id="selectApprovalAttendance" parameterType="Attendance" resultType="Attendance">
 	select att_appr_req_date, att.emp_no, att.att_clock_in, att.att_clock_out, appr.att_appr_clock_in, appr.att_appr_clock_out, att_appr_result
 	from tb_attendance_approval appr
 	join tb_attendance att on att.att_no = appr.att_no
 	where att.emp_no = #{emp_no}
 	and ATT_appr_req_date between #{att_date_start} and #{att_date_end}
+</select>
+
+<!-- /////////////////주간근태///////////////// -->
+<select id="selectWeeklyAttendance" parameterType="Attendance" resultType="Attendance">
+	select t.*, (att_clock_out-att_clock_in) worktime
+	from tb_attendance t
+	where emp_no = #{emp_no}
+	and ATT_date between #{att_date_start} and #{att_date_end}
 </select>
 
 </mapper>

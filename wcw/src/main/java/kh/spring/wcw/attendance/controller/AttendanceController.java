@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +36,7 @@ public class AttendanceController {
 	private WCWUtill util;
 	
 	@RequestMapping("/daily")
-	public ModelAndView selectDailyAttendance(ModelAndView mv) {
+	public ModelAndView viewDailyAttendance(ModelAndView mv) {
 		mv.setViewName("attendance/daily");
 		return mv;
 	}
@@ -70,9 +71,9 @@ public class AttendanceController {
 		return String.valueOf(result);
 	}
 	
-	@RequestMapping(value =  "/read", produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value =  "/select", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String readAttendance(
+	public String selectAttendance(
 			Attendance attendance
 			,@RequestParam(name="att_date_start") String att_date_start
 			, @RequestParam(name="att_date_end") String att_date_end
@@ -84,11 +85,11 @@ public class AttendanceController {
 		attendance.setEmp_no(loginSSInfo.getEmp_no());
 		attendance.setAtt_date_start(att_date_start_d);
 		attendance.setAtt_date_end(att_date_end_d);
-		List<Attendance> readResult = service.readAttendance(attendance);
+		List<Attendance> selectResult = service.selectAttendance(attendance);
 		
 		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
 		
-		return gsonObj.toJson(readResult);
+		return gsonObj.toJson(selectResult);
 				
 	}
 	
@@ -116,9 +117,9 @@ public class AttendanceController {
 		return String.valueOf(result);
 	}
 	
-	@PostMapping(value =  "/approval/read", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value =  "/approval/select", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String readApprovalAttendance(
+	public String selectApprovalAttendance(
 			Attendance attendance
 			,@RequestParam(name="att_date_start_str") String att_appr_date_start
 			, @RequestParam(name="att_date_end_str") String att_appr_date_end
@@ -130,19 +131,64 @@ public class AttendanceController {
 		attendance.setEmp_no(loginSSInfo.getEmp_no());
 		attendance.setAtt_date_start(att_date_start_d);
 		attendance.setAtt_date_end(att_date_end_d);
-		List<Attendance> readResult = service.readApprovalAttendance(attendance);
+		List<Attendance> selectResult = service.selectApprovalAttendance(attendance);
 		
 		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
 		
-		return gsonObj.toJson(readResult);
+		return gsonObj.toJson(selectResult);
 				
 	}
 	
 	///////////////////////////////////////주간 근태 관리//////////////////////////////////
 	
 	@RequestMapping("/weekly")
-	public ModelAndView selectWeeklyAttendance(ModelAndView mv) {
+	public ModelAndView viewWeeklyAttendance(ModelAndView mv) {
 		mv.setViewName("attendance/weekly");
 		return mv;
+	}
+	
+	@RequestMapping(value =  "/selectWeekly", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST )
+	@ResponseBody
+	public String selectWeeklyAttendance(
+			Attendance attendance
+			,@RequestParam(name="att_date_start") String att_date_start
+			, @RequestParam(name="att_date_end") String att_date_end
+			, HttpSession session
+			) {
+		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
+		Date att_date_start_d = Date.valueOf(att_date_start);
+		Date att_date_end_d = Date.valueOf(att_date_end);
+		attendance.setEmp_no(loginSSInfo.getEmp_no());
+		attendance.setAtt_date_start(att_date_start_d);
+		attendance.setAtt_date_end(att_date_end_d);
+		List<Attendance> result = service.selectWeeklyAttendance(attendance);
+		
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
+		
+		return gsonObj.toJson(result);
+				
+	}
+	
+
+	@RequestMapping(value =  "/selectAllWeekly", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
+	@ResponseBody
+	public String selectAllWeeklyAttendance(
+			Attendance attendance
+			,@RequestParam(name="att_date_start_str") String att_date_start
+			, @RequestParam(name="att_date_end_str") String att_date_end
+			, HttpSession session
+			) {
+		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
+		Date att_date_start_d = Date.valueOf(att_date_start);
+		Date att_date_end_d = Date.valueOf(att_date_end);
+		attendance.setEmp_no(loginSSInfo.getEmp_no());
+		attendance.setAtt_date_start(att_date_start_d);
+		attendance.setAtt_date_end(att_date_end_d);
+		List<Attendance> result = service.selectAttendance(attendance);
+		
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
+		
+		return gsonObj.toJson(result);
+				
 	}
 }

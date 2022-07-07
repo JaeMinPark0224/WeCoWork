@@ -78,6 +78,7 @@
 	width: 138px;
 	font-size: 12px;
 	font-family: NotoSansR;
+	text-align: center;
 }
 
 /* #att_month, #att_month_text, #week_select{
@@ -168,8 +169,8 @@
 						<table class="attendance_main_box_content_table" id="att_appr_date_search_table">
 							<tr class="table_title">
 								<td style="width: 11%">요일</td>
-								<td style="width: 17%">날짜</td>
-								<td style="width: 15%">근무시간</td>
+								<td style="width: 15%">날짜</td>
+								<td style="width: 17%">근무시간</td>
 								<td style="width: 21%">출근 시간</td>
 								<td style="width: 21%">퇴근 시간</td>
 								<td style="width: 15%">연장 근로 시간</td>
@@ -184,32 +185,7 @@
 </section>
 <script>
 
-/* 출퇴근~! */
-	$("#btn_clock_in").click(function(){
-		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/insert",
-			type: "post",
-			success: function(result){
-				alert(result);
-			},
-			error: function(error){
-				alert(error) ;
-			}
-		});
-	});
-	
-	$("#btn_clock_out").click(function(){
-		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/update",
-			type: "post",
-			success: function(result){
-				alert(result);
-			},
-			error: function(error){
-				alert(error) ;
-			}
-		});
-	});
+/* 년월, 주차 선택 후 날짜표시 */
 	
 	$("#att_month").on("input", week_input_function);
 	
@@ -247,20 +223,25 @@
 				endDate.setDate(endDate.getDate() + 1);
 			}
 		}
-		console.log(startDate.toLocaleDateString());
-		console.log(endDate.toLocaleDateString());
-		$('#startDate').append(startDate.toLocaleDateString());
-		$('#endDate').append(endDate.toLocaleDateString());
+/* 		console.log(endDate.toLocaleDateString());
+		var startyear = startDate.toLocaleDateString().substr(0,4);
+		var startmonth = startDate.toLocaleDateString().substr(6,1);
+		startmonth = ((startmonth) < 10) ? '0'+(startmonth) : (startmonth);
+		var startdate = startDate.toLocaleDateString().substr(8,2);
+		startdate = ((startdate) < 10) ? '0'+(startdate) : (startdate); */
+		console.log(startDate.toISOString().split('T')[0]);
+		$('#startDate').append(startDate.toISOString().split('T')[0]);
+		$('#endDate').append(endDate.toISOString().split('T')[0]);
 	}
-	
+	<%-- 
 	$("#att_date_search_btn").click(function(){
 		
-		<%-- $(".table_title").eq(0).nextAll().remove();
+		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/read",
+			url: "<%=request.getContextPath()%>/attendance/selectWeekly",
 			type: "post",
-			data: {att_date_start:$('#att_date_start').val()
-				, att_date_end:$('#att_date_end').val()} ,
+			data: {att_date_start:$('#startDate').val()
+				, att_date_end:$('#endDate').val()} ,
 			dataType:"json",
 			success: function(result){
 				console.log(result);
@@ -269,9 +250,9 @@
 					var vo = result[i];
 					html = "";
 					html += '<tr class="table_content_white">';
-                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
                     html += '<td >'+vo.emp_no+'</td>';
                     html += '<td >'+'${loginSSInfo.name}'+'</td>';
+                    html += '<td >'+'${loginSSInfo.dept_name}'+'</td>';
                     html += '<td >'+vo.att_clock_in+'</td>';
                     html += '<td >'+vo.att_clock_out+'</td>';
                     html += '<td >'+vo.ip_clock_in+'</td>';
@@ -283,74 +264,70 @@
 			error: function(error){
 				alert(error); 
 			}
-		}); --%>
+		}); 
 	});
-	
-	$('.attendance_modify_submit_btn').click(function(){
+	 --%>
+	$("#att_date_search_btn").click(function(){
+		$(".table_title").nextAll().remove();
 		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/approval/insert",
+			url: "<%=request.getContextPath()%>/attendance/selectAllWeekly",
 			type: "post",
-			data: {att_appr_req_date:$('#att_appr_req_date').val()
-				, att_appr_clock_in_str:$('#att_appr_clock_in').val()
-				, att_appr_clock_out_str:$('#att_appr_clock_out').val()
-				, att_modify_reason_text:$('#att_modify_reason_text').val()
-			},
-			
-			success: function(result){
-				alert("요청이 완료되었습니다. result = " + result);
-				$('#att_appr_req_date').val('');
-				$('#att_appr_clock_in').val('');
-				$('#att_appr_clock_out').val('');
-				$('#att_modify_reason_text').val('');
-			},
-			error: function(error){
-				alert("요청 실패") ;
-			}
-		});
-	});
-	
-	$("#att_appr_date_search_btn").click(function(){
-		$(".table_title").eq(1).nextAll().remove();
-		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/approval/read",
-			type: "post",
-			data: {att_date_start_str:$('#att_appr_date_start').val()
-				, att_date_end_str:$('#att_appr_date_end').val()} ,
+			data: {att_date_start_str:$('#startDate').text()
+				, att_date_end_str:$('#endDate').text()} ,
 			dataType:"json",
 			success: function(result){
 				console.log(result);
+				var day = ['일', '월', '화', '수', '목', '금', '토'];
 				var html;
+				var extendtime = 144000000;
+				var worktimetotal = 0;
 				for(var i = 0; i < result.length; i++){
 					var vo = result[i];
+					var worktimedaily = new Date(vo.att_clock_out).getTime()-new Date(vo.att_clock_in).getTime(); 
+					worktimetotal =worktimetotal +worktimedaily;  
 					html = "";
 					html += '<tr class="table_content_white">';
-                    html += '<td >'+vo.att_appr_req_date.substr(0,10)+'</td>';
-                    html += '<td >'+vo.emp_no+'</td>';
-                    html += '<td >'+'${loginSSInfo.name}'+'</td>';
+                    html += '<td >'+day[new Date(vo.att_date).getDay()]+'</td>';
+                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
+                    html += '<td >'+ tohhmmss(worktimedaily)+'</td>';
                     html += '<td >'+vo.att_clock_in+'</td>';
                     html += '<td >'+vo.att_clock_out+'</td>';
-                    html += '<td >'+vo.att_appr_clock_in+'</td>';
-                    html += '<td >'+vo.att_appr_clock_out+'</td>';
-                    html += '<td >';
-                    if(vo.att_appr_result == 1) {
-                    	html += "승인";
-                    } else if (vo.att_appr_result == 2) {
-						html += "반려";
-                    } else if (vo.att_appr_result == 3) {
-						html += "대기";
-                    }
-                    html += '</td>';
+                    html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
                     html += '</tr>';
                     $('#att_appr_date_search_table').append(html);
 				}
+				html = "";
+				html += '<tr class="table_content_white">';
+                html += '<td >'+vo.emp_no+'</td>';
+                html += '<td >'+'${loginSSInfo.name}'+'</td>';
+                html += '<td >'+'${loginSSInfo.dept_name}'+'</td>';
+                html += '<td >'+tohhmmss(worktimetotal)+'</td>';
+                html += '<td >'+'40시간'+'</td>';
+                html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
+                html += '<td >'+tohhmmss(worktimetotal/result.length)+'</td>';
+                html += '</tr>';
+                $('#att_date_search_table').append(html);
 			},
 			error: function(error){
 				alert(error); 
 			}
 		});
 	});
+	// 숫자를 hh:mm:ss로 바꾸는 함수
+	function tohhmmss(num) {
+		var stringHMS = '';
+		num = num / 1000;
+		var hh = Math.floor(num/3600);
+		var mm = Math.floor((num - (hh * 3600))/60);
+		var ss = num - (hh * 3600) - (mm * 60);
+		stringHMS = hh + '시간 ' + mm + "분 " + ss +'초';
+		if(num < 0) {
+			stringHMS = "-";
+		}
+		return stringHMS;
+	}
 
-/* 시계~! */
+/*///////////////  시계~! ///////////////////////*/
 var clockTarget = document.getElementById("clock");
 
 function clock() {
