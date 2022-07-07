@@ -81,8 +81,8 @@
             position: relative;
         }
         #sign_img{
-            width: 280px;
-            height: 180px;
+            width: 300px;
+            height: 150px;
             display: inline-block;
             border: 1px solid rgb(191, 191, 191);
         }
@@ -105,14 +105,14 @@
             bottom: -30px;
             left: 500px;
             width: 330PX;
-            height: 330px;
+            height: 280px;
             border: 1px solid rgb(100, 100, 100);
             background-color: white;
             display: none;
         }
         #canvas{
-            width: 300px;
-            height: 200px;
+            width: 300;
+            height: 150;
             border: 1px solid rgb(191, 191, 191);
             margin-left: 14px;
         }
