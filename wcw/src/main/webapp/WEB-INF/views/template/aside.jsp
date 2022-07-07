@@ -208,7 +208,27 @@
 				<div class="chat_header_tap">TODO</div>
 			</div>
 		</div>
-		<div id="chat_body"></div>
+		<div id="chat_body">
+			<div class="chat_first">
+				<div class="search_chat">
+					<form class="search_chatForm">
+						<img src="<%= request.getContextPath() %>/resources/images/search-icon.svg" id="search">
+						<input id="input_search" type="text" name="searchInput" autocomplete="off"
+							placeholder="검색어입력">
+					</form>
+				</div>
+				<!-- 채팅방 생성 (view_chat5.jsp)-->
+				<div class="chat_create">
+					<a href="javascript:openWin('<%=request.getContextPath()%>/chat/insert','0')">
+					<img src="<%= request.getContextPath() %>/resources/images/create-icon.svg" id="create"></a> 
+					
+					<a href="javascript:openWin('<%=request.getContextPath()%>/chat5.do','0')">
+					<img src="<%= request.getContextPath() %>/resources/images/create-icon.svg" id="create"></a> 
+				</div>
+				"javascript:openWin('open.html','0')"
+				<!-- 여기까지-->
+			</div>
+		</div>
 	</div>
 </aside>
 <script type="text/javascript">
@@ -287,3 +307,13 @@ console.log(window.innerHeight);
 		$('.test_login_form').submit();
 	});
 </script>
+
+<script type="text/javascript">
+	function openWin(f,s) { 
+		adWindow=window.open(f,s,'width=400, height=430,left=800px,top=250px,status=no,scrollbars=auto'); 
+		}
+</script>
+
+
+
+

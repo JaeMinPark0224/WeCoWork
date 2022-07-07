@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>test5 채팅</title>
+	<title>채팅방</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 	<script type="text/javascript">
@@ -70,12 +70,18 @@
 			webSocket.init({ url: '<c:url value="/chat5?bang_id=${bang_id}" />' });	
 		});
 	</script>
+	
+<style type="text/css">
+#message{
+	width: 300px;
+}
+</style>
 </head>
 <body>
-	<div style="width: 800px; height: 700px; padding: 10px; border: solid 1px #e1e3e9;">
+	<div style="width: 300px; height: 250px; padding: 10px; border: solid 1px #e1e3e9;">
 		<div id="divChatData"></div>
 	</div>
-	<div style="width: 100%; height: 10%; padding: 10px;">
+	<div style="width: 300px; height: 350px; padding: 10px;">
 		<input type="text" id="message" size="110" onkeypress="if(event.keyCode==13){webSocket.sendChat();}" />
 		<input type="button" id="btnSend" value="채팅 전송" onclick="webSocket.sendChat()" />
 	</div>
