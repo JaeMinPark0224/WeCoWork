@@ -16,15 +16,15 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="section">
     <div id="all">
-        <form method="post" >
+        <form action="<%= request.getContextPath() %>/mypage.do" method="post" enctype="multipart/form-data">
             <span id="title">마이페이지</span>
             <div>
             	<div id="profile">
 		            	<c:if test="${empty loginSSInfo.profile}">
-		            		<img id="prof_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
+		            		<img id="prof_img" name = "prof_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
 		            	</c:if>
 		            	<c:if test="${not empty loginSSInfo.profile}">
-		            		<img id="prof_img" src="${loginSSInfo.profile}">
+		            		<img id="prof_img" name = "prof_img" src="${loginSSInfo.profile}">
 		            	</c:if>
                         <input type="button" value="프로필 등록" id="prof_btn">
                         <input type="file" id="file" name="file" style="display:none" onchange="f_check(this)" accept="image/jpg, image/jpeg, image/png">
@@ -35,7 +35,7 @@
                         <span class="tab">성명</span>
                         <span class="info">정보</span><br>
                         <span class="tab">비밀번호</span>
-                        <input type="password" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
+                        <input type="password" name="pwd" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
                         <span class="tab">비밀번호 확인</span>
                         <input type="password" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
                         <span class="tab">내선 번호</span>
@@ -55,10 +55,10 @@
                         <span class="tab">서명</span>
                         <div id="sign_section">
                         	<c:if test="${empty loginSSInfo.sign}">
-		            			<img id="sign_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
+		            			<img id="sign_img" name="sign_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
 		            		</c:if>
 		            		<c:if test="${not empty loginSSInfo.sign}">
-		            			<img id="sign_img" src="${loginSSInfo.sign}">
+		            			<img id="sign_img" name="sign_img" src="${loginSSInfo.sign}">
 		            		</c:if>
                             <input type="button" id="sign_btn" value="서명 등록">
                         </div><br>

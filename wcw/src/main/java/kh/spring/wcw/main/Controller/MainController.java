@@ -1,8 +1,13 @@
 package kh.spring.wcw.main.Controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
+import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.company.service.CompanyService;
@@ -33,6 +44,10 @@ public class MainController {
 	private EmployeeService EmployeeService;
 	@Autowired
 	private CompanyService CompanyService;
+	@Autowired
+	private ServletContext context;
+//	@Autowired
+//	private fileUpload commonFile;
 	
 	// 메인 페이지로 이동
 	@GetMapping("/")
@@ -271,7 +286,64 @@ public class MainController {
 	@GetMapping("/mypage")
 	public ModelAndView viewMypage(ModelAndView mv) {
 		mv.setViewName("mypage/mypage");
+		
 		return mv;
 	}
+	
+	// 마이페이지 정보 수정 기능
+	@PostMapping("/mypage.do")
+	public ModelAndView updateMypage(
+			ModelAndView mv
+			, @RequestParam(name = "pwd", defaultValue = "") String employee_pwd
+			, @RequestParam(name = "prof_img", required = false) MultipartFile employee_profile
+			, @RequestParam(name = "sign_img", required = false) MultipartFile employee_sign
+			, HttpServletRequest request
+			, HttpSession session
+			, Employee employee
+			) throws ServletException, IOException {
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		
+		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+				"cloud_name", "dfam8azdg",
+				"api_key", "882165332977633",
+				"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
+				"secure", true));
+		System.out.println("정보 수정하러 왔음");
+		String fileSavePath = "upload";
+		String uploadPath = context.getRealPath(fileSavePath);
+		File path = new File(uploadPath);
+		if(!path.exists()) {
+			path.mkdirs();
+		}
+		
+		System.out.println("employee_profile");
+		int maxFileSize = 50*1000*1000;
+		
+		MultipartRequest multi = new MultipartRequest(request
+				, uploadPath
+				, maxFileSize
+				, "UTF-8" 
+				, new DefaultFileRenamePolicy());
+		String profile = multi.getParameter("file");
+		System.out.println("employee_profile2222222: " + profile);
+		String sign = multi.getFilesystemName("employee_sign");
+		String pwd = multi.getParameter("employee_pwd");
+		String memberFileName = multi.getFilesystemName("file");
+		
+		if(profile != null && profile != "") {
+			File cloudinaryFile = new File(uploadPath + "\\" + profile);
+			Map uploadResult = cloudinary.uploader().upload(cloudinaryFile, ObjectUtils.emptyMap());
+			String profile_done = (String) uploadResult.get("url");
+			employee.setProfile(profile_done);
+			System.out.println("아싸리비요" + employee.getProfile());
+		}
+
+		
+		
+		
+//		mv.setViewName(sign);
+		return mv;
+	}
+	
 		
 }
