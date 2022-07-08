@@ -198,7 +198,33 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-		  
+		
+		<!-- cloudinary -->
+		<dependency>
+        	<groupId>com.cloudinary</groupId>
+        	<artifactId>cloudinary-http44</artifactId>
+        	<version>1.17.0</version>
+    	</dependency>  
+    	
+    	<!-- File Upload -->
+		<dependency>
+		    <groupId>servlets.com</groupId>
+		    <artifactId>cos</artifactId>
+		    <version>05Nov2002</version>
+		</dependency>
+       <!-- commons-fileupload -->
+       <dependency>
+           <groupId>commons-fileupload</groupId>
+           <artifactId>commons-fileupload</artifactId>
+           <version>1.4</version>
+       </dependency>
+       <!-- commons-io -->
+       <dependency>
+           <groupId>commons-io</groupId>
+           <artifactId>commons-io</artifactId>
+           <version>2.11.0</version>
+       </dependency>
+    
 	</dependencies>
     <build>
         <plugins>
