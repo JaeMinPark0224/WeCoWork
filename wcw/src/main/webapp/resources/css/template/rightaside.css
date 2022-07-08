@@ -37,7 +37,6 @@
 	width: 300px;
 	height: 100px;
 	background-color: #4B4DB2;
-	position: absolute;
 }
 
 #chat_header_wrap {
@@ -62,7 +61,6 @@
 	height: 100%;
 	background-color: rgb(244, 244, 244); 
 }
-
 /* 즐겨찾기 버튼 */
 /* 즐겨찾기 버튼 */
 /* 즐겨찾기 버튼 */
@@ -82,3 +80,43 @@
 	-webkit-text-stroke-color: #4B4DB2;
 	transition: 0.15s ease;
 }
+
+/* 사이드-채팅 */
+
+.chat_create{
+	height: 22px;
+	font-size: 22px;
+	display: inline-block;
+	position: relative;
+    top: 6.5;
+}
+.search_chat{
+	display: inline-block;
+} 
+
+#search{
+	width: 22px;
+	height: 22px;
+}
+.search_chatForm input{
+	width: 180px;
+	height: 28px;
+	
+}
+.search_chatForm img{
+	position: relative;
+	top: 6.5;
+	margin-left: 8px;
+	margin-right: 3px;
+	cursor: pointer;
+}
+#create{
+	width: 22px;
+	height: 22px;
+}
+.chat_create img{
+	margin-left: 15px;
+}
+
+
+
