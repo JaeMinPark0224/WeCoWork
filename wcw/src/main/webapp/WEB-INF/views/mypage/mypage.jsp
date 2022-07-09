@@ -16,7 +16,7 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="section">
     <div id="all">
-        <form action="<%= request.getContextPath() %>/mypage.do" method="post" enctype="multipart/form-data">
+        <form action="<%= request.getContextPath() %>/mypage.do" method="post" id="submit" enctype="multipart/form-data">
             <span id="title">마이페이지</span>
             <div>
             	<div id="profile">
@@ -35,9 +35,9 @@
                         <span class="tab">성명</span>
                         <span class="info">정보</span><br>
                         <span class="tab">비밀번호</span>
-                        <input type="password" name="pwd" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
+                        <input type="password" id = "pwd1" name="pwd" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
                         <span class="tab">비밀번호 확인</span>
-                        <input type="password" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
+                        <input type="password" id = "pwd2" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
                         <span class="tab">내선 번호</span>
                         <span class="info">정보</span><br>
                         <span class="tab">사원 번호</span>
@@ -61,6 +61,7 @@
 		            			<img id="sign_img" name="sign_img" src="${loginSSInfo.sign}">
 		            		</c:if>
                             <input type="button" id="sign_btn" value="서명 등록">
+                            <input type="hidden" name="sign_file" id="sign_file" style="display: none">
                         </div><br>
                     </div>
             </div>
@@ -78,6 +79,10 @@
     </div>
 </section>
 <script>
+
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
 	// 서명 등록 버튼 클릭 시
 	$("#sign_btn").click(function(){
 		$("#canvas_container").show();
@@ -94,11 +99,51 @@
 		signImage.src = canvas.toDataURL();
 		$("#canvas_container").hide();
 	}
+	$("#save").click(function(){
+		var data = canvas.toDataURL("image/png");
+		/* var dataUrl = data.substring(data.indexof("iVBOR")); */
+		$("#sign_file").attr("value", data).val(data);
+	})
 	
 	// 프로필 변경 버튼 클릭 시 file을 클릭한 것과 같도록
 	$("#prof_btn").click(function(){
 		document.all.file.click();
 	})
+	
+	var chkPwd = false;
+	// 비밀번호 유효성 검사
+	$("#pwd1").focusout(function(){
+	    var pwd = /^[0-9a-zA-Z]{8,20}$/;
+	    var pwd1 = $("#pwd1").val();
+	    		
+	    if(!pwd.test(pwd1)){
+	    	chkPwd = false;
+	    } else {
+	    	chkPwd = true;
+	    }
+	 });
+	
+	// 수정하기 버튼 클릭 시
+	$("#submit").submit(function(){
+		var pwd1 = $("#pwd1").val();
+		var pwd2 = $("#pwd2").val();
+		
+		if(pwd1 != null && pwd1 !="" && (pwd2 == null || pwd2 == "")){
+			alert("비밀번호 변경을 원할 시, 비밀번호 확인에도 변경하고자 하는 비밀번호를 입력해 주세요.");
+			return false;
+		}
+		
+		if(pwd1 != pwd2){
+			alert("비밀번호와 비밀번호 확인에 입력한 비밀번호를 동일하게 입력해 주세요.");
+			return false;
+		}
+		
+		if(chkPwd == false){
+			alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 8~20자)");
+			return false;
+		}
+	})
+	
 
 </script>
 <script>

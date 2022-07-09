@@ -74,4 +74,31 @@ public class EmployeeDao {
 	public String selectRandomNum(String email) {
 		return sqlsession.selectOne("employeeMapper.selectRandomNum", email);
 	}
+	
+	// 프로필 이미지 update
+	public int updateEmployeeProfile(int emp_no, String profile) {
+		String no = Integer.toString(emp_no);
+		HashMap<String, String> map= new HashMap<>();
+		map.put("emp_no", no);
+		map.put("profile", profile);
+		return sqlsession.update("employeeMapper.updateEmployeeProfile", map);
+	}
+	
+	// 서명 이미지 update
+	public int updateEmployeeSign(int emp_no, String sign) {
+		String no = Integer.toString(emp_no);
+		HashMap<String, String> map= new HashMap<>();
+		map.put("emp_no", no);
+		map.put("sign", sign);
+		return sqlsession.update("employeeMapper.updateEmployeeSign", map);
+	}
+	
+	// 비밀번호 update
+	public int updateEmployeePwd(int emp_no, String pwd) {
+		String no = Integer.toString(emp_no);
+		HashMap<String, String> map= new HashMap<>();
+		map.put("emp_no", no);
+		map.put("pwd", pwd);
+		return sqlsession.update("employeeMapper.updateEmployeePwd", map);
+	}
 }

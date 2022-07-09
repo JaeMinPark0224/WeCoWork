@@ -28,8 +28,6 @@ import org.springframework.web.util.WebUtils;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.company.service.CompanyService;
@@ -294,56 +292,90 @@ public class MainController {
 	@PostMapping("/mypage.do")
 	public ModelAndView updateMypage(
 			ModelAndView mv
-			, @RequestParam(name = "pwd", defaultValue = "") String employee_pwd
-			, @RequestParam(name = "prof_img", required = false) MultipartFile employee_profile
-			, @RequestParam(name = "sign_img", required = false) MultipartFile employee_sign
+			, @RequestParam(name = "pwd", required = false, defaultValue = "") String employee_pwd
+			, @RequestParam(name = "file", required = false) MultipartFile employee_profile
+			, @RequestParam(name = "sign_file", required = false, defaultValue = "") String employee_sign
 			, HttpServletRequest request
 			, HttpSession session
 			, Employee employee
+			, RedirectAttributes rttr
 			) throws ServletException, IOException {
+		
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		
-		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-				"cloud_name", "dfam8azdg",
-				"api_key", "882165332977633",
-				"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
-				"secure", true));
-		System.out.println("정보 수정하러 왔음");
-		String fileSavePath = "upload";
-		String uploadPath = context.getRealPath(fileSavePath);
-		File path = new File(uploadPath);
-		if(!path.exists()) {
-			path.mkdirs();
-		}
-		
-		System.out.println("employee_profile");
-		int maxFileSize = 50*1000*1000;
-		
-		MultipartRequest multi = new MultipartRequest(request
-				, uploadPath
-				, maxFileSize
-				, "UTF-8" 
-				, new DefaultFileRenamePolicy());
-		String profile = multi.getParameter("file");
-		System.out.println("employee_profile2222222: " + profile);
-		String sign = multi.getFilesystemName("employee_sign");
-		String pwd = multi.getParameter("employee_pwd");
-		String memberFileName = multi.getFilesystemName("file");
-		
-		if(profile != null && profile != "") {
-			File cloudinaryFile = new File(uploadPath + "\\" + profile);
-			Map uploadResult = cloudinary.uploader().upload(cloudinaryFile, ObjectUtils.emptyMap());
-			String profile_done = (String) uploadResult.get("url");
-			employee.setProfile(profile_done);
-			System.out.println("아싸리비요" + employee.getProfile());
-		}
 
+		// 변경된 값이 있는지 확인하기 위한 임의의 숫자
+		int sum = -1;
 		
+		// 프로필 이미지 변경 시
+		if(employee_profile.getSize() != 0) {
+			long timeForRename = System.currentTimeMillis();
+			String realPath = request.getSession().getServletContext().getRealPath("");
+			String savePath = "resources\\uploadFiles";
+			File folder = new File(realPath+savePath);
+			if(!folder.exists()) {
+				folder.mkdirs();
+			}
+			String filePath = realPath + savePath + "\\" + timeForRename + "_" + employee_profile.getOriginalFilename();
+			employee_profile.transferTo(new File(filePath));
+			Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+					"cloud_name", "dfam8azdg",
+					"api_key", "882165332977633",
+					"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
+					"secure", true));
+			File cloudinaryFile = new File(filePath);
+			Map uploadResult = cloudinary.uploader().upload(cloudinaryFile, ObjectUtils.emptyMap());
+			String profile= (String) uploadResult.get("url");
+			System.out.println("프로필 저장 URL: " + profile);
+			
+			// 프로필 사진 cloudinary URL 경로를 세션에 담아주기
+			loginInfo.setProfile(profile);
+					
+			// cloudinary URL 경로를 DB에 업데이트 해주기
+			int result = EmployeeService.updateEmployeeProfile(loginInfo.getEmp_no(), profile);
+			
+			sum = 1;
+		}
 		
+		// 서명 이미지 변경 시
+		if(employee_sign.length() > 7) {
+			System.out.println("서명 URL: " + employee_sign);
+			
+			// 서명 URL 경로를 세션에 담아주기
+			loginInfo.setSign(employee_sign);
+			
+			// cloudinary URL 경로를 DB에 업데이트 해주기
+			int result = EmployeeService.updateEmployeeSign(loginInfo.getEmp_no(), employee_sign);
+			
+			sum = 1;
+		}
 		
-//		mv.setViewName(sign);
+		// 비밀번호 변경 시
+		if(employee_pwd.length() > 7) {
+			System.out.println("변경 예정 비밀번호: " + employee_pwd);
+			
+			// 변경 예정 비밀번호를 세센에 담아주기
+			loginInfo.setPwd(employee_pwd);
+			
+			// 비밀번호를 DB에 없데이트 해주기
+			int result = EmployeeService.updateEmployeePwd(loginInfo.getEmp_no(), employee_pwd);
+			
+			sum = 1;
+			
+			// 비밀번호가 변경되었음으로 재로그인 유도
+			rttr.addFlashAttribute("msg", "비밀번호가 변경되었습니다. 재로그인 후 이용해주세요.");
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		
+		// 변경된 값이 없다면
+		if(sum == -1) {
+			rttr.addFlashAttribute("msg", "변경된 값이 없습니다. 프로필 정보 수정 후 수정하기 버튼을 클릭해 주세요.");
+			mv.setViewName("login/login");
+			return mv;
+		}
+		
+		mv.setViewName("mypage/mypage"); // 다시 마이페이지로
 		return mv;
 	}
-	
 		
 }

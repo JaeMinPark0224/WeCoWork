@@ -209,11 +209,11 @@
  		}
         // 이메일 인증 확인
         if($("#email_btn_1").is(":visible")){
-            alert("아메일 인증을 완료해주세요.");
+            alert("이메일 인증을 완료해주세요.");
             return rt = false;
         }
         if($("#do_btn").is(":visible")){
-            alert("아메일 인증을 완료해주세요.");
+            alert("이메일 인증을 완료해주세요.");
             return rt = false;
         }
 		
@@ -223,7 +223,7 @@
 			return rt = false;
 		}	
 		if($("#email_btn_1").is(":visible")){
-            alert("아메일 인증을 완료해주세요.");
+            alert("이메일 인증을 완료해주세요.");
             return rt = false;
         }
 		if(chkPwd == false){
@@ -235,7 +235,7 @@
 			return rt = false;
 		}
 		if(chkPwdCk == false){
-			alert("비밀번호 확인내 입력 값을 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 4~20자)");
+			alert("비밀번호 확인 내 입력 값을 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 4~20자)");
 			return rt = false;
 		}
 		if(chkName == false){

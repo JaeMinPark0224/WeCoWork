@@ -60,4 +60,25 @@
 	where email = #{email}
 </select>
 
+<!-- 프로필 사진 update -->
+<update id="updateEmployeeProfile" parameterType="hashmap">
+	update tb_employee
+	set profile = #{profile}
+	where emp_no = #{emp_no}
+</update>
+
+<!-- 프로필 사진 update -->
+<update id="updateEmployeeSign" parameterType="hashmap">
+	update tb_employee
+	set sign = #{sign}
+	where emp_no = #{emp_no}
+</update>
+
+<!-- 비밀번호 update -->
+<update id="updateEmployeePwd" parameterType="hashmap">
+	update tb_employee
+	set pwd = #{pwd}
+	where emp_no = #{emp_no}
+</update>
+
 </mapper>

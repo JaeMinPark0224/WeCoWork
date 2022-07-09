@@ -112,11 +112,11 @@
 	// 최종 확인 버튼 클릭 시
 	$("#find_pwd").on("click", (function(){
 		if($("#do_btn").is(":visible")){
-            alert("아메일 인증을 완료해주세요.");
+            alert("이메일 인증을 완료해주세요.");
             return;
         }
 		if($("#email_btn_1").is(":visible")){
-            alert("아메일 인증을 완료해주세요.");
+            alert("이메일 인증을 완료해주세요.");
             return;
         }
 	}));

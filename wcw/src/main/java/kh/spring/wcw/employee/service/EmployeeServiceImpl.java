@@ -61,5 +61,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.selectRandomNum(email);
 	}
 
+	// 프로필 이미지 update
+	@Override
+	public int updateEmployeeProfile(int emp_no, String profile) {
+		return dao.updateEmployeeProfile(emp_no, profile);
+	}
+	
+	// 서명 이미지 update
+	@Override
+	public int updateEmployeeSign(int emp_no, String sign) {
+		return dao.updateEmployeeSign(emp_no, sign);
+	}
+	
+	// 비밀번호 update
+	@Override
+	public int updateEmployeePwd(int emp_no, String pwd) {
+		return dao.updateEmployeePwd(emp_no, pwd);
+	}
 	
 }

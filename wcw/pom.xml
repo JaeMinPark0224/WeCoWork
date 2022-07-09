@@ -157,7 +157,6 @@
 		    <scope>runtime</scope>
 		</dependency>		
 			
-		<!-- File uploader Cloudinary -->
 		
 		<!-- Gson -->
 		<!-- gson -->
@@ -207,11 +206,6 @@
     	</dependency>  
     	
     	<!-- File Upload -->
-		<dependency>
-		    <groupId>servlets.com</groupId>
-		    <artifactId>cos</artifactId>
-		    <version>05Nov2002</version>
-		</dependency>
        <!-- commons-fileupload -->
        <dependency>
            <groupId>commons-fileupload</groupId>
