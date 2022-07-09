@@ -41,7 +41,7 @@ CREATE TABLE TB_EMPLOYEE (
 	INTL_NO	        VARCHAR2(30)		            NOT NULL,
 	PHONE	        VARCHAR2(30)		            NOT NULL,
 	PROFILE	        VARCHAR2(600)		            NULL,
-	SIGN	        VARCHAR2(600)		            NULL,
+	SIGN	        CLOB		            NULL,
 	IP	            VARCHAR2(30)		            NOT NULL,
 	JOIN_DATE	    DATE	        DEFAULT SYSDATE	NOT NULL,
 	RESIGN_DATE	    DATE	        DEFAULT SYSDATE	NULL,
