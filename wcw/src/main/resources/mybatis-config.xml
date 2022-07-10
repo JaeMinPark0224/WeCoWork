@@ -19,6 +19,7 @@
 		<mapper resource="mappers/attendance-mapper.xml" />
 		<mapper resource="mappers/company-mapper.xml" />
 		<mapper resource="mappers/notification-mapper.xml"/>
+		<mapper resource="mappers/hr-mapper.xml"/>
 	</mappers>
 	
 	
