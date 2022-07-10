@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주간 근태 관리</title>
+<title>휴가 관리</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
 
 <style type="text/css">
@@ -125,28 +125,14 @@
 <section id="attendance_section">
 	<div id="attendance_main_wrap">
 		<div id="attendance_main_header">
-			<div id="attendance_main_menu_title">주간 근태</div>
+			<div id="attendance_main_menu_title">휴가 관리</div>
 		</div>
 		
 		<div id="attendance_main_container">
-			<div id="attendance_main_box_first" class="flexbox1">
-				<div class="font_title" id="att_month_text">기준 년월</div>
-				<input type="month" id="att_month" name="att_month" class="att_date_form">
-				<select name="week" id="week_select">
-				   	<option value="1">1주차</option>
-				    <option value="2">2주차</option>
-				    <option value="3">3주차</option>
-				    <option value="4">4주차</option>
-				    <option value="5">5주차</option>
-				 </select>
-				 <div id="startDate" class="date_div"></div>
-				 <div>~</div>
-				 <div id="endDate" class="date_div"></div>
-				<button type="submit" class="btn_format_mini_gray" id="att_date_search_btn">조회</button>
-			</div>
+			
 			<div class="attendance_main_box">
 				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">주간 근태 현황</div>
+					<div class="attendance_main_box_title">휴가 신청</div>
 				</div>
 				<div class="attendance_main_box_container">
 					
@@ -168,25 +154,21 @@
 			
 			<div class="attendance_main_box">
 				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">주간 근태 내역</div>
+					<div class="attendance_main_box_title">휴가 신청 내역</div>
 				</div>
 				<div class="attendance_main_box_container">
 					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table" id="att_appr_date_search_table">
-							<tr class="table_title">
-								<td style="width: 11%">요일</td>
-								<td style="width: 15%">날짜</td>
-								<td style="width: 17%">근무시간</td>
-								<td style="width: 21%">출근 시간</td>
-								<td style="width: 21%">퇴근 시간</td>
-								<td style="width: 15%">연장 근로 시간</td>
-							</tr>
-							
-						</table>
-						
-						<div class="charts">
-		                    <canvas id="chart1"></canvas>
-		                </div>
+						<div id="attendance_modify_grid_container">
+							<div class="font_title attendance_modify_grid_first_row">신청 일자</div>
+							<input type="date" id="vacation_req_date" name="att_appr_req_date" class="attendance_modify_grid_first_row att_date_form">
+							<div class="font_title attendance_modify_grid_first_row">휴가 기간</div>
+							<input type="date" id="vacation_start" name="att_appr_req_date" class="attendance_modify_grid_first_row att_date_form">
+							<div>~</div>
+							<input type="date" id="vacation_end" name="att_appr_req_date" class="attendance_modify_grid_first_row att_date_form">
+							<div class="font_title">신청 사유</div>
+							<input type="text" id="vacation_text">
+							<button type="submit" class="btn_format_mini" id="vacation_submit_btn">요청</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -341,26 +323,6 @@
 		return stringHMS;
 	}
 	
-/*////////////////// 차트 /////////////////// */
-const chart1 = document.getElementById('chart1').getContext('2d');
-    const myChart1 = new Chart(chart1, {
-        type: 'line',
-        data: {
-            labels: ['월', '화', '수', '목', '금', '토', '일'],
-            datasets: [{
-                label: '근무시간',
-                data: [0, 0, 0, 0, 0, 0, 0],
-                backgroundColor: '#4B4DB2',
-                borderColor: '#4B4DB2'
-                
-            }]
-        },
-        options: {
-            scales: {
-                y: { beginAtZero: true}
-            }
-        }
-    });
 
 
 /*///////////////  시계~! ///////////////////////*/

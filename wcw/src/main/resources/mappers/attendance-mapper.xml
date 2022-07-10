@@ -80,12 +80,7 @@
 	and ATT_appr_req_date between #{att_date_start} and #{att_date_end}
 </select>
 
-<!-- /////////////////주간근태///////////////// -->
-<select id="selectWeeklyAttendance" parameterType="Attendance" resultType="Attendance">
-	select t.*, (att_clock_out-att_clock_in) worktime
-	from tb_attendance t
-	where emp_no = #{emp_no}
-	and ATT_date between #{att_date_start} and #{att_date_end}
-</select>
+<!-- /////////////////월간근태///////////////// -->
+
 
 </mapper>

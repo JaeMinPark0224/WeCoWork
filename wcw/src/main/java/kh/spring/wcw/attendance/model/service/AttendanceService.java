@@ -34,7 +34,5 @@ public class AttendanceService {
 		return dao.selectApprovalAttendance(attendance);
 	}
 	
-	public List<Attendance> selectWeeklyAttendance(Attendance attendance){
-		return dao.selectWeeklyAttendance(attendance);
-	}
+	
 }

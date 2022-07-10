@@ -147,32 +147,9 @@ public class AttendanceController {
 		return mv;
 	}
 	
-	@RequestMapping(value =  "/selectWeekly", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST )
+	@RequestMapping(value =  "/selectWeekly", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String selectWeeklyAttendance(
-			Attendance attendance
-			,@RequestParam(name="att_date_start") String att_date_start
-			, @RequestParam(name="att_date_end") String att_date_end
-			, HttpSession session
-			) {
-		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
-		Date att_date_start_d = Date.valueOf(att_date_start);
-		Date att_date_end_d = Date.valueOf(att_date_end);
-		attendance.setEmp_no(loginSSInfo.getEmp_no());
-		attendance.setAtt_date_start(att_date_start_d);
-		attendance.setAtt_date_end(att_date_end_d);
-		List<Attendance> result = service.selectWeeklyAttendance(attendance);
-		
-		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
-		
-		return gsonObj.toJson(result);
-				
-	}
-	
-
-	@RequestMapping(value =  "/selectAllWeekly", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
-	@ResponseBody
-	public String selectAllWeeklyAttendance(
 			Attendance attendance
 			,@RequestParam(name="att_date_start_str") String att_date_start
 			, @RequestParam(name="att_date_end_str") String att_date_end
@@ -191,4 +168,15 @@ public class AttendanceController {
 		return gsonObj.toJson(result);
 				
 	}
+	
+///////////////////////////////////////월간 근태 관리//////////////////////////////////
+	
+	@RequestMapping("/monthly")
+	public ModelAndView viewWMonthlyAttendance(ModelAndView mv) {
+	mv.setViewName("attendance/monthly");
+	return mv;
+}
+	
+
+	
 }
