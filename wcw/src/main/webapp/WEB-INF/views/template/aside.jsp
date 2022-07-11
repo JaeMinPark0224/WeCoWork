@@ -310,7 +310,7 @@ console.log(window.innerHeight);
 
 <script type="text/javascript">
 	function openWin(f,s) { 
-		adWindow=window.open(f,s,'width=340, height=375, left=800px,top=250px,status=no,scrollbars=auto'); 
+		adWindow=window.open(f,s,'width=340, height=375, left=800px,top=250px,status=no,overflow:scroll;'); 
 		}
 </script>
 
