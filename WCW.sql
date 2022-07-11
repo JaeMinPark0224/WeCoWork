@@ -322,7 +322,8 @@ CREATE TABLE TB_VACATION (
 	VACA_COMMENT	    VARCHAR2(300)		    NOT NULL,
 	VACA_REQ_DATE	    DATE	            	NOT NULL,
 	VACA_CONFIRM	    NUMBER		            NOT NULL,
-	VACA_APPROVER	    NUMBER		            NOT NULL
+	VACA_APPROVER	    NUMBER		            NOT NULL,
+    VACA_ALLDAY         VARCHAR2(1)             NOT NULL
 );
 
 COMMENT ON COLUMN TB_VACATION.VACA_SORT IS '1. 연차휴가 2. 출산휴가 3.배우자 출산휴가 4. 생리휴가 5. 가족돌봄휴가';

@@ -135,28 +135,6 @@
 					<div class="attendance_main_box_title">휴가 신청</div>
 				</div>
 				<div class="attendance_main_box_container">
-					
-					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table" id="att_date_search_table">
-							<tr class="table_title">
-								<td style="width: 14%">사번</td>
-								<td style="width: 11%">성명</td>
-								<td style="width: 11%">부서</td>
-								<td style="width: 16%">총 근로 시간</td>
-								<td style="width: 16%">기본 근로 시간</td>
-								<td style="width: 16%">연장 근로 시간</td>
-								<td style="width: 16%">일 평균 근로 시간</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
-			
-			<div class="attendance_main_box">
-				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">휴가 신청 내역</div>
-				</div>
-				<div class="attendance_main_box_container">
 					<div class="attendance_main_box_content">
 						<div id="attendance_modify_grid_container">
 							<div class="font_title attendance_modify_grid_first_row">신청 일자</div>
@@ -165,10 +143,66 @@
 							<input type="date" id="vacation_start" name="att_appr_req_date" class="attendance_modify_grid_first_row att_date_form">
 							<div>~</div>
 							<input type="date" id="vacation_end" name="att_appr_req_date" class="attendance_modify_grid_first_row att_date_form">
+							<div class="font_title">휴가 구분</div>
+							<select name="vaca_select" id="vaca_select">
+								<option value="1">연차휴가</option>
+								<option value="2">출산휴가</option>
+								<option value="3">배우자 출산휴가</option>
+								<option value="4">생리휴가</option>
+								<option value="5">가족 돌봄 휴가</option>
+							</select>
+							<div class="font_title">전일 / 반일</div>
+							<select name="vaca_select_allday" id="vaca_select_allday">
+								<option value="1">전일</option>
+								<option value="2">반일-오전</option>
+								<option value="3">반일-오후</option>
+							</select>
 							<div class="font_title">신청 사유</div>
 							<input type="text" id="vacation_text">
 							<button type="submit" class="btn_format_mini" id="vacation_submit_btn">요청</button>
 						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="attendance_main_box">
+				<div class="attendance_main_box_top">
+					<div class="attendance_main_box_title">휴가 신청 내역</div>
+				</div>
+				<div class="attendance_main_box_container">
+					<div class="attendance_main_box_content">
+						<div class="font_title">기준 년도</div>
+						<select name="year" id="year_select">
+						</select>
+						<div class="font_title">결재 상태</div>
+						<select name="vaca_appr" id="vaca_appr">
+							<option value="0">전체</option>
+						   	<option value="1">진행중</option>
+						    <option value="2">승인</option>
+						    <option value="3">반려</option>
+						</select>
+						<div class="font_title">휴가 구분</div>
+						<select name="vaca_sort" id="vaca_sort">
+							<option value="0">전체</option>
+						   	<option value="1">연차휴가</option>
+						    <option value="2">출산휴가</option>
+						    <option value="3">배우자 출산휴가</option>
+						    <option value="4">생리휴가</option>
+						    <option value="5">가족 돌봄 휴가</option>
+						</select>
+						<table class="attendance_main_box_content_table" id="att_date_search_table">
+							<tr class="table_title">
+								<td style="width: 14%">신청일</td>
+								<td style="width: 11%">휴가 구분</td>
+								<td style="width: 11%">전일/반일</td>
+								<td style="width: 16%">시작일</td>
+								<td style="width: 16%">종료일</td>
+								<td style="width: 10%">사용일수</td>
+								<td style="width: 10%">잔여일수</td>
+								<td style="width: 12%">결재상태</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -177,196 +211,40 @@
 </section>
 <script>
 
-/* 년월, 주차 선택 후 날짜표시 */
-	
-	$("#att_month").on("input", week_input_function);
-	
-	$("#week_select").on("input", week_input_function);
-	
-	function week_input_function() {
-		if($('#att_month').val() == "") {
-			return;
-		}
-		$(".date_div").contents().filter(function(){ return this.nodeType != 1; }).remove();
-		console.log('input'); // input check
-		var dt = new Date($('#att_month').val()); // 월별 첫번째날로 date 생성
-		var weekNum = $('#week_select').val(); //원하는 주차(사용자 입력값)
-		var monthTemp = dt.getMonth(); //월 
-		var startDate;
-		var endDate;
-		if(weekNum != 1) {
-			dt.setDate(dt.getDate() + ((weekNum-1) * 7));
-			startDate = new Date(dt.getTime());
-			endDate = new Date(dt.getTime());
-			while(startDate.getDay() != 1) { // 1 = 월요일
-				startDate.setDate(startDate.getDate()-1);
-			}
-			while(endDate.getDay() != 0) {
-				endDate.setDate(endDate.getDate() + 1);
-				if(endDate.getMonth() != monthTemp) {
-					endDate.setDate(endDate.getDate() - 1);
-					break;
+/* 휴가신청 ajax */
+
+	$(vacation_submit_btn).click(function(){
+			$.ajax({
+				url: "<%=request.getContextPath()%>/vacation/insert",
+				type: "post",
+				data: {vacation_req_date:$('#vacation_req_date').val()
+					, vacation_start:$('#vacation_start').val()
+					, vacation_end:$('#vacation_end').val()
+					, vaca_select:$('#vaca_select').val()
+					, vaca_select_allday:$('#vaca_select_allday').val()
+					, vacation_text:$('#vacation_text').val()
+					, vaca_select_allday:$('#vaca_select_allday').val()
+				},
+				
+				success: function(result){
+					alert("요청이 완료되었습니다. result = " + result);
+					$('#vacation_req_date').val('');
+					$('#vaca_select').val('');
+					$('#vaca_select_allday').val('');
+					$('#vacation_text').val('');
+				},
+				error: function(error){
+					alert("요청 실패") ;
 				}
-			}
-		} else if(weekNum ==1) {
-			startDate = new Date(dt.getTime());
-			endDate = new Date(dt.getTime());
-			while(endDate.getDay() != 0) { // day = 0~6 일~토요일
-				endDate.setDate(endDate.getDate() + 1);
-			}
-		}
-/* 		console.log(endDate.toLocaleDateString());
-		var startyear = startDate.toLocaleDateString().substr(0,4);
-		var startmonth = startDate.toLocaleDateString().substr(6,1);
-		startmonth = ((startmonth) < 10) ? '0'+(startmonth) : (startmonth);
-		var startdate = startDate.toLocaleDateString().substr(8,2);
-		startdate = ((startdate) < 10) ? '0'+(startdate) : (startdate); */
-		console.log(startDate.toISOString().split('T')[0]);
-		$('#startDate').append(startDate.toISOString().split('T')[0]);
-		$('#endDate').append(endDate.toISOString().split('T')[0]);
-	}
-	
-	$("#att_date_search_btn").click(function(){
-		$(".table_title").nextAll().remove();
-		$.ajax({
-			url: "<%=request.getContextPath()%>/attendance/selectWeekly",
-			type: "post",
-			data: {att_date_start_str:$('#startDate').text()
-				, att_date_end_str:$('#endDate').text()} ,
-			dataType:"json",
-			success: function(result){
-				console.log(result);
-				var day = ['일', '월', '화', '수', '목', '금', '토'];
-				var html;
-				var extendtime = 144000000;
-				var worktimetotal = 0;
-				for(var i = 0; i < result.length; i++){
-					var vo = result[i];
-					if(vo.att_clock_out != null) {
-						var worktimedaily = new Date(vo.att_clock_out).getTime()-new Date(vo.att_clock_in).getTime(); 
-					} else {
-						worktimedaily = 0;
-					}
-					worktimetotal = worktimetotal + worktimedaily;  
-					html = "";
-					html += '<tr class="table_content_white">';
-                    html += '<td >'+day[new Date(vo.att_date).getDay()]+'</td>';
-                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
-                    if(vo.att_clock_out != null) {
-	                    html += '<td >'+ tohhmmss(worktimedaily)+'</td>';
-                    } else {
-                    	html += '<td >'+ '근무중'+'</td>';
-                    }
-                    html += '<td >'+vo.att_clock_in+'</td>';
-                    html += '<td >';
-                    if(vo.att_clock_out == null) {
-                    	html += "-";}
-                    else{
-                    	html += vo.att_clock_out;
-                    }
-               		html += '</td>';
-                    html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
-                    html += '</tr>';
-                    $('#att_appr_date_search_table').append(html);
-				}
-				html = "";
-				html += '<tr class="table_content_white">';
-                html += '<td >'+'${loginSSInfo.emp_no}'+'</td>';
-                html += '<td >'+'${loginSSInfo.name}'+'</td>';
-                html += '<td >'+'${loginSSInfo.dept_name}'+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal)+'</td>';
-                html += '<td >'+'40시간'+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal/((result.length == 0)?1:result.length))+'</td>';
-                html += '</tr>';
-                $('#att_date_search_table').append(html);
-                
-               	var worktimearray = [0, 0, 0, 0, 0, 0, 0];
-                for(var i = 0; i < 6; i++){
-                	var worktimedaily = 0;
-                	if(result[i] != undefined) {
-	                	if(result[i].att_clock_out != null) {
-							worktimedaily = new Date(result[i].att_clock_out).getTime()-new Date(result[i].att_clock_in).getTime(); 
-							worktimedaily = worktimedaily / 3600000;
-						} else {
-							worktimedaily = 0;
-						}
-	                	var dayIndex = new Date(result[i].att_date).getDay();
-	                	if(dayIndex == 0) {
-	                		dayIndex = 7;
-	                	}
-	                	worktimearray[dayIndex-1] = worktimedaily; 
-                	}
-                }
-                for(var i = 0; i < 6; i++){
-	               	myChart1.data.datasets[0].data[i] = worktimearray[i];m
-                }
-               	myChart1.update();
-			},
-			error: function(error){
-				alert(error); 
-			}
+			});
 		});
-	});
-	// 숫자를 hh:mm:ss로 바꾸는 함수
-	function tohhmmss(num) {
-		var stringHMS = '';
-		num = num / 1000;
-		var hh = Math.floor(num/3600);
-		var mm = Math.floor((num - (hh * 3600))/60);
-		var ss = num - (hh * 3600) - (mm * 60);
-		stringHMS = hh + '시간 ' + mm + "분 " + ss +'초';
-		if(num < 0) {
-			stringHMS = "-";
-		}
-
-		return stringHMS;
+		
+	var joinYear = '${loginSSInfo.join_date}'.substr(0,4);
+	joinYear = 2017;
+	var currentYear = (new Date()).getFullYear();
+	for(var i = currentYear; i >= Number(joinYear); i--) {
+		$('#year_select').append('<option value="'+i+'">'+i+'년</option>');
 	}
-	
-
-
-/*///////////////  시계~! ///////////////////////*/
-var clockTarget = document.getElementById("clock");
-
-function clock() {
-    var date = new Date();
-    // date Object를 받아오고 
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    month = ((month+1) < 10) ? '0'+(month+1) : (month+1);
-    // 달을 받아옵니다 
-    var clockDate = date.getDate();
-    clockDate = (clockDate < 10) ? '0'+clockDate : clockDate;
-    // 몇일인지 받아옵니다  
-    var week = ['일', '월', '화', '수', '목', '금', '토'];
-    // 요일은 숫자형태로 리턴되기때문에 미리 배열을 만듭니다. 
-    var hours = date.getHours();
-    hours = (hours < 10) ? '0'+hours : hours;
-    // 시간을 받아오고 
-    var minutes = date.getMinutes();
-    minutes = (minutes < 10) ? '0'+minutes : minutes;
-    // 분도 받아옵니다.
-    var seconds = date.getSeconds();
-    seconds = (seconds < 10) ? '0'+seconds : seconds;
-    // 초까지 받아온후 
-    $("#clock").text(year+'-'+month+'-'+ clockDate + ' / '  + hours + ':' + minutes+':'+seconds);
-    //':${minutes < 10 ? '0${minutes }'  : minutes }:${seconds < 10 ? '0${seconds }'  : seconds }'
-    //clockTarget.innerText = '${month+1}월 ${clockDate}일 ${week[day]}요일' +
-    //'${hours < 10 ? '0${hours}' : hours}:${minutes < 10 ? '0${minutes }'  : minutes }:${seconds < 10 ? '0${seconds }'  : seconds }';
-    // 월은 0부터 1월이기때문에 +1일을 해주고 
-    // 시간 분 초는 한자리수이면 시계가 어색해보일까봐 10보다 작으면 앞에0을 붙혀주는 작업을 3항연산으로 했습니다. 
-}
-
-function init() {
-	clock();
-	// 최초에 함수를 한번 실행시켜주고 
-	setInterval(clock, 1000);
-	// setInterval이라는 함수로 매초마다 실행을 해줍니다.
-	// setInterval은 첫번째 파라메터는 함수이고 두번째는 시간인데 밀리초단위로 받습니다. 1000 = 1초 
-}
-
-init();
-
 
 </script>
 </body>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Vacation">
+<!-- 	
+	VACA_NO            NOT NULL VARCHAR2        
+	EMP_NO             NOT NULL NUMBER        
+	VACA_SORT          NOT NULL VARCHAR2(1)   
+	VACA_START         NOT NULL DATE          
+	VACA_END           NOT NULL DATE          
+	VACA_CNT           NOT NULL NUMBER        
+	VACA_COMMENT       NOT NULL VARCHAR2(300) 
+	VACA_REQ_DATE      NOT NULL DATE          
+	VACA_CONFIRM       NOT NULL NUMBER        
+	VACA_APPROVER      NOT NULL NUMBER    
+	--> 
+	
+<insert id="insertVacation">
+	insert into tb_vacation(VACA_NO, EMP_NO
+	, VACA_SORT, VACA_START, VACA_END
+	, VACA_CNT, VACA_COMMENT, VACA_REQ_DATE
+	, VACA_CONFIRM, VACA_APPROVER, vaca_allday
+	) values(
+	(#{emp_no}||#{vaca_req_date}), #{emp_no}
+	, #{vaca_sort}, #{vaca_start}, #{vaca_end}
+	, #{vaca_cnt}, #{vaca_comment}, #{vaca_req_date}
+	, 1, 100, #{vaca_allday}
+	)
+</insert>
+<select id="selectVacation">
+	select * from tb_vacation
+	where emp_no = #{emp_no}
+</select>
+
+</mapper>
