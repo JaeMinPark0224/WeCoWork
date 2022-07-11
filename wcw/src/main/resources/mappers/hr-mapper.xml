@@ -4,7 +4,27 @@
 
 <!-- 직원 리스트 selct -->
 <select id="selectEmployeeList" resultType="Employee">
-	
+	select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no
+	from tb_employee e 
+		join tb_department d using(dept_no)
+    	join tb_job_title j using(job_title_no)
+    order by e.join_date desc
+</select>
+
+<select id="selectEmployeeListFilter" resultType="Employee" parameterType="string">
+	select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no
+	from tb_employee e 
+		join tb_department d using(dept_no)
+    	join tb_job_title j using(job_title_no)
+    	<if test='selectVal.equals("no")'>
+    		order by e.emp_no
+    	</if>
+    	<if test='selectVal.equals("date")'>
+    		order by e.join_date desc
+    	</if>
+    	<if test='selectVal.equals("name")'>
+    		order by e.name desc
+    	</if>	
 </select>
 
 </mapper>
