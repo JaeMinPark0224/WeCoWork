@@ -21,8 +21,19 @@ time, mark, audio, video,button {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;
 	text-decoration: none;
+}
+a:link {
+	text-decoration: none;	
+}
+a:visited {
+	text-decoration: none;	
+}
+a:hover {
+	text-decoration: none;	
+}
+a:active {
+	text-decoration: none;	
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
