@@ -147,5 +147,24 @@ public class HrController {
 		return gson.toJson(result);
 	}
 
-
+	@PostMapping(value= "/employee/update", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String updateEmployee(
+			HttpSession session
+			, @RequestParam(name="emp_no", required = false) String e_no_str
+			, @RequestParam(name="dept_name", required = false) String dept_name
+			, @RequestParam(name="job_title", required = false) String job_title
+			, @RequestParam(name="intl_no", required = false) String intl_no_str
+			, @RequestParam(name="resign_yn", required = false) String resign_yn) {
+		
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		int cp_no = loginInfo.getCp_no();
+		
+		int e_no = Integer.parseInt(e_no_str);
+		int intl_no = Integer.parseInt(intl_no_str);
+		
+		int result_int = hrService.updateEmployee(cp_no, e_no, dept_name, job_title, intl_no, resign_yn);
+		String result = Integer.toString(result_int);
+		return result;
+	}
 }

@@ -147,6 +147,9 @@
 	</div>
 </aside>
 <script>
+	$("#logo").on("click", function(){
+		location.href="<%= request.getContextPath()%>/";
+	})
 	$("#logout_btn").on("click", function(){
 		location.href="<%= request.getContextPath()%>/logout";
 	})

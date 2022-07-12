@@ -47,5 +47,11 @@ public class HrServiceImpl implements HrService {
 	public List<String> selectJobList(int cp_no) {
 		return dao.selectJobList(cp_no);
 	}
+	
+	// 직원 정보 업데이트
+	@Override
+	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, int intl_no, String resign_yn) {
+		return dao.updateEmployee(cp_no, e_no, dept_name, job_title, intl_no, resign_yn);
+	}
 		
 }

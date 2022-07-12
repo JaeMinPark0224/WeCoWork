@@ -77,7 +77,7 @@
             <select id="modal_select_dept">
             	<c:if test="${not empty deptList}">
             		<c:forEach items="#{deptList}" var="deptList">
-            			<option value="${deptList}">${deptList}</option>
+            			<option class="deptList" value="${deptList}">${deptList}</option>
             		</c:forEach>
             	</c:if>	
             </select>
@@ -89,26 +89,28 @@
             <select id="modal_select_job">
                 <c:if test="${not empty jobList}">
             		<c:forEach items="#{jobList}" var="jobList">
-            			<option value="${jobList}">${jobList}</option>
+            			<option class="jobList" value="${jobList}">${jobList}</option>
             		</c:forEach>
             	</c:if>	
             </select>
             <span class="modal_title">내선번호</span>
-            <input type="text" id="modal_text_intl" value="안녕">
+            <input type="text" id="modal_text_intl" value="">
             <span class="modal_title">퇴사 여부</span>
             <select id="modal_select_resign">
-                <option value="N"> N</option>
+                <option value="N" > N</option>
                 <option value="Y"> Y</option>
             </select>
+            <input type="hidden" value="" id="e_no">
         </div>
         <hr>
         <div id="modal_btn">
-            <input type="button" value="취소" id="modal_cancel">
-            <input type="button" value="확인" id="modal_edit">
+        	<input type="button" value="수정" id="modal_edit">
+            <input type="button" value="확인" id="modal_cancel">
         </div>
     </div>
 </section>
 <script>
+
 // 모달 내 취소버튼 클릭 시 모달 없애기
 	$("#modal_cancel").click(function(){
 		$("#modal").hide();
@@ -197,20 +199,28 @@
 	
 // 사원 상세 정보 모달 띄우기 & 정보 조회
 	$(".tb_read").click(function(){
-		var empNo = $(this).nextAll(".empNo").val();
-		console.log($(this).nextAll(".empNo").val());
-		
 		$.ajax({
 			url: "<%=request.getContextPath()%>/hr/employee/select",
 			type: "post",
 			data: {empNo: $(this).nextAll(".empNo").val()},
 			dataType: "json",
 			success: function(result){
-				console.log(result);
+				// 성명
+				$('#e_name').text(result.name);
+				// 부서
 				$('#modal_select_dept').val(result.dept_name).prop('selected', true);
+				// 이메일
+				$('#e_email').text(result.email);
+				// 연락처
+				$('#e_phone').text(result.phone);
+				// 직책
 				$('#modal_select_job').val(result.job_title).prop('selected', true);
+				// 내선번호
 				$('#modal_text_intl').val(result.intl_no);
+				// 퇴사 현황
 				$('#modal_select_resign').val(result.resign_yn).prop('selected', true);
+				// 직원 번호
+				$('#e_no').val(result.emp_no);
 			},
 			error: function(result){
 				console.log("직원 상세 정보 ajax 오류");
@@ -220,12 +230,48 @@
 		$("#modal").show();
 	})
 	
-// 수정하기 클릭 시
+	
+// 모달 내 수정버튼 클릭 시
 	$("#modal_edit").on("click", function(){
 		
-	})
+		//내선번호 유효성 체크
+		var intl_no_chk = false;
+		var intlVal = $("#modal_text_intl").val();
+		var intl = /^[0-9]{1,30}$/;	
+		if(!intl.test(intlVal)){
+			intl_no_chk = false;
+		} else {
+			intl_no_chk = true;
+		}
 
-	
+		if($('#modal_text_intl').val()== null || $('#modal_text_intl').val()==""){
+			alert("직원의 내선번호 입력 후 수정해 주세요.");
+			return;
+		}
+		if(intl_no_chk == false){
+			alert("내선번호는 숫자만 입력 가능합니다. 다시 입력해 주세요.");
+			return;
+		}
+		$.ajax({
+			url: "<%=request.getContextPath()%>/hr/employee/update",
+			type: "post",
+			data: {emp_no:$('#e_no').val(),
+					dept_name:$('#modal_select_dept').val(), 
+					job_title:$('#modal_select_job').val(),
+					intl_no:$('#modal_text_intl').val(),
+					resign_yn: $('#modal_select_resign').val()},
+			success: function(result){
+				if(result == 3){
+					alert("직원 정보가 수정되었습니다.");
+					$("#modal").hide();
+					location.href="<%= request.getContextPath() %>/hr/employee/list";
+				}
+			},
+			error: function(result){
+				console.log("수정 실패");
+			}
+		})
+	})
 </script>
 </body>
 </html>

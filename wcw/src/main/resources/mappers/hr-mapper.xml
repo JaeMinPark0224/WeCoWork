@@ -34,7 +34,7 @@
 
 <!-- 직원 상세 정보 select -->
 <select id="selectEmployee" resultType="Employee" parameterType="hashmap">
-	select e.name, d.dept_name, e.email, e.phone, j.job_title, e.intl_no, e.resign_yn
+	select e.name, d.dept_name, e.email, e.phone, j.job_title, e.intl_no, e.resign_yn, e.emp_no
 	from tb_employee e
         join tb_department d using(dept_no) 
 		join tb_company c using(cp_no)
@@ -59,4 +59,33 @@
 	where cp_no = #{cp_no}
 	order by job_level desc
 </select>
+
+<!-- 직원 정보 update / 내선번호 & 퇴사 여부-->
+<update id="updateEmployee1" parameterType="hashmap">
+update (select e.intl_no, e.resign_yn
+        from tb_employee e
+            join tb_department d using(dept_no)
+            join tb_job_title j using(job_title_no)
+        where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
+    set intl_no = #{intl_no},
+        resign_yn = #{resign_yn}
+</update>
+<update id="updateEmployee2" parameterType="hashmap">
+update (select d.dept_name
+        from tb_employee e
+            join tb_department d using(dept_no)
+            join tb_job_title j using(job_title_no)
+        where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
+    set dept_name = #{dept_name}
+</update>
+<update id="updateEmployee3" parameterType="hashmap">
+update (select d.dept_name, j.job_title, e.intl_no, e.resign_yn
+        from tb_employee e
+            join tb_department d using(dept_no)
+            join tb_job_title j using(job_title_no)
+        where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
+    set job_title = #{job_title}
+</update>
+
+
 </mapper>
