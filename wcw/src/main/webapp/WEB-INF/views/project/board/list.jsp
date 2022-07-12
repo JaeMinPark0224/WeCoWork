@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/project/project.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
 <%@ include file="/WEB-INF/views/template/csslink.jsp" %>
@@ -44,26 +45,15 @@
 			<div class="project_board_list_flex_box_header">상단고정</div>
 			<div class="project_board_list_flex_box_body">
 				<div class="project_board_list_flex_box_body_container_fix">
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
+					<c:forEach items="${boardFixList }" var="board">
+						<div class="project_board_list_gird_rows" pr_no = "${board.pb_no }">
+							<input class="project_board_num" type="hidden" value="${board.pb_no }">
+							<div class="project_board_fix"><img class="project_board_fix_btn" fixChk="Y" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>
+							<div class="project_board_title"><span class="project_board_title_span">${board.pb_title}</span></div>
+							<div class="project_board_writer">${board.name } ${board.job_title }</div>
+							<div class="project_board_date">${fn:substring(board.pb_date,0,10) }</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -71,31 +61,109 @@
 			<div class="project_board_list_flex_box_board_header">게시물</div>
 			<div class="project_board_list_flex_box_board_body">
 				<div class="project_board_list_flex_box_body_container_fix">
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-blank.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-blank.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-blank.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-blank.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_fix"><img class="project_board_fix_btn" src="<%= request.getContextPath()%>/resources/images/thumbtack-blank.svg"></div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
+					<c:forEach items="${boardList }" var="board">
+						<div class="project_board_list_gird_rows" pr_no = "${board.pb_no }">
+							<input class="project_board_num" type="hidden" value="${board.pb_no }">
+							<c:if test="${board.board_fix eq 'Y' }">
+								<div class="project_board_fix"><img class="project_board_fix_btn" fixChk="Y" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>
+							</c:if>
+							<c:if test="${board.board_fix eq 'N' }">
+								<div class="project_board_fix"><img class="project_board_fix_btn" fixChk="N" src="<%= request.getContextPath()%>/resources/images/thumbtack-blank.svg"></div>
+							</c:if>
+							<div class="project_board_title"><span class="project_board_title_span">${board.pb_title}</span></div>
+							<div class="project_board_writer">${board.name } ${board.job_title }</div>
+							<div class="project_board_date">${fn:substring(board.pb_date,0,10) }</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
+		</div>
+		<div id="project_board_insert_btn_wrap">
+			<button type="button" id="project_board_insert_btn">글 작성</button>
 		</div>
 	</div>
 	</div>
 </section>
+<script type="text/javascript">
+	$("#project_board_insert_btn").on('click', function() {
+		location.href = "<%= request.getContextPath()%>/project/board/insert"+$(location).attr("search");
+	});
+	
+	$(".project_board_title_span").on("click", titleClick);
+	
+	function titleClick() {
+		var pb_no = $(this).parent().siblings('.project_board_num').val();
+		location.href = "<%= request.getContextPath()%>/project/board/read?project=${pr_no}&no="+pb_no;
+	}
+	
+	$('.project_board_fix_btn').on('click', fixBtnFnc);
+	
+	function fixBtnFnc() {
+		console.log("project_board_fix_btn click");
+		var pb_no = $(this).parent().siblings('.project_board_num').val();
+		var fixChk = $(this).attr("fixChk");
+		var $this = $(this);
+		var urlStr = "";
+		if(fixChk == 'Y') {
+			urlStr = "<%= request.getContextPath()%>/project/board/fix/delete";
+		} else if(fixChk == 'N') {
+			urlStr = "<%= request.getContextPath()%>/project/board/fix/insert";	
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: urlStr,
+			data: {
+				pb_no: pb_no
+			},
+			success: function(result){
+				if(result == 1) {
+					if(fixChk == 'Y') {
+						var $temp = $('.project_board_list_flex_box_body_container_fix').eq(1).children('[pr_no='+pb_no+']');
+						$temp.find('.project_board_fix_btn').attr('src', "<%= request.getContextPath()%>/resources/images/thumbtack-blank.svg");
+						$temp.find('.project_board_fix_btn').attr('fixChk', 'N');
+					} else if(fixChk == 'N') {
+						var $temp = $('.project_board_list_flex_box_body_container_fix').eq(1).children('[pr_no='+pb_no+']');
+						$temp.find('.project_board_fix_btn').attr('src', "<%= request.getContextPath()%>/resources/images/thumbtack-full.svg");
+						$temp.find('.project_board_fix_btn').attr('fixChk', 'Y');
+					}
+					$.ajax({
+						type: "POST",
+						url: "<%= request.getContextPath()%>/project/board/fix/select",
+						data: {
+							pr_no : '${pr_no}'
+						},
+						dataType: 'json',
+						success: function(result) {
+							console.log(result);
+							var $container = $('.project_board_list_flex_box_body_container_fix').eq(0);
+							$container.empty();
+							for (var i = 0; i < result.length; i++) {
+								var board = result[i]; 
+								$container.append('<div class="project_board_list_gird_rows" pr_no = "'+board.pb_no+'"></div>');
+								var $tempbox = $('.project_board_list_gird_rows[pr_no='+board.pb_no+']').eq(0);
+								$tempbox.append('<input class="project_board_num" type="hidden" value="'+board.pb_no +'">');
+								$tempbox.append('<div class="project_board_fix"><img class="project_board_fix_btn" fixChk="Y" src="<%= request.getContextPath()%>/resources/images/thumbtack-full.svg"></div>');
+								$tempbox.append('<div class="project_board_title"><span class="project_board_title_span">'+board.pb_title+'</span></div>');
+								$tempbox.append('<div class="project_board_writer">'+board.name+' '+board.job_title +'</div>');
+								$tempbox.append('<div class="project_board_date">'+board.pb_date+'</div>');
+							}
+							$('.project_board_fix_btn').off('click');
+							$('.project_board_fix_btn').on('click', fixBtnFnc);
+							$(".project_board_title_span").off("click");
+							$(".project_board_title_span").on("click", titleClick);
+						},
+						error: function(request, status, error) {
+							alert('fail');
+						}
+					});
+				}
+			},
+			error: function(request, status, error){
+				alert('fail');
+			}
+		});
+	}
+</script>
 </body>
 </html>

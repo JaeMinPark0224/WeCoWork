@@ -99,8 +99,8 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">프로젝트<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content" id="project_list">프로젝트 리스트</div>
+						<div class="left_menu_2depth_content" id="project_insert">프로젝트 생성</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -269,7 +269,6 @@
 </aside>
 <script>
 	$("#favorite_btn").on('mouseenter', function() {
-		console.log("test1");
 		$(this).css({
 			"color": "#4B4DB2"
 		});
@@ -282,15 +281,10 @@
 	});
 </script>
 <script>
-console.log($(window).height());
-console.log(window.innerHeight);
 
 	$('#left_menu_scroll').css('height', $(window).height() - $('#left_menu_scroll').offset().top);
 	$(window).resize(function() {
 		$('#left_menu_scroll').css('height', $(window).height() - $('#left_menu_scroll').offset().top);
-		console.log(window.innerHeight - $('#left_menu_scroll').offset().top);
-		console.log(window.innerHeight);
-		console.log("test1");
 	});
 </script>
 <script>
@@ -299,6 +293,18 @@ console.log(window.innerHeight);
 	});
 	$('#attendance_weekly').click(function() {
 		location.href = '<%= request.getContextPath()%>/attendance/weekly';
+	});
+	$('#project_list').click(function() {
+		location.href = '<%= request.getContextPath()%>/project/list';
+	});
+	$('.profile_circle').click(function() {
+		location.href = '<%= request.getContextPath()%>/mypage';
+	})
+	$('#project_insert').click(function() {
+		location.href = '<%= request.getContextPath()%>/project/insert';
+	});
+	$('#logo').click(function() {
+		location.href = '<%= request.getContextPath()%>/';
 	});
 </script>
 <script>
@@ -310,7 +316,7 @@ console.log(window.innerHeight);
 
 <script type="text/javascript">
 	function openWin(f,s) { 
-		adWindow=window.open(f,s,'width=340, height=375, left=800px,top=250px,status=no,overflow:scroll;'); 
+		adWindow=window.open(f,s,'width=340, height=375, left=800px,top=250px,status=no,scrollbars=auto'); 
 		}
 </script>
 

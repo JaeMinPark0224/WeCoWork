@@ -16,4 +16,29 @@
 		<div class="project_main_tab">파일</div>
 		<div class="project_main_tab">참여자</div>
 	</div>
+	<script>
+		$('.project_main_tab').on('click', function() {
+			console.log($(this).index());
+			switch($(this).index()) {
+			case 0:
+				location.href = "<%= request.getContextPath()%>/project/board/list"+$(location).attr("search");
+				break;
+			case 1:
+				location.href = "<%= request.getContextPath()%>/project/work/list"+$(location).attr("search");
+				break;
+			case 2:
+				alert("할 일");
+				break;
+			case 3:
+				alert("캘린더");
+				break;
+			case 4:
+				alert("파일");
+				break;
+			case 5:
+				alert("참여자");
+				break;
+			}
+		});
+	</script>
 </div>

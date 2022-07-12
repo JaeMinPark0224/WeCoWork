@@ -19,10 +19,10 @@
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 		<div id="project_main_container">
 			<div id="project_main_box_title">
-				<div id="project_main_box_title_title">프로젝트 제목</div>
-				<div id="project_main_box_title_content"></div>
-				<div id="project_main_box_title_company">머슬톡톡</div>
-				<div id="project_main_box_title_participant"></div>
+				<div id="project_main_box_title_title">${project.pr_title }프로젝트 제목</div>
+				<div id="project_main_box_title_content">${project.pr_content }</div>
+				<div id="project_main_box_title_company">${project.cp_name }</div>
+				<div id="project_main_box_title_participant">${project}</div>
 			</div>
 			<div class="project_main_box">
 				<div class="project_main_box_top">

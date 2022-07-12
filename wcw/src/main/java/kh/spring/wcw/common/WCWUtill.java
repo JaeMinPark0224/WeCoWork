@@ -1,8 +1,12 @@
 package kh.spring.wcw.common;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
+
+import kh.spring.wcw.employee.domain.Employee;
 
 @Component
 public class WCWUtill {
@@ -26,5 +30,13 @@ public class WCWUtill {
 //	    }
 
 	    return ip;
+	}
+	
+	public boolean loginChk(HttpSession session) {
+		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
+		if(loginSSInfo == null) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -11,6 +11,7 @@
 		<typeAlias type="kh.spring.wcw.attendance.domain.Attendance" alias="Attendance"/>
 		<typeAlias type="kh.spring.wcw.company.domain.Company" alias="Company"/>
 		<typeAlias type="kh.spring.wcw.notification.domain.Notification" alias="Notification"/>
+		<typeAlias type="kh.spring.wcw.project.domain.Project" alias="Project"/>
 		<typeAlias type="kh.spring.wcw.vacation.domain.Vacation" alias="Vacation"/>
 	</typeAliases>
 	
@@ -20,6 +21,7 @@
 		<mapper resource="mappers/attendance-mapper.xml" />
 		<mapper resource="mappers/company-mapper.xml" />
 		<mapper resource="mappers/notification-mapper.xml"/>
+		<mapper resource="mappers/project-mapper.xml"/>
 		<mapper resource="mappers/hr-mapper.xml"/>
 		<mapper resource="mappers/vacation-mapper.xml"/>
 		<mapper resource="mappers/chat-mapper.xml"/>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Project">
+	<insert id="insertProject" parameterType="Project">
+		insert all 
+		into tb_project
+		(PR_NO, PR_TITLE
+		, PR_CONTENT , PR_OPEN_YN
+		, PR_JOIN_OPEN, PR_DATE
+		, CP_NO, PR_COMPLETE_YN)
+		values
+		((SELECT nvl(max(PR_NO),0)+1 from tb_project), #{pr_title}
+		, #{pr_content}, #{pr_open_yn}
+		, #{pr_join_open}, default
+		, (select cp_no
+   			from tb_employee te
+    		join tb_department td
+    		on te.dept_no = td.dept_no
+    		where te.emp_no = #{emp_no})
+		, default)
+		into tb_project_emp
+		(PR_NO, EP_NO
+		, PR_EMP_DATE, PR_EMP_AUTHORITY)
+		values
+		((SELECT nvl(max(PR_NO),0)+1 from tb_project), #{emp_no}
+		, default, 'A')
+		select * from dual
+	</insert>
+	
+	<insert id="insertProjectEmp" parameterType="Project">
+		insert into tb_project
+		(PR_NO, PR_TITLE
+		, PR_CONTENT , PR_OPEN_YN
+		, PR_JOIN_OPEN, PR_DATE
+		, CP_NO, PR_COMPLETE_YN)
+		values
+		((SELECT nvl(max(PR_NO),0)+1 from tb_project), #{pr_title}
+		, #{pr_content}, #{pr_open_yn}
+		, #{pr_join_open}, default
+		, (select cp_no
+   			from tb_employee te
+    		join tb_department td
+    		on te.dept_no = td.dept_no)
+		, default)
+	</insert>
+	
+	<select id="selectListProject" parameterType="_int" resultType="Project">
+		select tp.*, ta.pr_fav from tb_project tp
+		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
+		    on tp.pr_no = ta.pr_fav
+		    where cp_no = (select cp_no
+		    from tb_department td
+		    join tb_employee te
+		    on td.dept_no = te.dept_no
+		    where te.emp_no = #{emp_no})
+		    order by tp.pr_date desc
+	</select>
+	
+	<insert id="insertFavoriteProject" parameterType="Project">
+		insert into tb_project_favorite
+			(pr_no, emp_no)
+			values
+			(#{pr_no}, #{emp_no})
+	</insert>
+	
+	<delete id="deleteFavoriteProject" parameterType="Project">
+		delete from tb_project_favorite
+			where pr_no = #{pr_no}
+			and emp_no = #{emp_no}
+	</delete>
+	
+	<select id="selectProject" parameterType="_int" resultType="Project">
+		select tp.*, cp_name from tb_project tp
+        join tb_company tc
+        on tp.cp_no = tc.cp_no
+		where pr_no = #{pr_no}
+	</select>
+	
+	<select id="selectEmpProject" parameterType="hashmap" resultType="Project">
+		select pr_no, ep_no emp_no from tb_project_emp where pr_no = #{pr_no} and ep_no = #{emp_no}
+	</select>
+	
+	<select id="selectListBoardProject" parameterType="Project" resultType="Project">
+    select tpb.*, te.name, tjt.job_title, nvl2(ta.pb_no, 'Y', 'N') board_fix
+		    from tb_project_board  tpb
+		    join tb_employee te
+		    on tpb.emp_no = te.emp_no
+		    join tb_job_title tjt
+		    on te.job_title_no = tjt.job_title_no
+            left outer join (select pb_no, emp_no from tb_project_board_fix where emp_no = #{emp_no}) ta
+            on tpb.pb_no = ta.pb_no
+		    where pr_no = #{pr_no}
+	</select>
+	
+	<select id="selectListBoardFixProject" parameterType="Project" resultType="Project">
+    select tpb.*, te.name, tjt.job_title, nvl2(ta.pb_no, 'Y', 'N') board_fix
+		    from tb_project_board  tpb
+		    join tb_employee te
+		    on tpb.emp_no = te.emp_no
+		    join tb_job_title tjt
+		    on te.job_title_no = tjt.job_title_no
+            join (select pb_no, emp_no from tb_project_board_fix where emp_no = #{emp_no}) ta
+            on tpb.pb_no = ta.pb_no
+		    where pr_no = #{pr_no}
+	</select>
+	
+	<insert id="insertDoBoardProject" parameterType="Project">
+		insert into tb_project_board
+		(PB_NO, PR_NO
+		, PB_TITLE, PB_CONTENT
+		, EMP_NO, PB_DATE)
+		values
+		((SELECT nvl(max(PB_NO),0)+1 from tb_project_board), #{pr_no}
+		, #{pb_title}, #{pb_content}
+		, #{emp_no}, default)
+	</insert>
+	
+	<select id="selectOneBoardProject" parameterType="_int" resultType="Project">
+		select tpb.*, te.name, tjt.job_title, td.dept_name
+			from tb_project_board tpb
+            join tb_employee te
+            on tpb.emp_no = te.emp_no
+            join tb_job_title tjt
+            on te.job_title_no = tjt.job_title_no
+            join tb_department td
+            on te.dept_no = td.dept_no
+			where pb_no = #{pb_no}
+	</select>
+	
+	<insert id="insertBoardFixProject" parameterType="Project">
+		insert into tb_project_board_fix
+		(pb_no, emp_no)
+		values
+		(#{pb_no}, #{emp_no})
+	</insert>
+	
+	<delete id="deleteBoardFixProject" parameterType="Project">
+		delete from tb_project_board_fix
+		where pb_no = #{pb_no}
+		and emp_no = #{emp_no}
+	</delete>
+</mapper>

@@ -21,6 +21,7 @@
 	width: 147px;
 	display: block;
 	margin: 65px auto 65px;
+	cursor: pointer;
 }
 
 #login_info {
@@ -34,6 +35,7 @@
 	border-radius: 50%;
 	background-color: rgb(230, 230, 230);
 	margin: 0 auto 20px;
+	cursor: pointer;
 }
 
 .company_info {
