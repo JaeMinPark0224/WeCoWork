@@ -39,20 +39,16 @@ import kh.spring.wcw.mail.Mail;
 public class MainController {
 	
 	@Autowired
-	private EmployeeService EmployeeService;
+	private EmployeeService empService;
 	@Autowired
-	private CompanyService CompanyService;
-	@Autowired
-	private ServletContext context;
-//	@Autowired
-//	private fileUpload commonFile;
+	private CompanyService cpService;
 	
 	// 메인 페이지로 이동
 	@GetMapping("/")
 	public ModelAndView readMain(ModelAndView mv
 			, HttpSession session) {
 		if(session.getAttribute("loginSSInfo") == null) {
-			mv.setViewName("redirect:/login"); //TODO 첫화면 만들예정
+			mv.setViewName("redirect:/login"); //TODO 첫화면으로
 			return mv;
 		}
 		mv.setViewName("main/main");
@@ -80,10 +76,10 @@ public class MainController {
 		Company result2 = null;
 		
 		// 직원 로그인
-		Employee result = EmployeeService.selectEmployee(email, pwd);
+		Employee result = empService.selectEmployee(email, pwd);
 		if(result == null) {
 			// 회사 로그인
-			result2 = CompanyService.selectCompany(email, pwd);
+			result2 = cpService.selectCompany(email, pwd);
 			if(result2 == null) {
 				rttr.addFlashAttribute("msg", "로그인 실패. 입력값 확인 후 다시 시도해 주세요.");
 				mv.setViewName("redirect:/login");
@@ -186,24 +182,24 @@ public class MainController {
 	public String insertRandomNum(
 			@RequestParam(name="employeeEmail") String email) throws Throwable{
 
-		String randomNum = EmployeeService.selectRandomNum(email);
+		String randomNum = empService.selectRandomNum(email);
 		
 		// 해당 이메일이 테이블에 없다면 새로운 난수 insert
 		if(randomNum == null) {
-			int result = EmployeeService.insertRandomNum(email);
+			int result = empService.insertRandomNum(email);
 			if(result > 0) {
 				// 난수 번호 찾기
-				randomNum = EmployeeService.selectRandomNum(email);
+				randomNum = empService.selectRandomNum(email);
 				// 난수 번호를 메일로 보내기
 				Mail.sendMailForPwd(email, randomNum);
 			}
 		}
 		// 해당 이메일이 테이블에 있다면 기존 난수 update
 		else {
-			int result2 = EmployeeService.updateRandomNum(email);
+			int result2 = empService.updateRandomNum(email);
 			if(result2 > 0) {
 				// 난수 번호 찾기
-				randomNum = EmployeeService.selectRandomNum(email);
+				randomNum = empService.selectRandomNum(email);
 				// 난수 번호를 메일로 보내기
 				Mail.sendMailForPwd(email, randomNum);
 			}
@@ -219,7 +215,7 @@ public class MainController {
 			
 		int result = -1;
 
-		return result = EmployeeService.deleteRandomNum(email);
+		return result = empService.deleteRandomNum(email);
 	}
 	
 	// 비밀번호 찾기 기능
@@ -231,7 +227,7 @@ public class MainController {
 			, @RequestParam(name="email") String email
 			, @RequestParam(name="name") String name) {
 		
-		String result = EmployeeService.selectEmployeePwd(cp_name, email, name);
+		String result = empService.selectEmployeePwd(cp_name, email, name);
 		if(result == null) {
 			rttr.addFlashAttribute("msg", "입력한 정보에 해당하는 비밀번호를 찾을 수 없습니다. 입력값 확인 후 다시 시도해 주세요.");
 			mv.setViewName("redirect:/find/pwd");
@@ -269,7 +265,7 @@ public class MainController {
 		company.setCp_join_phone(cp_join_phone);
 		company.setCp_url(cp_url);
 		
-		int result = CompanyService.insertBusiness(company);
+		int result = cpService.insertBusiness(company);
 		
 		if(result > 0 ) {
 			rttr.addAttribute("msg" , "회원가입이 완료되었습니다. 심사 후 입력하신 연락처로 연락드리겠습니다.");
@@ -331,7 +327,7 @@ public class MainController {
 			loginInfo.setProfile(profile);
 					
 			// cloudinary URL 경로를 DB에 업데이트 해주기
-			int result = EmployeeService.updateEmployeeProfile(loginInfo.getEmp_no(), profile);
+			int result = empService.updateEmployeeProfile(loginInfo.getEmp_no(), profile);
 			
 			sum = 1;
 		}
@@ -344,7 +340,7 @@ public class MainController {
 			loginInfo.setSign(employee_sign);
 			
 			// cloudinary URL 경로를 DB에 업데이트 해주기
-			int result = EmployeeService.updateEmployeeSign(loginInfo.getEmp_no(), employee_sign);
+			int result = empService.updateEmployeeSign(loginInfo.getEmp_no(), employee_sign);
 			
 			sum = 1;
 		}
@@ -357,7 +353,7 @@ public class MainController {
 			loginInfo.setPwd(employee_pwd);
 			
 			// 비밀번호를 DB에 없데이트 해주기
-			int result = EmployeeService.updateEmployeePwd(loginInfo.getEmp_no(), employee_pwd);
+			int result = empService.updateEmployeePwd(loginInfo.getEmp_no(), employee_pwd);
 			
 			sum = 1;
 			

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hr.service.HrService;
 
@@ -28,17 +30,18 @@ import kh.spring.wcw.hr.service.HrService;
 public class HrController {
 	
 	@Autowired
-	private HrService HrService;
+	private HrService hrService;
 	
-	// Á÷¿ø ¸®½ºÆ® Á¶È¸ ÆäÀÌÁö·Î ÀÌµ¿
+	// ì§ì› ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ í˜ì´ì§€ë¡œ ì´ë™
 	@GetMapping("/employee/list")
 	public ModelAndView selectListEmployee(
 			ModelAndView mv
+			, HttpSession session
 			, @RequestParam(name="page", required = false) String page
 			, @RequestParam(name="option", required = false, defaultValue = "date") String selectVal
 			, @RequestParam(name="list", required = false) List<Employee> list) {
-		int currentPage = 1; // ÇöÀç ÆäÀÌÁö
-		int cotentLimit = 15; // ÇÑ ÆäÀÌÁö¿¡ º¸¿©Áú Á÷¿ø Á¤º¸ °¹¼ö
+		int currentPage = 1; // í˜„ì¬ í˜ì´ì§€
+		int cotentLimit = 15; // í•œ í˜ì´ì§€ì— ë³´ì—¬ì§ˆ ì§ì› ì •ë³´ ê°¯ìˆ˜
 		
 		String currentPageStr = page;
 		try {
@@ -52,24 +55,41 @@ public class HrController {
 		int offset = (currentPage - 1) * cotentLimit;
 		RowBounds rowBounds = new RowBounds(offset, cotentLimit);
 		
-		List<Employee> totalList = HrService.selectEmployeeList();
+		// íšŒì‚¬ ë²ˆí˜¸ ê°€ì ¸ì˜¤ê¸°
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		System.out.println(loginInfo);
+		int cp_no = loginInfo.getCp_no();
+		
+		// íšŒì‚¬ê°€ ê°€ì§„ ë¶€ì„œ ì „ë¶€ ê°€ì ¸ì˜¤ê¸°
+		List<String> deptList = hrService.selectDeptList(cp_no);
+		System.out.println("ë¶€ì„œ ëª©ë¡: " + deptList);
+		
+		// íšŒì‚¬ê°€ ê°€ì§„ ì§ìœ„ ì „ë¶€ ê°€ì ¸ì˜¤ê¸°
+		List<String> jobList = hrService.selectJobList(cp_no);
+		System.out.println("ì§ìœ„ ëª©ë¡: " + jobList);
+		
+		// ì§ì› ë¦¬ìŠ¤íŠ¸ (size ì¸¡ì •ìš©)
+		List<Employee> totalList = hrService.selectEmployeeList(cp_no);
 		
 		int totalpageCnt = totalList.size()/cotentLimit + 1;
 		int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
 		int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
 		
-		list = HrService.selectEmployeeListFilter(selectVal, rowBounds);
+		// ì§ì› ë¦¬ìŠ¤íŠ¸
+		list = hrService.selectEmployeeListFilter(selectVal, rowBounds, cp_no);
 		
 		mv.addObject("option", selectVal);
 		mv.addObject("totalpageCnt", totalpageCnt);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
 		mv.addObject("employeeList", list);
+		mv.addObject("deptList", deptList);
+		mv.addObject("jobList", jobList);
 		mv.setViewName("hr/employeeList");
 		return mv;
 	}
 	
-	// Á÷¿ø ¸®½ºÆ® Á¶È¸ ÇÊÅÍ ajax
+	// ì§ì› ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ í•„í„° ajax
 //	@PostMapping(value= "/employee/list", produces = "text/plain;charset=UTF-8")
 //	@ResponseBody
 //	public String selectListEmployeeAjax(
@@ -77,8 +97,8 @@ public class HrController {
 //			, @RequestParam(name="selectVal", required = false) String selectVal
 //			, @RequestParam(name="page", required = false) String page
 //			, @RequestParam(name="list", required = false) List<Employee> list) {
-//		int currentPage = 1; // ÇöÀç ÆäÀÌÁö
-//		int cotentLimit = 15; // ÇÑ ÆäÀÌÁö¿¡ º¸¿©Áú Á÷¿ø Á¤º¸ °¹¼ö
+//		int currentPage = 1; // í˜„ì¬ í˜ì´ì§€
+//		int cotentLimit = 15; // í•œ í˜ì´ì§€ì— ë³´ì—¬ì§ˆ ì§ì› ì •ë³´ ê°¯ìˆ˜
 //		
 //		System.out.println("ajax");
 //		System.out.println(selectVal);
@@ -101,7 +121,7 @@ public class HrController {
 //		int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
 //		int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
 //		
-//		list = HrService.selectEmployeeListFilter(selectVal);
+//		list = hrService.selectEmployeeListFilter(selectVal);
 //			
 //		Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("employeeList", list);
@@ -112,4 +132,20 @@ public class HrController {
 //		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 //		return gson.toJson(map);
 //	}
+
+	@PostMapping(value= "/employee/select", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectOneEmployee(
+			HttpSession session
+			, @RequestParam(name="empNo", required = false) String emp_no) {
+		
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		int cp_no = loginInfo.getCp_no();
+		Employee result = hrService.selectEmployee(emp_no, cp_no);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		return gson.toJson(result);
+	}
+
+
 }

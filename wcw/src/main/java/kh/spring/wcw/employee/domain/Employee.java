@@ -21,17 +21,18 @@ public class Employee {
 	private int dept_no;
 	private int job_title_no;
 	private String cp_name;
+	private int cp_no;
 	private String dept_name;
 	private String job_title;
 	private String hr_yn;
-	
+
 	@Override
 	public String toString() {
 		return "Employee [emp_no=" + emp_no + ", email=" + email + ", pwd=" + pwd + ", name=" + name + ", intl_no="
 				+ intl_no + ", phone=" + phone + ", profile=" + profile + ", sign=" + sign + ", ip=" + ip
 				+ ", join_date=" + join_date + ", resign_date=" + resign_date + ", resign_yn=" + resign_yn
-				+ ", dept_no=" + dept_no + ", job_title_no=" + job_title_no + ", cp_name=" + cp_name + ", dept_name="
-				+ dept_name + ", job_title=" + job_title + ", hr_yn=" + hr_yn + "]";
+				+ ", dept_no=" + dept_no + ", job_title_no=" + job_title_no + ", cp_name=" + cp_name + ", cp_no="
+				+ cp_no + ", dept_name=" + dept_name + ", job_title=" + job_title + ", hr_yn=" + hr_yn + "]";
 	}
 
 	public int getEmp_no() {
@@ -177,5 +178,14 @@ public class Employee {
 	public void setHr_yn(String hr_yn) {
 		this.hr_yn = hr_yn;
 	}
+
+	public int getCp_no() {
+		return cp_no;
+	}
+
+	public void setCp_no(int cp_no) {
+		this.cp_no = cp_no;
+	}
+	
 	
 }

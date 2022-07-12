@@ -127,8 +127,7 @@
 	$("#submit").submit(function(){
 		var pwd1 = $("#pwd1").val();
 		var pwd2 = $("#pwd2").val();
-		
-		if(pwd1 != null && pwd1 !="" && (pwd2 == null || pwd2 == "")){
+		if((pwd1 !="") && (pwd2 == null || pwd2 == "")){
 			alert("비밀번호 변경을 원할 시, 비밀번호 확인에도 변경하고자 하는 비밀번호를 입력해 주세요.");
 			return false;
 		}
@@ -138,9 +137,11 @@
 			return false;
 		}
 		
-		if(chkPwd == false){
-			alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 8~20자)");
-			return false;
+		if(pwd1 !=""){
+			if(chkPwd == false){
+				alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 8~20자)");
+				return false;
+			}	
 		}
 	})
 	

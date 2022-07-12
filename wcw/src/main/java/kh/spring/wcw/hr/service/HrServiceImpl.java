@@ -21,18 +21,31 @@ public class HrServiceImpl implements HrService {
 	
 	// 직원 리스트 조회
 	@Override
-	public List<Employee> selectEmployeeList(RowBounds rowBounds){
-		return dao.selectEmployeeList(rowBounds);
-	}
-	
-	@Override
-	public List<Employee> selectEmployeeList() {
-		return dao.selectEmployeeList();
+	public List<Employee> selectEmployeeList(int cp_no) {
+		return dao.selectEmployeeList(cp_no);
 	};
 
 	@Override
-	public List<Employee> selectEmployeeListFilter(String selectVal, RowBounds rowBounds){
-		return dao.selectEmployeeListFilter(selectVal, rowBounds);
+	public List<Employee> selectEmployeeListFilter(String selectVal, RowBounds rowBounds, int cp_no){
+		return dao.selectEmployeeListFilter(selectVal, rowBounds, cp_no);
+	}
+	
+	// 직원 상세 조회
+	@Override
+	public Employee selectEmployee(String emp_no, int cp_no) {
+		return dao.selectEmployee(emp_no, cp_no);
+	}
+	
+	// 부서 리스트 조회
+	@Override
+	public List<String> selectDeptList(int cp_no) {
+		return dao.selectDeptList(cp_no);
+	}
+
+	// 직위 리스트 조회
+	@Override
+	public List<String> selectJobList(int cp_no) {
+		return dao.selectJobList(cp_no);
 	}
 		
 }

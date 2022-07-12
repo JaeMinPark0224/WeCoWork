@@ -2,20 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="hrMapper">
 
-<!-- 직원 리스트 selct -->
-<select id="selectEmployeeList" resultType="Employee">
+<!-- 직원 리스트 select (size용) -->
+<select id="selectEmployeeList" resultType="Employee" parameterType="_int">
 	select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no
-	from tb_employee e 
-		join tb_department d using(dept_no)
-    	join tb_job_title j using(job_title_no)
+	from tb_employee e
+        join tb_department d using(dept_no) 
+		join tb_company c using(cp_no)
+		join tb_job_title j using(job_title_no)
+    where j.cp_no = #{cp_no}
     order by e.join_date desc
 </select>
 
-<select id="selectEmployeeListFilter" resultType="Employee" parameterType="string">
+<!-- 직원 리스트 select -->
+<select id="selectEmployeeListFilter" resultType="Employee" parameterType="hashmap">
 	select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no
-	from tb_employee e 
-		join tb_department d using(dept_no)
-    	join tb_job_title j using(job_title_no)
+	from tb_employee e
+        join tb_department d using(dept_no) 
+		join tb_company c using(cp_no)
+		join tb_job_title j using(job_title_no)
+    where j.cp_no = #{cp_no}
     	<if test='selectVal.equals("no")'>
     		order by e.emp_no
     	</if>
@@ -27,4 +32,31 @@
     	</if>	
 </select>
 
+<!-- 직원 상세 정보 select -->
+<select id="selectEmployee" resultType="Employee" parameterType="hashmap">
+	select e.name, d.dept_name, e.email, e.phone, j.job_title, e.intl_no, e.resign_yn
+	from tb_employee e
+        join tb_department d using(dept_no) 
+		join tb_company c using(cp_no)
+		join tb_job_title j using(job_title_no)
+    where j.cp_no = #{cp_no} and e.emp_no = #{emp_no}
+</select>
+
+<!-- 부서 리스트 select -->
+<select id="selectDeptList" resultType="string" parameterType="_int">
+	select d.dept_name
+	from tb_department d
+		join tb_company c using(cp_no)
+	where cp_no = #{cp_no}
+	order by d.dept_name
+</select>
+
+<!-- 직위 리스트 select -->
+<select id="selectJobList" resultType="string" parameterType="_int">
+	select j.job_title
+	from tb_job_title j
+		join tb_company c using(cp_no)
+	where cp_no = #{cp_no}
+	order by job_level desc
+</select>
 </mapper>
