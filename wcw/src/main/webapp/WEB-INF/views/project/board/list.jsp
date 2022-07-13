@@ -20,24 +20,14 @@
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 	<div id="project_board_list_container">
 		<div class="project_board_list_flex_box">
-			<div class="project_board_list_flex_box_header">공지</div>
+			<div class="project_board_list_flex_box_header">공지사항</div>
 			<div class="project_board_list_flex_box_body">
 				<div class="project_board_list_flex_box_body_container">
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
-					<div class="project_board_title">공지사항 제목 공지사항 제목 공지사항 제목</div>
-					<div class="project_board_writer">박재민 직급</div>
-					<div class="project_board_date">2022.6.22</div>
+					<c:forEach items="${noticeList }" var="notice">
+						<div class="project_board_title"><span class="project_notice_title_span" pn_no="${notice.pn_no }">${notice.pn_title }</span></div>
+						<div class="project_board_writer">${notice.name } ${notice.job_title }</div>
+						<div class="project_board_date">${fn:substring(notice.pn_date,0,10) }</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -79,6 +69,7 @@
 			</div>
 		</div>
 		<div id="project_board_insert_btn_wrap">
+			<button type="button" id="project_notice_insert_btn">공지사항 작성</button>
 			<button type="button" id="project_board_insert_btn">글 작성</button>
 		</div>
 	</div>
@@ -86,7 +77,16 @@
 </section>
 <script type="text/javascript">
 	$("#project_board_insert_btn").on('click', function() {
-		location.href = "<%= request.getContextPath()%>/project/board/insert"+$(location).attr("search");
+		location.href = "<%= request.getContextPath()%>/project/board/insert?project=${pr_no}";
+	});
+	
+	$("#project_notice_insert_btn").on('click', function() {
+		location.href = "<%= request.getContextPath()%>/project/notice/insert?project=${pr_no}";	
+	});
+	
+	$(".project_notice_title_span").on('click', function() {
+		var pn_no = $(this).attr("pn_no");
+		location.href = "<%= request.getContextPath()%>/project/notice/read?project=${pr_no}&no="+pn_no;	
 	});
 	
 	$(".project_board_title_span").on("click", titleClick);

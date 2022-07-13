@@ -17,27 +17,27 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="project_section">
 	<div id="project_main_wrap">
-	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
+		<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 		<div id="projcet_main_menu_title_profile_wrap">
-			<div id="project_main_menu_title">게시물 작성</div>
+			<div id="project_main_menu_title">공지사항</div>
 			<div id="project_main_profile_wrap">
 				<div id="project_main_profile_picture_wrap">
 				</div>
 				<div id="project_main_profile_info_wrap">
-					<div class="project_main_profile_info">${project.dept_name }</div>
+					<div class="project_main_profile_info">${notice.dept_name }</div>
 					<div class="project_main_profile_info_wrap">
-						<div class="project_main_profile_info_name">${project.name }</div>
-						<div class="project_main_profile_info">${project.job_title }</div>
+						<div class="project_main_profile_info_name">${notice.name }</div>
+						<div class="project_main_profile_info">${notice.job_title }</div>
 					</div>
-					<div class="project_main_profile_info">${fn:substring(project.pb_date,0,19) }</div>
+					<div class="project_main_profile_info">${fn:substring(notice.pn_date,0,19) }</div>
 				</div>
 			</div>
 		</div>
 		<div id="project_board_read_wrap">
 			<div class="project_board_read_title">게시물 제목</div>
-			<div class="project_board_read_content">${project.pb_title }</div>
+			<div class="project_board_read_content">${notice.pn_title }</div>
 			<div class="project_board_read_title">게시물 내용</div>
-			<div class="project_board_read_content">${project.pb_content }</div>
+			<div class="project_board_read_content">${notice.pn_content }</div>
 			<div class="project_board_read_hr"></div>
 			<div class="project_board_read_title">파일 업로드</div>
 			<div class="project_board_read_content">파일 이름.jpg</div>

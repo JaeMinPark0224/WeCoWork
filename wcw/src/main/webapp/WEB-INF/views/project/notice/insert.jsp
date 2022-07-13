@@ -17,21 +17,21 @@
 <section id="project_section">
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
-	<div id="project_main_menu_title">게시물 작성</div>
-		<form name="board_form" action="<%= request.getContextPath()%>/project/board/insert.do" method="post">
+	<div id="project_main_menu_title">공지사항 작성</div>
+		<form name="notice_form" action="<%= request.getContextPath()%>/project/notice/insert.do" method="post">
 			<input type="hidden" value="${pr_no }" name="pr_no">
 			<div id="project_board_insert_wrap">
 				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">게시물 제목</div>
+					<div class="project_board_insert_div_title">공지사항 제목</div>
 					<div class="project_input_wrap">
-						<input type="text" class="project_board_insert_input_text" name="pb_title" id="pb_title" placeholder="게시물 제목을 입력해 주세요. (최대 30자)">
+						<input type="text" class="project_board_insert_input_text" name="pn_title" id="pb_title" placeholder="공지사항 제목을 입력해 주세요. (최대 30자)">
 						<div class="project_board_input_count">0/30자</div>
 					</div>
 				</div>
 				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">게시물 내용</div>
+					<div class="project_board_insert_div_title">공지사항 내용</div>
 					<div class="project_input_wrap">
-						<textarea class="project_board_insert_textarea" name="pb_content" id="pb_content" placeholder="프로젝트 내용을 입력해 주세요. (최대 600자)"></textarea>
+						<textarea class="project_board_insert_textarea" name="pn_content" id="pb_content" placeholder="공지사항 내용을 입력해 주세요. (최대 600자)"></textarea>
 						<div class="project_board_input_count">0/600자</div>
 					</div>
 				</div>
@@ -119,7 +119,7 @@
 		let text = $('.project_board_insert_textarea').val();
 		text = text.replaceAll(/(\n|\r\n)/g, "<br>");
 		$('.project_board_insert_textarea').val(text);
-		board_form.submit();
+		notice_form.submit();
 	});
 	
 </script>

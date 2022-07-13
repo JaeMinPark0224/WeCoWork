@@ -39,4 +39,10 @@ public interface ProjectService {
 	public int insertBoardFixProject(Project project);
 	
 	public int deleteBoardFixProject(Project project);
+	
+	public int insertNoticeProject(Project project);
+	
+	public List<Project> selectListNoticeProject(Project project);
+	
+	public Project selectOneNoticeProject(Project project);
 }

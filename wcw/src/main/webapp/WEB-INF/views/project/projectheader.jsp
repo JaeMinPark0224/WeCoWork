@@ -19,12 +19,13 @@
 	<script>
 		$('.project_main_tab').on('click', function() {
 			console.log($(this).index());
+			var js_pr_no = (new URL(location.href).searchParams).get('project'); 
 			switch($(this).index()) {
 			case 0:
-				location.href = "<%= request.getContextPath()%>/project/board/list"+$(location).attr("search");
+				location.href = "<%= request.getContextPath()%>/project/board/list?project="+js_pr_no;
 				break;
 			case 1:
-				location.href = "<%= request.getContextPath()%>/project/work/list"+$(location).attr("search");
+				location.href = "<%= request.getContextPath()%>/project/work/list?project="+js_pr_no;
 				break;
 			case 2:
 				alert("할 일");

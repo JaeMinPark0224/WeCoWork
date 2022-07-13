@@ -139,4 +139,37 @@
 		where pb_no = #{pb_no}
 		and emp_no = #{emp_no}
 	</delete>
+	
+	<insert id="insertNoticeProject" parameterType="Project">
+		insert into tb_project_notice
+		(pn_no, pn_title
+		, pn_content, pn_date
+		, pr_no, emp_no)
+		values
+		((SELECT nvl(max(PN_NO),0)+1 from tb_project_notice), #{pn_title}
+		, #{pn_content} , default
+		, #{pr_no}, #{emp_no})
+	</insert>
+	
+	<select id="selectListNoticeProject" parameterType="Project" resultType="Project">
+		select tpn.*, te.name, tjt.job_title
+		    from tb_project_notice  tpn
+		    join tb_employee te
+		    on tpn.emp_no = te.emp_no
+		    join tb_job_title tjt
+		    on te.job_title_no = tjt.job_title_no
+		    where pr_no = #{pr_no}
+	</select>
+	
+	<select id="selectOneNoticeProject" parameterType="Project" resultType="Project">
+		select tpn.*, te.name, tjt.job_title, td.dept_name
+			from tb_project_notice tpn
+            join tb_employee te
+            on tpn.emp_no = te.emp_no
+            join tb_job_title tjt
+            on te.job_title_no = tjt.job_title_no
+            join tb_department td
+            on te.dept_no = td.dept_no
+			where pn_no = #{pn_no}
+	</select>
 </mapper>

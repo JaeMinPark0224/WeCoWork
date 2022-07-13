@@ -43,7 +43,7 @@ public class ProjectController {
 	private Project projectObj;
 	
 	@GetMapping("/list")
-	public ModelAndView selectProject(
+	public ModelAndView selectListProject(
 			ModelAndView mv
 			,HttpSession session) {
 		if(!wcwutill.loginChk(session)) {
@@ -59,7 +59,7 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/main")
-	public ModelAndView readProject(
+	public ModelAndView selectOneProject(
 			ModelAndView mv
 			, @RequestParam int project
 			, HttpSession session
@@ -77,7 +77,9 @@ public class ProjectController {
 			mv.setViewName("redirect:/project/list");
 			return mv;
 		}
+		projectObj = service.selectProject(project);
 		mv.addObject("project", service.selectProject(project));
+		mv.addObject("pr_no", projectObj.getPr_no());
 		mv.setViewName("project/main");
 		return mv;
 	}
@@ -115,7 +117,7 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/board/list")
-	public ModelAndView selectBoardProject(
+	public ModelAndView selectListBoardProject(
 			ModelAndView mv
 			, HttpSession session
 			, @RequestParam int project
@@ -127,9 +129,11 @@ public class ProjectController {
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		projectObj.setPb_no(project);
 		projectObj.setEmp_no(loginSSInfo.getEmp_no());
+		List<Project> noticeList = service.selectListNoticeProject(projectObj);
 		List<Project> boardList = service.selectListBoardProject(projectObj);
 		List<Project> boardFixList = service.selectListBoardFixProject(projectObj);
 		mv.addObject("pr_no", project);
+		mv.addObject("noticeList", noticeList);
 		mv.addObject("boardList", boardList);
 		mv.addObject("boardFixList", boardFixList);
 		mv.setViewName("project/board/list");
@@ -168,7 +172,7 @@ public class ProjectController {
 		return mv;
 	}
 	@GetMapping("/board/read")
-	public ModelAndView readBoardProject(
+	public ModelAndView selectOneBoardProject(
 			ModelAndView mv
 			, HttpSession session
 			, @RequestParam(required = false , defaultValue = "0") int project
@@ -191,14 +195,30 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/work/list")
-	public ModelAndView selectWorkProject(ModelAndView mv) {
+	public ModelAndView selectListWorkProject(
+			ModelAndView mv
+			, @RequestParam(name = "project", defaultValue = "0") int pr_no
+			) {
+		// 프로젝트 번호 저장
+		mv.addObject("pr_no", pr_no);
+		// 프로젝트 업무 list 페이지 이동
 		mv.setViewName("project/work/list");
 		return mv;
 	}
 	
 	@GetMapping("/work/read")
-	public ModelAndView readWorkProject(ModelAndView mv) {
+	public ModelAndView selectOneWorkProject(ModelAndView mv) {
 		mv.setViewName("project/work/read");
+		return mv;
+	}
+	
+	@GetMapping("/work/insert")
+	public ModelAndView insertWorkProject(
+			ModelAndView mv
+			, @RequestParam(name = "project", defaultValue = "0") int pr_no
+			, Project project
+			) {
+		mv.setViewName("project/work/insert");
 		return mv;
 	}
 	
@@ -330,6 +350,60 @@ public class ProjectController {
 		Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("YYYY-MM-dd").create();
 		String result = gson.toJson(boardFixList);
 		return result;
+	}
+	
+	@GetMapping("/notice/insert")
+	public ModelAndView	insertNoticeProject(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam int project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		mv.addObject("pr_no", project);
+		mv.setViewName("project/notice/insert");
+		return mv;
+	}
+	
+	@PostMapping("/notice/insert.do")
+	public ModelAndView	insertDoNoticeProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		int result = service.insertNoticeProject(project);
+		mv.setViewName("redirect:/project/board/list?project="+project.getPr_no());
+		return mv;
+	}
+	
+	@GetMapping("/notice/read")
+	public ModelAndView	selectListNoticeProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			, @RequestParam(name = "project", defaultValue = "0") int pr_no
+			, @RequestParam(name = "no", defaultValue = "0") int pn_no
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		project.setPn_no(pn_no);
+		Project result = service.selectOneNoticeProject(project);
+		mv.addObject("pr_no", pr_no);
+		mv.addObject("notice", result);
+		mv.setViewName("project/notice/read");
+		return mv;
 	}
 	
 }

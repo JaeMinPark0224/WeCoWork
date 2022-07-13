@@ -26,6 +26,10 @@ public class Project {
 	private String job_title;
 	private String dept_name;
 	private String board_fix;
+	private int pn_no;
+	private String pn_title;
+	private String pn_content;
+	private Timestamp pn_date;
 	public int getPr_no() {
 		return pr_no;
 	}
@@ -140,6 +144,30 @@ public class Project {
 	public void setBoard_fix(String board_fix) {
 		this.board_fix = board_fix;
 	}
+	public int getPn_no() {
+		return pn_no;
+	}
+	public void setPn_no(int pn_no) {
+		this.pn_no = pn_no;
+	}
+	public String getPn_title() {
+		return pn_title;
+	}
+	public void setPn_title(String pn_title) {
+		this.pn_title = pn_title;
+	}
+	public String getPn_content() {
+		return pn_content;
+	}
+	public void setPn_content(String pn_content) {
+		this.pn_content = pn_content;
+	}
+	public Timestamp getPn_date() {
+		return pn_date;
+	}
+	public void setPn_date(Timestamp pn_date) {
+		this.pn_date = pn_date;
+	}
 	@Override
 	public String toString() {
 		return "Project [pr_no=" + pr_no + ", pr_title=" + pr_title + ", pr_content=" + pr_content + ", pr_open_yn="
@@ -147,8 +175,10 @@ public class Project {
 				+ ", cp_name=" + cp_name + ", pr_complete_yn=" + pr_complete_yn + ", emp_no=" + emp_no + ", pr_fav="
 				+ pr_fav + ", pb_no=" + pb_no + ", pb_title=" + pb_title + ", pb_content=" + pb_content + ", pb_date="
 				+ pb_date + ", name=" + name + ", job_title=" + job_title + ", dept_name=" + dept_name + ", board_fix="
-				+ board_fix + "]";
+				+ board_fix + ", pn_no=" + pn_no + ", pn_title=" + pn_title + ", pn_content=" + pn_content
+				+ ", pn_date=" + pn_date + "]";
 	}
+	
 	
 	
 }

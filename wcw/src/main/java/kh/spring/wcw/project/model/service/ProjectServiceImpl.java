@@ -79,4 +79,19 @@ public class ProjectServiceImpl implements ProjectService{
 		return dao.deleteBoardFixProject(project);
 	}
 
+	@Override
+	public int insertNoticeProject(Project project) {
+		return dao.insertNoticeProject(project);
+	}
+
+	@Override
+	public List<Project> selectListNoticeProject(Project project) {
+		return dao.selectListNoticeProject(project);
+	}
+
+	@Override
+	public Project selectOneNoticeProject(Project project) {
+		return dao.selectOneNoticeProject(project);
+	}
+
 }

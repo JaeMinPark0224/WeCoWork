@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <aside id="left_aside">
 	<img src="<%= request.getContextPath() %>/resources/images/logo.png" id="logo">
 	<div id="login_info">
@@ -32,6 +33,48 @@
 	</div>
 	<div id="left_menu_scroll">
 		<div id="left_menu">
+			<c:if test="${loginSSInfo.hr_yn = 'Y' }">
+			<div class="left_menu_wrap">
+				<div class="left_menu_title">
+					<div class="left_menu_hr"></div>
+					<div class="left_menu_hr_title">Admin</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">사원 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">직원 조회</div>
+						<div class="left_menu_2depth_content">직원 가입 관리</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">회사 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">회사 관리</div>
+						<div class="left_menu_2depth_content">회사 관리</div>
+						<div class="left_menu_2depth_content">회사 관리</div>
+						<div class="left_menu_2depth_content">회사 관리</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">근태 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">근태 관리</div>
+						<div class="left_menu_2depth_content">근태 관리</div>
+						<div class="left_menu_2depth_content">근태 관리</div>
+						<div class="left_menu_2depth_content">근태 관리</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">공지 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">공지 관리</div>
+						<div class="left_menu_2depth_content">공지 관리</div>
+						<div class="left_menu_2depth_content">공지 관리</div>
+						<div class="left_menu_2depth_content">공지 관리</div>
+					</div>
+				</div>
+			</div>
+			</c:if>
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>

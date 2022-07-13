@@ -81,5 +81,14 @@
 		</div>
 	</div>
 </section>
+<script type="text/javascript">
+	// projectheader에 버튼 추가
+	$("#project_main_tab_wrap").append("<div id='project_work_insert_btn_wrap'><button id='project_work_insert_btn'>업무 추가</button></div>");
+	
+	// 업무 추가 버튼 이벤트 등록
+	$("#project_work_insert_btn").on("click", function() {
+		location.href = "<%= request.getContextPath()%>/project/work/insert?project=${pr_no}";
+	});
+</script>
 </body>
 </html>

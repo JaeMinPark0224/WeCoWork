@@ -1,5 +1,6 @@
 package kh.spring.wcw.project.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -64,5 +65,17 @@ public class ProjectDao {
 	
 	public int deleteBoardFixProject(Project project) {
 		return sqlsession.delete("Project.deleteBoardFixProject", project);
+	}
+	
+	public int insertNoticeProject(Project project) {
+		return sqlsession.insert("Project.insertNoticeProject", project);
+	}
+	
+	public List<Project> selectListNoticeProject(Project project) {
+		return sqlsession.selectList("Project.selectListNoticeProject", project);
+	}
+	
+	public Project selectOneNoticeProject(Project project) {
+		return sqlsession.selectOne("Project.selectOneNoticeProject", project);
 	}
 }
