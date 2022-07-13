@@ -1,11 +1,9 @@
 package kh.spring.wcw.hr.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.employee.domain.Employee;
 
 /**

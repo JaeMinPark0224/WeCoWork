@@ -30,12 +30,17 @@
 }
 
 .profile_circle {
-	width: 110px;
-	height: 110px;
+	width: 115px;
+	height: 115px;
 	border-radius: 50%;
 	background-color: rgb(230, 230, 230);
 	margin: 0 auto 20px;
 	cursor: pointer;
+}
+#profile{
+	width: 115px;
+	height: 115px;
+	border-radius: 50%;
 }
 
 .company_info {

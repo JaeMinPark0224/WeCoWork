@@ -2,16 +2,13 @@ package kh.spring.wcw.employee.dao;
 
 import java.sql.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.employee.domain.Employee;
-import kh.spring.wcw.notice.domain.Notice;
 
 @Repository
 public class EmployeeDao {

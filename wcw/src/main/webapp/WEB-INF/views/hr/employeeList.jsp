@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/hr/employeeList.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
 <%@ include file="/WEB-INF/views/template/csslink.jsp" %>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/hr/employeeList.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/d61a9a42f0.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>직원 리스트 조회</title>
@@ -46,7 +46,7 @@
 						<td class="tb_read">${list.job_title}</td>
 						<td class="tb_read">${list.intl_no}</td>
 						<td class="tb_read"></td>
-						<input type="hidden" class="empNo" value="${list.emp_no}">
+						<td><input type="hidden" class="empNo" value="${list.emp_no}"></td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -237,7 +237,7 @@
 		//내선번호 유효성 체크
 		var intl_no_chk = false;
 		var intlVal = $("#modal_text_intl").val();
-		var intl = /^[0-9]{1,30}$/;	
+		var intl = /^[0-9]{1,20}$/;	
 		if(!intl.test(intlVal)){
 			intl_no_chk = false;
 		} else {
@@ -249,7 +249,7 @@
 			return;
 		}
 		if(intl_no_chk == false){
-			alert("내선번호는 숫자만 입력 가능합니다. 다시 입력해 주세요.");
+			alert("내선번호를 형식에 맞게 작성해 주세요. (숫자 1~20자)");
 			return;
 		}
 		$.ajax({

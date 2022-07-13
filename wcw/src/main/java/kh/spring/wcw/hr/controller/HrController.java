@@ -1,13 +1,7 @@
 package kh.spring.wcw.hr.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hr.service.HrService;
 

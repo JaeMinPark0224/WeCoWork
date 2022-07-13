@@ -1,10 +1,8 @@
 package kh.spring.wcw.employee.service;
 
 import java.sql.Date;
-import java.util.List;
 
 import kh.spring.wcw.employee.domain.Employee;
-import kh.spring.wcw.notice.domain.Notice;
 
 /**
  *   직원 서비스 

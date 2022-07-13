@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/mypage/mypage.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
 <%@ include file="/WEB-INF/views/template/csslink.jsp" %>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/mypage/mypage.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/d61a9a42f0.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
@@ -79,10 +79,12 @@
     </div>
 </section>
 <script>
-
+alert("${msg}");
 <c:if test="${not empty msg}">
 	alert("${msg}");
 </c:if>
+</script>
+<script>
 	// 서명 등록 버튼 클릭 시
 	$("#sign_btn").click(function(){
 		$("#canvas_container").show();
@@ -144,8 +146,6 @@
 			}	
 		}
 	})
-	
-
 </script>
 <script>
 // 캔버스 설정

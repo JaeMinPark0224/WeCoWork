@@ -3,12 +3,9 @@ package kh.spring.wcw.main.Controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,14 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.WebUtils;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -212,10 +206,8 @@ public class MainController {
 	@ResponseBody
 	public int deleteRandomNum(
 	@RequestParam(name="employeeEmail") String email) throws Throwable{
-			
-		int result = -1;
 
-		return result = empService.deleteRandomNum(email);
+		return empService.deleteRandomNum(email);
 	}
 	
 	// 비밀번호 찾기 기능
@@ -319,6 +311,7 @@ public class MainController {
 					"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
 					"secure", true));
 			File cloudinaryFile = new File(filePath);
+			@SuppressWarnings("rawtypes")
 			Map uploadResult = cloudinary.uploader().upload(cloudinaryFile, ObjectUtils.emptyMap());
 			String profile= (String) uploadResult.get("url");
 			System.out.println("프로필 저장 URL: " + profile);
@@ -327,9 +320,10 @@ public class MainController {
 			loginInfo.setProfile(profile);
 					
 			// cloudinary URL 경로를 DB에 업데이트 해주기
-			int result = empService.updateEmployeeProfile(loginInfo.getEmp_no(), profile);
+			empService.updateEmployeeProfile(loginInfo.getEmp_no(), profile);
 			
 			sum = 1;
+			System.out.println("프로필 사진 변경");
 		}
 		
 		// 서명 이미지 변경 시
@@ -340,9 +334,10 @@ public class MainController {
 			loginInfo.setSign(employee_sign);
 			
 			// cloudinary URL 경로를 DB에 업데이트 해주기
-			int result = empService.updateEmployeeSign(loginInfo.getEmp_no(), employee_sign);
+			empService.updateEmployeeSign(loginInfo.getEmp_no(), employee_sign);
 			
 			sum = 1;
+			System.out.println("서명 이미지 변경");
 		}
 		
 		// 비밀번호 변경 시
@@ -353,12 +348,14 @@ public class MainController {
 			loginInfo.setPwd(employee_pwd);
 			
 			// 비밀번호를 DB에 없데이트 해주기
-			int result = empService.updateEmployeePwd(loginInfo.getEmp_no(), employee_pwd);
+			empService.updateEmployeePwd(loginInfo.getEmp_no(), employee_pwd);
 			
 			sum = 1;
+			System.out.println("비밀번호 변경");
 			
 			// 비밀번호가 변경되었음으로 재로그인 유도
 			rttr.addFlashAttribute("msg", "비밀번호가 변경되었습니다. 재로그인 후 이용해주세요.");
+			request.getSession().invalidate();
 			mv.setViewName("redirect:/login");
 			return mv;
 		}
@@ -366,7 +363,8 @@ public class MainController {
 		// 변경된 값이 없다면
 		if(sum == -1) {
 			rttr.addFlashAttribute("msg", "변경된 값이 없습니다. 프로필 정보 수정 후 수정하기 버튼을 클릭해 주세요.");
-			mv.setViewName("login/login");
+			mv.setViewName("mypage/mypage");
+			System.out.println("변경된 정보 없음");
 			return mv;
 		}
 		

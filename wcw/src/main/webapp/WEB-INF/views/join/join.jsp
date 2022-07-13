@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/join/join.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
 <%@ include file="/WEB-INF/views/template/csslink2.jsp" %>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/d61a9a42f0.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/join/join.css">
 <head>
 <meta charset="UTF-8">
 <title>비즈니스 회원가입</title>
@@ -45,7 +45,7 @@
         <span class="btn_name">회사 홈페이지 URL</span> <br>
         <input type="text" placeholder=" 회사 홈페이지 URL을 입력해 주세요." id="cp_url" name="cp_url" class="text">
         <input type="submit" id="ok" value="회원가입 요청">
-    </div>
+    </form>    
 </section>
 <script>
 	// 유효성 검사
