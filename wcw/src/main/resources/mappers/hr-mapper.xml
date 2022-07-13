@@ -76,7 +76,9 @@ update (select d.dept_name
             join tb_department d using(dept_no)
             join tb_job_title j using(job_title_no)
         where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
-    set dept_name = #{dept_name}
+    set dept_no = (select dept_no 
+    					from tb_department 
+    					where dept_name = #{dept_name} and cp_no = #{cp_no})
 </update>
 <update id="updateEmployee3" parameterType="hashmap">
 update (select d.dept_name, j.job_title, e.intl_no, e.resign_yn
@@ -84,7 +86,9 @@ update (select d.dept_name, j.job_title, e.intl_no, e.resign_yn
             join tb_department d using(dept_no)
             join tb_job_title j using(job_title_no)
         where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
-    set job_title = #{job_title}
+    set job_title = (select dept_no 
+    					from tb_job_title
+    					where job_title = #{job_title} and cp_no = #{cp_no})
 </update>
 
 

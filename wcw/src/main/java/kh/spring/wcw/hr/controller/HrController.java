@@ -132,7 +132,8 @@ public class HrController {
 //		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 //		return gson.toJson(map);
 //	}
-
+	
+	// 직원 상세 정보 조회
 	@PostMapping(value= "/employee/select", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String selectOneEmployee(
@@ -146,7 +147,8 @@ public class HrController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		return gson.toJson(result);
 	}
-
+	
+	// 직원 정보 업데이트
 	@PostMapping(value= "/employee/update", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String updateEmployee(
@@ -166,5 +168,30 @@ public class HrController {
 		int result_int = hrService.updateEmployee(cp_no, e_no, dept_name, job_title, intl_no, resign_yn);
 		String result = Integer.toString(result_int);
 		return result;
+	}
+	
+	// 직원 계정 등록 페이지로 이동
+	@GetMapping("/employee/insert")
+	public ModelAndView viewEmployee(
+			ModelAndView mv
+			, HttpSession session) {
+		
+		// 회사 번호 가져오기
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		System.out.println(loginInfo);
+		int cp_no = loginInfo.getCp_no();
+				
+		// 회사가 가진 부서 전부 가져오기
+		List<String> deptList = hrService.selectDeptList(cp_no);
+		System.out.println("부서 목록: " + deptList);
+				
+		// 회사가 가진 직위 전부 가져오기
+		List<String> jobList = hrService.selectJobList(cp_no);
+		System.out.println("직위 목록: " + jobList);
+		
+		mv.addObject("deptList", deptList);
+		mv.addObject("jobList", jobList);
+		mv.setViewName("hr/insertEmployee");
+		return mv;
 	}
 }
