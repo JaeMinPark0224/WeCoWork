@@ -27,8 +27,15 @@
 	)
 </insert>
 <select id="selectVacation">
-	select * from tb_vacation
-	where emp_no = #{emp_no}
+	select * 
+	from tb_vacation v join tb_vacation_use u on v.emp_no = u.emp_no
+	where emp_no = #{emp_no} and vaca_start between '#{vu_year}-01-01' and '#{vu_year}-12-31'
+	<if test='!vaca_confirm.equals("0")'>
+	and vaca_confirm = #{vaca_confirm}
+	</if>
+	<if test='!vaca_sort.equals("0")'>
+	and vaca_sort = #{vaca_sort}
+	</if>
 </select>
 
 </mapper>

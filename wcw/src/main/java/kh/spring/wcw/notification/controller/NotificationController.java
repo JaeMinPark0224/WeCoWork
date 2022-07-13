@@ -1,11 +1,8 @@
 package kh.spring.wcw.notification.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.http.HttpRequest;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

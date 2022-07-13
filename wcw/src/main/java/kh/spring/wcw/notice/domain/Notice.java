@@ -1,7 +1,6 @@
 package kh.spring.wcw.notice.domain;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 public class Notice {
 //	NT_NO	NUMBER	

@@ -125,8 +125,8 @@
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content" id="attendance_daily">일일 근태 관리</div>
 						<div class="left_menu_2depth_content" id="attendance_weekly">주간 근태 관리</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content" id="attendance_monthly">월간 근태 관리</div>
+						<div class="left_menu_2depth_content" id="vacation">휴가 관리</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 					</div>
@@ -297,6 +297,14 @@
 	$('#attendance_weekly').click(function() {
 		location.href = '<%= request.getContextPath()%>/attendance/weekly';
 	});
+	$('#attendance_monthly').click(function() {
+		location.href = '<%= request.getContextPath()%>/attendance/monthly';
+	});
+	$('#vacation').click(function() {
+		location.href = '<%= request.getContextPath()%>/vacation';
+	});
+	
+	//project url
 	$('#project_list').click(function() {
 		location.href = '<%= request.getContextPath()%>/project/list';
 	});
@@ -305,9 +313,6 @@
 	})
 	$('#project_insert').click(function() {
 		location.href = '<%= request.getContextPath()%>/project/insert';
-	});
-	$('#logo').click(function() {
-		location.href = '<%= request.getContextPath()%>/';
 	});
 </script>
 <script>

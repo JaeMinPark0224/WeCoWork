@@ -2,20 +2,21 @@ package kh.spring.wcw.vacation.controller;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import kh.spring.wcw.common.WCWUtill;
 import kh.spring.wcw.employee.domain.Employee;
@@ -23,7 +24,7 @@ import kh.spring.wcw.vacation.domain.Vacation;
 import kh.spring.wcw.vacation.model.service.VacationService;
 
 @Controller
-
+@RequestMapping("/vacation")
 public class VacationController {
 
 	@Autowired
@@ -31,13 +32,13 @@ public class VacationController {
 	@Autowired
 	private VacationService service;
 	
-	@GetMapping("/vacation")
+	@GetMapping("")
 	public ModelAndView viewVacation(ModelAndView mv) {
 		mv.setViewName("vacation/vacation");
 		return mv;
 	}
 	
-	@RequestMapping("/vacation/insert")
+	@RequestMapping("/insert")
 	@ResponseBody
 	public String insertVacation(Vacation vacation
 			, HttpSession session
@@ -78,10 +79,29 @@ public class VacationController {
 			    e.printStackTrace();
 			}
 		
-		if(loginSSInfo == null) {
-			return "session is empty";
-		}
+		
 		int result = service.insertVacation(vacation);
 		return String.valueOf(result);
 	}
+	
+	@RequestMapping(value = "/select", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectVacation(
+			Vacation vacation
+			, HttpSession session
+			, @RequestParam(name="year_select") String year_select
+			, @RequestParam(name="vaca_confirm") String vaca_confirm
+			, @RequestParam(name="vaca_sort") String vaca_sort
+			) {
+		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
+		
+		vacation.setVu_year(year_select);
+		vacation.setVaca_confirm(vaca_confirm);
+		vacation.setVaca_sort(vaca_sort);
+		List<Vacation> result = service.selectVacation(vacation);
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
+		
+		return gsonObj.toJson(result);
+	}
+	
 }
