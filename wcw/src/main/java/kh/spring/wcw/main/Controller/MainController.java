@@ -3,6 +3,8 @@ package kh.spring.wcw.main.Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -69,6 +71,28 @@ public class MainController {
 			) {
 		Company result2 = null;
 		
+		// 난수 비밀번호 단어 암호화
+	    try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(pwd.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			StringBuffer hexString = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				String hex = Integer.toHexString(0xff & byteData[i]);
+				if (hex.length() == 1) {
+					hexString.append('0');
+				}
+				hexString.append(hex);
+			}
+			pwd = hexString.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
 		// 직원 로그인
 		Employee result = empService.selectEmployee(email, pwd);
 		if(result == null) {
@@ -250,9 +274,34 @@ public class MainController {
 			, @RequestParam(name="cp_join_name") String cp_join_name
 			, @RequestParam(name="cp_join_phone") String cp_join_phone
 			, @RequestParam(name="cp_url", defaultValue = "") String cp_url) {
+		
+		// 난수 비밀번호 단어 암호화
+		String pwd="";
+	    try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(cp_pwd.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			StringBuffer hexString = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				String hex = Integer.toHexString(0xff & byteData[i]);
+				if (hex.length() == 1) {
+					hexString.append('0');
+				}
+				hexString.append(hex);
+			}
+			pwd = hexString.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		
+		
 		company.setCp_name(cp_name);
 		company.setCp_join_email(cp_join_email);
-		company.setCp_pwd(cp_pwd);
+		company.setCp_pwd(pwd);
 		company.setCp_join_name(cp_join_name);
 		company.setCp_join_phone(cp_join_phone);
 		company.setCp_url(cp_url);
@@ -363,7 +412,7 @@ public class MainController {
 		// 변경된 값이 없다면
 		if(sum == -1) {
 			rttr.addFlashAttribute("msg", "변경된 값이 없습니다. 프로필 정보 수정 후 수정하기 버튼을 클릭해 주세요.");
-			mv.setViewName("mypage/mypage");
+			mv.setViewName("redirect:/mypage");
 			System.out.println("변경된 정보 없음");
 			return mv;
 		}

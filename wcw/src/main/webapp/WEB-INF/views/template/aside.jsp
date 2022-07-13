@@ -33,7 +33,9 @@
 	</div>
 	<div id="left_menu_scroll">
 		<div id="left_menu">
-			<c:if test="${loginSSInfo.hr_yn = 'Y' }">
+		
+		<c:if test="${not empty loginSSInfo }">
+			<c:if test="${loginSSInfo.hr_yn eq 'Y' }">
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
@@ -75,6 +77,7 @@
 				</div>
 			</div>
 			</c:if>
+		</c:if>
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>

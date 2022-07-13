@@ -77,15 +77,15 @@
     <span id="title">직원 리스트</span>
     <p id="sub_title">* 직원 계정 등록 완료 시, 직원의 이메일(아이디)로 로그인 정보가 전달됩니다.</p>
     <div id="content">
-        <form action="" id="submit" method="post">
+        <form action="<%=request.getContextPath()%>/hr/employee/insert" id="submit" method="post">
             <span class="form_text">성명 *</span><br>
-            <input type="text" class="input_text" id="e_name" placeholder=" 직원의 성명을 입력해 주세요." required><br>
+            <input type="text" class="input_text" name="name" id="e_name" placeholder=" 직원의 성명을 입력해 주세요." required><br>
             <span class="form_text">이메일(아이디) *</span><br> 
-            <input type="text" class="input_text" placeholder=" 아이디로 사용할 이메일을 입력해 주세요." required><br>
+            <input type="text" class="input_text" name="email"placeholder=" 아이디로 사용할 이메일을 입력해 주세요." required><br>
             <span class="form_text">개인 연락망 *</span><br> 
-            <input type="text" class="input_text" id="e_phone" placeholder=" 직원의 개인 연락망을 입력해 주세요." required><br>
+            <input type="text" class="input_text" name="phone" id="e_phone" placeholder=" 직원의 개인 연락망을 입력해 주세요." required><br>
             <span class="form_text">부서 *</span><br> 
-                <select id="select_dept" class="input_text">
+                <select id="select_dept" name="dept_name" class="input_text">
                     <c:if test="${not empty deptList}">
             			<c:forEach items="#{deptList}" var="deptList">
             				<option class="deptList" value="${deptList}">${deptList}</option>
@@ -93,7 +93,7 @@
             		</c:if>
                 </select>
             <span class="form_text">직위 *</span><br> 
-                <select id="select_job" class="input_text">
+                <select id="select_job" name="job_title" class="input_text">
                     <c:if test="${not empty jobList}">
             			<c:forEach items="#{jobList}" var="jobList">
             				<option class="jobList" value="${jobList}">${jobList}</option>
@@ -101,11 +101,16 @@
             		</c:if>	
                 </select>
             <span class="form_text">내선 번호 *</span><br>
-            <input type="text" class="input_text" id="e_intl" placeholder=" 직원의 내선 번호를 입력해 주세요." required><br>
+            <input type="text" class="input_text" name="intl_no" id="e_intl" placeholder=" 직원의 내선 번호를 입력해 주세요." required><br>
             <input type="submit" id="add_btn" value="등록">
         </form>
     </div>
 </section>
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 <script>
 // 유효성 검사
 	// 직원 성명
@@ -165,27 +170,6 @@
 			alert("직원의 내선번호를 형식에 맞게 작성해 주세요. (숫자 1~20자)");
 			return;
 		}
-		
-		// 유효성 검사 통과 시 ajax 실행
-		$.ajax({
-			url: "<%=request.getContextPath()%>/hr/employee/insert.do",
-			type: "post",
-			data: {emp_no:$('#e_no').val(),
-					dept_name:$('#modal_select_dept').val(), 
-					job_title:$('#modal_select_job').val(),
-					intl_no:$('#modal_text_intl').val(),
-					resign_yn: $('#modal_select_resign').val()},
-			success: function(result){
-				if(result == 3){
-					alert("직원 정보가 수정되었습니다.");
-					$("#modal").hide();
-					location.href="<%= request.getContextPath() %>/hr/employee/list";
-				}
-			},
-			error: function(result){
-				console.log("직원 등록 실패");
-			}
-		})
 	})
 </script>
 </body>

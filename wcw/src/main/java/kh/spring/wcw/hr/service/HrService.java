@@ -1,5 +1,6 @@
 package kh.spring.wcw.hr.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -50,5 +51,12 @@ public interface HrService {
 	 * @return 업데이트 결과값 (성공여부)
 	 * @author ybseo
 	 */
-	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, int intl_no, String resign_yn);
+	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, String intl_no, String resign_yn);
+	
+	/**
+	 * @param Map (이름, 비밀번호, 이메일, 전화번호, 부서 이름, 직급, 내선 번호, 회사 번호)
+	 * @return insert 결과값 (성공여부)
+	 * @author ybseo
+	 */
+	public int insertEmployee(HashMap<String, Object> map);
 }

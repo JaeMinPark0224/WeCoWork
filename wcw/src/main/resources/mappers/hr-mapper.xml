@@ -71,25 +71,37 @@ update (select e.intl_no, e.resign_yn
         resign_yn = #{resign_yn}
 </update>
 <update id="updateEmployee2" parameterType="hashmap">
-update (select d.dept_name
-        from tb_employee e
-            join tb_department d using(dept_no)
-            join tb_job_title j using(job_title_no)
-        where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
+update tb_employee
     set dept_no = (select dept_no 
     					from tb_department 
     					where dept_name = #{dept_name} and cp_no = #{cp_no})
+    where emp_no = #{emp_no}
 </update>
 <update id="updateEmployee3" parameterType="hashmap">
-update (select d.dept_name, j.job_title, e.intl_no, e.resign_yn
-        from tb_employee e
-            join tb_department d using(dept_no)
-            join tb_job_title j using(job_title_no)
-        where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
-    set job_title = (select dept_no 
+update tb_employee
+    set job_title_no = (select job_title_no
     					from tb_job_title
     					where job_title = #{job_title} and cp_no = #{cp_no})
+    where emp_no = #{emp_no}
 </update>
 
+<insert id="insertEmployee" parameterType="hashmap">
+insert into tb_employee 
+	(emp_no, email, pwd, name, intl_no, phone, join_date, resign_yn, dept_no, job_title_no, hr_yn)
+values 
+	(
+	(SELECT NVL(MAX(EMP_NO), 99)+1 FROM TB_EMPLOYEE)
+	, #{email}
+	, #{pwd}
+	, #{name}
+	, #{intl_no}
+	, #{phone}
+	, default
+	, default
+	, (select dept_no from tb_department where dept_name = #{dept_name} and cp_no = #{cp_no})
+	, (select job_title_no from tb_job_title where job_title = #{job_title} and cp_no = #{cp_no})
+	, default
+)
+</insert>
 
 </mapper>

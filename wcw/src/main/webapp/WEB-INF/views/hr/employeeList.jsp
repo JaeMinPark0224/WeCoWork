@@ -46,7 +46,7 @@
 						<td class="tb_read">${list.job_title}</td>
 						<td class="tb_read">${list.intl_no}</td>
 						<td class="tb_read"></td>
-						<td><input type="hidden" class="empNo" value="${list.emp_no}"></td>
+						<td class="tb_read last_tb"><input type="hidden" class="empNo" value="${list.emp_no}"></td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -110,7 +110,11 @@
     </div>
 </section>
 <script>
-
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
+<script>
 // 모달 내 취소버튼 클릭 시 모달 없애기
 	$("#modal_cancel").click(function(){
 		$("#modal").hide();
@@ -202,7 +206,7 @@
 		$.ajax({
 			url: "<%=request.getContextPath()%>/hr/employee/select",
 			type: "post",
-			data: {empNo: $(this).nextAll(".empNo").val()},
+			data: {empNo: $(this).nextAll(".last_tb").children(".empNo").val()},
 			dataType: "json",
 			success: function(result){
 				// 성명

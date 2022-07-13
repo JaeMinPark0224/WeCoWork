@@ -47,7 +47,7 @@ public class HrDao {
 	}	
 	
 	// 직원 정보 업데이트
-	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, int intl_no, String resign_yn) {
+	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, String intl_no, String resign_yn) {
 		HashMap<String, Object> map= new HashMap<>();
 		map.put("cp_no", cp_no);
 		map.put("emp_no", e_no);
@@ -64,5 +64,10 @@ public class HrDao {
 		
 		int result = result1 + result2 + result3;
 		return result;
+	}
+
+	// 직원 계정 생성
+	public int insertEmployee(HashMap<String, Object> map) {
+		return sqlsession.insert("hrMapper.insertEmployee", map);
 	}
 }

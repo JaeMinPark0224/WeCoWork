@@ -1,5 +1,6 @@
 package kh.spring.wcw.hr.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -46,8 +47,14 @@ public class HrServiceImpl implements HrService {
 	
 	// 직원 정보 업데이트
 	@Override
-	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, int intl_no, String resign_yn) {
+	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, String intl_no, String resign_yn) {
 		return dao.updateEmployee(cp_no, e_no, dept_name, job_title, intl_no, resign_yn);
+	}
+	
+	// 직원 계정 생성
+	@Override
+	public int insertEmployee(HashMap<String, Object> map) {
+		return dao.insertEmployee(map);
 	}
 		
 }

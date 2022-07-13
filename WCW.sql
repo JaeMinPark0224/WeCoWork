@@ -42,7 +42,7 @@ CREATE TABLE TB_EMPLOYEE (
 	PHONE	        VARCHAR2(30)		            NOT NULL,
 	PROFILE	        VARCHAR2(600)		            NULL,
 	SIGN	        CLOB		            NULL,
-	IP	            VARCHAR2(30)		            NOT NULL,
+	IP	            VARCHAR2(30)		            NULL,
 	JOIN_DATE	    DATE	        DEFAULT SYSDATE	NOT NULL,
 	RESIGN_DATE	    DATE	        DEFAULT SYSDATE	NULL,
 	RESIGN_YN	    VARCHAR2(1)	    DEFAULT 'N'	    NOT NULL,

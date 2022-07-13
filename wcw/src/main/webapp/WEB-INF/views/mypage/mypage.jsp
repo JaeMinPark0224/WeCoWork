@@ -19,7 +19,7 @@
         <form action="<%= request.getContextPath() %>/mypage.do" method="post" id="submit" enctype="multipart/form-data">
             <span id="title">마이페이지</span>
             <div>
-            	<div id="profile">
+            	<div id="profile_mp">
 		            	<c:if test="${empty loginSSInfo.profile}">
 		            		<img id="prof_img" name = "prof_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
 		            	</c:if>
@@ -31,27 +31,27 @@
                 </div>
                     <div id="content">
                         <span class="tab">아이디(이메일)</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.email}</span><br>
                         <span class="tab">성명</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.name}</span><br>
                         <span class="tab">비밀번호</span>
                         <input type="password" id = "pwd1" name="pwd" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
                         <span class="tab">비밀번호 확인</span>
                         <input type="password" id = "pwd2" class="pwd" placeholder="영문, 숫자 8~20자리 조합 "><br>
                         <span class="tab">내선 번호</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.intl_no}</span><br>
                         <span class="tab">사원 번호</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.emp_no}</span><br>
                         <span class="tab">개인 연락 번호</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.phone}</span><br>
                         <span class="tab last">입사일</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.join_date}</span><br>
                         <span class="tab">회사명</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.cp_name}</span><br>
                         <span class="tab">부서명</span>
-                        <span class="info">정보</span><br>
+                        <span class="info">${loginSSInfo.dept_name}</span><br>
                         <span class="tab">직위</span>
-                        <span class="info last">정보</span><br>
+                        <span class="info last">${loginSSInfo.job_title}</span><br>
                         <span class="tab">서명</span>
                         <div id="sign_section">
                         	<c:if test="${empty loginSSInfo.sign}">
@@ -79,7 +79,6 @@
     </div>
 </section>
 <script>
-alert("${msg}");
 <c:if test="${not empty msg}">
 	alert("${msg}");
 </c:if>

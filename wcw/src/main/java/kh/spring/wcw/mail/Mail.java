@@ -42,18 +42,64 @@ public class Mail {
 	            msg.setHeader("content-Type", "text/html");
 	            //메일보내기
 	            javax.mail.Transport.send(msg, msg.getAllRecipients());
-	            System.out.println("이메일 send");
+	            System.out.println("비밀번호 찾기용 이메일 send");
 				return;
 	             
 	        }catch (AddressException addr_e) {
 	            addr_e.printStackTrace();
-	            System.out.println("이메일 send 실패1");
+	            System.out.println("비밀번호 찾기용 이메일 send 실패1");
 	        }catch (MessagingException msg_e) {
 	            msg_e.printStackTrace();
-	            System.out.println("이메일 send 실패2");
+	            System.out.println("비밀번호 찾기용 이메일 send 실패2");
 	        }catch (Exception msg_e) {
 	            msg_e.printStackTrace();
-	            System.out.println("이메일 send 실패3");
+	            System.out.println("비밀번호 찾기용 이메일 send 실패3");
+	        }
+	     
+	}
+	
+	public static void sendMailForInsert(String mail, String resultNum, String cp_name) {
+		 Properties p = System.getProperties();
+	     p.put("mail.smtp.starttls.enable", "true");     // gmail은 true 고정
+	     p.put("mail.smtp.host", "smtp.naver.com");      // smtp 서버 주소
+	     p.put("mail.smtp.auth", "true");                // gmail은 true 고정
+	     p.put("mail.smtp.port", "587");                 // 네이버 포트
+	     
+	     Authenticator auth = new MyAuthentication();
+	     //session 생성 및  MimeMessage생성
+	     Session session = Session.getDefaultInstance(p, auth);
+	     MimeMessage msg = new MimeMessage(session);
+	     
+	     try{
+	            //편지보낸시간
+	            msg.setSentDate(new Date());
+	            InternetAddress from = new InternetAddress() ;
+	            from = new InternetAddress("6aseonbase@naver.com"); //발신자 아이디
+	            // 이메일 발신자
+	            msg.setFrom(from);
+	            // 이메일 수신자
+	            InternetAddress to = new InternetAddress(mail);
+	            msg.setRecipient(Message.RecipientType.TO, to);
+	            // 이메일 제목
+	            msg.setSubject("[WCW] '" + cp_name + "' 로그인 정보 안내드립니다.", "UTF-8");
+	            // 이메일 내용
+	            msg.setText("[WCW] 발송 메일입니다. <br> 안녕하세요, "+cp_name+"입니다. 로그인 정보 안내드립니다. <br> 아이디:" + mail + " 비밀번호: " + resultNum, "UTF-8");
+	            // 이메일 헤더
+	            msg.setHeader("content-Type", "text/html");
+	            //메일보내기
+	            javax.mail.Transport.send(msg, msg.getAllRecipients());
+	            System.out.println("로그인 정보 전달 이메일 send");
+				return;
+	             
+	        }catch (AddressException addr_e) {
+	            addr_e.printStackTrace();
+	            System.out.println("로그인 정보 전달 이메일 send 실패1");
+	        }catch (MessagingException msg_e) {
+	            msg_e.printStackTrace();
+	            System.out.println("로그인 정보 전달 이메일 send 실패2");
+	        }catch (Exception msg_e) {
+	            msg_e.printStackTrace();
+	            System.out.println("로그인 정보 전달 이메일 send 실패3");
 	        }
 	     
 	}

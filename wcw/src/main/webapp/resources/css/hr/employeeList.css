@@ -46,11 +46,14 @@
         height: 60px;
         vertical-align: middle;
     }
-    tr > td:first-child, tr > td:last-child{
+    tr > td:first-child, .list:nth-child(9){
         width: 35px;
     }
     .tb_read{
     	cursor: pointer;
+    }
+    .last_tb{
+    	display: none;
     }
     #first_line{
         font-family: NotoSansB;
