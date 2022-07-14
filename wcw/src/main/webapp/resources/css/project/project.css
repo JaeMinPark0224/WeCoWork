@@ -544,7 +544,7 @@ section {
 .project_board_list_flex_box_body {
 	width: 1070px;;
 	overflow: hidden;
-	height: 200px;
+	min-height: 96px;
 	background-color: rgb(244, 244, 244);
 }
 
@@ -552,7 +552,7 @@ section {
 	margin: 35px 85px;
 	display: grid;
 	grid-template-columns: 680px 90px 90px;
-    grid-template-rows: repeat(5, 25px);
+    grid-template-rows: 25px;
 	column-gap: 20px;
 }
 
@@ -637,6 +637,7 @@ section {
 
 #project_board_insert_btn_wrap {
 	text-align: right;
+	font-size: 0px;
 }
 
 #project_board_insert_btn {
@@ -646,6 +647,20 @@ section {
 	background-color: rgb(230, 230, 230);
 	font-family: NotoSansR;
 	font-size: 12px;
+}
+
+#project_notice_insert_btn {
+	cursor: pointer;
+	width: 90px;
+	height: 30px; 
+	background-color: rgb(230, 230, 230);
+	font-family: NotoSansR;
+	font-size: 12px;	
+	margin-right: 10px;
+}
+
+.project_notice_title_span {
+	cursor: pointer;
 }
 
 /* 프로젝트 글등록 페이지 */
@@ -781,14 +796,18 @@ section {
 /* 프로젝트 글읽기 페이지 */
 /* 프로젝트 글읽기 페이지 */
 
+#projcet_main_menu_title_profile_wrap {
+	position: relative;
+}
+
 #project_main_profile_wrap {
-	position: absolute;
-	top: 0px;
-	right: 0px;
 	display: flex;
 	gap: 25px;
 	flex-direction: row;
 	flex-grow: 1;
+	position: absolute;
+	top: 0px;
+	right: 0px;
 }
 
 #project_main_profile_picture_wrap {
@@ -868,7 +887,72 @@ section {
 	cursor: pointer;
 }
 
-/* 프로젝트 업무 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+/* 프로젝트 업무 생성 리스트 페이지 */
+
+
+
+#project_work_worker_add_btn {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	width: 90px;
+	height: 30px;
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+}
+
+#project_work_worker_add_btn:hover {
+	color: rgb(244, 244, 244);	
+	background-color: rgb(75, 77, 178);
+}
+
+.project_work_read_content_date_input_wrap {
+	display: flex;
+	gap: 20px;
+}
+
+.project_work_read_content_date_input_text {
+	font-size: 12px;
+	color: rgb(94, 94, 94);
+	font-family: NotoSansR;
+}
+
+.project_work_read_content_date_input_date {
+	font-size: 12px;
+	color: rgb(94, 94, 94);
+	font-family: NotoSansR;
+	height: 20px;
+	margin-top: 5px;
+}
+
+#project_work_title_input_text {
+	height: 30px;
+	width: 550px;
+    padding-left: 10px;
+    font-family: NotoSansR;
+    color: rgb(94, 94, 94);
+    border: 1px solid rgb(224, 224, 224);
+    font-size: 12px;
+}
+
+#project_work_content_input_textarea {
+	resize: none;
+	width: 550px;
+	height: 180px;
+	font-size: 12px;
+}
+
 /* 프로젝트 업무 리스트 페이지 */
 /* 프로젝트 업무 리스트 페이지 */
 /* 프로젝트 업무 리스트 페이지 */
@@ -970,6 +1054,28 @@ section {
 	margin: auto;
 }
 
+#project_work_insert_btn_wrap {
+	flex-grow: 1;
+	text-align: right;
+}
+
+#project_work_insert_btn {
+	width: 90px;
+	height: 30px;
+	background-color: rgb(230, 230, 230);
+	font-size: 12px;
+	color: rgb(51, 51, 51);
+	cursor: pointer;
+	font-family: NotoSansR;
+}
+
+/* 프로젝트 업무 조회 페이지 */
+/* 프로젝트 업무 조회 페이지 */
+/* 프로젝트 업무 조회 페이지 */
+/* 프로젝트 업무 조회 페이지 */
+/* 프로젝트 업무 조회 페이지 */
+/* 프로젝트 업무 조회 페이지 */
+/* 프로젝트 업무 조회 페이지 */
 /* 프로젝트 업무 조회 페이지 */
 
 #project_work_update_btn {
@@ -1059,6 +1165,7 @@ section {
 	font-family: NotoSansR;
 	min-height: 30px;
 	line-height: 30px;
+	position: relative;
 }
 
 .project_work_read_content_hr {
