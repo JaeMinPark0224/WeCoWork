@@ -74,7 +74,7 @@
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="section">
-    <span id="title">직원 리스트</span>
+    <span id="title">직원 계정 등록</span>
     <p id="sub_title">* 직원 계정 등록 완료 시, 직원의 이메일(아이디)로 로그인 정보가 전달됩니다.</p>
     <div id="content">
         <form action="<%=request.getContextPath()%>/hr/employee/insert" id="submit" method="post">

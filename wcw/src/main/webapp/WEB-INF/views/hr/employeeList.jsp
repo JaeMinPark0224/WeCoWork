@@ -80,6 +80,9 @@
             			<option class="deptList" value="${deptList}">${deptList}</option>
             		</c:forEach>
             	</c:if>	
+            	<c:if test="${empty deptList}">
+            		<option class="deptList">생성된 부서 없음</option>
+            	</c:if>	
             </select>
             <span class="modal_title">이메일</span>
             <span class="modal_content" id="e_email">이메일 출력</span>

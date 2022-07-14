@@ -62,5 +62,10 @@ public class HrServiceImpl implements HrService {
 	public List<Employee> selectAdminList(int cp_no) {
 		return dao.selectAdminList(cp_no);
 	}
-		
+	
+	// 관리자 부서 설정 업데이트
+	@Override
+	public int updateAdmin(int cp_no, String dept_name) {
+		return dao.updateAdmin(cp_no, dept_name);
+	}
 }

@@ -14,7 +14,7 @@
         color: rgb(75, 77, 178);
     }
     #content{
-       margin-top: 70px;
+       margin-top: 63px;
        margin-left: 65px; 
     }
     #table{
@@ -23,6 +23,8 @@
         font-size: 12px;
         font-family: NotoSansR;
         border-spacing: 0px;
+        color: rgb(94, 94, 94);
+        vertical-align: middle;
     }
     td{
         height: 60px;
@@ -48,7 +50,8 @@
         border: 0px;
         font-family: NotoSansR;
         font-size: 12px;
-        margin-left: 880px;
+        margin-left: 850px;
+        cursor: pointer;
     }
 
     

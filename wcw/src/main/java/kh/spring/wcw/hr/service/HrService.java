@@ -48,14 +48,14 @@ public interface HrService {
 	
 	/**
 	 * @param 회사 번호, 사원 번호, 부서명, 직급, 내선번호, 퇴사 여부
-	 * @return 업데이트 결과값 (성공여부)
+	 * @return 업데이트 결과값 (성공 여부)
 	 * @author ybseo
 	 */
 	public int updateEmployee(int cp_no, int e_no, String dept_name, String job_title, String intl_no, String resign_yn);
 	
 	/**
 	 * @param Map (이름, 비밀번호, 이메일, 전화번호, 부서 이름, 직급, 내선 번호, 회사 번호)
-	 * @return insert 결과값 (성공여부)
+	 * @return insert 결과값 (성공 여부)
 	 * @author ybseo
 	 */
 	public int insertEmployee(HashMap<String, Object> map);
@@ -66,4 +66,11 @@ public interface HrService {
 	 * @author ybseo
 	 */
 	public List<Employee> selectAdminList(int cp_no);
+	
+	/**
+	 * @param 회사 번호, 부서 이름
+	 * @return update 결과값 (성공 여부)
+	 * @author ybseo
+	 */
+	public int updateAdmin(int cp_no, String dept_name);
 }

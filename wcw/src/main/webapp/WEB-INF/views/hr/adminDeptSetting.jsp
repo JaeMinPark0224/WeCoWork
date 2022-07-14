@@ -15,7 +15,7 @@
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="section">
-    <span id="title">직원 리스트</span>
+    <span id="title">관리자 부서 설정</span>
     <input type="button" id="edit_btn" value="관리자 설정">
     <div id="content">
         <table id="table">
@@ -53,15 +53,20 @@
         <div id="modal_section">
             <span class="modal_title">부서</span>
             <select id="modal_select_dept">
-                <option> 부서명1</option>
-                <option> 부서명1</option>
-                <option> 부서명1</option>
+            	<c:if test="${not empty deptList}">
+            		<c:forEach items="#{deptList}" var="deptList">
+            			<option class="deptList" value="${deptList}">${deptList}</option>
+            		</c:forEach>
+            	</c:if>
+            	<c:if test="${empty deptList}">
+            		<option class="deptList">생성된 부서 없음</option>
+            	</c:if>	
             </select>
         </div>
         <hr>
         <div id="modal_btn">
             <input type="button" value="취소" id="modal_cancel">
-            <input type="button" value="설정" id="modal_edit">
+            <input type="button" value="권한 부여" id="modal_edit">
         </div>
     </div>
 </section>
@@ -71,6 +76,7 @@
 </c:if>
 </script>
 <script>
+
 // 관리자 설정 버튼 클릭 시
 $("#edit_btn").click(function(){
 	$("#modal").show();
@@ -78,6 +84,32 @@ $("#edit_btn").click(function(){
 // 모달 내 취소 버튼 클릭 시
 $("#modal_cancel").click(function(){
 	$("#modal").hide();
+})
+
+// 모달 내 '권한 부여' 버튼 클릭 시
+$("#modal_edit").click(function(){
+	var selectVal = $('#modal_select_dept').val();
+	console.log(selectVal);
+	
+	$.ajax({
+		url: "<%=request.getContextPath()%>/hr/department/update",
+		type: "post",
+		data: {selectVal: selectVal},
+		dataType: 'json',
+		success: function(result){
+			if(result > -1){
+				alert("관리자 부서 변경이 완료되었습니다");
+				location.href="<%= request.getContextPath() %>/hr/department/list";
+			}
+			else {
+				alert("관리자 부서 변경 중 오류가 발생했습니다.");
+			}
+		},
+		error: function(result){
+			console.log("권한 부여 ajax 오류");
+		}
+	})
+	
 })
 </script>
 </body>

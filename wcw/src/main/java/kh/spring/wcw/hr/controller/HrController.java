@@ -282,8 +282,8 @@ public class HrController {
 		return mv;
 	}
 	
-	// 직원 계정 등록 페이지로 이동
-	@GetMapping("/department/setting")
+	// 관리자 부서 설정 페이지로 이동
+	@GetMapping("/department/list")
 	public ModelAndView selectAdminDeptSetting(
 			ModelAndView mv
 			, HttpSession session) {
@@ -305,5 +305,22 @@ public class HrController {
 		mv.addObject("adminList", adminList);
 		mv.setViewName("hr/adminDeptSetting");
 		return mv;
+	}
+	
+	// 관리자 부서 설정 기능
+	@PostMapping("/department/update")
+	@ResponseBody
+	public int updateAdminDeptSetting(
+			HttpSession session
+			, @RequestParam(name="selectVal", required = false) String dept_name) {
+				
+		// 회사 번호 가져오기
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		System.out.println(loginInfo);
+		int cp_no = loginInfo.getCp_no();
+		
+		int result = hrService.updateAdmin(cp_no, dept_name);
+
+		return result;
 	}
 }

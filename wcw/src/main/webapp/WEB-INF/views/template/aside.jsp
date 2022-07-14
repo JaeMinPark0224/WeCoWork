@@ -44,17 +44,15 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">사원 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">직원 조회</div>
-						<div class="left_menu_2depth_content">직원 가입 관리</div>
+						<div class="left_menu_2depth_content" id="emp_list_select">직원 조회</div>
+						<div class="left_menu_2depth_content" id="emp_insert">직원 가입 관리</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">회사 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_1depth_title" open_chk="f">부서 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">회사 관리</div>
-						<div class="left_menu_2depth_content">회사 관리</div>
-						<div class="left_menu_2depth_content">회사 관리</div>
-						<div class="left_menu_2depth_content">회사 관리</div>
+						<div class="left_menu_2depth_content" id="dept_admin">관리자 부서 설정</div>
+						<div class="left_menu_2depth_content" id="dept_list_select">부서 조회</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -366,6 +364,21 @@
 	})
 	$('#project_insert').click(function() {
 		location.href = '<%= request.getContextPath()%>/project/insert';
+	});
+</script>
+<script>
+// 사원 관리 URL
+	$('#emp_list_select').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/employee/list';
+	});
+	$('#emp_insert').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/employee/insert';
+	});
+</script>
+<script>
+// 부서 관리 URL
+	$('#dept_admin').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/department/list';
 	});
 </script>
 <script>

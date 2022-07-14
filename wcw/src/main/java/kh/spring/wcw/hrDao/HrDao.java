@@ -75,4 +75,20 @@ public class HrDao {
 	public List<Employee> selectAdminList(int cp_no) {
 		return sqlsession.selectList("hrMapper.selectAdminList", cp_no);
 	}
+	
+	// 관리자 부서 설정 업데이트
+	public int updateAdmin(int cp_no, String dept_name) {
+		HashMap<String, Object> map= new HashMap<>();
+		map.put("cp_no", cp_no);
+		map.put("dept_name", dept_name);
+		
+		int result = -1;
+		result = sqlsession.update("hrMapper.updateAdmin1", cp_no);
+		System.out.println("result1: " + result);
+		result = sqlsession.update("hrMapper.updateAdmin2", map);
+		System.out.println("result2: " + result);
+
+		
+		return result;
+	}
 }
