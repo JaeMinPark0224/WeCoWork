@@ -58,10 +58,10 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">근태 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">근태 관리</div>
-						<div class="left_menu_2depth_content">근태 관리</div>
-						<div class="left_menu_2depth_content">근태 관리</div>
-						<div class="left_menu_2depth_content">근태 관리</div>
+						<div class="left_menu_2depth_content" id="attendance_daily_hr">일일 근태 관리</div>
+						<div class="left_menu_2depth_content">주간 근태 관리</div>
+						<div class="left_menu_2depth_content">월간 근태 관리</div>
+						<div class="left_menu_2depth_content">휴가 관리</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -185,7 +185,7 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">인사정보<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">2depth content</div>
+						<div class="left_menu_2depth_content" id="pi_chart">조직도</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
 						<div class="left_menu_2depth_content">2depth content</div>
@@ -353,6 +353,9 @@
 	});
 	$('#vacation').click(function() {
 		location.href = '<%= request.getContextPath()%>/vacation';
+	});
+	$('#pi_chart').click(function() {
+		location.href = '<%= request.getContextPath()%>/pi/chart';
 	});
 	
 	//project url
