@@ -31,9 +31,6 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceService service;
 	
-	@Autowired
-	private WCWUtill util;
-	
 	@RequestMapping("/daily")
 	public ModelAndView viewDailyAttendance(ModelAndView mv) {
 		mv.setViewName("attendance/daily");
@@ -51,7 +48,7 @@ public class AttendanceController {
 			return "session is empty";
 		}
 		attendance.setEmp_no(loginSSInfo.getEmp_no());
-		attendance.setIp_clock_in(util.getClientIP(request));
+		attendance.setIp_clock_in(WCWUtill.getClientIP(request));
 		int result = service.insertAttendance(attendance);
 		return String.valueOf(result);
 	}
@@ -65,7 +62,7 @@ public class AttendanceController {
 			) {
 		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
 		attendance.setEmp_no(loginSSInfo.getEmp_no());
-		attendance.setIp_clock_out(util.getClientIP(request));
+		attendance.setIp_clock_out(WCWUtill.getClientIP(request));
 		int result = service.updateAttendance(attendance);
 		return String.valueOf(result);
 	}

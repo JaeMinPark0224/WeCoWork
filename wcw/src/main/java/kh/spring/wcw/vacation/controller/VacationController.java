@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import kh.spring.wcw.common.WCWUtill;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.vacation.domain.Vacation;
 import kh.spring.wcw.vacation.model.service.VacationService;
@@ -27,8 +26,7 @@ import kh.spring.wcw.vacation.model.service.VacationService;
 @RequestMapping("/vacation")
 public class VacationController {
 
-	@Autowired
-	private WCWUtill util;
+
 	@Autowired
 	private VacationService service;
 	
@@ -94,7 +92,7 @@ public class VacationController {
 			, @RequestParam(name="vaca_sort") String vaca_sort
 			) {
 		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
-		
+		vacation.setEmp_no(loginSSInfo.getEmp_no());
 		vacation.setVu_year(year_select);
 		vacation.setVaca_confirm(vaca_confirm);
 		vacation.setVaca_sort(vaca_sort);
