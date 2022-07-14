@@ -37,7 +37,7 @@ public class Mail {
 	            // 이메일 제목
 	            msg.setSubject("[WCW] 인증번호 안내드립니다.", "UTF-8");
 	            // 이메일 내용
-	            msg.setText("안녕하세요, WCW입니다. \n 인증번호: " + randomNum, "UTF-8");
+	            msg.setText("안녕하세요, WCW입니다. <br> 인증번호: " + randomNum, "UTF-8");
 	            // 이메일 헤더
 	            msg.setHeader("content-Type", "text/html");
 	            //메일보내기
@@ -83,7 +83,7 @@ public class Mail {
 	            // 이메일 제목
 	            msg.setSubject("[WCW] '" + cp_name + "' 로그인 정보 안내드립니다.", "UTF-8");
 	            // 이메일 내용
-	            msg.setText("[WCW] 발송 메일입니다. <br> 안녕하세요, "+cp_name+"입니다. 로그인 정보 안내드립니다. <br> 아이디:" + mail + " 비밀번호: " + resultNum, "UTF-8");
+	            msg.setText("[WCW] 발송 메일입니다. <br><br> 안녕하세요, "+cp_name+"입니다. 로그인 정보 안내드립니다. <br> 아이디:" + mail + " 비밀번호: " + resultNum, "UTF-8");
 	            // 이메일 헤더
 	            msg.setHeader("content-Type", "text/html");
 	            //메일보내기

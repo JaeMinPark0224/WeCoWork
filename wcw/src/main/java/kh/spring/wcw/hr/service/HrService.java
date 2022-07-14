@@ -59,4 +59,11 @@ public interface HrService {
 	 * @author ybseo
 	 */
 	public int insertEmployee(HashMap<String, Object> map);
+	
+	/**
+	 * @param 회사 번호
+	 * @return 관리자 권한이 'Y'인 직원 리스트
+	 * @author ybseo
+	 */
+	public List<Employee> selectAdminList(int cp_no);
 }

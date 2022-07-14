@@ -413,11 +413,10 @@ public class MainController {
 		if(sum == -1) {
 			rttr.addFlashAttribute("msg", "변경된 값이 없습니다. 프로필 정보 수정 후 수정하기 버튼을 클릭해 주세요.");
 			mv.setViewName("redirect:/mypage");
-			System.out.println("변경된 정보 없음");
 			return mv;
 		}
-		
-		mv.setViewName("mypage/mypage"); // 다시 마이페이지로
+		rttr.addFlashAttribute("msg", "정보가 수정되었습니다.");
+		mv.setViewName("redirect:/mypage"); // 다시 마이페이지로
 		return mv;
 	}
 		

@@ -56,5 +56,11 @@ public class HrServiceImpl implements HrService {
 	public int insertEmployee(HashMap<String, Object> map) {
 		return dao.insertEmployee(map);
 	}
+	
+	// 관리자(인사팀 직원) 리스트 조회
+	@Override
+	public List<Employee> selectAdminList(int cp_no) {
+		return dao.selectAdminList(cp_no);
+	}
 		
 }

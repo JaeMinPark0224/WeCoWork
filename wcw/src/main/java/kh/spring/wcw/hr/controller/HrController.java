@@ -277,8 +277,33 @@ public class HrController {
 			mv.setViewName("redirect:/hr/employee/list");
 		} else {
 			rttr.addFlashAttribute("msg", "직원 계정 생성 중 오류가 발생했습니다. 다시 시도해 주세요.");
-			mv.setViewName("hr/employeeList");
+			mv.setViewName("redirect:/hr/employee/list");
 		}
+		return mv;
+	}
+	
+	// 직원 계정 등록 페이지로 이동
+	@GetMapping("/department/setting")
+	public ModelAndView selectAdminDeptSetting(
+			ModelAndView mv
+			, HttpSession session) {
+			
+		// 회사 번호 가져오기
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		System.out.println(loginInfo);
+		int cp_no = loginInfo.getCp_no();
+					
+		// 회사가 가진 부서 전부 가져오기
+		List<String> deptList = hrService.selectDeptList(cp_no);
+		System.out.println("부서 목록: " + deptList);
+		
+		// 관리자 권한이 'Y'인 직원 리스트 가져오기
+		List<Employee> adminList = hrService.selectAdminList(cp_no);
+		System.out.println("관리자 직원 목록: " + adminList);
+		
+		mv.addObject("deptList", deptList);
+		mv.addObject("adminList", adminList);
+		mv.setViewName("hr/adminDeptSetting");
 		return mv;
 	}
 }

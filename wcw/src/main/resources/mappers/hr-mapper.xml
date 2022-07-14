@@ -85,6 +85,7 @@ update tb_employee
     where emp_no = #{emp_no}
 </update>
 
+<!-- 직원 계정 insert -->
 <insert id="insertEmployee" parameterType="hashmap">
 insert into tb_employee 
 	(emp_no, email, pwd, name, intl_no, phone, join_date, resign_yn, dept_no, job_title_no, hr_yn)
@@ -103,5 +104,15 @@ values
 	, default
 )
 </insert>
+
+<!-- 관리자(인사팀 직원) 리스트 select -->
+<select id="selectAdminList" parameterType="_int" resultType="Employee">
+select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no, e.resign_yn
+	from tb_employee e
+        join tb_department d using(dept_no) 
+		join tb_company c using(cp_no)
+		join tb_job_title j using(job_title_no)
+    where j.cp_no = #{cp_no} and e.hr_yn = 'Y'
+</select>
 
 </mapper>

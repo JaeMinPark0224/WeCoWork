@@ -70,4 +70,9 @@ public class HrDao {
 	public int insertEmployee(HashMap<String, Object> map) {
 		return sqlsession.insert("hrMapper.insertEmployee", map);
 	}
+	
+	// 관리자(인사팀 직원) 리스트 조회
+	public List<Employee> selectAdminList(int cp_no) {
+		return sqlsession.selectList("hrMapper.selectAdminList", cp_no);
+	}
 }

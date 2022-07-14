@@ -3,16 +3,8 @@
         margin-left: 60px;
         width: 1200px;
         color: rgb(94, 94, 94);
+        position: relative;
     }
-    a:visited {
-    	text-decoration: none;
-   	    color: rgb(94, 94, 94);
-    }
-    a:link {
-    	text-decoration: none;
-   	    color: rgb(94, 94, 94);
-    }
-    
     #title{
         display: inline-block;
         font-family: NotoSansB;
@@ -20,14 +12,6 @@
         margin-top: 105px;
         margin-left: 65px;
         color: rgb(75, 77, 178);
-    }
-    #select{
-        width: 140px;
-        height: 25px;
-        font-family: NotoSansR;
-        font-size: 12px;
-        margin-left: 850px;
-        
     }
     #content{
        margin-top: 70px;
@@ -39,17 +23,14 @@
         font-size: 12px;
         font-family: NotoSansR;
         border-spacing: 0px;
-        color: rgb(94, 94, 94);
-        vertical-align: middle;
     }
     td{
         height: 60px;
-        vertical-align: middle;
     }
-    tr > td:first-child, .list:nth-child(9){
+    tr > td:first-child, tr > td:last-child{
         width: 35px;
     }
-    .tb_read{
+     .tb_read{
     	cursor: pointer;
     }
     .last_tb{
@@ -59,16 +40,27 @@
         font-family: NotoSansB;
         background-color: rgb(224, 224, 224);
     }
+    #edit_btn{
+        width: 115px;
+        height: 40px;
+        background-color: rgb(230, 230, 230);
+        color: rgb(51, 51, 51);
+        border: 0px;
+        font-family: NotoSansR;
+        font-size: 12px;
+        margin-left: 880px;
+    }
+
     
     #modal{
         width: 280px;
-        height: 512px;
+        height: 165px;
         position: absolute;
-        top: 450px;
+        top: 400px;
         left: 450px;
-        background-color: white;
-        display: none;
+        background-color: rgb(250, 250, 250);
         box-shadow: 3px 3px 10px rgb(210, 210, 210);
+        display: none;
     }
     #modal_section{
         display: block;
@@ -90,7 +82,7 @@
         margin-bottom: 20px;
         color: rgb(94, 94, 94);
     }
-    #modal_select_dept, #modal_select_job, #modal_select_resign{
+    #modal_select_dept{
         font-family: NotoSansB;
         font-size: 12px;
         width: 225px;
@@ -101,8 +93,8 @@
     #modal_text_intl{
         font-family: NotoSansB;
         font-size: 12px;
-        width: 225px;
-        height: 30px;
+        width: 217px;
+        height: 22px;
         margin-bottom: 22px;
         color: rgb(94, 94, 94);
     }
@@ -125,9 +117,9 @@
         border: 0px;
         font-family: NotoSansR;
         font-size: 12px;
-        background-color: white;
+        background-color: rgb(250, 250, 250);
     }
-    
+
     .list{
     	background-color: rgb(244, 244, 244);
     	font-family: NotoSansR;
