@@ -13,6 +13,7 @@
 		<typeAlias type="kh.spring.wcw.notification.domain.Notification" alias="Notification"/>
 		<typeAlias type="kh.spring.wcw.project.domain.Project" alias="Project"/>
 		<typeAlias type="kh.spring.wcw.vacation.domain.Vacation" alias="Vacation"/>
+		<typeAlias type="kh.spring.wcw.dept.domain.Dept" alias="Dept"/>
 	</typeAliases>
 	
 	<mappers>

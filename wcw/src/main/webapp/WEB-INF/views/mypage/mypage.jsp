@@ -11,6 +11,11 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
@@ -78,11 +83,6 @@
         </form>
     </div>
 </section>
-<script>
-<c:if test="${not empty msg}">
-	alert("${msg}");
-</c:if>
-</script>
 <script>
 	// 서명 등록 버튼 클릭 시
 	$("#sign_btn").click(function(){

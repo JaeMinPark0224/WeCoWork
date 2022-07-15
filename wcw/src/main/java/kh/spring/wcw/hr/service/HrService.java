@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
+import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 
@@ -27,6 +28,13 @@ public interface HrService {
 	public List<Employee> selectEmployeeListFilter(String selectVal, RowBounds rowBounds, int cp_no);
 
 	/**
+	 * @param 부서 이름
+	 * @return 가져온 부서에 해당하는 직원 리스트
+	 * @author ybseo
+	 */
+	public List<Employee> selectDeptEmployeeList(int cp_no, String dept_name);
+	
+	/**
 	 * @param 사원 번호, 회사 번호
 	 * @return 직원 상세 정보
 	 * @author ybseo
@@ -35,10 +43,17 @@ public interface HrService {
 	
 	/**
 	 * @param 회사 번호
-	 * @return 부서 리스트
+	 * @return 부서명 리스트
 	 * @author ybseo
 	 */
 	public List<String> selectDeptList(int cp_no);
+	
+	/**
+	 * @param 회사 번호
+	 * @return 부서 모든 정보 리스트
+	 * @author ybseo
+	 */
+	public List<Dept> selectDeptAllList(int cp_no);
 	
 	/**
 	 * @param 회사 번호

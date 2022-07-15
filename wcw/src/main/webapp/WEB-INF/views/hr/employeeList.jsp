@@ -11,6 +11,11 @@
 <meta charset="UTF-8">
 <title>직원 리스트 조회</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
@@ -112,10 +117,6 @@
         </div>
     </div>
 </section>
-<script>
-<c:if test="${not empty msg}">
-	alert("${msg}");
-</c:if>
 </script>
 <script>
 // 모달 내 취소버튼 클릭 시 모달 없애기

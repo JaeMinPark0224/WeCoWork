@@ -10,6 +10,11 @@
 <meta charset="UTF-8">
 <title>직원 등록</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 </head>
 <style>
     #section{
@@ -106,11 +111,6 @@
         </form>
     </div>
 </section>
-<script>
-<c:if test="${not empty msg}">
-	alert("${msg}");
-</c:if>
-</script>
 <script>
 // 유효성 검사
 	// 직원 성명

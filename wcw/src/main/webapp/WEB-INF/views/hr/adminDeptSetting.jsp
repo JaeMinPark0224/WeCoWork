@@ -11,6 +11,11 @@
 <meta charset="UTF-8">
 <title>관리자 부서 설정</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
@@ -71,11 +76,6 @@
     </div>
 </section>
 <script>
-<c:if test="${not empty msg}">
-	alert("${msg}");
-</c:if>
-</script>
-<script>
 
 // 관리자 설정 버튼 클릭 시
 $("#edit_btn").click(function(){
@@ -92,14 +92,14 @@ $("#modal_edit").click(function(){
 	console.log(selectVal);
 	
 	$.ajax({
-		url: "<%=request.getContextPath()%>/hr/department/update",
+		url: "<%=request.getContextPath()%>/hr/department/admin/update",
 		type: "post",
 		data: {selectVal: selectVal},
 		dataType: 'json',
 		success: function(result){
 			if(result > -1){
 				alert("관리자 부서 변경이 완료되었습니다");
-				location.href="<%= request.getContextPath() %>/hr/department/list";
+				location.href="<%= request.getContextPath() %>/hr/department/admin/list";
 			}
 			else {
 				alert("관리자 부서 변경 중 오류가 발생했습니다.");

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 
@@ -29,6 +30,14 @@ public class HrDao {
 		return sqlsession.selectList("hrMapper.selectEmployeeListFilter", map, rowBounds);
 	}
 	
+	// 특정 부서에 해당하는 직원 리스트
+	public List<Employee> selectDeptEmployeeList(int cp_no, String dept_name) {
+		HashMap<String, Object> map= new HashMap<>();
+		map.put("dept_name", dept_name);
+		map.put("cp_no", cp_no);
+		return sqlsession.selectList("hrMapper.selectDeptEmployeeList", map);
+	}
+	
 	// 직원 상세 조회
 	public Employee selectEmployee(String emp_no, int cp_no) {
 		HashMap<String, Object> map= new HashMap<>();
@@ -37,9 +46,14 @@ public class HrDao {
 		return sqlsession.selectOne("hrMapper.selectEmployee", map);
 	}
 	
-	// 부서 리스트 조회
+	// 부서 이름 리스트 조회
 	public List<String> selectDeptList(int cp_no) {
 		return sqlsession.selectList("hrMapper.selectDeptList", cp_no);
+	}
+	
+	// 부서 모든 정보 리스트 조회
+	public List<Dept> selectDeptAllList(int cp_no) {
+		return sqlsession.selectList("hrMapper.selectDeptAllList", cp_no);
 	}
 	
 	// 직위 리스트 조회
@@ -88,7 +102,6 @@ public class HrDao {
 		System.out.println("result1: " + result);
 		result = sqlsession.update("hrMapper.updateAdmin2", map);
 		System.out.println("result2: " + result);
-
 		
 		return result;
 	}

@@ -11,6 +11,11 @@
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
@@ -44,11 +49,6 @@
             </div>
         </div>
     </section>
-<script>
-<c:if test="${not empty msg}">
-	alert("${msg}");
-</c:if>
-</script>
 <script>
 	// cancel를 누르면 로그인 페이지로
 	$("#cancel").click(function(){

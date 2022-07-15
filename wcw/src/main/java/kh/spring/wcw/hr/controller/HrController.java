@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hr.service.HrService;
@@ -285,7 +286,7 @@ public class HrController {
 	}
 	
 	// 관리자 부서 설정 페이지로 이동
-	@GetMapping("/department/list")
+	@GetMapping("/department/admin/list")
 	public ModelAndView selectAdminDeptSetting(
 			ModelAndView mv
 			, HttpSession session) {
@@ -310,7 +311,7 @@ public class HrController {
 	}
 	
 	// 관리자 부서 설정 기능
-	@PostMapping("/department/update")
+	@PostMapping("/department/admin/update")
 	@ResponseBody
 	public int updateAdminDeptSetting(
 			HttpSession session
@@ -326,144 +327,33 @@ public class HrController {
 		return result;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 부서 리스트 조회 페이지로 이동
+	@GetMapping("/department/list")
+	public ModelAndView selectDept(
+			ModelAndView mv
+			, HttpSession session) {
+		
+	// 회사 번호 가져오기
+	Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+	System.out.println(loginInfo);
+	int cp_no = loginInfo.getCp_no();
+						
+		
+	// 회사가 가진 부서 전채 정보 전부 가져오기
+	List<Dept> deptList = hrService.selectDeptAllList(cp_no);
+	String dept_name = deptList.get(0).getDept_name();
+	System.out.println("부서 목록: " + deptList);
+	System.out.println("1번 부서: " + dept_name);
+	
+	// 특정 부서의 직원 리스트 사져오기
+	List<Employee> employeeList_dept = hrService.selectDeptEmployeeList(cp_no, dept_name);
+	
+	mv.addObject("deptList", deptList);
+	mv.addObject("employeeList", employeeList_dept);
+	mv.setViewName("hr/deptList");
+	
+	return mv;
+	}
 	
 	
 	
