@@ -17,6 +17,7 @@ public class Project {
 	private String cp_name;
 	private String pr_complete_yn;
 	private int emp_no;
+	private int ep_no;
 	private int pr_fav;
 	private int pb_no;
 	private String pb_title;
@@ -30,6 +31,21 @@ public class Project {
 	private String pn_title;
 	private String pn_content;
 	private Timestamp pn_date;
+	private int pw_no;
+	private String pw_title;
+	private int pw_status;
+	private int pw_priority;
+	private Timestamp pw_start_date;
+	private Timestamp pw_end_date;
+	private String pw_content;
+	private int pw_tier;
+	private int pw_ref_no;
+	private int pw_order;
+	private Timestamp pw_date;
+	private String pr_emp_authority;
+	private String intl_no;
+	private String email;
+	private String profile;
 	public int getPr_no() {
 		return pr_no;
 	}
@@ -89,6 +105,12 @@ public class Project {
 	}
 	public void setEmp_no(int emp_no) {
 		this.emp_no = emp_no;
+	}
+	public int getEp_no() {
+		return ep_no;
+	}
+	public void setEp_no(int ep_no) {
+		this.ep_no = ep_no;
 	}
 	public int getPr_fav() {
 		return pr_fav;
@@ -168,17 +190,112 @@ public class Project {
 	public void setPn_date(Timestamp pn_date) {
 		this.pn_date = pn_date;
 	}
+	public int getPw_no() {
+		return pw_no;
+	}
+	public void setPw_no(int pw_no) {
+		this.pw_no = pw_no;
+	}
+	public String getPw_title() {
+		return pw_title;
+	}
+	public void setPw_title(String pw_title) {
+		this.pw_title = pw_title;
+	}
+	public int getPw_status() {
+		return pw_status;
+	}
+	public void setPw_status(int pw_status) {
+		this.pw_status = pw_status;
+	}
+	public int getPw_priority() {
+		return pw_priority;
+	}
+	public void setPw_priority(int pw_priority) {
+		this.pw_priority = pw_priority;
+	}
+	public Timestamp getPw_start_date() {
+		return pw_start_date;
+	}
+	public void setPw_start_date(Timestamp pw_start_date) {
+		this.pw_start_date = pw_start_date;
+	}
+	public Timestamp getPw_end_date() {
+		return pw_end_date;
+	}
+	public void setPw_end_date(Timestamp pw_end_date) {
+		this.pw_end_date = pw_end_date;
+	}
+	public String getPw_content() {
+		return pw_content;
+	}
+	public void setPw_content(String pw_content) {
+		this.pw_content = pw_content;
+	}
+	public int getPw_tier() {
+		return pw_tier;
+	}
+	public void setPw_tier(int pw_tier) {
+		this.pw_tier = pw_tier;
+	}
+	public int getPw_ref_no() {
+		return pw_ref_no;
+	}
+	public void setPw_ref_no(int pw_ref_no) {
+		this.pw_ref_no = pw_ref_no;
+	}
+	public int getPw_order() {
+		return pw_order;
+	}
+	public void setPw_order(int pw_order) {
+		this.pw_order = pw_order;
+	}
+	public Timestamp getPw_date() {
+		return pw_date;
+	}
+	public void setPw_date(Timestamp pw_date) {
+		this.pw_date = pw_date;
+	}
+	public String getPr_emp_authority() {
+		return pr_emp_authority;
+	}
+	public void setPr_emp_authority(String pr_emp_authority) {
+		this.pr_emp_authority = pr_emp_authority;
+	}
+	public String getIntl_no() {
+		return intl_no;
+	}
+	public void setIntl_no(String intl_no) {
+		this.intl_no = intl_no;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 	@Override
 	public String toString() {
 		return "Project [pr_no=" + pr_no + ", pr_title=" + pr_title + ", pr_content=" + pr_content + ", pr_open_yn="
 				+ pr_open_yn + ", pr_join_open=" + pr_join_open + ", pr_date=" + pr_date + ", cp_no=" + cp_no
-				+ ", cp_name=" + cp_name + ", pr_complete_yn=" + pr_complete_yn + ", emp_no=" + emp_no + ", pr_fav="
-				+ pr_fav + ", pb_no=" + pb_no + ", pb_title=" + pb_title + ", pb_content=" + pb_content + ", pb_date="
-				+ pb_date + ", name=" + name + ", job_title=" + job_title + ", dept_name=" + dept_name + ", board_fix="
-				+ board_fix + ", pn_no=" + pn_no + ", pn_title=" + pn_title + ", pn_content=" + pn_content
-				+ ", pn_date=" + pn_date + "]";
+				+ ", cp_name=" + cp_name + ", pr_complete_yn=" + pr_complete_yn + ", emp_no=" + emp_no + ", ep_no="
+				+ ep_no + ", pr_fav=" + pr_fav + ", pb_no=" + pb_no + ", pb_title=" + pb_title + ", pb_content="
+				+ pb_content + ", pb_date=" + pb_date + ", name=" + name + ", job_title=" + job_title + ", dept_name="
+				+ dept_name + ", board_fix=" + board_fix + ", pn_no=" + pn_no + ", pn_title=" + pn_title
+				+ ", pn_content=" + pn_content + ", pn_date=" + pn_date + ", pw_no=" + pw_no + ", pw_title=" + pw_title
+				+ ", pw_status=" + pw_status + ", pw_priority=" + pw_priority + ", pw_start_date=" + pw_start_date
+				+ ", pw_end_date=" + pw_end_date + ", pw_content=" + pw_content + ", pw_tier=" + pw_tier
+				+ ", pw_ref_no=" + pw_ref_no + ", pw_order=" + pw_order + ", pw_date=" + pw_date + ", pr_emp_authority="
+				+ pr_emp_authority + ", intl_no=" + intl_no + ", email=" + email + ", profile=" + profile + "]";
 	}
 	
 	
+
 	
 }

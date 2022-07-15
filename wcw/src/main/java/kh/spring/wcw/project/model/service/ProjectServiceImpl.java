@@ -94,4 +94,44 @@ public class ProjectServiceImpl implements ProjectService{
 		return dao.selectOneNoticeProject(project);
 	}
 
+	@Override
+	public int insertWorkProject(Project project) {
+		return dao.insertWorkProject(project);
+	}
+
+	@Override
+	public List<Project> selectListWorkProject(Project project) {
+		return dao.selectListWorkProject(project);
+	}
+
+	@Override
+	public Project selectOneWorkProject(int pw_no) {
+		return dao.selectOneWorkProject(pw_no);
+	}
+
+	@Override
+	public List<Project> selectListParticipantProject(int pr_no, String authority) {
+		return dao.selectListParticipantProject(pr_no, authority);
+	}
+
+	@Override
+	public List<String> selectListDeptProject(int pr_no, String authority) {
+		return dao.selectListDeptProject(pr_no, authority);
+	}
+
+	@Override
+	public int insertParticipantProject(Project project) {
+		return dao.insertParticipantProject(project);
+	}
+
+	@Override
+	public int updateParticipantProject(Project project) {
+		return dao.updateParticipantProject(project);
+	}
+
+	@Override
+	public int deleteParticipantProject(Project project) {
+		return dao.deleteParticipantProject(project);
+	}
+
 }

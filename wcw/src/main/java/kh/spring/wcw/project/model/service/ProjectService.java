@@ -2,8 +2,6 @@ package kh.spring.wcw.project.model.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import kh.spring.wcw.project.domain.Project;
 
 /**
@@ -45,4 +43,20 @@ public interface ProjectService {
 	public List<Project> selectListNoticeProject(Project project);
 	
 	public Project selectOneNoticeProject(Project project);
+	
+	public int insertWorkProject(Project project);
+	
+	public List<Project> selectListWorkProject(Project project);
+	
+	public Project selectOneWorkProject(int pw_no);
+	
+	public List<Project> selectListParticipantProject(int pr_no, String authority);
+	
+	public int insertParticipantProject(Project project);
+	
+	public List<String> selectListDeptProject(int pr_no, String authority);
+	
+	public int updateParticipantProject(Project project);
+	
+	public int deleteParticipantProject(Project project);
 }

@@ -144,8 +144,8 @@
 
 .dpeth_arrow {
 	position: absolute;
-	right: 0px;
-	line-height: 30px;
+	right: 7px;
+	line-height: 30px !important;
 	transition: transform 0.3s;
 }
 

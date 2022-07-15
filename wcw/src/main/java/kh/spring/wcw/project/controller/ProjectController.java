@@ -1,5 +1,9 @@
 package kh.spring.wcw.project.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,9 +37,6 @@ public class ProjectController {
 	
 	@Autowired
 	private WCWUtill wcwutill;
-	
-	@Autowired
-	private ServletContext context;
 	
 	@Autowired
 	private ProjectService service;
@@ -89,8 +91,7 @@ public class ProjectController {
 			ModelAndView mv
 			, HttpSession session
 			) {
-		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
-		if(loginSSInfo == null) {
+		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
 			return mv;
 		}
@@ -104,11 +105,11 @@ public class ProjectController {
 			, Project project
 			, HttpSession session
 			) {
-		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
-		if(loginSSInfo == null) {
+		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
 			return mv;
 		}
+		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		int result = service.insertProject(project);
 		
@@ -197,17 +198,54 @@ public class ProjectController {
 	@GetMapping("/work/list")
 	public ModelAndView selectListWorkProject(
 			ModelAndView mv
+			, HttpSession session
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
 			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		projectObj.setEmp_no(loginSSInfo.getEmp_no());
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		
+		List<Project> workList = service.selectListWorkProject(projectObj);
+		
+		
 		// 프로젝트 번호 저장
 		mv.addObject("pr_no", pr_no);
+		// 업무 리스트 저장
+		mv.addObject("workList", workList);
 		// 프로젝트 업무 list 페이지 이동
 		mv.setViewName("project/work/list");
 		return mv;
 	}
 	
 	@GetMapping("/work/read")
-	public ModelAndView selectOneWorkProject(ModelAndView mv) {
+	public ModelAndView selectOneWorkProject(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam(name = "project", defaultValue = "0") int pr_no
+			, @RequestParam(name = "no", defaultValue = "0") int pw_no
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		projectObj.setEmp_no(loginSSInfo.getEmp_no());
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		
+		Project result = service.selectOneWorkProject(pw_no);
+		mv.addObject("work", result);
 		mv.setViewName("project/work/read");
 		return mv;
 	}
@@ -215,10 +253,43 @@ public class ProjectController {
 	@GetMapping("/work/insert")
 	public ModelAndView insertWorkProject(
 			ModelAndView mv
+			, HttpSession session
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
 			, Project project
 			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
 		mv.setViewName("project/work/insert");
+		return mv;
+	}
+	
+	@PostMapping("/work/insert.do")
+	public ModelAndView insertDoWorkProject(
+			ModelAndView mv
+			, RedirectAttributes rttr
+			, HttpSession session
+			, Project project
+			, @RequestParam(name = "pw_start_date_str") String pwStartDateStr
+			, @RequestParam(name = "pw_end_date_str") String pwEndDateStr
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime localDateTime = LocalDateTime.from(dateFormat.parse(pwStartDateStr));
+		Timestamp tsStart = Timestamp.valueOf(localDateTime);
+		localDateTime = LocalDateTime.from(dateFormat.parse(pwEndDateStr));
+		Timestamp tsEnd = Timestamp.valueOf(localDateTime);
+		project.setPw_start_date(tsStart);
+		project.setPw_end_date(tsEnd);
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		service.insertWorkProject(project);
+		rttr.addAttribute("project", project.getPr_no());
+		mv.setViewName("redirect:/project/work/list");
 		return mv;
 	}
 	
@@ -244,9 +315,83 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/participant/list")
-	public ModelAndView selectParticipantProject(ModelAndView mv) {
+	public ModelAndView selectListParticipantProject(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam(name = "project", defaultValue = "0") int pr_no
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		
+		List<Project> participantAList = service.selectListParticipantProject(pr_no, "A");
+		List<Project> participantBList = service.selectListParticipantProject(pr_no, "B");
+		List<String> deptAList = service.selectListDeptProject(pr_no, "A");
+		List<String> deptBList = service.selectListDeptProject(pr_no, "B");
+		
+		String pr_emp_authority = null;
+		
+		for(int i = 0; i < participantAList.size(); i++) {
+			if(participantAList.get(i).getEp_no() == emp_no) {
+				pr_emp_authority = participantAList.get(i).getPr_emp_authority();
+			}
+		}
+		
+		for(int i = 0; i < participantBList.size(); i++) {
+			if(participantAList.get(i).getEp_no() == emp_no) {
+				pr_emp_authority = participantAList.get(i).getPr_emp_authority();
+			}
+		}
+		mv.addObject("pr_emp_authority", pr_emp_authority);
+		mv.addObject("deptAList", deptAList);
+		mv.addObject("deptBList", deptBList);
+		mv.addObject("participantAList", participantAList);
+		mv.addObject("participantBList", participantBList);
 		mv.setViewName("project/participant/list");
 		return mv;
+	}
+	
+	@PostMapping("/participant/list")
+	@ResponseBody
+	public String selectListAjaxParticipantProject(
+			HttpSession session
+			, @RequestParam int pr_no
+			, @RequestParam String authority
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "0";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "0";
+		}
+		List<Project> participantList = null;
+		List<String> deptList = null;
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		if(!authority.equals("C")) {
+			participantList = service.selectListParticipantProject(pr_no, authority);
+			deptList = service.selectListDeptProject(pr_no, authority);
+		} else {
+			participantList = service.selectListParticipantProject(pr_no, authority);
+			deptList = service.selectListDeptProject(pr_no, authority);
+		}
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("participantList", participantList);
+		map.put("deptList", deptList);
+		String result = gson.toJson(map);
+		return result;
 	}
 	
 	@PostMapping("/participant/read")
@@ -267,6 +412,61 @@ public class ProjectController {
 		} else {
 			result = 1;
 		}
+		return String.valueOf(result);
+	}
+	
+	@PostMapping("/participant/insert")
+	@ResponseBody
+	public String insertParticipantProject(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam int pr_no
+			, @RequestParam(defaultValue = "0") int emp_no
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return "0";
+		}
+		projectObj.setPr_no(pr_no);
+		if(emp_no == 0) {
+			Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+			projectObj.setEmp_no(loginSSInfo.getEmp_no());
+		} else {
+			projectObj.setEmp_no(emp_no);
+		}
+		int result = service.insertParticipantProject(projectObj);
+		return String.valueOf(result);
+	}
+	
+	@PostMapping("/participant/delete")
+	@ResponseBody
+	public String deleteParticipantProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return "0";
+		}
+		int result = service.deleteParticipantProject(project);		
+		
+		return String.valueOf(result);
+	}
+	
+	@PostMapping("/participant/update")
+	@ResponseBody
+	public String updateParticipantProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return "0";
+		}
+		int result = service.updateParticipantProject(project);
+		
 		return String.valueOf(result);
 	}
 	

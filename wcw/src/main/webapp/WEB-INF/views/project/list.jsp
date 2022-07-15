@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/project/project.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
 <%@ include file="/WEB-INF/views/template/csslink.jsp" %>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/project/project.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
 <head>
 <meta charset="UTF-8">
 <title>WCW</title>
@@ -16,6 +16,7 @@
 <body>
 <div id="project_list_modal_background">
 	<input type="hidden" id="project_list_modal_val">
+	<input type="hidden" id="project_list_modal_join_open">
 	<div id="project_list_modal_wrap">
 		<div id="project_list_modal_flex">
 			<div id="project_list_modal_title"></div>
@@ -57,10 +58,10 @@
 				<c:if test="${item.pr_fav ne '0'}">
 					<img class="project_list_fav" favChk = 't' src="<%= request.getContextPath()%>/resources/images/bahai-full.svg">
 				</c:if>
-				<c:if test="${item.pr_open_yn eq 'Y'}">
+				<c:if test="${item.pr_join_open eq 'N'}">
 					<img class="project_list_unlock" unlockChk = 't' src="<%= request.getContextPath()%>/resources/images/unlock.png">
 				</c:if>
-				<c:if test="${item.pr_open_yn ne 'Y'}">
+				<c:if test="${item.pr_join_open eq 'Y'}">
 					<img class="project_list_unlock" unlockChk = 'f' src="<%= request.getContextPath()%>/resources/images/lock.png">
 				</c:if>
 			</div>
@@ -135,8 +136,10 @@
 			$('#project_list_modal_people').text($(this).children('.project_list_dept').text());
 			if($(this).children('.project_list_unlock').attr('unlockChk') == 't') {
 				$("#project_list_modal_notice").text('');
+				$("#project_list_modal_join_open").val('N');
 			} else {
 				$("#project_list_modal_notice").text('*관리자 승인 후 참여 가능');
+				$("#project_list_modal_join_open").val('Y');
 			}
 			$.ajax({
 				type: "POST",
@@ -148,10 +151,29 @@
 					if(result == 1) {
 						location.href = "<%= request.getContextPath()%>/project/main?project="+$('#project_list_modal_val').val();
 					} else {
+						console.log("heare");
 						$("#project_list_modal_background").css('display', 'block');
 						$('.project_list_modal_btn_participate').off('click');
 						$('.project_list_modal_btn_participate').on('click', function() {
-							location.href = "<%= request.getContextPath()%>/project/main?project="+$('#project_list_modal_val').val();
+							if($("#project_list_modal_join_open").val() == 'N') {
+								$.ajax({
+									type: "POST",
+									url: "<%= request.getContextPath()%>/project/participant/insert",
+									data: {
+										pr_no : $('#project_list_modal_val').val()
+									},
+									success: function(result) {
+										if(result == 1) {
+											location.href = "<%= request.getContextPath()%>/project/main?project="+$('#project_list_modal_val').val();											
+										}
+									},
+									error: function(request, status, error) {
+										alert('fail');
+									}
+								});
+							}
+							
+							<%-- location.href = "<%= request.getContextPath()%>/project/main?project="+$('#project_list_modal_val').val(); --%>
 						});
 					}
 				},

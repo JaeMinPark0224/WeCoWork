@@ -237,6 +237,7 @@ section {
 	position: absolute;
 	left: 35px;
 	top: 30px;
+	width: 120px;
 }
 
 .project_list_update {
@@ -951,6 +952,28 @@ section {
 	width: 550px;
 	height: 180px;
 	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+    border: 1px solid rgb(224, 224, 224);
+    padding: 10px;
+}
+
+#project_work_add_btn_wrap {
+	grid-column: 1/ 3;
+	text-align: center;
+}
+
+#project_work_add_btn {
+    width: 115px;
+    height: 40px;
+    background-color: #4B4DB2;
+    color: white;
+    font-size: 12px;
+    font-family: NotoSansR;
+    margin: auto;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
 }
 
 /* 프로젝트 업무 리스트 페이지 */
@@ -999,6 +1022,10 @@ section {
 
 .work_name_content {
 	
+}
+
+.work_name_content_left {
+	text-align: left;
 }
 
 .work_manager_content {
@@ -1062,11 +1089,17 @@ section {
 #project_work_insert_btn {
 	width: 90px;
 	height: 30px;
+	line-height: 30px;
 	background-color: rgb(230, 230, 230);
 	font-size: 12px;
 	color: rgb(51, 51, 51);
 	cursor: pointer;
 	font-family: NotoSansR;
+}
+
+.work_title_span {
+	cursor: pointer;
+	margin-left: 20px;
 }
 
 /* 프로젝트 업무 조회 페이지 */
@@ -1088,6 +1121,7 @@ section {
 	position: absolute;
 	top: 0px;
 	right: 115px;
+	cursor: pointer;
 }
 
 #project_work_delete_btn {
@@ -1100,6 +1134,7 @@ section {
 	position: absolute;
 	top: 0px;
 	right: 0px;
+	cursor: pointer;
 }
 
 #project_work_read_profile_wrap {
@@ -1190,6 +1225,24 @@ section {
 	background-color: rgb(224, 224, 224);
 	margin-right: 25px;
 	text-align: center;
+	cursor: pointer;
+}
+
+.project_work_read_content_priority_wrap {
+	display: flex;
+	flex-direction: row;
+}
+
+.project_work_read_content_priority {
+	font-size: 12px;
+	color: rgb(94, 94, 94);
+	font-family: NotoSansR;
+	width: 90px;
+	height: 30px;
+	background-color: rgb(224, 224, 224);
+	margin-right: 25px;
+	text-align: center;
+	cursor: pointer;
 }
 
 .project_work_read_content_worker_wrap {
@@ -1374,6 +1427,279 @@ section {
 	height: 20px;
 	line-height: 20px;
 }
+
+
+
+/* 프로젝트 참여자 리스트 페이지 */
+/* 프로젝트 참여자 리스트 페이지 */
+/* 프로젝트 참여자 리스트 페이지 */
+/* 프로젝트 참여자 리스트 페이지 */
+/* 프로젝트 참여자 리스트 페이지 */
+/* 프로젝트 참여자 리스트 페이지 */
+/* 프로젝트 참여자 리스트 페이지 */
+/* 프로젝트 참여자 리스트 페이지 */
+
+
+#project_participant_wrap {
+	margin-top: 30px;
+	width: 1070px;
+	font-size: 0px;
+}
+
+.project_participant_flex_wrap {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 70px;
+}
+
+.project_participant_header_wrap {
+	height: 60px;
+	width: 1070px;
+	background-color: rgb(224, 224, 224);
+	font-size: 12px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);	
+}
+
+.projecet_participant_header {
+	font-size: 12px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);	
+	height: 60px;
+	line-height: 60px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.project_participant_body_wrap {
+	width: 1070px;
+	min-height: 60px;
+	background-color: rgb(244, 244, 244);
+	padding: 45px;
+	box-sizing: border-box;
+}
+
+.project_participant_body_flex {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.project_participant_dept_name {
+	font-size: 13px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+}
+
+.project_participant_body_gird {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 70px;
+	row-gap: 10px;
+}
+
+.project_workder_gird {
+	display: grid;
+	grid-template-columns: 70px 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	column-gap: 20px;
+	row-gap: 5px;
+}
+
+.project_workder_profile {
+	grid-column: 1 / 2;
+	grid-row: 1 / 4;
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	background-color: rgb(230, 230, 230);
+}
+
+.project_workder_profile_img {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;	
+}
+
+.project_workder_name_dept {
+	font-size: 0px;
+}
+
+.project_workder_name {
+	font-size: 13px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+}
+
+.project_workder_dept {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+}
+
+.project_workder_num {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+}
+
+.project_workder_email {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+}
+
+#project_participant_modal_background {
+	display: none;
+	z-index: 2;
+	background-color: rgba(128, 128, 128, 0.356);
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	font-size: 0px;
+}
+
+#project_participant_modal_wrap{
+	width: 320px;
+	height: 310px;
+	position: absolute;
+ 	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%,-50%);
+  	background-color: rgb(250, 250, 250);
+}
+
+#project_participant_modal_grid {
+	display: grid;
+	grid-template-rows: 85px 20px 70px 20px 70px 45px;
+}
+
+#project_participant_modal_tap_wrap {
+	padding: 0px 25px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	text-align: center;
+}
+
+.project_participant_modal_tap {
+	font-size: 13px;
+	color: rgb(51, 51, 51);
+	font-family: NotoSansR;
+	cursor: pointer;
+	align-self: center;
+}
+
+.project_participant_modal_select_wrap {
+	padding: 0px 25px;
+}
+
+#project_participant_modal_select_dept {
+	width: 270px;
+	height: 40px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(51, 51, 51);
+}
+
+#project_participant_modal_select_name {
+	width: 270px;
+	height: 40px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(51, 51, 51);
+}
+
+.project_participant_modal_name {
+	font-size: 11px;
+	color: rgb(158, 158, 158);
+	font-family: NotoSansR;
+	height: 20px;
+	line-height: 20px;
+	padding-left: 25px;
+}
+
+#project_participant_modal_btn_wrap {
+	height: 45px;
+	box-sizing: border-box;
+	border-top: 1px solid rgb(224, 224, 224);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.project_participant_modal_btn {
+	font-size: 12px;
+	font-family: NotoSansR;
+	cursor: pointer;
+	align-self: center;
+	justify-self: center;
+	width: 160px;
+	height: 44px;
+	background-color: rgb(250, 250, 250);
+}
+
+.project_participant_modal_btn:hover {
+	color: white !important;
+	background-color: #4B4DB2;	
+}
+
+#project_participant_modal_cancle_btn {
+	color: rgb(190, 190, 190);
+}
+
+#project_participant_modal_add_btn {
+	color: #4B4DB2;
+}
+
+
+#project_participant_update_btn {
+	width: 90px;
+	height: 30px;
+	background-color: rgb(230, 230, 230);
+	font-size: 12px;
+	color: rgb(51, 51, 51);
+	font-family: NotoSansR;
+	position: absolute;
+	top: 0px;
+	right: 115px;
+	cursor: pointer;
+}
+
+
+#project_participant_invite_btn {
+	width: 90px;
+	height: 30px;
+	background-color: rgb(230, 230, 230);
+	font-size: 12px;
+	color: rgb(51, 51, 51);
+	font-family: NotoSansR;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	cursor: pointer;
+}
+
+.project_participant_modal_tap_invite {
+	display: none;
+	grid-column: 1 / 4;
+	font-size: 13px;
+	color: rgb(51, 51, 51);
+	font-family: NotoSansR;
+	cursor: pointer;
+	align-self: center;
+	text-align: center;
+	color: #4B4DB2;
+}
+
+
+
+
+
+
+
+
 
 
 

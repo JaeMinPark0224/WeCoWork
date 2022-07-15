@@ -78,4 +78,42 @@ public class ProjectDao {
 	public Project selectOneNoticeProject(Project project) {
 		return sqlsession.selectOne("Project.selectOneNoticeProject", project);
 	}
+	
+	public int insertWorkProject(Project project) {
+		return sqlsession.insert("Project.insertWorkProject", project);
+	}
+	
+	public List<Project> selectListWorkProject(Project project) {
+		return sqlsession.selectList("Project.selectListWorkProject", project);
+	}
+	
+	public Project selectOneWorkProject(int pw_no) {
+		return sqlsession.selectOne("Project.selectOneWorkProject", pw_no);
+	}
+	
+	public List<Project> selectListParticipantProject(int pr_no, String authority) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pr_no", pr_no);
+		map.put("pr_emp_authority", authority);
+		return sqlsession.selectList("Project.selectListParticipantProject", map);
+	}
+	
+	public List<String> selectListDeptProject(int pr_no, String authority) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pr_no", pr_no);
+		map.put("pr_emp_authority", authority);
+		return sqlsession.selectList("Project.selectListDeptProject", map);
+	}
+	
+	public int insertParticipantProject(Project project) {
+		return sqlsession.insert("Project.insertParticipantProject", project);
+	}
+	
+	public int updateParticipantProject(Project project) {
+		return sqlsession.update("Project.updateParticipantProject", project);
+	}
+	
+	public int deleteParticipantProject(Project project) {
+		return sqlsession.update("Project.deleteParticipantProject", project);
+	}
 }
