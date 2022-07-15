@@ -106,10 +106,21 @@ public interface HrService {
 	
 	
 	
+	
+	
 	/**
 	 * @param Attendance
 	 * @return 근태 정보 리스트
 	 * @author Jinjeong Lee
 	 */
 	public List<Attendance> selectAttendance(Attendance attendance);
+	
+	/**
+	 * @param Attendance
+	 * @return 근태 정보 수정 요청 리스트
+	 * @author Jinjeong Lee
+	 */
+	public List<Attendance> selectApprovalAttendance(Attendance attendance);
+	
+	
 }

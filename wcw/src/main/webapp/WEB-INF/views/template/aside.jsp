@@ -59,6 +59,7 @@
 					<div class="left_menu_1depth_title" open_chk="f">근태 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content" id="attendance_daily_hr">일일 근태 관리</div>
+						<div class="left_menu_2depth_content" id="attendance_appr_hr">근태 조정 요청 관리</div>
 						<div class="left_menu_2depth_content">주간 근태 관리</div>
 						<div class="left_menu_2depth_content">월간 근태 관리</div>
 						<div class="left_menu_2depth_content">휴가 관리</div>
@@ -347,6 +348,9 @@
 	});
 	$('#attendance_daily_hr').click(function() {
 		location.href = '<%= request.getContextPath()%>/hr/attendance/daily';
+	});
+	$('#attendance_appr_hr').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/attendance/approval';
 	});
 	$('#attendance_weekly').click(function() {
 		location.href = '<%= request.getContextPath()%>/attendance/weekly';

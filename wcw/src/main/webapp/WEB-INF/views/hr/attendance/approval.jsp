@@ -116,7 +116,7 @@
 <section id="attendance_section">
 	<div id="attendance_main_wrap">
 		<div id="attendance_main_header">
-			<div id="attendance_main_menu_title">일일 근태 조회</div>
+			<div id="attendance_main_menu_title">근태 조정 요청 조회</div>
 		</div>
 		
 		<div id="attendance_main_container">
@@ -127,19 +127,36 @@
 						<input type="date" class="att_date_form" id="att_date_start" name="att_date_start">
 						<div class="font_content">~</div>
 						<input type="date" class="att_date_form" id="att_date_end" name="att_date_end">
-						<button type="submit" class="btn_format_mini_gray" id="att_date_search_btn">조회</button>
+						<div class="font_title ">부서명</div>
+						<select name="dept_name" id="dept_name">
+							<option value="0">전체</option>
+						   	<option value="1"></option>
+						    <option value="2"></option>
+						    <option value="3"></option>
+						    <option value="4"></option>
+						    <option value="5"></option>
+						</select>
+						<div class="font_title height25">결재 상태</div>
+						<select name="att_appr_result" id="att_appr_result">
+							<option value="0">전체</option>
+						   	<option value="1">승인</option>
+						    <option value="2">반려</option>
+						    <option value="3">대기</option>
+						</select>
+						<button type="submit" class="btn_format_mini_gray" id="att_appr_date_search_btn">조회</button>
 					</div>
 				</div>
 				<div class="attendance_main_box_content">
 					<table class="attendance_hr_main_box_content_table" id="att_date_search_table">
 						<tr class="table_title">
-							<td style="width: 14%">근무일자</td>
-							<td style="width: 10%">사번</td>
-							<td style="width: 10%">성명</td>
-							<td style="width: 19%">출근시간</td>
-							<td style="width: 19%">퇴근시간</td>
-							<td style="width: 14%">출근IP</td>
-							<td style="width: 14%">퇴근IP</td>
+							<td style="width: 10%">근무일</td>
+							<td style="width: 7.5%">사번</td>
+							<td style="width: 7.5%">성명</td>
+							<td style="width: 17%">출근시간</td>
+							<td style="width: 17%">퇴근시간</td>
+							<td style="width: 17%">수정요청 출근시간</td>
+							<td style="width: 17%">수정요청 퇴근시간</td>
+							<td style="width: 7%">승인 결과</td>
 						</tr>
 					</table>
 				</div>
@@ -149,50 +166,51 @@
 	</div>
 </section>
 <script>
-	$("#att_date_search_btn").click(function(){
-		$(".table_title").eq(0).nextAll().remove();
-		$.ajax({
-			url: "<%=request.getContextPath()%>/hr/attendance/select",
-			type: "post",
-			data: {att_date_start:$('#att_date_start').val()
-				, att_date_end:$('#att_date_end').val()} ,
-			dataType:"json",
-			success: function(result){
-				console.log(result);
-				var html;
-				for(var i = 0; i < result.length; i++){
-					var vo = result[i];
-					html = "";
-					html += '<tr class="table_content_white">';
-                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
-                    html += '<td >'+vo.emp_no+'</td>';
-                    html += '<td >'+vo.name+'</td>';
-                    html += '<td >'+vo.att_clock_in+'</td>';
-                    html += '<td >';
-	                    if(vo.att_clock_out == null) {
-	                    	html += "-";}
-	                    else{
-	                    	html += vo.att_clock_out;
-	                    }
-                    html += '</td>';
-                    html += '<td >'+vo.ip_clock_in+'</td>';
-                    html += '<td >';
-	                    if(vo.ip_clock_out == null) {
-	                    	html += "-";}
-	                    else{
-	                    	html += vo.ip_clock_out;
-	                    }
-                    html += '</td>';
-                    html += '</tr>';
-                    $('#att_date_search_table').append(html);
-				}
-			},
-			error: function(error){
-				alert(error); 
+$("#att_appr_date_search_btn").click(function(){
+	$(".table_title").eq(1).nextAll().remove();
+	$.ajax({
+		url: "<%=request.getContextPath()%>/hr/attendance/approval/select",
+		type: "post",
+		data: {att_date_start:$('#att_date_start').val()
+			, att_date_end:$('#att_date_end').val()
+			, dept_name:$('#dept_name').val()
+			, att_appr_result:$('#att_appr_result').val()
+		} ,
+		dataType:"json",
+		success: function(result){
+			console.log(result);
+			var html;
+			for(var i = 0; i < result.length; i++){
+				var vo = result[i];
+				html = "";
+				html += '<tr class="table_content_white">';
+                html += '<td >'+vo.att_appr_req_date.substr(0,10)+'</td>';
+                html += '<td >'+vo.emp_no+'</td>';
+                html += '<td >'+vo.name+'</td>';
+                html += '<td >'+vo.att_clock_in+'</td>';
+                html += '<td >'+vo.att_clock_out+'</td>';
+                html += '<td >'+vo.att_appr_clock_in+'</td>';
+                html += '<td >'+vo.att_appr_clock_out+'</td>';
+                html += '<td >';
+                if(vo.att_appr_result == 1) {
+                	html += "승인";
+                } else if (vo.att_appr_result == 2) {
+					html += "반려";
+                } else if (vo.att_appr_result == 3) {
+					html += "대기";
+                }
+                html += '</td>';
+                html += '</tr>';
+                $('#att_date_search_table').append(html);
 			}
-		});
+		},
+		error: function(error){
+			alert(error); 
+		}
 	});
-	
+});
+
+
 	
 </script>
 </body>

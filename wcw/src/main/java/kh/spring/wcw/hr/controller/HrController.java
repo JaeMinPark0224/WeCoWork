@@ -385,5 +385,32 @@ public class HrController {
 				
 	}
 	
+	@RequestMapping("/attendance/approval")
+	public ModelAndView viewApprovalAttendanceHr(ModelAndView mv) {
+		mv.setViewName("hr/attendance/approval");
+		return mv;
+	}
+	@PostMapping(value =  "/attendance/approval/select", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectApprovalAttendance(
+			Attendance attendance
+			, @RequestParam(name="att_date_start") String att_date_start
+			, @RequestParam(name="att_date_end") String att_date_end
+			, @RequestParam(name="dept_name") String dept_name
+			, @RequestParam(name="att_appr_result") String att_appr_result
+			) {
+		Date att_date_start_d = Date.valueOf(att_date_start);
+		Date att_date_end_d = Date.valueOf(att_date_end);
+		attendance.setAtt_date_start(att_date_start_d);
+		attendance.setAtt_date_end(att_date_end_d);
+		attendance.setDept_name(dept_name);
+		attendance.setAtt_appr_result(att_appr_result);
+		List<Attendance> selectResult = hrService.selectApprovalAttendance(attendance);
+		
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
+		
+		return gsonObj.toJson(selectResult);
+				
+	}
 	
 }

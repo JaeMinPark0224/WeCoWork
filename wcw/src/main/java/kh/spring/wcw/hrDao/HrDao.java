@@ -169,4 +169,9 @@ public class HrDao {
 	public List<Attendance> selectAttendance(Attendance attendance){
 		return sqlsession.selectList("hrMapper.selectAttendance", attendance);
 	}
+	
+	public List<Attendance> selectApprovalAttendance(Attendance attendance){
+		return sqlsession.selectList("hrMapper.selectApprovalAttendance", attendance);
+	}
+	
 }
