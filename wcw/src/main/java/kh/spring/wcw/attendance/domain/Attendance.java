@@ -43,16 +43,10 @@ public class Attendance {
 	private Date att_appr_date;
 	private Date att_appr_req_date;
 	
-	public Date getAtt_appr_req_date() {
-		return att_appr_req_date;
-	}
-
-	public void setAtt_appr_req_date(Date att_appr_req_date) {
-		this.att_appr_req_date = att_appr_req_date;
-	}
 
 	private Date att_date_start;
 	private Date att_date_end;
+	private String name;
 	
 	@Override
 	public String toString() {
@@ -62,13 +56,18 @@ public class Attendance {
 				+ att_appr_content + ", att_appr_result=" + att_appr_result + ", att_appr_clock_in=" + att_appr_clock_in
 				+ ", att_appr_clock_out=" + att_appr_clock_out + ", att_appr_date=" + att_appr_date
 				+ ", att_appr_req_date=" + att_appr_req_date + ", att_date_start=" + att_date_start + ", att_date_end="
-				+ att_date_end + "]";
-	}
-
-	public Attendance() {
+				+ att_date_end + ", name=" + name + "]";
+	}	public Attendance() {
 		super();
 	}
 
+	public Date getAtt_appr_req_date() {
+		return att_appr_req_date;
+	}
+	
+	public void setAtt_appr_req_date(Date att_appr_req_date) {
+		this.att_appr_req_date = att_appr_req_date;
+	}
 	public String getAtt_no() {
 		return att_no;
 	}
@@ -199,6 +198,13 @@ public class Attendance {
 	public void setAtt_date_end(Date att_date_end) {
 		this.att_date_end = att_date_end;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	
 
 }

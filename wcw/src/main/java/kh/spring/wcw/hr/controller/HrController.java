@@ -2,6 +2,7 @@ package kh.spring.wcw.hr.controller;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hr.service.HrService;
 import kh.spring.wcw.mail.Mail;
@@ -323,4 +325,175 @@ public class HrController {
 
 		return result;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	////// 이진정 //////
+	@RequestMapping("/attendance/daily")
+	public ModelAndView viewDailyAttendanceHr(ModelAndView mv) {
+		mv.setViewName("hr/attendance/daily");
+		return mv;
+	}
+	
+	@RequestMapping(value =  "/attendance/select", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectAttendance(
+			Attendance attendance
+			,@RequestParam(name="att_date_start") String att_date_start
+			, @RequestParam(name="att_date_end") String att_date_end
+			) {
+		Date att_date_start_d = Date.valueOf(att_date_start);
+		Date att_date_end_d = Date.valueOf(att_date_end);
+		attendance.setAtt_date_start(att_date_start_d);
+		attendance.setAtt_date_end(att_date_end_d);
+		List<Attendance> result = hrService.selectAttendance(attendance);
+		
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
+		
+		return gsonObj.toJson(result);
+				
+	}
+	
+	
 }

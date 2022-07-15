@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
+import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 
 /**
@@ -73,4 +74,27 @@ public interface HrService {
 	 * @author ybseo
 	 */
 	public int updateAdmin(int cp_no, String dept_name);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * @param Attendance
+	 * @return 근태 정보 리스트
+	 * @author Jinjeong Lee
+	 */
+	public List<Attendance> selectAttendance(Attendance attendance);
 }

@@ -2,7 +2,7 @@
 
 section {
 	font-size: 0;
-	width : 1320px;
+	width: 1320px;
 }
 
 /* 리스트페이지 */
@@ -12,7 +12,6 @@ section {
 /* 리스트페이지 */
 /* 리스트페이지 */
 /* 리스트페이지 */
-
 #attendance_wrap {
 	margin-top: 105px;
 	margin-left: 125px;
@@ -37,11 +36,12 @@ section {
 }
 
 #attendance_list_text_box_wrap {
-	display: inline-block;	
+	display: inline-block;
 	float: right;
 }
 
 #attendance_list_text_box {
+	
 }
 
 #attendance_list_wrap {
@@ -55,7 +55,7 @@ section {
 	width: 190px;
 	height: 190px;
 	border-radius: 15px;
-	background-color: rgb(244, 244, 244); 
+	background-color: rgb(244, 244, 244);
 	overflow: hidden;
 	position: relative;
 }
@@ -63,7 +63,7 @@ section {
 .attendance_list_color {
 	width: 15px;
 	height: 190px;
-	background-color: rgb(75, 77, 178); 
+	background-color: rgb(75, 77, 178);
 	position: absolute;
 	left: 0;
 }
@@ -105,7 +105,8 @@ section {
 	position: absolute;
 	left: 150px;
 	top: 27.5px;
-	filter: brightness(0) saturate(100%) invert(26%) sepia(76%) saturate(1356%) hue-rotate(219deg) brightness(91%) contrast(87%);
+	filter: brightness(0) saturate(100%) invert(26%) sepia(76%)
+		saturate(1356%) hue-rotate(219deg) brightness(91%) contrast(87%);
 }
 
 .attendance_list_fix2 {
@@ -117,11 +118,10 @@ section {
 	width: 20px;
 	height: 20px;
 	position: absolute;
-	left:  150px;
+	left: 150px;
 	top: 150px;
 }
 
-
 /* 메인페이지 */
 /* 메인페이지 */
 /* 메인페이지 */
@@ -129,7 +129,6 @@ section {
 /* 메인페이지 */
 /* 메인페이지 */
 /* 메인페이지 */
-
 #attendance_main_wrap {
 	margin: 105px 125px 220px 125px;
 }
@@ -214,14 +213,13 @@ section {
 
 .attendance_main_box {
 	width: 1070px;
-
 	background-color: rgb(244, 244, 244);
 }
 
 .attendance_main_box_top {
 	width: 1070px;
 	height: 60px;
-	background-color: rgb(224, 224, 224);	
+	background-color: rgb(224, 224, 224);
 }
 
 .attendance_main_box_title {
@@ -230,7 +228,7 @@ section {
 	font-size: 13px;
 	font-family: NotoSansB;
 	color: rgb(94, 94, 94);
-	text-align : center;
+	text-align: center;
 }
 
 .attendance_main_box_container {
@@ -280,12 +278,13 @@ section {
 	line-height: 25px;
 }
 
-.att_date_form{
+.att_date_form {
 	border: 1px solid rgb(224, 224, 224);
-	width: 138px; height:25px;
+	width: 138px;
+	height: 25px;
 	font-size: 12px;
 	font-family: NotoSansR;
-	color: rgb(94, 94, 94);	
+	color: rgb(94, 94, 94);
 }
 
 .attendance_main_box_content_table{
@@ -295,24 +294,35 @@ section {
 	border-bottom: 2px solid rgb(224, 224, 224);
 	width: 955px;
 }
-.attendance_main_box_content_table tr{
+
+.attendance_hr_main_box_content_table {
+	margin-top: 30px;
+	border-top: 2px solid rgb(224, 224, 224);
+	border-left: 2px solid rgb(224, 224, 224);
+	border-bottom: 2px solid rgb(224, 224, 224);
+	width: 1070px;
+}
+
+.attendance_main_box_content_table tr, .attendance_hr_main_box_content_table tr {
 	height: 38px;
 }
-.attendance_main_box_content_table td{
+
+.attendance_main_box_content_table td, .attendance_hr_main_box_content_table td {
 	text-align: center;
 	line-height: 38px;
 	font-size: 12px;
 	font-family: NotoSansR;
-	color: rgb(94, 94, 94);	
+	color: rgb(94, 94, 94);
 	border-right: 2px solid rgb(224, 224, 224);
 }
-.attendance_main_box_content_table tr:first-child td{
+
+.attendance_main_box_content_table tr:first-child td, .attendance_hr_main_box_content_table tr:first-child td {
 	background-color: rgb(230, 230, 230);
 	font-size: 12px;
 	font-family: NotoSansB;
-	color: rgb(94, 94, 94);	
+	color: rgb(94, 94, 94);
 }
 
-.table_content_white{
+.table_content_white {
 	background-color: white;
 }

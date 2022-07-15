@@ -345,6 +345,9 @@
 	$('#attendance_daily').click(function() {
 		location.href = '<%= request.getContextPath()%>/attendance/daily';
 	});
+	$('#attendance_daily_hr').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/attendance/daily';
+	});
 	$('#attendance_weekly').click(function() {
 		location.href = '<%= request.getContextPath()%>/attendance/weekly';
 	});

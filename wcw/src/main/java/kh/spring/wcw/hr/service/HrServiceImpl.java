@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hrDao.HrDao;
 
@@ -68,4 +69,56 @@ public class HrServiceImpl implements HrService {
 	public int updateAdmin(int cp_no, String dept_name) {
 		return dao.updateAdmin(cp_no, dept_name);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/////////////////이진정//////////////////
+	///근태조회
+	public List<Attendance> selectAttendance(Attendance attendance){
+		return dao.selectAttendance(attendance);
+	}
+	
 }

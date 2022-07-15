@@ -132,4 +132,65 @@ update tb_employee
     where td.cp_no = #{cp_no} and td.dept_name = #{dept_name})
 </update>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ///////////////////이진정////////////////// -->
+<!-- 근태조회 -->
+<select id="selectAttendance" parameterType="Attendance" resultType="Attendance">
+	select * from tb_attendance a
+	join tb_employee e using (emp_no)
+	where a.ATT_date between #{att_date_start} and #{att_date_end}
+</select>
+
 </mapper>
