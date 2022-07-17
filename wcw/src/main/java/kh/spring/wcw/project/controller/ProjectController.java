@@ -1,8 +1,10 @@
 package kh.spring.wcw.project.controller;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -215,7 +217,6 @@ public class ProjectController {
 		
 		List<Project> workList = service.selectListWorkProject(projectObj);
 		
-		
 		// 프로젝트 번호 저장
 		mv.addObject("pr_no", pr_no);
 		// 업무 리스트 저장
@@ -245,7 +246,11 @@ public class ProjectController {
 		}
 		
 		Project result = service.selectOneWorkProject(pw_no);
+		List<Project> workerList = service.selectListWorkEmpProject(pw_no);
+		List<Project> subWorkList = service.selectListSubWorkProject(pw_no);
 		mv.addObject("work", result);
+		mv.addObject("workerList", workerList);
+		mv.addObject("subWorkList", subWorkList);
 		mv.setViewName("project/work/read");
 		return mv;
 	}
@@ -255,11 +260,15 @@ public class ProjectController {
 			ModelAndView mv
 			, HttpSession session
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
+			, @RequestParam(name = "no", required = false) String pwNoStr
 			, Project project
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
 			return mv;
+		}
+		if(pwNoStr != null) {
+			mv.addObject("ref_pw_no", pwNoStr);
 		}
 		mv.setViewName("project/work/insert");
 		return mv;
@@ -273,6 +282,7 @@ public class ProjectController {
 			, Project project
 			, @RequestParam(name = "pw_start_date_str") String pwStartDateStr
 			, @RequestParam(name = "pw_end_date_str") String pwEndDateStr
+			, @RequestParam(name = "empNoList") List<String> empNoList
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
@@ -287,6 +297,7 @@ public class ProjectController {
 		project.setPw_start_date(tsStart);
 		project.setPw_end_date(tsEnd);
 		project.setEmp_no(loginSSInfo.getEmp_no());
+		project.setEmpNoList(empNoList);
 		service.insertWorkProject(project);
 		rttr.addAttribute("project", project.getPr_no());
 		mv.setViewName("redirect:/project/work/list");
@@ -296,10 +307,55 @@ public class ProjectController {
 	@GetMapping("/todo/list")
 	public ModelAndView selectTodoProject(
 			ModelAndView mv
-			, @RequestParam int project
+			, @RequestParam(name = "project") int pr_no
+			, HttpSession session
+			, Project project
 			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		
+		SimpleDateFormat todayFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String todayStr = todayFormat.format(new Date());
+		
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
+		LocalDateTime local_pt_date = LocalDateTime.from(dateFormat.parse(todayStr+"00:00:00"));
+		Timestamp pt_date = Timestamp.valueOf(local_pt_date);
+		project.setPt_date(pt_date);
+		project.setPr_no(pr_no);
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		List<Project> todoList = service.selectListTodoProject(project);
+		mv.addObject("today", todayStr);
+		mv.addObject("todoList", todoList);
 		mv.setViewName("project/todo/list");
 		return mv;
+	}
+	
+	@PostMapping("/todo/insert")
+	@ResponseBody
+	public String insertTodoProject(
+			ModelAndView mv
+			, Project project
+			, @RequestParam String pt_date_year
+			, @RequestParam String pt_date_hour_minute
+			, HttpSession session
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "0";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm");
+		LocalDateTime local_pt_date = LocalDateTime.from(dateFormat.parse(pt_date_year+pt_date_hour_minute));
+		Timestamp pt_date = Timestamp.valueOf(local_pt_date);
+		project.setPt_date(pt_date);
+		int result = service.insertTodoProjecet(project);
+		return String.valueOf(result);
 	}
 	
 	@GetMapping("/calendar/list")
@@ -380,13 +436,8 @@ public class ProjectController {
 		List<Project> participantList = null;
 		List<String> deptList = null;
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		if(!authority.equals("C")) {
-			participantList = service.selectListParticipantProject(pr_no, authority);
-			deptList = service.selectListDeptProject(pr_no, authority);
-		} else {
-			participantList = service.selectListParticipantProject(pr_no, authority);
-			deptList = service.selectListDeptProject(pr_no, authority);
-		}
+		participantList = service.selectListParticipantProject(pr_no, authority);
+		deptList = service.selectListDeptProject(pr_no, authority);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("participantList", participantList);
 		map.put("deptList", deptList);

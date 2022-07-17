@@ -87,8 +87,16 @@ public class ProjectDao {
 		return sqlsession.selectList("Project.selectListWorkProject", project);
 	}
 	
+	public List<Project> selectListSubWorkProject(int pw_no) {
+		return sqlsession.selectList("Project.selectListSubWorkProject", pw_no);
+	}
+	
 	public Project selectOneWorkProject(int pw_no) {
 		return sqlsession.selectOne("Project.selectOneWorkProject", pw_no);
+	}
+	
+	public List<Project> selectListWorkEmpProject(int pw_no) {
+		return sqlsession.selectList("Project.selectListWorkEmpProject", pw_no);
 	}
 	
 	public List<Project> selectListParticipantProject(int pr_no, String authority) {
@@ -115,5 +123,13 @@ public class ProjectDao {
 	
 	public int deleteParticipantProject(Project project) {
 		return sqlsession.update("Project.deleteParticipantProject", project);
+	}
+	
+	public List<Project> selectListTodoProject(Project project) {
+		return sqlsession.selectList("Project.selectListTodoProject", project);
+	}
+	
+	public int insertTodoProjecet(Project project) {
+		return sqlsession.insert("Project.insertTodoProjecet", project);
 	}
 }

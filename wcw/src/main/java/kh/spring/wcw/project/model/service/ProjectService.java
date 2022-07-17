@@ -48,7 +48,11 @@ public interface ProjectService {
 	
 	public List<Project> selectListWorkProject(Project project);
 	
+	public List<Project> selectListSubWorkProject(int pw_no);
+	
 	public Project selectOneWorkProject(int pw_no);
+	
+	public List<Project> selectListWorkEmpProject(int pw_no);
 	
 	public List<Project> selectListParticipantProject(int pr_no, String authority);
 	
@@ -59,4 +63,8 @@ public interface ProjectService {
 	public int updateParticipantProject(Project project);
 	
 	public int deleteParticipantProject(Project project);
+	
+	public List<Project> selectListTodoProject(Project project);
+	
+	public int insertTodoProjecet(Project project);
 }

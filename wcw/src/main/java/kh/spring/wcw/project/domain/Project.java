@@ -2,6 +2,7 @@ package kh.spring.wcw.project.domain;
 
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -46,6 +47,13 @@ public class Project {
 	private String intl_no;
 	private String email;
 	private String profile;
+	private int pwp_no;
+	private String pwp_authority;
+	private List<String> empNoList;
+	private int pt_no;
+	private Timestamp pt_date;
+	private String pt_content;
+	private String pt_complete_yn;
 	public int getPr_no() {
 		return pr_no;
 	}
@@ -280,6 +288,48 @@ public class Project {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
+	public int getPwp_no() {
+		return pwp_no;
+	}
+	public void setPwp_no(int pwp_no) {
+		this.pwp_no = pwp_no;
+	}
+	public String getPwp_authority() {
+		return pwp_authority;
+	}
+	public void setPwp_authority(String pwp_authority) {
+		this.pwp_authority = pwp_authority;
+	}
+	public List<String> getEmpNoList() {
+		return empNoList;
+	}
+	public void setEmpNoList(List<String> empNoList) {
+		this.empNoList = empNoList;
+	}
+	public int getPt_no() {
+		return pt_no;
+	}
+	public void setPt_no(int pt_no) {
+		this.pt_no = pt_no;
+	}
+	public Timestamp getPt_date() {
+		return pt_date;
+	}
+	public void setPt_date(Timestamp pt_date) {
+		this.pt_date = pt_date;
+	}
+	public String getPt_content() {
+		return pt_content;
+	}
+	public void setPt_content(String pt_content) {
+		this.pt_content = pt_content;
+	}
+	public String getPt_complete_yn() {
+		return pt_complete_yn;
+	}
+	public void setPt_complete_yn(String pt_complete_yn) {
+		this.pt_complete_yn = pt_complete_yn;
+	}
 	@Override
 	public String toString() {
 		return "Project [pr_no=" + pr_no + ", pr_title=" + pr_title + ", pr_content=" + pr_content + ", pr_open_yn="
@@ -292,10 +342,9 @@ public class Project {
 				+ ", pw_status=" + pw_status + ", pw_priority=" + pw_priority + ", pw_start_date=" + pw_start_date
 				+ ", pw_end_date=" + pw_end_date + ", pw_content=" + pw_content + ", pw_tier=" + pw_tier
 				+ ", pw_ref_no=" + pw_ref_no + ", pw_order=" + pw_order + ", pw_date=" + pw_date + ", pr_emp_authority="
-				+ pr_emp_authority + ", intl_no=" + intl_no + ", email=" + email + ", profile=" + profile + "]";
+				+ pr_emp_authority + ", intl_no=" + intl_no + ", email=" + email + ", profile=" + profile + ", pwp_no="
+				+ pwp_no + ", pwp_authority=" + pwp_authority + ", empNoList=" + empNoList + ", pt_no=" + pt_no
+				+ ", pt_date=" + pt_date + ", pt_content=" + pt_content + ", pt_complete_yn=" + pt_complete_yn + "]";
 	}
-	
-	
-
 	
 }

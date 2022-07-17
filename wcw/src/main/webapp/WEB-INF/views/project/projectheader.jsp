@@ -21,9 +21,14 @@
 			let project_main_tab_index;
 			if(project_main_tab_text == "board") {
 				project_main_tab_index = 0;
-			} else if(project_main_tab_text == "work") {
+			} 
+			else if(project_main_tab_text == "work") {
 				project_main_tab_index = 1;
-			} else if(project_main_tab_text == "participant") {
+			}
+			else if(project_main_tab_text == "todo") {
+				project_main_tab_index = 2;	
+			}
+			else if(project_main_tab_text == "participant") {
 				project_main_tab_index = 5;
 			}
 			$(".project_main_tab").eq(project_main_tab_index).css("font-family", "NotoSansB");
@@ -41,7 +46,7 @@
 				location.href = "<%= request.getContextPath()%>/project/work/list?project="+js_pr_no;
 				break;
 			case 2:
-				alert("할 일");
+				location.href = "<%= request.getContextPath()%>/project/todo/list?project="+js_pr_no;
 				break;
 			case 3:
 				alert("캘린더");

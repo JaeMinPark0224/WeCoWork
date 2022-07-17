@@ -105,8 +105,19 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
+	public List<Project> selectListSubWorkProject(int pw_no) {
+		return dao.selectListSubWorkProject(pw_no);
+	}
+
+	
+	@Override
 	public Project selectOneWorkProject(int pw_no) {
 		return dao.selectOneWorkProject(pw_no);
+	}
+	
+	@Override
+	public List<Project> selectListWorkEmpProject(int pw_no) {
+		return dao.selectListWorkEmpProject(pw_no);
 	}
 
 	@Override
@@ -132,6 +143,16 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int deleteParticipantProject(Project project) {
 		return dao.deleteParticipantProject(project);
+	}
+
+	@Override
+	public List<Project> selectListTodoProject(Project project) {
+		return dao.selectListTodoProject(project);
+	}
+
+	@Override
+	public int insertTodoProjecet(Project project) {
+		return dao.insertTodoProjecet(project);
 	}
 
 }

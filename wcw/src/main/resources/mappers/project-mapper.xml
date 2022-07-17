@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Project">
+	
 	<insert id="insertProject" parameterType="Project">
 		insert all 
 		into tb_project
@@ -81,7 +82,7 @@
 	</select>
 	
 	<select id="selectListParticipantProject" parameterType="hashmap" resultType="Project">
-		<if test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B")'>
+		<if test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B") or pr_emp_authority.equals("ALL")'>
 		select tpe.pr_no, tpe.ep_no, tpe.pr_emp_authority, te.email
 				, te.name, te.intl_no, te.profile, td.dept_name
 				, tjt.job_title
@@ -92,7 +93,10 @@
 		    on te.dept_no = td.dept_no
 		    join tb_job_title tjt
 		    on te.job_title_no = tjt.job_title_no
-		    where pr_no = #{pr_no} and pr_emp_authority = #{pr_emp_authority}
+		    where pr_no = #{pr_no} 
+		    <if test='!pr_emp_authority.equals("ALL")'>
+			    and pr_emp_authority = #{pr_emp_authority}
+		    </if>
 		    order by tjt.job_level asc
 		</if>
 		<if test='pr_emp_authority.equals("C")'>
@@ -108,14 +112,17 @@
 	</select>
 	
 	<select id="selectListDeptProject" parameterType="hashmap" resultType="string">
-		<if test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B")'>
+		<if test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B") or pr_emp_authority.equals("ALL")'>
 		select DISTINCT td.dept_name
 		    from tb_project_emp tpe
 		    join tb_employee te
 		    on tpe.ep_no = te.emp_no
 		    join tb_department td
 		    on te.dept_no = td.dept_no
-		    where pr_no = #{pr_no} and pr_emp_authority = #{pr_emp_authority}
+		    where pr_no = #{pr_no} 
+		    <if test='!pr_emp_authority.equals("ALL")'>
+			    and pr_emp_authority = #{pr_emp_authority}
+		    </if>
 	    </if>
 	    <if test='pr_emp_authority.equals("C")'>
 	    select DISTINCT td.dept_name
@@ -223,18 +230,50 @@
 	</select>
 	
 	<insert id="insertWorkProject" parameterType="Project">
-		insert into tb_project_work
-		(pw_no, pw_title, ep_no
-		, pw_status, pw_priority, pw_start_date
-		, pw_end_date, pw_content, pw_tier
-		, pw_ref_no, pw_order, pr_no
-		, pw_date)
-		values
-		((SELECT nvl(max(PW_NO),0)+1 from tb_project_work), #{pw_title}, #{emp_no}
-		, #{pw_status}, #{pw_priority}, #{pw_start_date}
-		, #{pw_end_date}, #{pw_content}, default
-		, (SELECT nvl(max(PW_NO),0)+1 from tb_project_work), default, #{pr_no}
-		, default)
+		insert all
+			 <choose>
+			 	<when test="pw_ref_no == 0">
+					into tb_project_work
+					(pw_no, pw_title, ep_no
+					, pw_status, pw_priority, pw_start_date
+					, pw_end_date, pw_content, pw_tier
+					, pw_ref_no, pw_order, pr_no
+					, pw_date)
+					values
+					((SELECT nvl(max(PW_NO),0)+1 from tb_project_work), #{pw_title}, #{emp_no}
+					, #{pw_status}, #{pw_priority}, #{pw_start_date}
+					, #{pw_end_date}, #{pw_content}, default
+					, (SELECT nvl(max(PW_NO),0)+1 from tb_project_work), default, #{pr_no}
+					, default)
+			 	</when>
+			 	<when test="pw_ref_no != 0">
+					into tb_project_work
+					(pw_no, pw_title, ep_no
+					, pw_status, pw_priority, pw_start_date
+					, pw_end_date, pw_content, pw_tier
+					, pw_ref_no, pw_order, pr_no
+					, pw_date)
+					values
+					((SELECT nvl(max(PW_NO),0)+1 from tb_project_work), #{pw_title}, #{emp_no}
+					, #{pw_status}, #{pw_priority}, #{pw_start_date}
+					, #{pw_end_date}, #{pw_content}, 1
+					, #{pw_ref_no}
+					, 	(select nvl(max(pw_order),0)+1
+					    from tb_project_work
+					    where pw_ref_no = #{pw_ref_no} and pw_tier = 1)
+					, #{pr_no}
+					, default)
+			 	</when>
+			 </choose>
+			<foreach collection="empNoList" item="emp_no_index" index="index">
+			into tb_project_work_participant
+			(pwp_no, pw_no
+			, emp_no, pwp_authority)
+			values
+			((SELECT nvl(max(pwp_no),0)+(#{index}+1) from tb_project_work_participant), (SELECT nvl(max(PW_NO),0)+1 from tb_project_work)
+			, #{emp_no_index}, 'B')
+			</foreach>
+			select * from dual
 	</insert>
 	
 	<select id="selectListWorkProject" parameterType="Project" resultType="Project">
@@ -242,11 +281,21 @@
 		    from tb_project_work tpw
 		    join tb_employee te
 		    on tpw.ep_no = te.emp_no
-		    where pr_no = #{pr_no}
+		    where pr_no = 1
+            order by pw_ref_no desc, (case when pw_order = 0 then 1 else 2 end),pw_order desc
+	</select>
+	
+	<select id="selectListSubWorkProject" parameterType="_int" resultType="Project">
+		select tpw.*, te.name
+		    from tb_project_work tpw
+		    join tb_employee te
+		    on tpw.ep_no = te.emp_no
+		    where pw_ref_no = #{pw_no} and pw_tier != 0
+		    order by pw_order desc
 	</select>
 	
 	<select id="selectOneWorkProject" parameterType="_int" resultType="Project">
-		select tpw.*, te.name, td.dept_name, tjt.job_title
+		select tpw.*, te.name, te.profile, td.dept_name, tjt.job_title
 		    from tb_project_work tpw
 		    join tb_employee te
 		    on tpw.ep_no = te.emp_no
@@ -255,6 +304,14 @@
 		    join tb_job_title tjt
 		    on te.job_title_no = tjt.job_title_no
 		    where pw_no = #{pw_no}
+	</select>
+	
+	<select id="selectListWorkEmpProject" parameterType="_int" resultType="Project">
+		select tpwp.emp_no, te.name
+		    from tb_project_work_participant tpwp
+		    join tb_employee te
+		    on tpwp.emp_no = te.emp_no
+		    where tpwp.pw_no = #{pw_no}
 	</select>
 	
 	<insert id="insertParticipantProject" parameterType="Project">
@@ -272,8 +329,25 @@
 		    where pr_no = #{pr_no} and ep_no = #{emp_no}
 	</update>
 	
-	<delete id="deleteParticipantProject">
+	<delete id="deleteParticipantProject" parameterType="Project">
 		delete tb_project_emp
 		where pr_no = #{pr_no} and ep_no = #{emp_no}
 	</delete>
+	
+	<select id="selectListTodoProject" parameterType="Project" resultType="Project">
+		select *
+		    from tb_project_todo
+		    where emp_no = #{emp_no} and pr_no = #{pr_no}
+		    and to_char(pt_date, 'YYYY-MM-DD') = to_char(#{pt_date}, 'YYYY-MM-DD')
+		    order by pt_date asc
+	</select>
+	
+	<insert id="insertTodoProjecet" parameterType="Project">
+		insert into tb_project_todo
+		(pt_no, emp_no, pr_no
+		, pt_date, pt_content, pt_complete_yn)
+		values
+		((SELECT nvl(max(pt_no),0)+1 from tb_project_todo), #{emp_no}, #{pr_no}
+		, #{pt_date}, #{pt_content}, default)
+	</insert>
 </mapper>

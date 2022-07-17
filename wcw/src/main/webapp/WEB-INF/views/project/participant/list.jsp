@@ -60,10 +60,10 @@
 										<div class="project_workder_gird">
 											<div class="project_workder_profile">
 												<c:if test="${empty participant.profile}">
-											    	<img class="project_workder_profile_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
+											    	<img class="project_worker_profile_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
 											    </c:if>
 											    <c:if test="${not empty participant.profile}">
-											        <img class="project_workder_profile_img" src="${participant.profile}">
+											        <img class="project_worker_profile_img" src="${participant.profile}">
 											   	</c:if>
 											</div>
 											<div class="project_workder_name_dept">
@@ -458,6 +458,7 @@ function employeInvite() {
 			pr_no : js_pr_no,
 			emp_no : js_emp_no,
 		},
+		dataType: "json",
 		success: function(result) {
 			if(result == 1) {
 				location.reload();
