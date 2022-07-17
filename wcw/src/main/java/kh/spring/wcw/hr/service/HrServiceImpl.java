@@ -83,7 +83,11 @@ public class HrServiceImpl implements HrService {
 		return dao.updateAdmin(cp_no, dept_name);
 	}
 	
-	
+	@Override
+	// 부서 상세 정보 (1개)
+	public Dept selectOneDepartment(int cp_no, int dept_no) {
+		return dao.selectOneDepartment(cp_no, dept_no);
+	}
 	
 	
 	

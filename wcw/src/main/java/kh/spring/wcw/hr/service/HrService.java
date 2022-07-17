@@ -90,6 +90,13 @@ public interface HrService {
 	 */
 	public int updateAdmin(int cp_no, String dept_name);
 	
+	/**
+	 * @param 회사 번호, 부서 번호
+	 * @return 가져온 부서 번호에 해당하는 부서 정보
+	 * @author ybseo
+	 */
+	public Dept selectOneDepartment(int cp_no, int dept_no);
+	
 	
 	
 	

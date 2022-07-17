@@ -58,16 +58,28 @@
 	from tb_department d
 		join tb_company c using(cp_no)
 	where cp_no = #{cp_no}
-	order by d.dept_name
+	order by d.dept_no
 </select>
 
 <!-- 부서 정보 리스트 select -->
 <select id="selectDeptAllList" resultType="Dept" parameterType="_int">
-	select d.dept_name, dept_no, d.dept_date, d.active_yn, d.emp_no, d.dept_upper_no, count(*) cnt
+	select d.dept_name, d.dept_no, d.dept_date, d.active_yn, d.emp_no,
+	(select name from tb_employee e where e.emp_no = d.emp_no) admin_name ,
+	d.dept_upper_no,
+	(select dept_name from tb_department where d.dept_upper_no = dept_no) dept_upper_name
+    from tb_department d join tb_department d2 on d.dept_no = d2.dept_no
+	where d.cp_no = 1
+    group by d.dept_name, d.dept_no, d.dept_date, d.active_yn, d.emp_no, d.dept_upper_no
+	order by d.dept_no
+</select>
+
+<!-- 특정 부서 정보 select (1개) -->
+<select id="selectOneDepartment" parameterType="map" resultType="Dept">
+	select d.dept_no, d.dept_name ,d.cp_no, d.dept_date, d.active_yn, d.emp_no
+			, (select name from tb_employee where emp_no = d.emp_no) admin_name
+			, (select dept_name from tb_department where d.dept_upper_no = dept_no) dept_upper_name
 	from tb_department d
-	where d.cp_no = #{cp_no}
-    group by dept_name, dept_no, dept_date, active_yn, d.emp_no, dept_upper_no
-	order by d.dept_name
+	where cp_no = #{cp_no} and dept_no = #{dept_no}
 </select>
 
 <!-- 직위 리스트 select -->
@@ -81,23 +93,23 @@
 
 <!-- 직원 정보 update / 내선번호 & 퇴사 여부-->
 <update id="updateEmployee1" parameterType="hashmap">
-update (select e.intl_no, e.resign_yn
-        from tb_employee e
-            join tb_department d using(dept_no)
-            join tb_job_title j using(job_title_no)
-        where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
+	update (select e.intl_no, e.resign_yn
+        		from tb_employee e
+            		join tb_department d using(dept_no)
+            		join tb_job_title j using(job_title_no)
+        		where j.cp_no = #{cp_no} and e.emp_no = #{emp_no})
     set intl_no = #{intl_no},
         resign_yn = #{resign_yn}
 </update>
 <update id="updateEmployee2" parameterType="hashmap">
-update tb_employee
+	update tb_employee
     set dept_no = (select dept_no 
     					from tb_department 
     					where dept_name = #{dept_name} and cp_no = #{cp_no})
     where emp_no = #{emp_no}
 </update>
 <update id="updateEmployee3" parameterType="hashmap">
-update tb_employee
+	update tb_employee
     set job_title_no = (select job_title_no
     					from tb_job_title
     					where job_title = #{job_title} and cp_no = #{cp_no})
@@ -106,9 +118,9 @@ update tb_employee
 
 <!-- 직원 계정 insert -->
 <insert id="insertEmployee" parameterType="hashmap">
-insert into tb_employee 
+	insert into tb_employee 
 	(emp_no, email, pwd, name, intl_no, phone, join_date, resign_yn, dept_no, job_title_no, hr_yn)
-values 
+	values 
 	(
 	(SELECT NVL(MAX(EMP_NO), 99)+1 FROM TB_EMPLOYEE)
 	, #{email}
@@ -126,7 +138,7 @@ values
 
 <!-- 관리자(인사팀 직원) 리스트 select -->
 <select id="selectAdminList" parameterType="_int" resultType="Employee">
-select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no, e.resign_yn
+	select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no, e.resign_yn
 	from tb_employee e
         join tb_department d using(dept_no) 
 		join tb_company c using(cp_no)
@@ -136,19 +148,19 @@ select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_
 
 <!-- 관리자 부서 update1 : 기존 관리자 권한이 있던 사원들에게서 관리자 권한 회수 -->
 <update id="updateAdmin1" parameterType="string">
-update tb_employee
+	update tb_employee
     set hr_yn = 'N'
     where hr_yn = 'Y'
 </update>
 <!-- 관리자 부서 update2 : 선택한 부서 사원들에게 관리자 권한 부여 -->
 <update id="updateAdmin2" parameterType="map">
-update tb_employee
+	update tb_employee
     set hr_yn = 'Y'
     where emp_no in (select te.emp_no
-    from tb_employee te
-    join tb_department td
-    on te.dept_no = td.dept_no
-    where td.cp_no = #{cp_no} and td.dept_name = #{dept_name})
+    				from tb_employee te
+    					join tb_department td
+    				on te.dept_no = td.dept_no
+    				where td.cp_no = #{cp_no} and td.dept_name = #{dept_name})
 </update>
 
 

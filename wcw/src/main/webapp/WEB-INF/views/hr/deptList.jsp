@@ -21,18 +21,17 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="section">
     <span class="title">부서 리스트</span>
-    <input type="button" id="edit_btn" value="부서 설정">
+    <input type="button" id="edit_btn" value="부서 생성">
     <div class="content">
         <table class="table">
             <tr class="first_line">
                 <td></td>
                 <td>부서 번호</td>
-                <td style="width: 20%;">부서명</td>
-                <td style="width: 13%;">부서 책임자</td>
-                <td style="width: 20%;">생성일</td>
-                <td>활성화 여부</td>
-                <td style="width: 10%;">총 인원</td>
-                <td style="width: 15%;">부모 부서</td>
+                <td style="width: 22%;">부서명</td>
+                <td>부서 책임자</td>
+                <td style="width: 28%;">생성일</td>
+                <td style="width: 7%;">활성화 여부</td>
+                <td style="width: 22%;">부모 부서</td>
                 <td></td>
             </tr>
             <c:if test="${not empty deptList}">
@@ -41,15 +40,37 @@
 						<td class="tb_read"></td>
 						<td class="tb_read">${list.dept_no}</td>
 						<td class="tb_read">${list.dept_name}</td>
-						<td class="tb_read">${list.emp_no}</td>
+						<c:if test="${not empty list.admin_name}">
+							<td class="tb_read">${list.admin_name}</td>
+						</c:if>
+						<c:if test="${empty list.admin_name}">
+							<td class="tb_read">-</td>
+						</c:if>
 						<td class="tb_read">${list.dept_date}</td>
 						<td class="tb_read">${list.active_yn}</td>
-						<td class="tb_read">${list.cnt}</td>
-						<td class="tb_read">${list.dept_upper_no}</td>
+						<c:if test="${not empty list.dept_upper_name}">
+							<td class="tb_read">${list.dept_upper_name}</td>
+						</c:if>
+						<c:if test="${empty list.dept_upper_name}">
+							<td class="tb_read">-</td>
+						</c:if>
 						<td class="tb_read"></td>
 						<td class="last_tb"><input type="hidden" class="deptNo" value="${list.dept_no}"></td>
+						<td class="last_tb"><input type="hidden" class="deptName" value="${list.dept_name}"></td>
 					</tr>
 				</c:forEach>
+			</c:if>
+			<c:if test="${empty deptList}">
+				<tr class="list">
+					<td class="tb_read"></td>
+					<td class="tb_read"></td>
+					<td class="tb_read"></td>
+					<td class="tb_read"></td>
+					<td class="tb_read"></td>
+					<td class="tb_read"></td>
+					<td class="tb_read"></td>
+					<td class="tb_read"></td>
+				</tr>
 			</c:if>
         </table>
     </div>
@@ -59,18 +80,20 @@
             <span class="modal_title">부서명</span>
             <input type="text" id="d_name" value="부서명 출력"></span>
             <span class="modal_title">부서 책임자</span>
-            <select id="modal_select_dept_cap">
-                <option> 부서 직원1</option>
-                <option> 부서 직원1</option>
-                <option> 부서 직원1</option>
+            
+            <select id="modal_select_dept_adm">
             </select>
+            
             <span class="modal_title">생성일</span>
-            <span class="modal_content">부서 생성일 출력</span>
+            <span class="modal_content" id="d_date">부서 생성일 출력</span>
             <span class="modal_title">부모 부서</span>
-            <select id="modal_select_dept">
-                <option> 부서1</option>
-                <option> 부서1</option>
-                <option> 부서1</option>
+            <select id="modal_select_dept_dp">
+                <c:if test="${not empty deptList}">
+            		<c:forEach items="#{deptList}" var="list">
+            			<option class="deptList" value="${list.dept_name}">${list.dept_name}</option>
+            		</c:forEach>
+            		<option id="nope" value="nope">부모 부서 없음</option>
+            	</c:if>
             </select>
             <span class="modal_title">활성화 여부</span>
             <select id="modal_select_yn">
@@ -80,16 +103,28 @@
         </div>
         <hr>
         <div id="modal_btn">
-            <input type="button" value="취소" id="modal_cancel">
-            <input type="button" value="확인" id="modal_edit">
+        	<input type="button" value="수정" id="modal_edit">
+            <input type="button" value="확인" id="modal_cancel">
         </div>
     </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     <span class="title">부서별 직원 리스트</span>
     <select id="select_dept">
-    	<c:if test="${not empty deptList}">
-    		<c:forEach items="${deptList}" var="list">
-    			<option value="${list.dept_name}">${list.dept_name}</option>
+    	<c:if test="${not empty deptNameList}">
+    		<c:forEach items="${deptNameList}" var="list">
+    			<option value="${list}">${list}</option>
     		</c:forEach>
     	</c:if>
     	<c:if test="${empty deptList}">
@@ -109,60 +144,118 @@
                 <td style="width: 18%;">개인 연락처</td>
                 <td></td>
             </tr>
-            <tr class="list">
                 <c:if test="${not empty employeeList}">
 			        <c:forEach items="${employeeList}" var="list">
 						<tr class="list">
-							<td class="tb_read"></td>
-							<td class="tb_read">${list.emp_no}</td>
-							<td class="tb_read">${list.name}</td>
-							<td class="tb_read">${list.email}</td>
-							<td class="tb_read">${list.join_date}</td>
-							<td class="tb_read">${list.job_title}</td>
-							<td class="tb_read">${list.intl_no}</td>
-							<td class="tb_read">${list.phone}</td>
-							<td class="tb_read"></td>
-							<td class="last_tb"><input type="hidden" class="empNo" value="${list.emp_no}"></td>
+							<td class="tb_read2"></td>
+							<td class="tb_read2">${list.emp_no}</td>
+							<td class="tb_read2">${list.name}</td>
+							<td class="tb_read2">${list.email}</td>
+							<td class="tb_read2">${list.join_date}</td>
+							<td class="tb_read2">${list.job_title}</td>
+							<td class="tb_read2">${list.intl_no}</td>
+							<td class="tb_read2">${list.phone}</td>
+							<td class="tb_read2"></td>
+							<td class="last_tb2"><input type="hidden" class="empNo2" value="${list.emp_no}"></td>
 						</tr>
 					</c:forEach>
 				</c:if>
-            </tr>
+				<c:if test="${empty employeeList}">
+					<tr class="list">
+						<td class="tb_read2"></td>
+						<td class="tb_read2"></td>
+						<td class="tb_read2"></td>
+						<td class="tb_read2"></td>
+						<td class="tb_read2"></td>
+						<td class="tb_read2"></td>
+						<td class="tb_read2"></td>
+						<td class="tb_read2"></td>
+						<td class="tb_read22"></td>
+					</tr>
+				</c:if>
         </table>
     </div>
 </section>
 <script>
 //부서 상세 정보 모달 띄우기 & 정보 조회
-<%-- $(".tb_read").click(function(){
+ $(".tb_read").click(function(){
+	$("#modal_select_dept_adm").children("option").remove();
+	$('#modal_select_dept_dp').val('nope').prop('selected', true);
 	$.ajax({
-		url: "<%=request.getContextPath()%>/hr/department/update",
+		url: "<%=request.getContextPath()%>/hr/department/select",
 		type: "post",
-		data: {empNo: $(this).nextAll(".last_tb").children(".deptNo").val()},
+		data: {deptNo: $(this).nextAll(".last_tb").children(".deptNo").val(),
+			deptName: $(this).nextAll(".last_tb").children(".deptName").val()},
 		dataType: "json",
 		success: function(result){
-			// 성명
-			$('#e_name').text(result.name);
-			// 부서
-			$('#modal_select_dept').val(result.dept_name).prop('selected', true);
-			// 이메일
-			$('#e_email').text(result.email);
-			// 연락처
-			$('#e_phone').text(result.phone);
-			// 직책
-			$('#modal_select_job').val(result.job_title).prop('selected', true);
-			// 내선번호
-			$('#modal_text_intl').val(result.intl_no);
-			// 퇴사 현황
-			$('#modal_select_resign').val(result.resign_yn).prop('selected', true);
-			// 직원 번호
-			$('#e_no').val(result.emp_no);
+			// 부서명
+			$('#d_name').val(result.form_dept.dept_name);
+			// 부서 책임자
+			   // 해당 부서 내 직원 리스트 출력
+				for(var i = 0; i < result.employeeList_dept.length; i++){
+					// 직원 이름 리스트 중, 해당 부서의 책임자와 이름이 동일하다면 해당 이름이 selected
+					if(result.employeeList_dept[i].name == result.form_dept.admin_name){
+						var option = $("<option selected>" + result.employeeList_dept[i].name + "</option>");
+					} else{
+						var option = $("<option>" + result.employeeList_dept[i].name + "</option>");	
+					}
+					$('#modal_select_dept_adm').append(option);
+				}
+				
+				// 해당 부서에 책임자가 없다면 없음이 selected 되도록
+				if(typeof result.form_dept.admin_name == "undefined"){
+					var basic1 = $("<option selected>" + "없음" + "</option>");
+					$('#modal_select_dept_adm').append(basic1);
+				} else{
+					var basic2 = $("<option>" + "없음" + "</option>");
+					$('#modal_select_dept_adm').append(basic2);
+				}
+
+			// 부서 생성일
+			$('#d_date').text(result.form_dept.dept_date);
+			
+			// 부모 부서 selected
+			if(typeof result.form_dept.dept_upper_name != "undefined"){
+				$('#modal_select_dept_dp').val(result.form_dept.dept_upper_name).prop('selected', true);
+			}
+			// 활성화 여부
+			$('#modal_select_yn').val(result.form_dept.active_yn).prop('selected', true);
 		},
 		error: function(result){
-			console.log("직원 상세 정보 ajax 오류");
+			console.log("부서 상세 정보 ajax 오류");
 		}
 	})
 	// 모달 보이게
 	$("#modal").show();
-}) --%>
+})
+</script>
+<script>
+// 모달 내 확인 버튼 클릭 시
+$('#modal_cancel').click(function(){
+	$("#modal").hide();	
+})
+
+// 모달 내 수정 버튼 클릭 시
+$('#modal_edit').click(function(){
+	// TODO
+})
+</script>
+
+<script>
+// 부서별 직원 리스트 조회 필터 변경 시
+	$('#select_dept').on("change", function(){
+		var option = $('#select_dept').val();
+		location.href="<%= request.getContextPath() %>/hr/department/list?option="+option;
+	})
+	
+
+	if('${option}' == null || '${option}' == ""){
+		$('#select_dept').val('${first_dept_name}').prop('selected', true);
+	} else{
+		$('#select_dept').val('${option}').prop('selected', true);
+	}
+	
+	
 </script>
 </body>
 </html>

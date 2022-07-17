@@ -9,15 +9,17 @@ public class Dept {
 	private Date dept_date;
 	private String active_yn;
 	private int emp_no; // 부서 책임자인 사원 번호
-	private int name; // 부서 책임자인 사원 이름
+	private String admin_name; // 부서 책임자인 사원 이름
+	private String name; // 부서 내 사원 이름
 	private int dept_upper_no; // 부모 부서의 부서 번호
+	private String dept_upper_name; // 부모 부서의 부서 이름
 	private int cnt; // 부서 내 직원 인원
 
 	@Override
 	public String toString() {
 		return "Dept [dept_no=" + dept_no + ", cp_no=" + cp_no + ", dept_name=" + dept_name + ", dept_date=" + dept_date
-				+ ", active_yn=" + active_yn + ", emp_no=" + emp_no + ", dept_upper_no=" + dept_upper_no + ", cnt="
-				+ cnt + "]";
+				+ ", active_yn=" + active_yn + ", emp_no=" + emp_no + ", admin_name=" + admin_name + ", name=" + name
+				+ ", dept_upper_no=" + dept_upper_no + ", dept_upper_name=" + dept_upper_name + ", cnt=" + cnt + "]";
 	}
 
 	public int getDept_no() {
@@ -68,6 +70,14 @@ public class Dept {
 		this.emp_no = emp_no;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int getDept_upper_no() {
 		return dept_upper_no;
 	}
@@ -84,5 +94,21 @@ public class Dept {
 		this.cnt = cnt;
 	}
 
+	public String getAdmin_name() {
+		return admin_name;
+	}
+
+	public void setAdmin_name(String admin_name) {
+		this.admin_name = admin_name;
+	}
+
+	public String getDept_upper_name() {
+		return dept_upper_name;
+	}
+
+	public void setDept_upper_name(String dept_upper_name) {
+		this.dept_upper_name = dept_upper_name;
+	}
 	
+
 }

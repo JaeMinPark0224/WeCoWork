@@ -106,7 +106,14 @@ public class HrDao {
 		return result;
 	}
 	
-	
+	// 부서 상세 조회 (1개)
+	public Dept selectOneDepartment(int cp_no, int dept_no) {
+		HashMap<String, Object> map= new HashMap<>();
+		map.put("cp_no", cp_no);
+		map.put("dept_no", dept_no);
+		
+		return sqlsession.selectOne("hrMapper.selectOneDepartment", map);
+	}
 	
 	
 	

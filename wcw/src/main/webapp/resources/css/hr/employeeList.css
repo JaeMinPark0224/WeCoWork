@@ -22,15 +22,15 @@
         color: rgb(75, 77, 178);
     }
     #select{
-        width: 140px;
-        height: 25px;
+        width: 115px;
+        height: 40px;
         font-family: NotoSansR;
         font-size: 12px;
-        margin-left: 850px;
+        margin-left: 880px;
         
     }
     #content{
-       margin-top: 70px;
+       margin-top: 50px;
        margin-left: 65px; 
     }
     #table{
@@ -65,7 +65,7 @@
         width: 280px;
         height: 512px;
         position: absolute;
-        top: 450px;
+        top: 400px;
         left: 450px;
         background-color: white;
         display: none;

@@ -55,6 +55,19 @@
 					</tr>
 				</c:forEach>
 			</c:if>
+			<c:if test="${empty employeeList}">
+					<tr class="list">
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+						<td class="tb_read"></td>
+					</tr>
+			</c:if>
         </table>
          <div id="pageing_all">
                 <div class="pageing">

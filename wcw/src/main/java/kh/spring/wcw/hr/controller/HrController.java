@@ -330,31 +330,89 @@ public class HrController {
 	
 	// 부서 리스트 조회 페이지로 이동
 	@GetMapping("/department/list")
-	public ModelAndView selectDept(
+	public ModelAndView selectListDepartment(
 			ModelAndView mv
-			, HttpSession session) {
+			, HttpSession session
+			, @RequestParam(name="option", required = false) String selectVal) {
 		
-	// 회사 번호 가져오기
-	Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-	System.out.println(loginInfo);
-	int cp_no = loginInfo.getCp_no();
-						
+		System.out.println("왓수다!" + selectVal);
+		// 회사 번호 가져오기
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		System.out.println(loginInfo);
+		int cp_no = loginInfo.getCp_no();
 		
-	// 회사가 가진 부서 전채 정보 전부 가져오기
-	List<Dept> deptList = hrService.selectDeptAllList(cp_no);
-	String dept_name = deptList.get(0).getDept_name();
-	System.out.println("부서 목록: " + deptList);
-	System.out.println("1번 부서: " + dept_name);
-	
-	// 특정 부서의 직원 리스트 사져오기
-	List<Employee> employeeList_dept = hrService.selectDeptEmployeeList(cp_no, dept_name);
-	
-	mv.addObject("deptList", deptList);
-	mv.addObject("employeeList", employeeList_dept);
-	mv.setViewName("hr/deptList");
-	
-	return mv;
+		// 회사가 가진 부서 전체 정보 가져오기
+		List<Dept> deptList = hrService.selectDeptAllList(cp_no);
+		String first_dept_name = deptList.get(0).getDept_name();
+		System.out.println("부서 목록: " + deptList);
+		System.out.println("1번 부서: " + first_dept_name);
+		
+		// 회사가 가진 부서 이름 전부 가져오기
+		List<String> deptNameList = hrService.selectDeptList(cp_no);
+		System.out.println("부서 목록: " + deptNameList);
+		
+		List<Employee> employeeList_dept = null;
+		System.out.println("selectVal: " + selectVal);
+		// 특정 부서의 직원 리스트 가져오기
+		if(selectVal == null || selectVal == "") {
+			employeeList_dept = hrService.selectDeptEmployeeList(cp_no, first_dept_name);
+		} else {
+			employeeList_dept = hrService.selectDeptEmployeeList(cp_no, selectVal);
+		}
+		
+		mv.addObject("option", selectVal);
+		mv.addObject("deptList", deptList);
+		mv.addObject("first_dept_name", first_dept_name);
+		mv.addObject("deptNameList", deptNameList);
+		mv.addObject("employeeList", employeeList_dept);
+		mv.setViewName("hr/deptList");
+		
+		return mv;
 	}
+	
+	// 부서 상세 조회 기능
+	@PostMapping("/department/select")
+	@ResponseBody
+	public String selectOneDepartment(
+			HttpSession session
+			, @RequestParam(name="deptNo", required = false) int dept_no
+			, @RequestParam(name="deptName", required = false) String dept_name) {
+					
+		System.out.println("dept_no: " + dept_no);
+		System.out.println("dept_name: " + dept_name);
+		
+		// 회사 번호 가져오기
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		System.out.println(loginInfo);
+		int cp_no = loginInfo.getCp_no();
+		
+		// 하나의 부서에 정보
+		Dept form_dept = hrService.selectOneDepartment(cp_no, dept_no);
+		System.out.println("해당 부서 정보: " + form_dept);
+		
+		// 특정 부서의 직원 리스트 가져오기
+		List<Employee> employeeList_dept = hrService.selectDeptEmployeeList(cp_no, dept_name);
+		System.out.println("특정 부서의 직원 리스트: " + employeeList_dept);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("employeeList_dept",employeeList_dept);
+		map.put("form_dept", form_dept);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+
+		return gson.toJson(map);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

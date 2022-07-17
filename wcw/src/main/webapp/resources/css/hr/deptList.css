@@ -14,9 +14,9 @@
         color: rgb(75, 77, 178);
     }
     .content{
-       margin-top: 70px;
+       margin-top: 50px;
        margin-left: 65px; 
-       margin-bottom: 120px;
+       margin-bottom: 90px;
     }
     .table{
         width: 1070px;
@@ -59,7 +59,7 @@
     
     #modal{
         width: 280px;
-        height: 452px;
+        height: 417px;
         position: absolute;
         top: 400px;
         left: 450px;
@@ -87,7 +87,7 @@
         margin-bottom: 20px;
         color: rgb(94, 94, 94);
     }
-    #modal_select_dept_cap, #modal_select_dept, #modal_select_yn, #d_name{
+    #modal_select_dept_adm, #modal_select_dept_dp, #modal_select_yn, #d_name{
         font-family: NotoSansB;
         font-size: 12px;
         width: 225px;
