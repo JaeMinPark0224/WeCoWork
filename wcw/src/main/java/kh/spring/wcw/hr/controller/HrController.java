@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -413,4 +414,32 @@ public class HrController {
 				
 	}
 	
+	
+	@RequestMapping("/attendance/weekly")
+	public ModelAndView viewWeeklyAttendanceHr(ModelAndView mv) {
+		mv.setViewName("hr/attendance/weekly");
+		return mv;
+	}
+	@RequestMapping(value = "/attendance/selectWeekly", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
+	@ResponseBody
+	public String selectWeeklyAttendance(
+			Attendance attendance
+			,@RequestParam(name="att_date_start_str") String att_date_start
+			, @RequestParam(name="att_date_end_str") String att_date_end
+			, @RequestParam(name="dept_name") String dept_name
+			, @RequestParam(name="name") String name
+			) {
+		Date att_date_start_d = Date.valueOf(att_date_start);
+		Date att_date_end_d = Date.valueOf(att_date_end);
+		attendance.setAtt_date_start(att_date_start_d);
+		attendance.setAtt_date_end(att_date_end_d);
+		attendance.setDept_name(dept_name);
+		attendance.setName(name);
+		List<Attendance> result = hrService.selectWeeklyAttendance(attendance);
+		
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
+		
+		return gsonObj.toJson(result);
+				
+	}
 }

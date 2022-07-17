@@ -135,9 +135,13 @@ public class HrServiceImpl implements HrService {
 	}
 	
 	//근태 조정 신청내역 조회
-	
 	public List<Attendance> selectApprovalAttendance(Attendance attendance){
 		return dao.selectApprovalAttendance(attendance);
+	}
+	
+	//주간근태조회
+	public List<Attendance> selectWeeklyAttendance(Attendance attendance){
+		return dao.selectWeeklyAttendance(attendance);
 	}
 	
 }

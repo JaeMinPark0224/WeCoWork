@@ -260,4 +260,16 @@ update tb_employee
 	and d.dept_name = #{dept_name}
 	</if>
 </select>
+<select id="selectWeeklyAttendance" parameterType="Attendance" resultType="Attendance">
+	select att.*, d.dept_name, e.name from tb_attendance att
+	join tb_employee e on e.emp_no = att.emp_no
+	join tb_department d on d.dept_no = e.dept_no
+	where att.ATT_date between #{att_date_start} and #{att_date_end}
+	<if test='!name.equals("0")'>
+	and e.name = #{name}
+	</if>
+	<if test='!dept_name.equals("0")'>
+	and d.dept_name = #{dept_name}
+	</if>
+</select>	
 </mapper>

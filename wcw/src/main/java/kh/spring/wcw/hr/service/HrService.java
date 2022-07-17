@@ -122,5 +122,13 @@ public interface HrService {
 	 */
 	public List<Attendance> selectApprovalAttendance(Attendance attendance);
 	
+	/**
+	 * @param Attendance
+	 * @return 주간 근태 정보 리스트
+	 * @author Jinjeong Lee
+	 */
+	public List<Attendance> selectWeeklyAttendance(Attendance attendance);
+	
+	
 	
 }

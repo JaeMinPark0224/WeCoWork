@@ -174,4 +174,9 @@ public class HrDao {
 		return sqlsession.selectList("hrMapper.selectApprovalAttendance", attendance);
 	}
 	
+	//주간근태조회
+	public List<Attendance> selectWeeklyAttendance(Attendance attendance){
+		return sqlsession.selectList("hrMapper.selectWeeklyAttendance", attendance);
+	}
+	
 }

@@ -116,7 +116,7 @@
 <section id="attendance_section">
 	<div id="attendance_main_wrap">
 		<div id="attendance_main_header">
-			<div id="attendance_main_menu_title">근태 조정 요청 조회</div>
+			<div id="attendance_main_menu_title">근태 조정 요청 관리</div>
 		</div>
 		
 		<div id="attendance_main_container">
