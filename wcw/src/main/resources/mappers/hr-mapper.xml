@@ -310,10 +310,21 @@
 	join tb_department d on d.dept_no = e.dept_no
 	where att.ATT_date between #{att_date_start} and #{att_date_end}
 	<if test='!name.equals("0")'>
-	and e.name = #{name}
+	and e.emp_no = #{emp_no}
 	</if>
 	<if test='!dept_name.equals("0")'>
 	and d.dept_name = #{dept_name}
 	</if>
 </select>	
+
+<!-- 부서, 직원성명 선택 -->
+<select id="selectDept" resultType="Employee" parameterType="_int" >
+	select dept_name, dept_no from tb_department where cp_no = #{cp_no}
+</select>
+<select id="selectEmp" resultType="Employee" parameterType="_int" >
+	select d.dept_name, e.name , e.emp_no
+	from tb_employee e
+	join tb_department d on e.dept_no=d.dept_no
+	where cp_no = #{cp_no}
+</select>
 </mapper>

@@ -179,18 +179,10 @@
 				 <div class="font_title" id="dept_name_txt">부서명</div>
 				<select name="dept_name" id="dept_name">
 					<option value="0">전체</option>
-				   	<option value="1"></option>
-				    <option value="2"></option>
-				    <option value="3"></option>
-				    <option value="4"></option>
-				    <option value="5"></option>
 				</select>
 				<div class="font_title " id="emp_name_txt">사원명</div>
 				<select name="emp_name" id="emp_name">
 					<option value="0">전체</option>
-				   	<option value="1"></option>
-				    <option value="2"></option>
-				    <option value="3"></option>
 				</select>
 				<button type="submit" class="btn_format_mini_gray" id="att_date_search_btn">조회</button>
 			</div>
@@ -297,7 +289,8 @@
 			data: {att_date_start_str:$('#startDate').text()
 				, att_date_end_str:$('#endDate').text()
 				, dept_name:$('#dept_name').val()
-				, name:$('#emp_name').val()
+				, name:$('#emp_name').text()
+				, emp_no : $('#emp_name').val()
 			} ,
 			dataType:"json",
 			success: function(result){
@@ -410,6 +403,74 @@ const chart1 = document.getElementById('chart1').getContext('2d');
         }
     });
 
+/*//////////////부서, 성명 선택///////// */
+// 셀렉박스 초기화
+function selectReset() {
+	let $deptSelect = $("#dept_name");
+	let $employeeSelect = $("#emp_name");
+	$deptSelect.children().remove();
+	selectOptionAdd($deptSelect, "전체", 0);
+	$employeeSelect.children().remove();
+	selectOptionAdd($employeeSelect, "전체", 0);
+}
+
+//셀렉박스에 옵션 추가
+function selectOptionAdd($dom, name, value) {
+	if(typeof value == "undefined") {
+		let html = "<option>"+name+"</option>";
+		$dom.append(html);
+	} else {
+		let html = "<option value='"+value+"'>"+name+"</option>";
+		$dom.append(html);
+	}
+}
+
+<c:forEach items="${deptList}" var="dept">
+	selectOptionAdd($("#dept_name"), "${dept.dept_name}");
+</c:forEach>
+
+var employee = [];
+var employeeVo;
+<c:forEach items="${empList}" var="emp">
+	employeeVo = {
+		dept_name : "${emp.dept_name}"
+		,name : "${emp.name}"
+		,emp_no : "${emp.emp_no}"
+	}
+	employee.push(employeeVo);
+</c:forEach>
+
+
+$("#dept_name").on("change", employeeList);
+
+//부서 선택시 사원 리스트 출력 함수
+function employeeList() {
+	let $deptSelect = $("#dept_name");
+	let $employeeSelect = $("#emp_name");
+	// '부서 선택' 옵션 삭제
+	if($(this).val() != "0") {
+		$deptSelect.children("[value = '0']").remove();
+	}
+	
+	// 사원 리스트 초기화
+	$employeeSelect.children().remove();
+	selectOptionAdd($employeeSelect, "성명 선택", 0);
+	// 사원 리스트 추가
+	for(var i = 0; i < employee.length; i++) {
+		if($deptSelect.val() == employee[i].dept_name) {
+			let employeeName = employee[i].name;
+			selectOptionAdd($employeeSelect, employeeName, employee[i].emp_no);
+		}
+	}
+	$employeeSelect.off('change');
+	$employeeSelect.on('change', employeeSelectFirstRemove);
+}
+
+//사원 선택시 이벤트 설정
+function employeeSelectFirstRemove() {
+	// '사원, 직급 선택' 옵션 삭제
+	$("#emp_name").children("[value = '0']").remove();
+}
 
 </script>
 </body>

@@ -29,7 +29,8 @@
 <select id="selectVacation">
 	select * 
 	from tb_vacation v join tb_vacation_use u on v.emp_no = u.emp_no
-	where emp_no = #{emp_no} and vaca_start between '#{vu_year}-01-01' and '#{vu_year}-12-31'
+	where emp_no = #{emp_no} 
+	and vaca_start between '#{vu_year}-01-01' and '#{vu_year}-12-31'
 	<if test='!vaca_confirm.equals("0")'>
 	and vaca_confirm = #{vaca_confirm}
 	</if>

@@ -215,4 +215,11 @@ public class HrDao {
 		return sqlsession.selectList("hrMapper.selectWeeklyAttendance", attendance);
 	}
 	
+	//부서, 직원명 선택
+	public List<Employee> selectDept(int cp_no) {
+		return sqlsession.selectList("hrMapper.selectDept", cp_no);
+	}
+	public List<Employee> selectEmp(int cp_no) {
+		return sqlsession.selectList("hrMapper.selectEmp", cp_no);
+	}
 }

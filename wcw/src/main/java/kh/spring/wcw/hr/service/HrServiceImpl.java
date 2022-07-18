@@ -138,18 +138,30 @@ public class HrServiceImpl implements HrService {
 	
 	/////////////////이진정//////////////////
 	///근태조회
+	@Override
 	public List<Attendance> selectAttendance(Attendance attendance){
 		return dao.selectAttendance(attendance);
 	}
 	
 	//근태 조정 신청내역 조회
+	@Override
 	public List<Attendance> selectApprovalAttendance(Attendance attendance){
 		return dao.selectApprovalAttendance(attendance);
 	}
 	
 	//주간근태조회
+	@Override
 	public List<Attendance> selectWeeklyAttendance(Attendance attendance){
 		return dao.selectWeeklyAttendance(attendance);
 	}
 	
+	//부서명, 직원명 조회
+	@Override
+	public List<Employee> selectDept(int cp_no) {
+		return dao.selectDept(cp_no);
+	}
+	@Override
+	public List<Employee> selectEmp(int cp_no) {
+		return dao.selectEmp(cp_no);
+	};
 }

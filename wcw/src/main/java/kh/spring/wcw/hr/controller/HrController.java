@@ -504,11 +504,22 @@ public class HrController {
 	}
 	
 	
-	@RequestMapping("/attendance/weekly")
-	public ModelAndView viewWeeklyAttendanceHr(ModelAndView mv) {
+	@GetMapping("/attendance/weekly")
+	public ModelAndView viewWeeklyAttendanceHr(ModelAndView mv
+			, HttpSession session
+			) {
+		
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int cp_no = loginSSInfo.getCp_no();
+		List<Employee> empList = hrService.selectEmp(cp_no);
+		List<Employee> deptList = hrService.selectDept(cp_no);
+		
+		mv.addObject("deptList", deptList);
+		mv.addObject("empList", empList);
 		mv.setViewName("hr/attendance/weekly");
 		return mv;
 	}
+	
 	@RequestMapping(value = "/attendance/selectWeekly", produces = "text/plain;charset=UTF-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String selectWeeklyAttendance(
@@ -517,6 +528,7 @@ public class HrController {
 			, @RequestParam(name="att_date_end_str") String att_date_end
 			, @RequestParam(name="dept_name") String dept_name
 			, @RequestParam(name="name") String name
+			, @RequestParam(name="emp_no") int emp_no
 			) {
 		Date att_date_start_d = Date.valueOf(att_date_start);
 		Date att_date_end_d = Date.valueOf(att_date_end);
@@ -524,6 +536,7 @@ public class HrController {
 		attendance.setAtt_date_end(att_date_end_d);
 		attendance.setDept_name(dept_name);
 		attendance.setName(name);
+		attendance.setEmp_no(emp_no);
 		List<Attendance> result = hrService.selectWeeklyAttendance(attendance);
 		
 		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();

@@ -142,6 +142,19 @@ public interface HrService {
 	 * @author Jinjeong Lee
 	 */
 	public List<Attendance> selectWeeklyAttendance(Attendance attendance);
+
+	/**
+	 * @param cp_no
+	 * @return 부서명 리스트
+	 * @author Jinjeong Lee
+	 */
+	public List<Employee> selectDept(int cp_no);
+	/**
+	 * @param cp_no
+	 * @return 직원명 리스트
+	 * @author Jinjeong Lee
+	 */
+	public List<Employee> selectEmp(int cp_no);
 	
 	
 	
