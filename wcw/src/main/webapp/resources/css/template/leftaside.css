@@ -37,6 +37,14 @@
 	margin: 0 auto 20px;
 	cursor: pointer;
 }
+.profile_cp{
+	width: 115px;
+	height: 115px;
+	border-radius: 50%;
+	background-color: white;
+	margin: 0 auto 20px;
+	cursor: pointer;
+}
 #profile{
 	width: 115px;
 	height: 115px;

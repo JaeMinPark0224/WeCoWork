@@ -295,7 +295,11 @@ $('#modal_edit2').click(function(){
 				dept_upper_no:$('#modal2_select_dept').val()
 				},
 		success: function(result){
-			alert("부서가 생성되었습니다.");
+			if(result = 1){
+				alert("부서가 생성되었습니다.");
+			}else{
+				alert("부서 생성에 실패했습니다.");
+			}
 			location.href="<%= request.getContextPath() %>/hr/department/list";
 		},
 		error: function(result){

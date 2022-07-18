@@ -4,6 +4,7 @@
 <aside id="left_aside">
 	<img src="<%= request.getContextPath() %>/resources/images/logo.png" id="logo">
 	<div id="login_info">
+	<c:if test="${not empty loginSSInfo}">
 		<div class="profile_circle">
 			<c:if test="${empty loginSSInfo.profile}">
 		    	<img id="profile" src="<%= request.getContextPath() %>/resources/images/clear.png">
@@ -14,6 +15,14 @@
 		</div>
 		<div class="company_info font_r font_gray94 font_12px">${loginSSInfo.cp_name }</div>
 		<div class="person_info"><span class="font_b font_gray94 font_13px">${loginSSInfo.name }&nbsp;</span><span class="font_r font_gray94 font_13px">${loginSSInfo.job_title }</span></div>
+	</c:if>
+	<c:if test="${not empty CompanySSinfo}">
+			<div class="profile_cp">
+				<img id="profile" src="<%= request.getContextPath() %>/resources/images/clear.png">
+			</div>
+			<div class="company_info font_r font_gray94 font_12px" style="margin-bottom: 50px;">${CompanySSinfo.cp_name}</div>
+	</c:if>
+
 		<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
 		<div id="test_login_btn_wrap">
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
@@ -33,6 +42,49 @@
 	</div>
 	<div id="left_menu_scroll">
 		<div id="left_menu">
+		
+		
+		<c:if test="${not empty CompanySSinfo }">
+			<div class="left_menu_wrap">
+				<div class="left_menu_title">
+					<div class="left_menu_hr"></div>
+					<div class="left_menu_hr_title">Admin</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">사원 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content" id="emp_list_select">직원 조회</div>
+						<div class="left_menu_2depth_content" id="emp_insert">직원 가입 관리</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">부서 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content" id="dept_list_select">부서 조회</div>
+						<div class="left_menu_2depth_content" id="dept_admin">관리자 부서 설정</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">근태 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content" id="attendance_daily_hr">일일 근태 관리</div>
+						<div class="left_menu_2depth_content" id="attendance_appr_hr">근태 조정 요청 관리</div>
+						<div class="left_menu_2depth_content" id="attendance_weekly_hr">주간 근태 관리</div>
+						<div class="left_menu_2depth_content">월간 근태 관리</div>
+						<div class="left_menu_2depth_content">휴가 관리</div>
+					</div>
+				</div>
+				<div class="left_menu_wrap_1depth">
+					<div class="left_menu_1depth_title" open_chk="f">공지 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
+					<div class="left_menu_2depth_content_wrap">
+						<div class="left_menu_2depth_content">공지 관리</div>
+						<div class="left_menu_2depth_content">공지 관리</div>
+						<div class="left_menu_2depth_content">공지 관리</div>
+						<div class="left_menu_2depth_content">공지 관리</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
 		
 		<c:if test="${not empty loginSSInfo }">
 			<c:if test="${loginSSInfo.hr_yn eq 'Y' }">
@@ -76,7 +128,6 @@
 				</div>
 			</div>
 			</c:if>
-		</c:if>
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
@@ -195,6 +246,7 @@
 					</div>
 				</div>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </aside>
