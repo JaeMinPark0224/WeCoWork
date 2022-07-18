@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kh.spring.wcw.project.domain.Project;
 import kh.spring.wcw.project.model.dao.ProjectDao;
@@ -151,8 +152,35 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public int insertTodoProjecet(Project project) {
-		return dao.insertTodoProjecet(project);
+	public int insertTodoProject(Project project) {
+		return dao.insertTodoProject(project);
 	}
+
+	@Override
+	@Transactional
+	public int updateTodoProject(Project project) {
+		return dao.updateTodoProject(project);
+	}
+
+	@Override
+	public List<Project> selectListCalendarProject(Project project) {
+		return dao.selectListCalendarProject(project);
+	}
+
+	@Override
+	public List<Project> selectListFolderProject(int pr_no) {
+		return dao.selectListFolderProject(pr_no);
+	}
+
+	@Override
+	public int insertFolderProject(Project project) {
+		return dao.insertFolderProject(project);
+	}
+
+	@Override
+	public int updateFolderProject(Project project) {
+		return dao.updateFolderProject(project);
+	}
+
 
 }

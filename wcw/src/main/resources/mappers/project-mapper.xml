@@ -25,6 +25,14 @@
 		values
 		((SELECT nvl(max(PR_NO),0)+1 from tb_project), #{emp_no}
 		, default, 'A')
+		into tb_project_file_folder
+		(pff_no, pff_name
+		, pff_ref, pff_level
+		, pff_order, pr_no)
+		values
+		((SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder), 'ROOT'
+		,(SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder), 0,
+		0, (SELECT nvl(max(PR_NO),0)+1 from tb_project))
 		select * from dual
 	</insert>
 	
@@ -342,7 +350,7 @@
 		    order by pt_date asc
 	</select>
 	
-	<insert id="insertTodoProjecet" parameterType="Project">
+	<insert id="insertTodoProject" parameterType="Project">
 		insert into tb_project_todo
 		(pt_no, emp_no, pr_no
 		, pt_date, pt_content, pt_complete_yn)
@@ -350,4 +358,62 @@
 		((SELECT nvl(max(pt_no),0)+1 from tb_project_todo), #{emp_no}, #{pr_no}
 		, #{pt_date}, #{pt_content}, default)
 	</insert>
+	
+	<update id="updateTodoProject" parameterType="Project">
+		update tb_project_todo
+			set pt_complete_yn = #{pt_complete_yn}
+			where pt_no = #{pt_no}
+	</update>
+	
+	<select id="selectListCalendarProject" parameterType="Project" resultType="Project">
+		select tpw.pw_no, tpw.pw_title, tpw.pw_start_date, tpw.pw_end_date, tpw.pw_status, tpw.pw_priority
+		    from tb_project_work tpw
+		    join tb_project_work_participant tpwp
+		    on tpw.pw_no = tpwp.pw_no
+		    where tpw.pr_no = #{pr_no} 
+		    <if test='emp_no != 0'>
+			    and tpwp.emp_no = #{emp_no}
+		    </if>
+	</select>
+	
+	<select id="selectListFolderProject" parameterType="_int" resultType="Project">	
+		select *
+			from tb_project_file_folder
+			where pr_no = #{pr_no}
+	</select>
+	
+	<insert id="insertFolderProject" parameterType="Project">
+	insert into tb_project_file_folder
+		(pff_no, pff_name
+		, pff_ref, pff_level
+		, pff_order, pr_no)
+		values
+		((SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder), #{pff_name}
+		<choose>
+			<when test="pff_ref == 0">
+				,(SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder)				
+			</when>
+			<when test="pff_ref != 0">
+				,#{pff_ref}
+			</when>
+		</choose>
+		, #{pff_level}
+		<choose>
+			<when test="pff_ref == 0">
+				, 0				
+			</when>
+			<when test="pff_ref != 0">
+				,(select nvl(max(pff_order),-1)+1
+		    		from tb_project_file_folder
+		    		where pff_ref = #{pff_ref})
+			</when>
+		</choose>
+		, #{pr_no})
+	</insert>
+	
+	<update id="updateFolderProject" parameterType="Project">
+		update tb_project_file_folder
+		set pff_name = #{pff_name}
+		where pff_no = #{pff_no}
+	</update>
 </mapper>

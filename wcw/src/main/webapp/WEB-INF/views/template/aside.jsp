@@ -22,8 +22,9 @@
 			</div>
 			<div class="company_info font_r font_gray94 font_12px" style="margin-bottom: 50px;">${CompanySSinfo.cp_name}</div>
 	</c:if>
-
+		<c:if test="${not(empty loginSSInfo && empty CompanySSinfo) }">
 		<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
+		</c:if>
 		<div id="test_login_btn_wrap">
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
@@ -44,7 +45,8 @@
 		<div id="left_menu">
 		
 		
-		<c:if test="${not empty CompanySSinfo }">
+		
+		<c:if test="${(not empty loginSSInfo && loginSSInfo.hr_yn eq 'Y') || not empty CompanySSinfo}">
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
@@ -61,7 +63,9 @@
 					<div class="left_menu_1depth_title" open_chk="f">부서 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content" id="dept_list_select">부서 조회</div>
-						<div class="left_menu_2depth_content" id="dept_admin">관리자 부서 설정</div>
+						<c:if test="${not empty CompanySSinfo }">
+							<div class="left_menu_2depth_content" id="dept_admin">관리자 부서 설정</div>
+						</c:if>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -85,49 +89,7 @@
 				</div>
 			</div>
 		</c:if>
-		
 		<c:if test="${not empty loginSSInfo }">
-			<c:if test="${loginSSInfo.hr_yn eq 'Y' }">
-			<div class="left_menu_wrap">
-				<div class="left_menu_title">
-					<div class="left_menu_hr"></div>
-					<div class="left_menu_hr_title">Admin</div>
-				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">사원 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content" id="emp_list_select">직원 조회</div>
-						<div class="left_menu_2depth_content" id="emp_insert">직원 가입 관리</div>
-					</div>
-				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">부서 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content" id="dept_list_select">부서 조회</div>
-						<div class="left_menu_2depth_content" id="dept_admin">관리자 부서 설정</div>
-					</div>
-				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">근태 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content" id="attendance_daily_hr">일일 근태 관리</div>
-						<div class="left_menu_2depth_content" id="attendance_appr_hr">근태 조정 요청 관리</div>
-						<div class="left_menu_2depth_content" id="attendance_weekly_hr">주간 근태 관리</div>
-						<div class="left_menu_2depth_content">월간 근태 관리</div>
-						<div class="left_menu_2depth_content">휴가 관리</div>
-					</div>
-				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">공지 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">공지 관리</div>
-						<div class="left_menu_2depth_content">공지 관리</div>
-						<div class="left_menu_2depth_content">공지 관리</div>
-						<div class="left_menu_2depth_content">공지 관리</div>
-					</div>
-				</div>
-			</div>
-			</c:if>
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>

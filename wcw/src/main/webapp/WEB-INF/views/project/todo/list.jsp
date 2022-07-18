@@ -40,8 +40,8 @@
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 	<div id="project_todo_header_wrap">
-		<div id="project_todo_header_date">${today }</div>
-		<div id="project_todo_header_progress">50%</div>
+		<div id="project_todo_header_date"><input type="date" id="projecet_todo_date_input" value="${today }"></div>
+		<div id="project_todo_header_progress"></div>
 		<div id="project_todo_header_progress_bar_wrap">
 			<div id="project_todo_header_progress_bar"></div>
 		</div>
@@ -51,8 +51,16 @@
 			<div id="project_todo_content_flex_box_head"></div>
 			<div id="project_todo_content_flex_box_body">
 				<c:forEach items="${todoList }" var="todo">
-					<div class="project_todo_chk_box" chk="${todo.pt_complete_yn }"><i class="fa-solid fa-check project_todo_chk"></i></div>
-					<div class="project_todo_list_title">[${fn:substring(todo.pt_date,11,16) }] ${todo.pt_content }</div>
+					<c:choose>
+						<c:when test="${todo.pt_complete_yn eq 'Y'}">
+							<div class="project_todo_chk_box" chk="${todo.pt_complete_yn }" pt_no="${todo.pt_no }" style="background-color : #4B4DB2;"><i class="fa-solid fa-check project_todo_chk" style="visibility : visible;"></i></div>
+							<div class="project_todo_list_title" style="text-decoration: line-through;">[${fn:substring(todo.pt_date,11,16) }] ${todo.pt_content }</div>
+						</c:when>
+						<c:when test="${todo.pt_complete_yn eq 'N'}">
+							<div class="project_todo_chk_box" chk="${todo.pt_complete_yn }" pt_no="${todo.pt_no }"><i class="fa-solid fa-check project_todo_chk"></i></div>
+							<div class="project_todo_list_title">[${fn:substring(todo.pt_date,11,16) }] ${todo.pt_content }</div>
+						</c:when>
+					</c:choose>
 				</c:forEach>
 			</div>
 		</div>
@@ -63,8 +71,42 @@
 	//프로젝트 번호
 	var js_pr_no = (new URL(location.href).searchParams).get('project');
 
-	$("#project_main_tab_wrap").append("<button id='project_todo_add_btn'>할 일 추가</button>");
-	$("#project_main_tab_wrap").append("<button id='project_todo_update_btn'>할 일 수정</button>");
+	// 추가 버튼 생성
+	$("#project_main_tab_wrap").append("<div id='project_todo_sub_btn_wrap'></div>")
+	$("#project_todo_sub_btn_wrap").append("<button id='project_todo_add_btn' class='project_todo_sub_btn'>할 일 추가</button>");
+	$("#project_todo_sub_btn_wrap").append("<button id='project_todo_update_btn' class='project_todo_sub_btn'>할 일 수정</button>");
+	$("#project_todo_sub_btn_wrap").append("<button id='project_todo_complete_btn' class='project_todo_sub_btn'>수정 완료</button>");
+	$("#project_todo_sub_btn_wrap").append("<button id='project_todo_cancle_btn' class='project_todo_sub_btn'>수정 취소</button>");
+	
+	// 진행도 업데이트
+	function progressUdpateFnc() {
+		// 퍼센트 계산
+		let progressPersent = (($(".project_todo_chk_box[chk='Y']").length/$(".project_todo_chk_box").length)*100).toFixed(2);
+		console.log(progressPersent);
+		if(progressPersent != '0.00' && progressPersent != '100.00' && progressPersent != 'NaN') {
+			if(progressPersent.charAt(4) == '0') {
+				progressPersent = progressPersent.substr(0,4);
+			}
+			if(progressPersent.charAt(3) == '0') {
+				progressPersent = progressPersent.substr(0,2);
+			}
+		}
+		else if(progressPersent == '0.00') {
+			progressPersent = progressPersent.substr(0,1);	
+		}
+		else if(progressPersent == '100.00') {
+			progressPersent = progressPersent.substr(0,3);	
+		}
+		else if(progressPersent == 'NaN') {
+				progressPersent = '0';
+		}
+		$("#project_todo_header_progress").text(progressPersent+"%");
+		
+		// progressbar 표시
+		let progressBarWidth = 1070 * progressPersent * 0.01 + "px"; 
+		$("#project_todo_header_progress_bar").css("width", progressBarWidth);
+	}
+	progressUdpateFnc();
 	
 	// 할 일 추가 버튼 모달창 열기
 	$("#project_todo_add_btn").on("click", function() {
@@ -98,15 +140,16 @@
 			data: {
 				pr_no : js_pr_no,
 				pt_content : textVal,
-				pt_date_year : $("#project_todo_header_date").text(),
+				pt_date_year : $("#projecet_todo_date_input").val(),
 				pt_date_hour_minute : timeVal
 			},
 			success: function(result) {
-				alert(result);
-				console.log("result : " + result);
-				/* if(result == 1) {
-					location.reload();
-				} */
+				if(result == -1) {
+					location.href = "<%= request.getContextPath()%>/login";					
+					return;
+				}
+				dateChangeFnc();
+				$("#project_todo_modal_background").css("display", "none");
 			},
 			error: function(request, status, error) {
 				alert("fail");
@@ -115,32 +158,230 @@
 	});
 	
 	// 할일 체크
-	$(".project_todo_chk_box").on("click", function() {
-		console.log($(this));
-		if($(this).attr("chk") == 'N') {
+	$(".project_todo_chk_box").on("click", todoChkFnc);
+	
+	// 할일 체크 함수
+	function todoChkFnc() {
+		let js_pt_no = $(this).attr("pt_no");
+		let jt_pt_complete = ($(this).attr("chk") == 'Y')?'N':'Y';
+		let $this = $(this);
+		$.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/project/todo/update",
+			data: {
+				pt_no : js_pt_no,
+				pt_complete_yn : jt_pt_complete
+			},
+			success: function(result) {
+				if(result == -1) {
+					location.href = "<%= request.getContextPath()%>/login";					
+					return;
+				}
+				if($this.attr("chk") == 'N') {
+					$this.css({
+						"background-color" : "#4B4DB2"
+					});
+					$this.children(".project_todo_chk").css({
+						"visibility" : "visible" 
+					});
+					$this.next().css({
+						"text-decoration": "line-through"
+					});
+					$this.attr("chk", 'Y');
+				} else if ($this.attr("chk") == 'Y') {
+					$this.css({
+						"background-color" : "rgb(244, 244, 244)"
+					});
+					$this.children(".project_todo_chk").css({
+						"visibility" : "hidden" 
+					});
+					$this.next().css({
+						"text-decoration": "none"
+					});
+					$this.attr("chk", 'N');
+				}
+				progressUdpateFnc();
+			},
+			error: function(request, status, error) {
+				alert("fail");
+			}
+		});
+	}
+	
+	// 날짜 변경
+	$("#projecet_todo_date_input").on("change", dateChangeFnc);
+	
+	// 날짜 변경 함수
+	function dateChangeFnc() {
+		$.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/project/todo/list",
+			data: {
+				pr_no : js_pr_no,
+				pt_date_year : $("#projecet_todo_date_input").val()
+			},
+			dataType : "json",
+			success: function(result) {
+				if(result == -1) {
+					location.href = "<%= request.getContextPath()%>/login";					
+					return;
+				}
+				$("#project_todo_content_flex_box_body").empty();
+				if(result != 0) {
+					for (var i = 0; i < result.length; i++) {
+						let todo = result[i];
+						let htmlText = '';
+						if(todo.pt_complete_yn == 'Y') {
+							htmlText += '<div class="project_todo_chk_box" chk="'+todo.pt_complete_yn+'" pt_no="'+todo.pt_no+'" style="background-color : #4B4DB2;"><i class="fa-solid fa-check project_todo_chk" style="visibility : visible;"></i></div>';
+							htmlText += '<div class="project_todo_list_title" style="text-decoration: line-through;">['+todo.pt_date.substring(11,16)+'] '+todo.pt_content+'</div>';
+						}
+						else if(todo.pt_complete_yn == 'N') {
+							htmlText += '<div class="project_todo_chk_box" chk="'+todo.pt_complete_yn+'" pt_no="'+todo.pt_no+'"><i class="fa-solid fa-check project_todo_chk"></i></div>';
+							htmlText += '<div class="project_todo_list_title">['+todo.pt_date.substring(11,16)+'] '+todo.pt_content+'</div>';
+						}
+						$("#project_todo_content_flex_box_body").append(htmlText);
+					}
+					$(".project_todo_chk_box").off("click");
+					$(".project_todo_chk_box").on("click", todoChkFnc);
+				}
+				progressUdpateFnc();
+			},
+			error: function(request, status, error) {
+				alert("fail");
+			}
+		});
+	}
+	
+	// 할 일 수정 버튼 클릭 이벤트
+	$("#project_todo_update_btn").on("click", function() {
+		let $todoList = $(".project_todo_list_title");
+		for(var i = 0; i < $todoList.length; i++) {
+			let $prev = $todoList.eq(i).prev();
+			if($prev.attr("chk") == 'N') {
+				let tempStr = $todoList.eq(i).text();
+				$todoList.eq(i).empty();
+				let htmlText = '<div class="project_todo_update_grid">'
+				htmlText += '<input type="time" class="project_todo_list_time_input">';
+				htmlText += '<input type="text" class="project_todo_list_title_input">';
+				htmlText += '<div class="project_todo_list_delete_btn" delChk="f">삭제<div></div>'
+				$todoList.eq(i).append(htmlText);
+				$todoList.eq(i).find(".project_todo_list_time_input").val(tempStr.substring(1,6));
+				$todoList.eq(i).find(".project_todo_list_title_input").val(tempStr.substring(8));
+			}
+		}
+		$(".project_todo_list_delete_btn").off("cilck");
+		$(".project_todo_list_delete_btn").on("click", todoListDeleteFnc);
+		$(".project_todo_chk_box").off("click");
+		$(".project_todo_chk_box").css({
+			"cursor" : "auto"
+		});
+		$("#project_todo_update_btn").css({
+			"display" : "none"
+		});
+		$("#project_todo_complete_btn").css({
+			"display" : "block"
+		});
+		$("#project_todo_cancle_btn").css({
+			"display" : "block"
+		});
+	});
+	
+	// 수정 완료 기능
+	$("#project_todo_complete_btn").on("click", function() {
+		// 모르겠음 유빈님 도와주세요 ㅠㅠㅠㅠㅠㅠㅠㅠ 새벽에 뭐하는 짓이여 ㅠㅠㅠㅠㅠㅠ
+		<%-- $.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/project/todo/update",
+			data: {
+				pt_no : js_pt_no,
+				pt_complete_yn : jt_pt_complete
+			},
+			success: function(result) {
+				if(result == -1) {
+					location.href = "<%= request.getContextPath()%>/login";					
+					return;
+				}
+				if($this.attr("chk") == 'N') {
+					$this.css({
+						"background-color" : "#4B4DB2"
+					});
+					$this.children(".project_todo_chk").css({
+						"visibility" : "visible" 
+					});
+					$this.next().css({
+						"text-decoration": "line-through"
+					});
+					$this.attr("chk", 'Y');
+				} else if ($this.attr("chk") == 'Y') {
+					$this.css({
+						"background-color" : "rgb(244, 244, 244)"
+					});
+					$this.children(".project_todo_chk").css({
+						"visibility" : "hidden" 
+					});
+					$this.next().css({
+						"text-decoration": "none"
+					});
+					$this.attr("chk", 'N');
+				}
+				progressUdpateFnc();
+			},
+			error: function(request, status, error) {
+				alert("fail");
+			}
+		}); --%>
+	});
+	
+	// 수정 취소 기능
+	$("#project_todo_cancle_btn").on("click", function() {
+		dateChangeFnc();
+		$("#project_todo_update_btn").css({
+			"display" : "block"
+		});
+		$("#project_todo_complete_btn").css({
+			"display" : "none"
+		});
+		$("#project_todo_cancle_btn").css({
+			"display" : "none"
+		});
+	});
+	
+	// todo 리스트 삭제 버튼 함수
+	function todoListDeleteFnc() {
+		let $chkBox = $(this).parents(".project_todo_list_title").prev();
+		if($(this).attr("delChk") == "f") {
+			$(this).prevAll().attr("disabled", true);	
+			$(this).attr("delChk", "t");
 			$(this).css({
-				"background-color" : "#4B4DB2"
+				"background-color" : "rgb(231, 76, 60)",
+				"color" : "white"
 			});
-			$(this).children(".project_todo_chk").css({
-				"visibility" : "visible" 
+			$chkBox.css({
+				"background-color" : "rgb(231, 76, 60)"
 			});
-			$(this).next().css({
-				"text-decoration": "line-through"
+	 		$chkBox.children(".project_todo_chk").removeClass("fa-check");
+	 		$chkBox.children(".project_todo_chk").addClass("fa-xmark");
+			$chkBox.children(".project_todo_chk").css({
+				"visibility" : "visible"
 			});
-			$(this).attr("chk", 'Y');
-		} else if ($(this).attr("chk") == 'Y') {
+		}
+		else if($(this).attr("delChk") == "t"){
+			$(this).prevAll().removeAttr("disabled");	
+			$(this).attr("delChk", "f");
 			$(this).css({
+				"background-color" : "rgb(244, 244, 244)",
+				"color" : "rgb(94, 94, 94)"
+			});
+			$chkBox.css({
 				"background-color" : "rgb(244, 244, 244)"
 			});
-			$(this).children(".project_todo_chk").css({
-				"visibility" : "hidden" 
+	 		$chkBox.children(".project_todo_chk").removeClass("fa-xmark");
+	 		$chkBox.children(".project_todo_chk").addClass("fa-check");
+			$chkBox.children(".project_todo_chk").css({
+				"visibility" : "hidden"
 			});
-			$(this).next().css({
-				"text-decoration": "none"
-			});
-			$(this).attr("chk", 'N');
 		}
-	});
+	}
 </script>
 </body>
 </html>

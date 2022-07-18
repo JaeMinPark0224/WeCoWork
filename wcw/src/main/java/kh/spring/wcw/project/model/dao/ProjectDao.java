@@ -129,7 +129,28 @@ public class ProjectDao {
 		return sqlsession.selectList("Project.selectListTodoProject", project);
 	}
 	
-	public int insertTodoProjecet(Project project) {
-		return sqlsession.insert("Project.insertTodoProjecet", project);
+	public int insertTodoProject(Project project) {
+		return sqlsession.insert("Project.insertTodoProject", project);
 	}
+	
+	public int updateTodoProject(Project project) {
+		return sqlsession.insert("Project.updateTodoProject", project);
+	}
+	
+	public List<Project> selectListCalendarProject(Project project) {
+		return sqlsession.selectList("Project.selectListCalendarProject", project);
+	}
+	
+	public List<Project> selectListFolderProject(int pr_no) {
+		return sqlsession.selectList("Project.selectListFolderProject", pr_no);
+	}
+	
+	public int insertFolderProject(Project project) {
+		return sqlsession.insert("Project.insertFolderProject", project);
+	}
+	
+	public int updateFolderProject(Project project) {
+		return sqlsession.insert("Project.updateFolderProject", project);
+	}
+	
 }

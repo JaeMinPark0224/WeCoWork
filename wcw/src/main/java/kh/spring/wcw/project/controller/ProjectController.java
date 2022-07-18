@@ -30,6 +30,7 @@ import kh.spring.wcw.common.WCWUtill;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.project.domain.Project;
 import kh.spring.wcw.project.model.service.ProjectService;
+import oracle.jdbc.proxy.annotation.Pre;
 
 @Controller
 @RequestMapping("/project")
@@ -334,6 +335,31 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@PostMapping("/todo/list")
+	@ResponseBody
+	public String selectAjaxTodoProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			, @RequestParam String pt_date_year
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		
+		
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
+		LocalDateTime local_pt_date = LocalDateTime.from(dateFormat.parse(pt_date_year+"00:00:00"));
+		Timestamp pt_date = Timestamp.valueOf(local_pt_date);
+		project.setPt_date(pt_date);
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		List<Project> todoList = service.selectListTodoProject(project);
+		Gson gson = new GsonBuilder().setPrettyPrinting().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		return gson.toJson(todoList);
+	}
+	
 	@PostMapping("/todo/insert")
 	@ResponseBody
 	public String insertTodoProject(
@@ -345,7 +371,7 @@ public class ProjectController {
 			) {
 		
 		if(!wcwutill.loginChk(session)) {
-			return "0";
+			return "-1";
 		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
@@ -354,21 +380,161 @@ public class ProjectController {
 		LocalDateTime local_pt_date = LocalDateTime.from(dateFormat.parse(pt_date_year+pt_date_hour_minute));
 		Timestamp pt_date = Timestamp.valueOf(local_pt_date);
 		project.setPt_date(pt_date);
-		int result = service.insertTodoProjecet(project);
+		int result = service.insertTodoProject(project);
+		return String.valueOf(result);
+	}
+	
+	@PostMapping("/todo/update")
+	@ResponseBody
+	public String updateTodoProject(
+			ModelAndView mv
+			, Project project
+			, HttpSession session
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		int result = service.updateTodoProject(project);
 		return String.valueOf(result);
 	}
 	
 	@GetMapping("/calendar/list")
-	public ModelAndView selectCalendarProject(ModelAndView mv) {
+	public ModelAndView selectListCalendarProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			, @RequestParam(name = "project") int pr_no
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		project.setPr_no(pr_no);
+		
+		if(service.selectEmpProject(project) == null) {
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		
+		List<Project> calendarMyList = service.selectListCalendarProject(project);
+		project.setEmp_no(0);
+		List<Project> calendarAllList = service.selectListCalendarProject(project);
+		mv.addObject("calendarMyList", calendarMyList);
+		mv.addObject("calendarAllList", calendarAllList);
 		mv.setViewName("project/calendar/list");
 		return mv;
 	}
 	
 	@GetMapping("/file/list")
-	public ModelAndView selectFileProject(ModelAndView mv) {
+	public ModelAndView selectFileProject(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam(name = "project") int pr_no
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		
+		List<Project> folderList = service.selectListFolderProject(pr_no);
+		
+		mv.addObject("folderList", folderList);
 		mv.setViewName("project/file/list");
 		return mv;
 	}
+	
+	@PostMapping("/folder/insert")
+	@ResponseBody
+	public String insertFolerProject(
+			HttpSession session
+			, @RequestParam int pr_no
+			, @RequestParam(required = false) String root
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		
+		if(root != null && root.equals("true")) {
+			project.setPr_no(pr_no);
+			project.setPff_name("ROOT");
+			project.setPff_ref(0);
+			project.setPff_level(0);
+			project.setPff_order(0);
+			int result = service.insertFolderProject(project);
+			return String.valueOf(result);
+		}
+		else if(root == null) {
+			int result = service.insertFolderProject(project);
+			return String.valueOf(result);
+		}
+		
+		return "100";
+	}
+	
+	@PostMapping("/folder/list")
+	@ResponseBody
+	public String selectListAjaxFolerProject(
+			HttpSession session
+			, @RequestParam int pr_no
+			, @RequestParam(required = false) String root
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(service.selectListFolderProject(pr_no));
+	}
+	
+	@PostMapping("/folder/update")
+	@ResponseBody
+	public String updateFolerProject(
+			HttpSession session
+			, @RequestParam int pr_no
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		service.updateFolderProject(project);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(service.selectListFolderProject(pr_no));
+	}
+	
 	
 	@GetMapping("/participant/list")
 	public ModelAndView selectListParticipantProject(
@@ -403,8 +569,8 @@ public class ProjectController {
 		}
 		
 		for(int i = 0; i < participantBList.size(); i++) {
-			if(participantAList.get(i).getEp_no() == emp_no) {
-				pr_emp_authority = participantAList.get(i).getPr_emp_authority();
+			if(participantBList.get(i).getEp_no() == emp_no) {
+				pr_emp_authority = participantBList.get(i).getPr_emp_authority();
 			}
 		}
 		mv.addObject("pr_emp_authority", pr_emp_authority);

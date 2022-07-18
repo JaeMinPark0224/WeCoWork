@@ -32,4 +32,5 @@
 	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>	
+	<tx:annotation-driven/>
 </beans>
