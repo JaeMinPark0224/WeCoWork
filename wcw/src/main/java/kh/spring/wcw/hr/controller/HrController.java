@@ -25,6 +25,7 @@ import com.google.gson.GsonBuilder;
 
 import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
+import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hr.service.HrService;
 import kh.spring.wcw.mail.Mail;
@@ -60,9 +61,17 @@ public class HrController {
 		RowBounds rowBounds = new RowBounds(offset, cotentLimit);
 		
 		// 회사 번호 가져오기
+		int cp_no = -1;
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		System.out.println(loginInfo);
-		int cp_no = loginInfo.getCp_no();
+		
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		System.out.println("회사 번호: " + cp_no);
 		
 		// 회사가 가진 부서 전부 가져오기
 		List<String> deptList = hrService.selectDeptList(cp_no);
@@ -144,8 +153,18 @@ public class HrController {
 			HttpSession session
 			, @RequestParam(name="empNo", required = false) String emp_no) {
 		
+		// 회사 번호 가져오기
+		int cp_no = -1;
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		int cp_no = loginInfo.getCp_no();
+		
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+ CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		System.out.println("회사 번호: " + cp_no);
 		Employee result = hrService.selectEmployee(emp_no, cp_no);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -163,8 +182,18 @@ public class HrController {
 			, @RequestParam(name="intl_no", required = false) String intl_no
 			, @RequestParam(name="resign_yn", required = false) String resign_yn) {
 		
-		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		int cp_no = loginInfo.getCp_no();
+		// 회사 번호 가져오기
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
 		
 		int e_no = Integer.parseInt(e_no_str);
 		
@@ -180,9 +209,17 @@ public class HrController {
 			, HttpSession session) {
 		
 		// 회사 번호 가져오기
-		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		System.out.println(loginInfo);
-		int cp_no = loginInfo.getCp_no();
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
 				
 		// 회사가 가진 부서 전부 가져오기
 		List<String> deptList = hrService.selectDeptList(cp_no);
@@ -252,10 +289,21 @@ public class HrController {
 	    System.out.println("암호화한 비밀번호: " + pwd);
 	    
 		// 암호화한 비밀번호 + @RequestParam 값들 db 저장
-	    	// 회사 번호 가져오기
-	    	Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-	    	int cp_no = loginInfo.getCp_no();
-	    	String cp_name = loginInfo.getCp_name();
+	 // 회사 번호 가져오기
+	 		int cp_no = -1;
+	 		String cp_name = "";
+	 		
+	 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+	 		if(loginInfo == null) {
+	 			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+	 			System.out.println("CompanySSinfo: "+CompanySSinfo);
+	 			cp_no = CompanySSinfo.getCp_no();
+	 			cp_name = CompanySSinfo.getCp_name();
+	 		} else {
+	 			cp_no = loginInfo.getCp_no();
+	 			cp_name = loginInfo.getCp_name();
+	 		}
+	 		System.out.println("회사 번호: " + cp_no);
 	    HashMap<String, Object> map = new HashMap<String, Object>();
 	    map.put("name", name);
 	    map.put("pwd", pwd);
@@ -293,12 +341,20 @@ public class HrController {
 			, HttpSession session) {
 			
 		// 회사 번호 가져오기
-		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		System.out.println(loginInfo);
-		int cp_no = loginInfo.getCp_no();
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
 					
-		// 회사가 가진 부서 전부 가져오기
-		List<String> deptList = hrService.selectDeptList(cp_no);
+		// 직원이 존재하는 부서 가져오기
+		List<String> deptList = hrService.selectAdminDeptList(cp_no);
 		System.out.println("부서 목록: " + deptList);
 		
 		// 관리자 권한이 'Y'인 직원 리스트 가져오기
@@ -319,12 +375,20 @@ public class HrController {
 			, @RequestParam(name="selectVal", required = false) String dept_name) {
 				
 		// 회사 번호 가져오기
-		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		System.out.println(loginInfo);
-		int cp_no = loginInfo.getCp_no();
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
 		
 		int result = hrService.updateAdmin(cp_no, dept_name);
-
+		
 		return result;
 	}
 	
@@ -337,9 +401,17 @@ public class HrController {
 		
 		System.out.println("왓수다!" + selectVal);
 		// 회사 번호 가져오기
-		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		System.out.println(loginInfo);
-		int cp_no = loginInfo.getCp_no();
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
 		
 		// 회사가 가진 부서 전체 정보 가져오기
 		List<Dept> deptList = hrService.selectDeptAllList(cp_no);
@@ -387,9 +459,17 @@ public class HrController {
 		System.out.println("dept_name: " + dept_name);
 		
 		// 회사 번호 가져오기
-		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		System.out.println(loginInfo);
-		int cp_no = loginInfo.getCp_no();
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
 		
 		// 하나의 부서에 정보
 		Dept form_dept = hrService.selectOneDepartment(cp_no, dept_no);
@@ -408,7 +488,7 @@ public class HrController {
 		return gson.toJson(map);
 	}
 	
-	// 부서 상세 조회 기능
+	// 부서 생성 기능
 	@PostMapping("/department/insert")
 	@ResponseBody
 	public int insertDepartment(
@@ -419,11 +499,20 @@ public class HrController {
 		System.out.println(dept_name + emp_no + dept_upper_no);
 		
 		// 회사 번호 가져오기
-		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-		System.out.println(loginInfo);
-		int cp_no = loginInfo.getCp_no();
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
 			
 		int result = -1; 
+		// 부서 생성하러 가기
 		result = hrService.insertDepartment(cp_no, dept_name, emp_no, dept_upper_no);
 		if (result == 1) {
 			System.out.println("부서 생성 성공");
@@ -432,7 +521,45 @@ public class HrController {
 		}
 
 		return result;
+	}
+	
+	// 부서 정보 엡데이트 기능
+	@PostMapping("/department/update")
+	@ResponseBody
+	public int updateDepartment(
+			HttpSession session
+			, @RequestParam(name="dept_name", required = false) String dept_name
+			, @RequestParam(name="emp_no", required = false) int emp_no
+			, @RequestParam(name="dept_upper_name", required = false) String dept_upper_name
+			, @RequestParam(name="modal_select_yn", required = false) String active_yn
+			, @RequestParam(name="dept_no", required = false) int dept_no) {
+		System.out.println(dept_name + emp_no + dept_upper_name + active_yn + dept_no);
+		
+		// 회사 번호 가져오기
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
+			
+		int result = -1;
+		
+		// 부서 수정하러 가기
+		result = hrService.updateDepartment(cp_no, dept_name, emp_no, dept_upper_name, active_yn, dept_no);
+		if (result == 1) {
+			System.out.println("부서 수정 성공");
+		} else {
+			System.out.println("부서 수정 실패");
 		}
+
+		return result;
+	}
 	
 	
 	

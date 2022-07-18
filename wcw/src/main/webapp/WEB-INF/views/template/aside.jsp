@@ -4,6 +4,7 @@
 <aside id="left_aside">
 	<img src="<%= request.getContextPath() %>/resources/images/logo.png" id="logo">
 	<div id="login_info">
+	<c:if test="${not empty loginSSInfo}">
 		<div class="profile_circle">
 			<c:if test="${empty loginSSInfo.profile}">
 		    	<img id="profile" src="<%= request.getContextPath() %>/resources/images/clear.png">
@@ -14,7 +15,16 @@
 		</div>
 		<div class="company_info font_r font_gray94 font_12px">${loginSSInfo.cp_name }</div>
 		<div class="person_info"><span class="font_b font_gray94 font_13px">${loginSSInfo.name }&nbsp;</span><span class="font_r font_gray94 font_13px">${loginSSInfo.job_title }</span></div>
-		<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
+	</c:if>
+	<c:if test="${not empty CompanySSinfo}">
+			<div class="profile_cp">
+				<img id="profile" src="<%= request.getContextPath() %>/resources/images/clear.png">
+			</div>
+			<div class="company_info font_r font_gray94 font_12px" style="margin-bottom: 50px;">${CompanySSinfo.cp_name}</div>
+	</c:if>
+		<c:if test="${not(empty loginSSInfo && empty CompanySSinfo) }">
+			<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
+		</c:if>
 		<div id="test_login_btn_wrap">
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
@@ -34,8 +44,7 @@
 	<div id="left_menu_scroll">
 		<div id="left_menu">
 		
-		<c:if test="${not empty loginSSInfo }">
-			<c:if test="${loginSSInfo.hr_yn eq 'Y' }">
+		<c:if test="${(not empty loginSSInfo && loginSSInfo.hr_yn eq 'Y') || not empty CompanySSinfo}">
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
@@ -52,7 +61,9 @@
 					<div class="left_menu_1depth_title" open_chk="f">부서 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content" id="dept_list_select">부서 조회</div>
-						<div class="left_menu_2depth_content" id="dept_admin">관리자 부서 설정</div>
+						<c:if test="${not empty CompanySSinfo }">
+							<div class="left_menu_2depth_content" id="dept_admin">관리자 부서 설정</div>
+						</c:if>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -75,8 +86,8 @@
 					</div>
 				</div>
 			</div>
-			</c:if>
 		</c:if>
+		<c:if test="${not empty loginSSInfo }">
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
@@ -195,6 +206,7 @@
 					</div>
 				</div>
 			</div>
+			</c:if>
 		</div>
 	</div>
 </aside>

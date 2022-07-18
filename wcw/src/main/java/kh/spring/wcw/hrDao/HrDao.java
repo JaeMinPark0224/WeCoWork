@@ -51,6 +51,11 @@ public class HrDao {
 		return sqlsession.selectList("hrMapper.selectDeptList", cp_no);
 	}
 	
+	// 부서 이름 리스트 조회(사원이 존재하는 부서만)
+	public List<String> selectAdminDeptList(int cp_no) {
+		return sqlsession.selectList("hrMapper.selectAdminDeptList", cp_no);
+	}
+	
 	// 부서 모든 정보 리스트 조회
 	public List<Dept> selectDeptAllList(int cp_no) {
 		return sqlsession.selectList("hrMapper.selectDeptAllList", cp_no);
@@ -118,20 +123,21 @@ public class HrDao {
 	// 부서 생성
 	public int insertDepartment(int cp_no, String dept_name, int emp_no, int dept_upper_no) {
 		// emp_no를 선택 안 했을 시 기본: -2, dept_upper_no를 선택 안 했을 시 기본: -1
-		int num = emp_no + dept_upper_no;
+		int plus = emp_no + dept_upper_no;
+		int num = -9999999;
 		// emp_no만 선택 안 했을 시 num = -2
 		// dept_upper_no만 선택 안 했을 시 num = -1
 		// 둘 다 선택 안 했을 시 -3
 		if(emp_no == -2) {
 			num = -2;
 		}
-		else if(dept_upper_no == -1) {
+		if(dept_upper_no == -1) {
 			num = -1;
 		}
-		else if(num == -3) {
+		if(plus == -3) {
 			num = -100;
 		}
-		else if (emp_no != -2 && dept_upper_no != -1 && num != -3) {
+		if (emp_no != -2 && dept_upper_no != -1 && plus != -3) {
 			num = 100;
 		}
 		System.out.println("num: "+num);
@@ -146,6 +152,18 @@ public class HrDao {
 		return sqlsession.insert("hrMapper.insertDepartment", map);
 	}
 	
+	// 부서 업데이트
+	public int updateDepartment(int cp_no, String dept_name, int emp_no, String dept_upper_name, String active_yn, int dept_no) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("cp_no", cp_no);
+		map.put("dept_name", dept_name);
+		map.put("emp_no", emp_no);
+		map.put("dept_upper_name", dept_upper_name);
+		map.put("active_yn", active_yn);
+		map.put("dept_no", dept_no);
+		
+		return sqlsession.update("hrMapper.updateDepartment", map);
+	}
 	
 	
 	

@@ -28,6 +28,12 @@
 			else if(project_main_tab_text == "todo") {
 				project_main_tab_index = 2;	
 			}
+			else if(project_main_tab_text == "calendar") {
+				project_main_tab_index = 3;	
+			}
+			else if(project_main_tab_text == "file") {
+				project_main_tab_index = 4;	
+			}
 			else if(project_main_tab_text == "participant") {
 				project_main_tab_index = 5;
 			}
@@ -36,7 +42,6 @@
 	</div>
 	<script>
 		$('.project_main_tab').on('click', function() {
-			console.log($(this).index());
 			var js_pr_no = (new URL(location.href).searchParams).get('project'); 
 			switch($(this).index()) {
 			case 0:
@@ -49,10 +54,10 @@
 				location.href = "<%= request.getContextPath()%>/project/todo/list?project="+js_pr_no;
 				break;
 			case 3:
-				alert("캘린더");
+				location.href = "<%= request.getContextPath()%>/project/calendar/list?project="+js_pr_no;
 				break;
 			case 4:
-				alert("파일");
+				location.href = "<%= request.getContextPath()%>/project/file/list?project="+js_pr_no;
 				break;
 			case 5:
 				location.href = "<%= request.getContextPath()%>/project/participant/list?project="+js_pr_no;

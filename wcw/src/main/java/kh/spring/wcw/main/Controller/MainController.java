@@ -98,13 +98,16 @@ public class MainController {
 		if(result == null) {
 			// 회사 로그인
 			result2 = cpService.selectCompany(email, pwd);
+			System.out.println("result2: " + result2);
 			if(result2 == null) {
 				rttr.addFlashAttribute("msg", "로그인 실패. 입력값 확인 후 다시 시도해 주세요.");
 				mv.setViewName("redirect:/login");
 				return mv;
 			}
-			session.setAttribute("CompanySSinfo", result2);
-			mv.setViewName("redirect:/"); //TODO 최고 관리자용 메인 페이지로 이동 예정
+			else {
+				session.setAttribute("CompanySSinfo", result2);
+				mv.setViewName("redirect:/hr/employee/list"); //TODO 최고 관리자용 메인 페이지로 이동 예정
+			}
 
 			return mv;
 		}
@@ -112,47 +115,12 @@ public class MainController {
 		// 퇴사했을 경우 로그인 불가
 		if(result.getResign_yn().equals("Y")) {
 			mv.setViewName("redirect:/login");
-			return mv;
 		// 퇴사하지 않았다면 로그인 가능
 		} else {
-			// 관리자 권한이 있다면
-			if(result.getHr_yn().equals("Y")) {
-				session.setAttribute("loginSSInfo", result);
-				mv.setViewName("redirect:/"); //TODO 직원(인사) 관리자용 페이지로 이동
-				
-				// 자동로그인을 체크했다면 세션 추가
-//				if (autoLogin != null){ 
-//					Cookie cookie = new Cookie("loginCookie", session.getId());
-//					cookie.setPath("/");
-//					int amount = 60 * 60 * 24 * 7; // 7일
-//					cookie.setMaxAge(amount);
-//					// 쿠키 적용              
-//					response.addCookie(cookie);
-//					
-//					Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
-//					EmployeeService.autologin(result.getEmail(), session.getId(), sessionLimit);
-//					}
-			}
-			// 관리자 권한이 없다면
-			if(result.getHr_yn().equals("N")) {
-				session.setAttribute("loginSSInfo", result);
-				mv.setViewName("redirect:/");
-				
-				// 자동로그인을 체크했다면 세션 추가
-//				if (autoLogin != null){ 
-//					Cookie cookie = new Cookie("loginCookie", session.getId());
-//					cookie.setPath("/");
-//					int amount = 60 * 60 * 24 * 7; // 7일
-//					cookie.setMaxAge(amount);
-//					// 쿠키 적용              
-//					response.addCookie(cookie);
-//					
-//					Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
-//					EmployeeService.autologin(result.getEmail(), session.getId(), sessionLimit);
-//				}
-			}
-			return mv;
+			session.setAttribute("loginSSInfo", result);
+			mv.setViewName("redirect:/");
 		}
+		return mv;
 	}
 	
 	// 로그아웃
@@ -340,6 +308,7 @@ public class MainController {
 		
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
 
+		
 		// 변경된 값이 있는지 확인하기 위한 임의의 숫자
 		int sum = -1;
 		

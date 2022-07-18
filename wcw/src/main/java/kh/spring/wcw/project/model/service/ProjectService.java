@@ -66,5 +66,16 @@ public interface ProjectService {
 	
 	public List<Project> selectListTodoProject(Project project);
 	
-	public int insertTodoProjecet(Project project);
+	public int insertTodoProject(Project project);
+	
+	public int updateTodoProject(Project project);
+	
+	public List<Project> selectListCalendarProject(Project project);
+	
+	public List<Project> selectListFolderProject(int pr_no);
+	
+	public int insertFolderProject(Project project);
+	
+	public int updateFolderProject(Project project);
+	
 }

@@ -54,6 +54,11 @@ public class Project {
 	private Timestamp pt_date;
 	private String pt_content;
 	private String pt_complete_yn;
+	private int pff_no;
+	private String pff_name;
+	private int pff_ref;
+	private int pff_level;
+	private int pff_order;
 	public int getPr_no() {
 		return pr_no;
 	}
@@ -330,6 +335,36 @@ public class Project {
 	public void setPt_complete_yn(String pt_complete_yn) {
 		this.pt_complete_yn = pt_complete_yn;
 	}
+	public int getPff_no() {
+		return pff_no;
+	}
+	public void setPff_no(int pff_no) {
+		this.pff_no = pff_no;
+	}
+	public String getPff_name() {
+		return pff_name;
+	}
+	public void setPff_name(String pff_name) {
+		this.pff_name = pff_name;
+	}
+	public int getPff_ref() {
+		return pff_ref;
+	}
+	public void setPff_ref(int pff_ref) {
+		this.pff_ref = pff_ref;
+	}
+	public int getPff_level() {
+		return pff_level;
+	}
+	public void setPff_level(int pff_level) {
+		this.pff_level = pff_level;
+	}
+	public int getPff_order() {
+		return pff_order;
+	}
+	public void setPff_order(int pff_order) {
+		this.pff_order = pff_order;
+	}
 	@Override
 	public String toString() {
 		return "Project [pr_no=" + pr_no + ", pr_title=" + pr_title + ", pr_content=" + pr_content + ", pr_open_yn="
@@ -344,7 +379,11 @@ public class Project {
 				+ ", pw_ref_no=" + pw_ref_no + ", pw_order=" + pw_order + ", pw_date=" + pw_date + ", pr_emp_authority="
 				+ pr_emp_authority + ", intl_no=" + intl_no + ", email=" + email + ", profile=" + profile + ", pwp_no="
 				+ pwp_no + ", pwp_authority=" + pwp_authority + ", empNoList=" + empNoList + ", pt_no=" + pt_no
-				+ ", pt_date=" + pt_date + ", pt_content=" + pt_content + ", pt_complete_yn=" + pt_complete_yn + "]";
+				+ ", pt_date=" + pt_date + ", pt_content=" + pt_content + ", pt_complete_yn=" + pt_complete_yn
+				+ ", pff_no=" + pff_no + ", pff_name=" + pff_name + ", pff_ref=" + pff_ref + ", pff_level=" + pff_level
+				+ ", pff_order=" + pff_order + "]";
 	}
+	
+	
 	
 }

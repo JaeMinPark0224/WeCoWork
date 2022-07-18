@@ -61,6 +61,15 @@
 	order by d.dept_no
 </select>
 
+<!-- 부서 이름 리스트(사원이 존재하는 부서만) select -->
+<select id="selectAdminDeptList" resultType="string" parameterType="_int">
+	select d.dept_name
+	from tb_department d
+		join tb_company c using(cp_no)
+	where cp_no = #{cp_no} and (select count(emp_no) from tb_employee te where te.dept_no = d.dept_no) != 0
+	order by d.dept_no
+</select>
+
 <!-- 부서 정보 리스트 select -->
 <select id="selectDeptAllList" resultType="Dept" parameterType="_int">
 	select d.dept_name, d.dept_no, d.dept_date, d.active_yn, d.emp_no,
@@ -147,10 +156,11 @@
 </select>
 
 <!-- 관리자 부서 update1 : 기존 관리자 권한이 있던 사원들에게서 관리자 권한 회수 -->
-<update id="updateAdmin1" parameterType="string">
+<update id="updateAdmin1" parameterType="_int">
 	update tb_employee
     set hr_yn = 'N'
     where hr_yn = 'Y'
+    and emp_no in (select te.emp_no from tb_employee te join tb_department td on te.dept_no = td.dept_no where td.cp_no = #{cp_no})
 </update>
 <!-- 관리자 부서 update2 : 선택한 부서 사원들에게 관리자 권한 부여 -->
 <update id="updateAdmin2" parameterType="hashmap">
@@ -194,6 +204,27 @@
 	, #{dept_upper_no}, #{emp_no})
 	</if>
 </insert>
+
+<update id="updateDepartment" parameterType="hashmap">
+
+	
+	update tb_department
+	set dept_name = #{dept_name}
+	<if test="!dept_upper_name.equals('-2') and emp_no != -1">
+	, emp_no = #{emp_no}
+	, dept_upper_no = (select dept_no from tb_department where dept_name = #{dept_upper_name} and cp_no = #{cp_no})
+	</if>
+	<if test="!dept_upper_name.equals('-2') and emp_no == -1">
+	, dept_upper_no = (select dept_no from tb_department where dept_name = #{dept_upper_name} and cp_no = #{cp_no})
+	</if>
+	<if test="dept_upper_name.equals('-2') and emp_no != -1">
+	, emp_no = #{emp_no}
+	</if>
+	<if test="dept_upper_name.equals('-2') and emp_no == -1">
+	</if>
+	, active_yn = #{active_yn}
+	where dept_no = #{dept_no}
+</update>
 
 
 
