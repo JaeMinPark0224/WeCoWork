@@ -97,6 +97,13 @@ public interface HrService {
 	 */
 	public Dept selectOneDepartment(int cp_no, int dept_no);
 	
+	/**
+	 * @param 회사 번호, 부서명, 사원 번호(부서 담장자), 부서 번호(부모 부서 번호)
+	 * @return 가져온 부서 번호에 해당하는 부서 정보
+	 * @author ybseo
+	 */
+	public int insertDepartment(int cp_no, String dept_name, int emp_no, int dept_upper_no);
+	
 	
 	
 	

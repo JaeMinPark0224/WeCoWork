@@ -89,7 +89,11 @@ public class HrServiceImpl implements HrService {
 		return dao.selectOneDepartment(cp_no, dept_no);
 	}
 	
-	
+	// 부서 생성
+	@Override
+	public int insertDepartment(int cp_no, String dept_name, int emp_no, int dept_upper_no) {
+		return dao.insertDepartment(cp_no, dept_name, emp_no, dept_upper_no);
+	}
 	
 	
 	

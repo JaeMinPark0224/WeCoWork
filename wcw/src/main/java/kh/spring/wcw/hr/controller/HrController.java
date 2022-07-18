@@ -360,11 +360,16 @@ public class HrController {
 			employeeList_dept = hrService.selectDeptEmployeeList(cp_no, selectVal);
 		}
 		
-		mv.addObject("option", selectVal);
-		mv.addObject("deptList", deptList);
-		mv.addObject("first_dept_name", first_dept_name);
-		mv.addObject("deptNameList", deptNameList);
-		mv.addObject("employeeList", employeeList_dept);
+		// 회사가 가진 모든 직원 이름 정보 가져오기
+		List<Employee> employeeNameList = hrService.selectEmployeeList(cp_no);
+		System.out.println("전체 직원 목록: " + employeeNameList);
+		
+		mv.addObject("option", selectVal);					 // 필터에 사용될 부서 이름
+		mv.addObject("deptList", deptList);					 // 회사 내 전체 부서 리스트 (정보 다)
+		mv.addObject("first_dept_name", first_dept_name);    // 부서 리스트 결과값에서 확인된 첫번째 부서명
+		mv.addObject("deptNameList", deptNameList);			 // 회사 내 전체 부서 리스트 (부서명만)
+		mv.addObject("employeeList", employeeList_dept);     // 특정 부서의 직원 리스트
+		mv.addObject("employeeNameList", employeeNameList);  // 회사 내 전체 직원 리스트
 		mv.setViewName("hr/deptList");
 		
 		return mv;
@@ -402,6 +407,32 @@ public class HrController {
 
 		return gson.toJson(map);
 	}
+	
+	// 부서 상세 조회 기능
+	@PostMapping("/department/insert")
+	@ResponseBody
+	public int insertDepartment(
+			HttpSession session
+			, @RequestParam(name="dept_name", required = false) String dept_name
+			, @RequestParam(name="emp_no", required = false) int emp_no
+			, @RequestParam(name="dept_upper_no", required = false) int dept_upper_no) {
+		System.out.println(dept_name + emp_no + dept_upper_no);
+		
+		// 회사 번호 가져오기
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		System.out.println(loginInfo);
+		int cp_no = loginInfo.getCp_no();
+			
+		int result = -1; 
+		result = hrService.insertDepartment(cp_no, dept_name, emp_no, dept_upper_no);
+		if (result == 1) {
+			System.out.println("부서 생성 성공");
+		} else {
+			System.out.println("부서 생성 실패");
+		}
+
+		return result;
+		}
 	
 	
 	

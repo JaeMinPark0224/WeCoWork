@@ -115,7 +115,36 @@ public class HrDao {
 		return sqlsession.selectOne("hrMapper.selectOneDepartment", map);
 	}
 	
-	
+	// 부서 생성
+	public int insertDepartment(int cp_no, String dept_name, int emp_no, int dept_upper_no) {
+		// emp_no를 선택 안 했을 시 기본: -2, dept_upper_no를 선택 안 했을 시 기본: -1
+		int num = emp_no + dept_upper_no;
+		// emp_no만 선택 안 했을 시 num = -2
+		// dept_upper_no만 선택 안 했을 시 num = -1
+		// 둘 다 선택 안 했을 시 -3
+		if(emp_no == -2) {
+			num = -2;
+		}
+		else if(dept_upper_no == -1) {
+			num = -1;
+		}
+		else if(num == -3) {
+			num = -100;
+		}
+		else if (emp_no != -2 && dept_upper_no != -1 && num != -3) {
+			num = 100;
+		}
+		System.out.println("num: "+num);
+		
+		HashMap<String, Object> map= new HashMap<>();
+		map.put("cp_no", cp_no);
+		map.put("dept_name", dept_name);
+		map.put("emp_no", emp_no);
+		map.put("dept_upper_no", dept_upper_no);
+		map.put("num", num);
+		
+		return sqlsession.insert("hrMapper.insertDepartment", map);
+	}
 	
 	
 	

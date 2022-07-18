@@ -153,7 +153,7 @@
     where hr_yn = 'Y'
 </update>
 <!-- 관리자 부서 update2 : 선택한 부서 사원들에게 관리자 권한 부여 -->
-<update id="updateAdmin2" parameterType="map">
+<update id="updateAdmin2" parameterType="hashmap">
 	update tb_employee
     set hr_yn = 'Y'
     where emp_no in (select te.emp_no
@@ -162,6 +162,38 @@
     				on te.dept_no = td.dept_no
     				where td.cp_no = #{cp_no} and td.dept_name = #{dept_name})
 </update>
+<insert id="insertDepartment" parameterType="hashmap">
+	insert 
+	into tb_department 
+	(dept_no, cp_no, dept_name, dept_date, active_yn
+	<if test="num == -2">
+	, dept_upper_no)
+	</if>
+	<if test="num == -1">
+	, emp_no)
+	</if>
+	<if test="num == -100">
+	)
+	</if>
+	<if test="num == 100">
+	, dept_upper_no, emp_no)
+	</if>
+	
+	values 
+	((SELECT NVL(MAX(DEPT_NO), 9)+1 FROM TB_DEPARTMENT), #{cp_no}, #{dept_name}, default, default
+	<if test="num == -2">
+	, #{dept_upper_no})
+	</if>
+	<if test="num == -1">
+	, #{emp_no})
+	</if>
+	<if test="num == -100">
+	)
+	</if>
+	<if test="num == 100">
+	, #{dept_upper_no}, #{emp_no})
+	</if>
+</insert>
 
 
 

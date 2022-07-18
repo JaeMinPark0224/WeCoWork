@@ -21,7 +21,7 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="section">
     <span class="title">부서 리스트</span>
-    <input type="button" id="edit_btn" value="부서 생성">
+    <input type="button" id="create_btn" value="부서 생성">
     <div class="content">
         <table class="table">
             <tr class="first_line">
@@ -75,6 +75,7 @@
         </table>
     </div>
 
+	<!-- 부서 상세 정보 및 수정용 모달 -->
     <div id="modal">
         <div id="modal_section">
             <span class="modal_title">부서명</span>
@@ -108,8 +109,42 @@
         </div>
     </div>
     
-    
-    
+    <!-- 부서 생성용 모달 -->
+    <div id="modal2">
+        <div id="modal_section2">
+        	<span class="modal_title">부서명</span>
+        	<input type="text" placeholder="부서명을 입력해 주세요." id="create_name" required>
+            <span class="modal_title">부서 책임자</span>
+            <select id="modal2_select_emp">
+                <c:if test="${not empty employeeNameList}">
+            		<c:forEach items="#{employeeNameList}" var="list">
+            			<option class="deptList" value="${list.emp_no}">${list.name}</option>
+            		</c:forEach>
+            		<option id="nope2" value="-2" selected>책임자 없음</option>
+            	</c:if>
+            	<c:if test="${empty employeeNameList}">
+            		<option id="nope2" value="-2">직원 없음</option>
+            	</c:if>
+            </select>
+            <span class="modal_title">부모 부서</span>
+            <select id="modal2_select_dept">
+            	<c:if test="${not empty deptList}">
+            		<c:forEach items="#{deptList}" var="list">
+            			<option class="deptList" value="${list.dept_no}">${list.dept_name}</option>
+            		</c:forEach>
+            		<option id="nope2" value="-1" selected>부모 부서 없음</option>
+            	</c:if>
+            	<c:if test="${empty deptList}">
+            		<option id="nope2" value="-1">부서 없음</option>
+            	</c:if>
+            </select>
+        </div>
+        <hr>
+        <div id="modal_btn2">
+			<input type="button" value="취소" id="modal_cancel2">
+        	<input type="button" value="생성" id="modal_edit2">
+        </div>
+    </div>
     
     
     
@@ -179,6 +214,8 @@
 <script>
 //부서 상세 정보 모달 띄우기 & 정보 조회
  $(".tb_read").click(function(){
+	$('#modal2').hide();
+	 
 	$("#modal_select_dept_adm").children("option").remove();
 	$('#modal_select_dept_dp').val('nope').prop('selected', true);
 	$.ajax({
@@ -242,6 +279,33 @@ $('#modal_edit').click(function(){
 </script>
 
 <script>
+// 부서 생성 버튼 클릭 시
+$('#create_btn').click(function(){
+	$('#modal').hide();
+	$('#modal2').show();
+})
+// 부서 생성 모달 내 생성 버튼 클릭 시
+$('#modal_edit2').click(function(){
+	
+	$.ajax({
+		url: "<%=request.getContextPath()%>/hr/department/insert",
+		type: "post",
+		data: {dept_name:$('#create_name').val(),
+				emp_no:$('#modal2_select_emp').val(),  // 책임자 사원 번호 
+				dept_upper_no:$('#modal2_select_dept').val()
+				},
+		success: function(result){
+			alert("부서가 생성되었습니다.");
+			location.href="<%= request.getContextPath() %>/hr/department/list";
+		},
+		error: function(result){
+			console.log("부서 생성 실패");
+		}
+	})
+})
+</script>
+
+<script>
 // 부서별 직원 리스트 조회 필터 변경 시
 	$('#select_dept').on("change", function(){
 		var option = $('#select_dept').val();
@@ -254,8 +318,7 @@ $('#modal_edit').click(function(){
 	} else{
 		$('#select_dept').val('${option}').prop('selected', true);
 	}
-	
-	
+
 </script>
 </body>
 </html>
