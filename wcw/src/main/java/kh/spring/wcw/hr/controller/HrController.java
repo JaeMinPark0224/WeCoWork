@@ -353,8 +353,8 @@ public class HrController {
 				}
 				System.out.println("회사 번호: " + cp_no);
 					
-		// 회사가 가진 부서 전부 가져오기
-		List<String> deptList = hrService.selectDeptList(cp_no);
+		// 직원이 존재하는 부서 가져오기
+		List<String> deptList = hrService.selectAdminDeptList(cp_no);
 		System.out.println("부서 목록: " + deptList);
 		
 		// 관리자 권한이 'Y'인 직원 리스트 가져오기
@@ -388,7 +388,7 @@ public class HrController {
 				System.out.println("회사 번호: " + cp_no);
 		
 		int result = hrService.updateAdmin(cp_no, dept_name);
-
+		
 		return result;
 	}
 	
@@ -488,7 +488,7 @@ public class HrController {
 		return gson.toJson(map);
 	}
 	
-	// 부서 상세 조회 기능
+	// 부서 생성 기능
 	@PostMapping("/department/insert")
 	@ResponseBody
 	public int insertDepartment(
@@ -524,6 +524,42 @@ public class HrController {
 	}
 	
 	// 부서 정보 엡데이트 기능
+	@PostMapping("/department/update")
+	@ResponseBody
+	public int updateDepartment(
+			HttpSession session
+			, @RequestParam(name="dept_name", required = false) String dept_name
+			, @RequestParam(name="emp_no", required = false) int emp_no
+			, @RequestParam(name="dept_upper_name", required = false) String dept_upper_name
+			, @RequestParam(name="modal_select_yn", required = false) String active_yn
+			, @RequestParam(name="dept_no", required = false) int dept_no) {
+		System.out.println(dept_name + emp_no + dept_upper_name + active_yn + dept_no);
+		
+		// 회사 번호 가져오기
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
+			
+		int result = -1;
+		
+		// 부서 수정하러 가기
+		result = hrService.updateDepartment(cp_no, dept_name, emp_no, dept_upper_name, active_yn, dept_no);
+		if (result == 1) {
+			System.out.println("부서 수정 성공");
+		} else {
+			System.out.println("부서 수정 실패");
+		}
+
+		return result;
+	}
 	
 	
 	

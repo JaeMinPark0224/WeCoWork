@@ -50,6 +50,13 @@ public interface HrService {
 	
 	/**
 	 * @param 회사 번호
+	 * @return 부서명 리스트
+	 * @author ybseo
+	 */
+	public List<String> selectAdminDeptList(int cp_no);
+	
+	/**
+	 * @param 회사 번호
 	 * @return 부서 모든 정보 리스트
 	 * @author ybseo
 	 */
@@ -99,10 +106,17 @@ public interface HrService {
 	
 	/**
 	 * @param 회사 번호, 부서명, 사원 번호(부서 담장자), 부서 번호(부모 부서 번호)
-	 * @return 가져온 부서 번호에 해당하는 부서 정보
+	 * @return update 결과값 (성공 여부)
 	 * @author ybseo
 	 */
 	public int insertDepartment(int cp_no, String dept_name, int emp_no, int dept_upper_no);
+	
+	/**
+	 * @param 회사 번호, 부서명, 사원 번호(부서 담장자), 부서명(부모 부서 부서명), 부서 활성화 여부
+	 * @return 가update 결과값 (성공 여부)
+	 * @author ybseo
+	 */
+	public int updateDepartment(int cp_no, String dept_name, int emp_no, String dept_upper_name, String active_yn, int dept_no);
 	
 	
 	

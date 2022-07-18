@@ -23,7 +23,7 @@
 			<div class="company_info font_r font_gray94 font_12px" style="margin-bottom: 50px;">${CompanySSinfo.cp_name}</div>
 	</c:if>
 		<c:if test="${not(empty loginSSInfo && empty CompanySSinfo) }">
-		<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
+			<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
 		</c:if>
 		<div id="test_login_btn_wrap">
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
@@ -43,8 +43,6 @@
 	</div>
 	<div id="left_menu_scroll">
 		<div id="left_menu">
-		
-		
 		
 		<c:if test="${(not empty loginSSInfo && loginSSInfo.hr_yn eq 'Y') || not empty CompanySSinfo}">
 			<div class="left_menu_wrap">

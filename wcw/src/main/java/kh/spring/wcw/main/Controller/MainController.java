@@ -115,47 +115,12 @@ public class MainController {
 		// 퇴사했을 경우 로그인 불가
 		if(result.getResign_yn().equals("Y")) {
 			mv.setViewName("redirect:/login");
-			return mv;
 		// 퇴사하지 않았다면 로그인 가능
 		} else {
-			// 관리자 권한이 있다면
-			if(result.getHr_yn().equals("Y")) {
-				session.setAttribute("loginSSInfo", result);
-				mv.setViewName("redirect:/hr/employee/list"); //TODO 직원(인사) 관리자용 페이지로 이동
-				
-				// 자동로그인을 체크했다면 세션 추가
-//				if (autoLogin != null){ 
-//					Cookie cookie = new Cookie("loginCookie", session.getId());
-//					cookie.setPath("/");
-//					int amount = 60 * 60 * 24 * 7; // 7일
-//					cookie.setMaxAge(amount);
-//					// 쿠키 적용              
-//					response.addCookie(cookie);
-//					
-//					Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
-//					EmployeeService.autologin(result.getEmail(), session.getId(), sessionLimit);
-//					}
-			}
-			// 관리자 권한이 없다면
-			if(result.getHr_yn().equals("N")) {
-				session.setAttribute("loginSSInfo", result);
-				mv.setViewName("redirect:/");
-				
-				// 자동로그인을 체크했다면 세션 추가
-//				if (autoLogin != null){ 
-//					Cookie cookie = new Cookie("loginCookie", session.getId());
-//					cookie.setPath("/");
-//					int amount = 60 * 60 * 24 * 7; // 7일
-//					cookie.setMaxAge(amount);
-//					// 쿠키 적용              
-//					response.addCookie(cookie);
-//					
-//					Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
-//					EmployeeService.autologin(result.getEmail(), session.getId(), sessionLimit);
-//				}
-			}
-			return mv;
+			session.setAttribute("loginSSInfo", result);
+			mv.setViewName("redirect:/");
 		}
+		return mv;
 	}
 	
 	// 로그아웃

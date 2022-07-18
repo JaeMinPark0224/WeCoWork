@@ -139,10 +139,12 @@
     }
     
 	#pageing_all{
-        margin: 45px auto 220px auto;
-        text-align: center;
-        font-family: 'NotoSansR';
+       margin: 45px 0px 220px 0px;
+    	text-align: center;
+    	font-family: 'NotoSansR';
+    	width: 1070px;
     }
+    
     .page{
     	background-color: rgb(236, 236, 236);
         border-radius: 3px;

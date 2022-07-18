@@ -46,6 +46,13 @@ public class HrServiceImpl implements HrService {
 		return dao.selectDeptList(cp_no);
 	}
 	
+	// 부서 이름 리스트 조회(사원이 존재하는 부서만)
+	@Override
+	public List<String> selectAdminDeptList(int cp_no) {
+		return dao.selectAdminDeptList(cp_no);
+	}
+
+	
 	// 부서 모든 정보 리스트 조회
 	@Override
 	public List<Dept> selectDeptAllList(int cp_no) {
@@ -95,6 +102,11 @@ public class HrServiceImpl implements HrService {
 		return dao.insertDepartment(cp_no, dept_name, emp_no, dept_upper_no);
 	}
 	
+	// 부서 업데이트
+	@Override
+	public int updateDepartment(int cp_no, String dept_name, int emp_no, String dept_upper_name, String active_yn, int dept_no) {
+		return dao.updateDepartment(cp_no, dept_name, emp_no, dept_upper_name, active_yn, dept_no);
+	}
 	
 	
 	

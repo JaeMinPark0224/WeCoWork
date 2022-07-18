@@ -115,7 +115,7 @@
             	</c:if>	
             </select>
             <span class="modal_title">내선번호</span>
-            <input type="text" id="modal_text_intl" value="">
+            <input type="text" id="modal_text_intl" value="" required>
             <span class="modal_title">퇴사 여부</span>
             <select id="modal_select_resign">
                 <option value="N" > N</option>
