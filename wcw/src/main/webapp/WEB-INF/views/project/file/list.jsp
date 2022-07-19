@@ -6,10 +6,10 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/project/project.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-<link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/jstree/style.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/jstree/style.css" />
 <script src="<%= request.getContextPath()%>/resources/js/jstree/jstree.js"></script>
 <head>
 <meta charset="UTF-8">
@@ -68,7 +68,8 @@ var vo;
 vo = {
 	"id" : "${folder.pff_no}",
 	"parent" : <c:if test="${folder.pff_level eq 0 }">"#"</c:if><c:if test="${folder.pff_level ne 0 }">"${folder.pff_ref}"</c:if>,
-	"text" : "${folder.pff_name}"		
+	"text" : "${folder.pff_name}",
+	"type" : "folder"
 }
 treeData.push(vo);
 </c:forEach>
@@ -87,8 +88,11 @@ function treeDataCreate(list) {
 		vo = {
 			"id" : list[i].pff_no,
 			"parent" : tempParent,
-			"text" : list[i].pff_name
+			"text" : list[i].pff_name,
+			"type" : "folder"
 		};
+		console.log("vo :");
+		console.log(vo);
 		treeData.push(vo);
 	}
 }
@@ -99,7 +103,12 @@ $('#project_file_tree').jstree({
 		'data' : treeData,
 		"check_callback" : true
 	},
-	'plugins' : ["contextmenu", "wholerow" ]
+	"types" : {
+		"folder" : {
+			
+		}
+	},
+	'plugins' : ["contextmenu", "wholerow" ,"types"]
 });
 
 
@@ -108,6 +117,7 @@ $('#project_file_tree').on("select_node.jstree", function (event, data) {
 	console.log("select_node.jstree");
 	console.log(event);
 	console.log(data);
+	console.log(data.node);
 });
 
 // 노드 생성

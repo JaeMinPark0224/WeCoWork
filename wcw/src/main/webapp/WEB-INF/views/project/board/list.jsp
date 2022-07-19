@@ -68,36 +68,46 @@
 				</div>
 			</div>
 		</div>
-		<div id="project_board_insert_btn_wrap">
-			<button type="button" id="project_notice_insert_btn">공지사항 작성</button>
-			<button type="button" id="project_board_insert_btn">글 작성</button>
-		</div>
 	</div>
 	</div>
 </section>
 <script type="text/javascript">
+// 게시판 서브 버튼 생성
+$("#project_main_tab_wrap").append("<div id='project_board_sub_btn_wrap'></div>")
+$("#project_board_sub_btn_wrap").append("<button id='project_notice_insert_btn' class='project_board_sub_btn'>공지사항 작성</button>");
+$("#project_board_sub_btn_wrap").append("<button id='project_board_insert_btn' class='project_board_sub_btn'>글 작성</button>");
+
+
+
+	// 게시판 작성 페이지 이동
 	$("#project_board_insert_btn").on('click', function() {
 		location.href = "<%= request.getContextPath()%>/project/board/insert?project=${pr_no}";
 	});
 	
+	// 공지사항 작성 페이지 이동
 	$("#project_notice_insert_btn").on('click', function() {
 		location.href = "<%= request.getContextPath()%>/project/notice/insert?project=${pr_no}";	
 	});
 	
+	// 공지사항 읽기 페이지 이동
 	$(".project_notice_title_span").on('click', function() {
 		var pn_no = $(this).attr("pn_no");
 		location.href = "<%= request.getContextPath()%>/project/notice/read?project=${pr_no}&no="+pn_no;	
 	});
 	
+	// 게시글 읽기 페이지 이동
 	$(".project_board_title_span").on("click", titleClick);
 	
+	// 게시글 url생성 함수
 	function titleClick() {
 		var pb_no = $(this).parent().siblings('.project_board_num').val();
 		location.href = "<%= request.getContextPath()%>/project/board/read?project=${pr_no}&no="+pb_no;
 	}
 	
+	// 게시글 상단 고정 기능
 	$('.project_board_fix_btn').on('click', fixBtnFnc);
 	
+	// 게시글 상단 고정 기능 구현 함수
 	function fixBtnFnc() {
 		console.log("project_board_fix_btn click");
 		var pb_no = $(this).parent().siblings('.project_board_num').val();

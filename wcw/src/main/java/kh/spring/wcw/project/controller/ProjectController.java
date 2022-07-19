@@ -1,12 +1,16 @@
 package kh.spring.wcw.project.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -20,9 +24,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -164,6 +171,9 @@ public class ProjectController {
 			ModelAndView mv
 			, HttpSession session
 			, Project project
+			, @RequestParam(name = "project_file", required = false) List<MultipartFile> board_file
+			, @RequestParam(name = "project_file_name", required = false) List<String> file_name
+			, @RequestParam(name = "project_parent_no", required = false) List<String> folder_no
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
@@ -171,8 +181,39 @@ public class ProjectController {
 		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
+		logger.info("board_file : {}", board_file);
+		if(board_file != null) {
+			List<Map<String, String>> pf_list = new ArrayList<Map<String, String>>();
+			Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+					"cloud_name", "dfam8azdg",
+					"api_key", "882165332977633",
+					"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
+					"secure", true));
+			@SuppressWarnings("rawtypes")
+			Map uploadResult = null;
+			for(int i = 0; i < board_file.size(); i++) {
+				try {
+					uploadResult = cloudinary.uploader().upload(
+							board_file.get(i).getBytes()
+							, ObjectUtils.asMap("resource_type", "auto"));
+					logger.info("filename : {}", board_file.get(i).getOriginalFilename());
+					logger.info("upload result : {}", uploadResult);
+					logger.info("result URL : {}", uploadResult.get("url"));
+					Map<String, String> pf_map = new HashMap<String, String>();
+					pf_map.put("pf_url", (String)uploadResult.get("url"));
+					pf_map.put("pf_name", board_file.get(i).getOriginalFilename());
+					pf_map.put("pff_no", folder_no.get(i));
+					pf_list.add(pf_map);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			project.setPf_list(pf_list);
+		}
+		logger.info("project : {}", project);
 		int result = service.insertDoBoardProject(project);
 		mv.setViewName("redirect:/project/board/list?project="+project.getPr_no());
+		//mv.setViewName("redirect:/project/board/insert?project="+project.getPr_no());
 		return mv;
 	}
 	@GetMapping("/board/read")
@@ -191,8 +232,8 @@ public class ProjectController {
 			return mv;
 		}
 		
-		projectObj = service.selectOneBoardProject(no);
-		mv.addObject("project", projectObj);
+		mv.addObject("project", service.selectOneBoardProject(no));
+		mv.addObject("fileList", service.selectListFileProject(no, "board"));
 		mv.addObject("pr_no", project);
 		mv.setViewName("project/board/read");
 		return mv;

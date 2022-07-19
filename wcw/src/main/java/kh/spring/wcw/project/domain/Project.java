@@ -3,6 +3,7 @@ package kh.spring.wcw.project.domain;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -59,6 +60,11 @@ public class Project {
 	private int pff_ref;
 	private int pff_level;
 	private int pff_order;
+	private int pf_no;
+	private String pf_url;
+	private Timestamp pf_date;
+	private String pf_name;
+	private List<Map<String, String>> pf_list;
 	public int getPr_no() {
 		return pr_no;
 	}
@@ -365,6 +371,36 @@ public class Project {
 	public void setPff_order(int pff_order) {
 		this.pff_order = pff_order;
 	}
+	public int getPf_no() {
+		return pf_no;
+	}
+	public void setPf_no(int pf_no) {
+		this.pf_no = pf_no;
+	}
+	public String getPf_url() {
+		return pf_url;
+	}
+	public void setPf_url(String pf_url) {
+		this.pf_url = pf_url;
+	}
+	public Timestamp getPf_date() {
+		return pf_date;
+	}
+	public void setPf_date(Timestamp pf_date) {
+		this.pf_date = pf_date;
+	}
+	public String getPf_name() {
+		return pf_name;
+	}
+	public void setPf_name(String pf_name) {
+		this.pf_name = pf_name;
+	}
+	public List<Map<String, String>> getPf_list() {
+		return pf_list;
+	}
+	public void setPf_list(List<Map<String, String>> pf_list) {
+		this.pf_list = pf_list;
+	}
 	@Override
 	public String toString() {
 		return "Project [pr_no=" + pr_no + ", pr_title=" + pr_title + ", pr_content=" + pr_content + ", pr_open_yn="
@@ -381,7 +417,8 @@ public class Project {
 				+ pwp_no + ", pwp_authority=" + pwp_authority + ", empNoList=" + empNoList + ", pt_no=" + pt_no
 				+ ", pt_date=" + pt_date + ", pt_content=" + pt_content + ", pt_complete_yn=" + pt_complete_yn
 				+ ", pff_no=" + pff_no + ", pff_name=" + pff_name + ", pff_ref=" + pff_ref + ", pff_level=" + pff_level
-				+ ", pff_order=" + pff_order + "]";
+				+ ", pff_order=" + pff_order + ", pf_no=" + pf_no + ", pf_url=" + pf_url + ", pf_date=" + pf_date
+				+ ", pf_name=" + pf_name + ", pf_list=" + pf_list + "]";
 	}
 	
 	
