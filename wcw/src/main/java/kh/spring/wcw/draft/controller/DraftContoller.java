@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.dept.domain.Dept;
@@ -28,20 +29,21 @@ public class DraftContoller {
 		@GetMapping("/insert")
 		public ModelAndView insertDraft(
 				ModelAndView mv
-				, HttpSession session) {
+				, HttpSession session
+				, RedirectAttributes rttr) {
 			// 회사 번호 가져오기
-			int cp_no = -1;
 			Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
-					
-			if(loginInfo == null) {
-				Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
-				System.out.println("CompanySSinfo: "+CompanySSinfo);
-				cp_no = CompanySSinfo.getCp_no();
-			} else {
-				cp_no = loginInfo.getCp_no();
-			}
-			System.out.println("회사 번호: " + cp_no);
+			int cp_no = loginInfo.getCp_no();
+			
+			// 직위 레벨 가져오기
+			String job_level = loginInfo.getJob_level();
 				
+			if(job_level.equals("0")) {
+				System.out.println("대표님이다!!!!!!!!!!!");
+				rttr.addFlashAttribute("msg", "대표직은 기안 작성이 불가합니다.");
+				mv.setViewName("redirect:/"); // 결재함 리스트로 이동 TODO
+				return mv;
+			}
 			// 회사가 가진 모든 직원 이름 정보 가져오기
 			List<Employee> employeeList = draftService.selectEmployeeList(cp_no);
 			System.out.println("전체 직원 목록: " + employeeList);

@@ -10,15 +10,15 @@
 <meta charset="UTF-8">
 <title>WCW</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
-</head>
-<body>
-<%@ include file="/WEB-INF/views/template/aside.jsp" %>
-<section>
-</section>
 <script>
 <c:if test="${not empty msg}">
 	alert("${msg}");
 </c:if>
 </script>
+</head>
+<body>
+<%@ include file="/WEB-INF/views/template/aside.jsp" %>
+<section>
+</section>
 </body>
 </html>
