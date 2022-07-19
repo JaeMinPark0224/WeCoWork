@@ -10,7 +10,7 @@
 <script src="https://kit.fontawesome.com/d61a9a42f0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <meta charset="UTF-8">
-<title>주간 근태 관리</title>
+<title>휴가 관리</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
 
 <style type="text/css">
@@ -101,7 +101,7 @@
 /* grid box~! */
 #attendance_main_box_first_hr{
 	display: grid;
-    grid-template-columns: 0.7fr 1.5fr 0.5fr 1.5fr 1.5fr 0.3fr 1.5fr 1fr;
+    grid-template-columns: 0.7fr 1.5fr 0.7fr 1.5fr 0.7fr 1.5fr 2fr;
     grid-template-rows: 1fr 1fr;
     gap: 10px 20px;
     align-items: center;
@@ -128,7 +128,7 @@
 	grid-row: 2 / 3;
 }
 #att_date_search_btn{
-	grid-column: 8 / 9;
+	grid-column: 7 / 8;
 	grid-row: 2 / 3;
 	justify-self: end;
 }
@@ -158,24 +158,29 @@
 <section id="attendance_section">
 	<div id="attendance_main_wrap">
 		<div id="attendance_main_header">
-			<div id="attendance_main_menu_title">주간 근태 관리</div>
+			<div id="attendance_main_menu_title">휴가 관리</div>
 		</div>
 		
 		<div id="attendance_main_container">
 			<div id="attendance_main_box_first_hr">
-				<div class="font_title" id="att_month_text">기준 년월</div>
-				<input type="month" id="att_month" name="att_month" class="att_date_form">
-				<div class="font_title">주차</div>
-				<select name="week" id="week_select">
-				   	<option value="1">1주차</option>
-				    <option value="2">2주차</option>
-				    <option value="3">3주차</option>
-				    <option value="4">4주차</option>
-				    <option value="5">5주차</option>
-				 </select>
-				 <div id="startDate" class="date_div"></div>
-				 <div>~</div>
-				 <div id="endDate" class="date_div"></div>
+				<div class="font_title" id="att_month_text">기준 년도</div>
+				<select name="year" class="att_date_form" id="year_select"></select>
+				<div class="font_title height25">휴가 구분</div>
+				<select name="vaca_sort" id="vaca_sort">
+					<option value="0">전체</option>
+				   	<option value="1">연차휴가</option>
+				    <option value="2">출산휴가</option>
+				    <option value="3">배우자 출산휴가</option>
+				    <option value="4">생리휴가</option>
+				    <option value="5">가족 돌봄 휴가</option>
+				</select>
+				 <div class="font_title height25">결재 상태</div>
+				<select name="vaca_confirm" id="vaca_confirm">
+					<option value="0">전체</option>
+				   	<option value="1">진행중</option>
+				    <option value="2">승인</option>
+				    <option value="3">반려</option>
+				</select>
 				 <div class="font_title" id="dept_name_txt">부서명</div>
 				<select name="dept_name" id="dept_name">
 					<option value="0">전체</option>
@@ -188,50 +193,28 @@
 			</div>
 			<div class="attendance_main_box">
 				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">주간 근태 현황</div>
+					<div class="attendance_main_box_title">휴가 신청 내역</div>
 				</div>
 				<div class="attendance_main_box_container">
-					
 					<div class="attendance_main_box_content">
 						<table class="attendance_main_box_content_table" id="att_date_search_table">
 							<tr class="table_title">
-								<td style="width: 14%">사번</td>
-								<td style="width: 11%">성명</td>
-								<td style="width: 11%">부서</td>
-								<td style="width: 16%">총 근로 시간</td>
-								<td style="width: 16%">기본 근로 시간</td>
-								<td style="width: 16%">연장 근로 시간</td>
-								<td style="width: 16%">일 평균 근로 시간</td>
+								<td style="width: 6%">사번</td>
+								<td style="width: 10%">성명</td>
+								<td style="width: 13%">신청일</td>
+								<td style="width: 10%">휴가 구분</td>
+								<td style="width: 10%">전일/반일</td>
+								<td style="width: 14%">시작일</td>
+								<td style="width: 14%">종료일</td>
+								<td style="width: 7%">사용일수</td>
+								<td style="width: 7%">잔여일수</td>
+								<td style="width: 9%">결재상태</td>
 							</tr>
 						</table>
 					</div>
 				</div>
 			</div>
 			
-			<div class="attendance_main_box">
-				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">주간 근태 내역</div>
-				</div>
-				<div class="attendance_main_box_container">
-					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table" id="att_appr_date_search_table">
-							<tr class="table_title">
-								<td style="width: 11%">요일</td>
-								<td style="width: 15%">날짜</td>
-								<td style="width: 17%">근무시간</td>
-								<td style="width: 21%">출근 시간</td>
-								<td style="width: 21%">퇴근 시간</td>
-								<td style="width: 15%">연장 근로 시간</td>
-							</tr>
-							
-						</table>
-						
-						<div class="charts">
-		                    <canvas id="chart1"></canvas>
-		                </div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>
@@ -382,26 +365,6 @@
 		return stringHMS;
 	}
 	
-/*////////////////// 차트 /////////////////// */
-const chart1 = document.getElementById('chart1').getContext('2d');
-    const myChart1 = new Chart(chart1, {
-        type: 'line',
-        data: {
-            labels: ['월', '화', '수', '목', '금', '토', '일'],
-            datasets: [{
-                label: '근무시간',
-                data: [0, 0, 0, 0, 0, 0, 0],
-                backgroundColor: '#4B4DB2',
-                borderColor: '#4B4DB2'
-                
-            }]
-        },
-        options: {
-            scales: {
-                y: { beginAtZero: true}
-            }
-        }
-    });
 
 /*//////////////부서, 성명 선택///////// */
 // 셀렉박스 초기화

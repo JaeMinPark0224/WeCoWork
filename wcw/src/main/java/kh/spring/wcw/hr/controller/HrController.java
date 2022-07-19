@@ -602,7 +602,13 @@ public class HrController {
 	}
 	
 	@RequestMapping("/attendance/approval")
-	public ModelAndView viewApprovalAttendanceHr(ModelAndView mv) {
+	public ModelAndView viewApprovalAttendanceHr(ModelAndView mv
+			, HttpSession session
+			) {
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int cp_no = loginSSInfo.getCp_no();
+		List<Employee> deptList = hrService.selectDept(cp_no);
+		mv.addObject("deptList", deptList);
 		mv.setViewName("hr/attendance/approval");
 		return mv;
 	}
@@ -670,4 +676,37 @@ public class HrController {
 		return gsonObj.toJson(result);
 				
 	}
+	
+	@GetMapping("/attendance/monthly")
+	public ModelAndView viewMonthlyAttendanceHr(ModelAndView mv
+			, HttpSession session
+			) {
+		
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int cp_no = loginSSInfo.getCp_no();
+		List<Employee> empList = hrService.selectEmp(cp_no);
+		List<Employee> deptList = hrService.selectDept(cp_no);
+		
+		mv.addObject("deptList", deptList);
+		mv.addObject("empList", empList);
+		mv.setViewName("hr/attendance/monthly");
+		return mv;
+	}
+	
+	@GetMapping("/attendance/vacation")
+	public ModelAndView viewVacationHr(ModelAndView mv
+			, HttpSession session
+			) {
+		
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int cp_no = loginSSInfo.getCp_no();
+		List<Employee> empList = hrService.selectEmp(cp_no);
+		List<Employee> deptList = hrService.selectDept(cp_no);
+		
+		mv.addObject("deptList", deptList);
+		mv.addObject("empList", empList);
+		mv.setViewName("hr/attendance/vacation");
+		return mv;
+	}
+	
 }

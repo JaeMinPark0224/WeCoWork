@@ -48,6 +48,7 @@ public class Attendance {
 	private Date att_date_end;
 	private String name;
 	private String dept_name;
+	private int cp_no;
 	
 	@Override
 	public String toString() {
@@ -57,7 +58,7 @@ public class Attendance {
 				+ att_appr_content + ", att_appr_result=" + att_appr_result + ", att_appr_clock_in=" + att_appr_clock_in
 				+ ", att_appr_clock_out=" + att_appr_clock_out + ", att_appr_date=" + att_appr_date
 				+ ", att_appr_req_date=" + att_appr_req_date + ", att_date_start=" + att_date_start + ", att_date_end="
-				+ att_date_end + ", name=" + name + ", dept_name=" + dept_name + "]";
+				+ att_date_end + ", name=" + name + ", dept_name=" + dept_name + ", cp_no=" + cp_no + "]";
 	}	public Attendance() {
 		super();
 	}
@@ -210,6 +211,12 @@ public class Attendance {
 	}
 	public void setDept_name(String dept_name) {
 		this.dept_name = dept_name;
+	}
+	public int getCp_no() {
+		return cp_no;
+	}
+	public void setCp_no(int cp_no) {
+		this.cp_no = cp_no;
 	}
 	
 	

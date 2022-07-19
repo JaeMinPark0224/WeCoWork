@@ -10,7 +10,7 @@
 <script src="https://kit.fontawesome.com/d61a9a42f0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 <meta charset="UTF-8">
-<title>주간 근태 관리</title>
+<title>월간 근태 관리</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
 
 <style type="text/css">
@@ -97,40 +97,39 @@
 	/* background-color: rgb(159, 197, 232); */
 /* 	box-sizing: border-box; */
 }
+#bluechip{
+	width: 12px;
+	height: 12px;
+	background-color: rgb(75, 77, 178);
+	border-radius: 50%;
+	margin-right: 5px;
+}
+#pinkchip{
+	width: 12px;
+	height: 12px;
+	background-color: rgb(242, 205, 220);
+	border-radius: 50%;
+	margin-left: 10px;
+	margin-right: 5px;
+}
+#att_month_text, #dept_name_txt, #emp_name_txt{
+	height: 25px;
+	line-height: 25px;
+}
+#att_month, #dept_name, #emp_name {
+	margin-right: 20px;
+}
+
 
 /* grid box~! */
+#abovetable_flex{
+	display:flex;
+	flex-direction: row-reverse; 
+	
+}
 #attendance_main_box_first_hr{
-	display: grid;
-    grid-template-columns: 0.7fr 1.5fr 0.5fr 1.5fr 1.5fr 0.3fr 1.5fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 10px 20px;
-    align-items: center;
-}
-/* #attendance_main_box_first_hr:first-child {
-    height: 25px;
-    line-height: 25px;
-}
- */
-#dept_name_txt{
-	grid-column: 1 / 2;
-	grid-row: 2 / 3;
-}
-#dept_name{
-	grid-column: 2 / 3;
-	grid-row: 2 / 3;
-}
-#emp_name_txt{
-	grid-column: 3 / 4;
-	grid-row: 2 / 3;
-}
-#emp_name{
-	grid-column: 4 / 5;
-	grid-row: 2 / 3;
-}
-#att_date_search_btn{
-	grid-column: 8 / 9;
-	grid-row: 2 / 3;
-	justify-self: end;
+	display:flex;
+	gap: 15px;
 }
 
 /* 같은 폰트 적용 */
@@ -158,24 +157,14 @@
 <section id="attendance_section">
 	<div id="attendance_main_wrap">
 		<div id="attendance_main_header">
-			<div id="attendance_main_menu_title">주간 근태 관리</div>
+			<div id="attendance_main_menu_title">월간 근태 관리</div>
 		</div>
 		
 		<div id="attendance_main_container">
 			<div id="attendance_main_box_first_hr">
 				<div class="font_title" id="att_month_text">기준 년월</div>
 				<input type="month" id="att_month" name="att_month" class="att_date_form">
-				<div class="font_title">주차</div>
-				<select name="week" id="week_select">
-				   	<option value="1">1주차</option>
-				    <option value="2">2주차</option>
-				    <option value="3">3주차</option>
-				    <option value="4">4주차</option>
-				    <option value="5">5주차</option>
-				 </select>
-				 <div id="startDate" class="date_div"></div>
-				 <div>~</div>
-				 <div id="endDate" class="date_div"></div>
+				
 				 <div class="font_title" id="dept_name_txt">부서명</div>
 				<select name="dept_name" id="dept_name">
 					<option value="0">전체</option>
@@ -188,99 +177,54 @@
 			</div>
 			<div class="attendance_main_box">
 				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">주간 근태 현황</div>
+					<div class="attendance_main_box_title">월간 근태 현황</div>
 				</div>
 				<div class="attendance_main_box_container">
-					
 					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table" id="att_date_search_table">
+						<div id="abovetable_flex">
+							<div class="font_title">휴가</div>
+							<div id="pinkchip"></div>
+							<div class="font_title">출근</div>	
+							<div id="bluechip"></div>
+						</div>
+						<table class="attendance_main_box_content_table" id="att_date_search_table" style="margin-top: 10px;">
 							<tr class="table_title">
-								<td style="width: 14%">사번</td>
-								<td style="width: 11%">성명</td>
-								<td style="width: 11%">부서</td>
-								<td style="width: 16%">총 근로 시간</td>
-								<td style="width: 16%">기본 근로 시간</td>
-								<td style="width: 16%">연장 근로 시간</td>
-								<td style="width: 16%">일 평균 근로 시간</td>
+								<td >성명</td>
+								<td >부서</td>
+								<c:forEach begin="1" end="31" var="i">
+									<td class="date_td" style="width: 2.2%">${i }</td>
+								</c:forEach>
+								<td style="width: 3%">출근</td>
+								<td style="width: 3%">휴가</td>
 							</tr>
 						</table>
 					</div>
 				</div>
 			</div>
 			
-			<div class="attendance_main_box">
-				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">주간 근태 내역</div>
-				</div>
-				<div class="attendance_main_box_container">
-					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table" id="att_appr_date_search_table">
-							<tr class="table_title">
-								<td style="width: 11%">요일</td>
-								<td style="width: 15%">날짜</td>
-								<td style="width: 17%">근무시간</td>
-								<td style="width: 21%">출근 시간</td>
-								<td style="width: 21%">퇴근 시간</td>
-								<td style="width: 15%">연장 근로 시간</td>
-							</tr>
-							
-						</table>
-						
-						<div class="charts">
-		                    <canvas id="chart1"></canvas>
-		                </div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>
 <script>
-
-/* 년월, 주차 선택 후 날짜표시 */
-	
-	$("#att_month").on("input", week_input_function);
-	
-	$("#week_select").on("input", week_input_function);
-	
-	function week_input_function() {
-		if($('#att_month').val() == "") {
-			return;
-		}
-		$(".date_div").contents().filter(function(){ return this.nodeType != 1; }).remove();
-		console.log('input'); // input check
-		var dt = new Date($('#att_month').val()); // 월별 첫번째날로 date 생성
-		var weekNum = $('#week_select').val(); //원하는 주차(사용자 입력값)
-		var monthTemp = dt.getMonth(); //월 
-		var startDate;
-		var endDate;
-		if(weekNum != 1) {
-			dt.setDate(dt.getDate() + ((weekNum-1) * 7));
-			startDate = new Date(dt.getTime());
-			endDate = new Date(dt.getTime());
-			while(startDate.getDay() != 1) { // 1 = 월요일
-				startDate.setDate(startDate.getDate()-1);
+	$("#att_month").on("change", function(){
+		let year = $(this).val().substring(0,4);
+		let month = $(this).val().substring(5,7);
+		let maxDate = new Date(year,month,0).getDate();
+		// 만약 maxDate가 28이면 28까지 나타난다.
+		// 테이블의 정보를 가져와서 28보다 크면 삭제
+		let $td = $(".date_td"); 
+		for (var i = 0; i < $td.length; i++) {
+			if($td.eq(i).text() > maxDate) {
+				$td.eq(i).remove();
 			}
-			while(endDate.getDay() != 0) {
-				endDate.setDate(endDate.getDate() + 1);
-				if(endDate.getMonth() != monthTemp) {
-					endDate.setDate(endDate.getDate() - 1);
-					break;
+			if(i == $td.length -1 && $td.eq(i).text() < maxDate) {
+				for (var j = parseInt($td.eq(i).text()); j < maxDate; j++) {
+					$(".date_td").eq(j-1).after('<td class="date_td" style="width: 2.2%">'+(j+1)+'</td>');
 				}
 			}
-		} else if(weekNum ==1) {
-			startDate = new Date(dt.getTime());
-			endDate = new Date(dt.getTime());
-			while(endDate.getDay() != 0) { // day = 0~6 일~토요일
-				endDate.setDate(endDate.getDate() + 1);
-			}
 		}
+	});
 
-		console.log(startDate.toISOString().split('T')[0]);
-		$('#startDate').append(startDate.toISOString().split('T')[0]);
-		$('#endDate').append(endDate.toISOString().split('T')[0]);
-	}
-	
 	$("#att_date_search_btn").click(function(){
 		$(".table_title").nextAll().remove();
 		$.ajax({
@@ -382,26 +326,7 @@
 		return stringHMS;
 	}
 	
-/*////////////////// 차트 /////////////////// */
-const chart1 = document.getElementById('chart1').getContext('2d');
-    const myChart1 = new Chart(chart1, {
-        type: 'line',
-        data: {
-            labels: ['월', '화', '수', '목', '금', '토', '일'],
-            datasets: [{
-                label: '근무시간',
-                data: [0, 0, 0, 0, 0, 0, 0],
-                backgroundColor: '#4B4DB2',
-                borderColor: '#4B4DB2'
-                
-            }]
-        },
-        options: {
-            scales: {
-                y: { beginAtZero: true}
-            }
-        }
-    });
+
 
 /*//////////////부서, 성명 선택///////// */
 // 셀렉박스 초기화

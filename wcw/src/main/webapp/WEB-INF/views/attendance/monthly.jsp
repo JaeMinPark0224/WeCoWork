@@ -183,7 +183,7 @@
 					center: 'title',
 					right: 'next'
 				},
-				initialView: 'dayGridMonth'
+				initialView: 'dayGridMonth',
 				events: [
 				    { // this object will be "parsed" into an Event Object
 				      title: 'The Title', // a property!

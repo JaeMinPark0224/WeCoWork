@@ -130,11 +130,6 @@
 						<div class="font_title ">부서명</div>
 						<select name="dept_name" id="dept_name">
 							<option value="0">전체</option>
-						   	<option value="1"></option>
-						    <option value="2"></option>
-						    <option value="3"></option>
-						    <option value="4"></option>
-						    <option value="5"></option>
 						</select>
 						<div class="font_title height25">결재 상태</div>
 						<select name="att_appr_result" id="att_appr_result">
@@ -210,8 +205,29 @@ $("#att_appr_date_search_btn").click(function(){
 	});
 });
 
+/*//////////////부서선택///////// */
+//셀렉박스 초기화
+function selectReset() {
+	let $deptSelect = $("#dept_name");
+	$deptSelect.children().remove();
+	selectOptionAdd($deptSelect, "전체", 0);
+}
 
-	
+//셀렉박스에 옵션 추가
+function selectOptionAdd($dom, name, value) {
+	if(typeof value == "undefined") {
+		let html = "<option>"+name+"</option>";
+		$dom.append(html);
+	} else {
+		let html = "<option value='"+value+"'>"+name+"</option>";
+		$dom.append(html);
+	}
+}
+
+<c:forEach items="${deptList}" var="dept">
+	selectOptionAdd($("#dept_name"), "${dept.dept_name}");
+</c:forEach>
+
 </script>
 </body>
 </html>

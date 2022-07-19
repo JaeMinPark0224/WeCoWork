@@ -72,8 +72,8 @@
 						<div class="left_menu_2depth_content" id="attendance_daily_hr">일일 근태 관리</div>
 						<div class="left_menu_2depth_content" id="attendance_appr_hr">근태 조정 요청 관리</div>
 						<div class="left_menu_2depth_content" id="attendance_weekly_hr">주간 근태 관리</div>
-						<div class="left_menu_2depth_content">월간 근태 관리</div>
-						<div class="left_menu_2depth_content">휴가 관리</div>
+						<div class="left_menu_2depth_content" id="attendance_monthly_hr">월간 근태 관리</div>
+						<div class="left_menu_2depth_content" id="attendance_vacation_hr">휴가 관리</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -373,8 +373,14 @@
 	$('#attendance_monthly').click(function() {
 		location.href = '<%= request.getContextPath()%>/attendance/monthly';
 	});
+	$('#attendance_monthly_hr').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/attendance/monthly';
+	});
 	$('#vacation').click(function() {
 		location.href = '<%= request.getContextPath()%>/vacation';
+	});
+	$('#attendance_vacation_hr').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/attendance/vacation';
 	});
 	$('#pi_chart').click(function() {
 		location.href = '<%= request.getContextPath()%>/pi/chart';
