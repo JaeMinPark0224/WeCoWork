@@ -2,6 +2,9 @@ package kh.spring.wcw.dept.domain;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Dept {
 	private int dept_no;
 	private int cp_no;

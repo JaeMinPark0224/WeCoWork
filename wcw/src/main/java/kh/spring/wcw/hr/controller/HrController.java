@@ -398,8 +398,6 @@ public class HrController {
 			ModelAndView mv
 			, HttpSession session
 			, @RequestParam(name="option", required = false) String selectVal) {
-		
-		System.out.println("왓수다!" + selectVal);
 		// 회사 번호 가져오기
 				int cp_no = -1;
 				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
@@ -560,6 +558,7 @@ public class HrController {
 
 		return result;
 	}
+
 	
 	
 	

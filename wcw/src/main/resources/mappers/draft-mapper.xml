@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="draftMapper">
+
+<!-- 직원 리스트 select -->
+<select id="selectEmployee" parameterType="_int" resultType="Employee">
+	SELECT e.emp_no, e.email, e.pwd, e.name, e.intl_no, e.phone, e.sign, e.join_date, d.dept_no, d.dept_name, j.job_title_no, j.job_title, j.job_level
+	FROM TB_EMPLOYEE e
+		JOIN TB_DEPARTMENT d on e.dept_no = d.dept_no
+		JOIN TB_COMPANY c USING(CP_NO)
+		JOIN TB_JOB_TITLE j on j.job_title_no = e.job_title_no
+    where resign_yn = 'N'
+    order by job_level desc, name;
+</select>
+
+</mapper>

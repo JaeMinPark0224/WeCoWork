@@ -4,7 +4,7 @@
 
 <!-- 직원 리스트 select (size용) -->
 <select id="selectEmployeeList" resultType="Employee" parameterType="_int">
-	select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, e.intl_no
+	select e.emp_no, e.name, e.email, e.join_date, d.dept_name, j.job_title, j.job_level,e.intl_no
 	from tb_employee e
         join tb_department d using(dept_no) 
 		join tb_company c using(cp_no)

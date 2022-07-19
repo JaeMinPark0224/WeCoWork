@@ -24,6 +24,7 @@ public class Employee {
 	private int cp_no;
 	private String dept_name;
 	private String job_title;
+	private String job_level;
 	private String hr_yn;
 
 	@Override
@@ -32,7 +33,8 @@ public class Employee {
 				+ intl_no + ", phone=" + phone + ", profile=" + profile + ", sign=" + sign + ", ip=" + ip
 				+ ", join_date=" + join_date + ", resign_date=" + resign_date + ", resign_yn=" + resign_yn
 				+ ", dept_no=" + dept_no + ", job_title_no=" + job_title_no + ", cp_name=" + cp_name + ", cp_no="
-				+ cp_no + ", dept_name=" + dept_name + ", job_title=" + job_title + ", hr_yn=" + hr_yn + "]";
+				+ cp_no + ", dept_name=" + dept_name + ", job_title=" + job_title + ", job_level=" + job_level
+				+ ", hr_yn=" + hr_yn + "]";
 	}
 
 	public int getEmp_no() {
@@ -186,6 +188,15 @@ public class Employee {
 	public void setCp_no(int cp_no) {
 		this.cp_no = cp_no;
 	}
+
+	public String getJob_level() {
+		return job_level;
+	}
+
+	public void setJob_level(String job_level) {
+		this.job_level = job_level;
+	}
+	
 	
 	
 }

@@ -46,7 +46,7 @@ CREATE TABLE TB_EMPLOYEE (
 	SIGN	        CLOB		            NULL,
 	IP	            VARCHAR2(30)		            NULL,
 	JOIN_DATE	    DATE	        DEFAULT SYSDATE	NOT NULL,
-	RESIGN_DATE	    DATE	        DEFAULT SYSDATE	NULL,
+	RESIGN_DATE	    DATE	NULL,
 	RESIGN_YN	    VARCHAR2(1)	    DEFAULT 'N'	    NOT NULL,
 	DEPT_NO     	NUMBER		                    NOT NULL,
 	JOB_TITLE_NO	NUMBER		                    NOT NULL,

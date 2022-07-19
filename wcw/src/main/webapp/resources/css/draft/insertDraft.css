@@ -1,0 +1,140 @@
+@charset "UTF-8";
+#section{
+        margin-left: 60px;
+        width: 1200px;
+        color: rgb(94, 94, 94);
+        position: relative;
+    }
+    #table2, #table3{
+    	display: none;
+    }
+    
+    
+    #content{
+        margin-left: 65px;
+    }
+
+    .title{
+        display: inline-block;
+        font-family: NotoSansB;
+        font-size: 14px;
+        margin-top: 105px;
+        margin-left: 65px;
+        margin-bottom: 70px;
+        color: rgb(75, 77, 178);
+    }
+    .sub_title{
+        font-size: 13px;
+        color: rgb(94, 94, 94);
+        font-family: NotoSansB;
+        margin-right: 50px;
+    }
+    .select{
+        width: 115px;
+        height: 35px;
+        font-size: 12px;
+        font-family: NotoSansR;
+    }
+    #draft_select{
+        margin-right: 400px;
+    }
+    #tables{
+        margin-top: 60px;
+    }
+
+    #ok_btn{
+        margin: 0 auto;
+        display: block;
+        margin-top: 95px;
+        width: 115px;
+        height: 40px;
+        color: white;
+        font-size: 12px;
+        font-family: NotoSansR;
+        background-color: rgb(75, 77, 178);
+        border: 0px;
+    }
+
+
+    .table{
+        width: 1080px;
+        text-align: center;
+        border: 1px solid rgb(127, 127, 127);
+        border-collapse: collapse;
+    }
+    td, tr{
+        border: 1px solid rgb(127, 127, 127);
+        border-collapse: collapse;
+    }
+    .first_td{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        height: 50px;
+        width: 195px;
+    }
+    .first_td_textarea{
+    	height:180px;
+        width: 195px;
+    }
+    .write_td{
+        width: 875px;
+        height: 40px;
+        font-family: NotoSansR;
+        font-size: 13px;
+    }
+    .textarea{
+        resize: none;
+        width: 874px;
+        height: 170px;
+        font-family: NotoSansR;
+        font-size: 13px;
+    }
+    
+    /* 정산서 */
+    .count_td{
+        height: 200px;
+    }
+    #second_table{
+        margin: 0 auto;
+        width: 300px;
+        text-align: center;
+        border: 1px solid rgb(127, 127, 127);
+        border-collapse: collapse;
+        width: 850px;
+    }
+    .second_tr{
+        height: 40px;
+        text-align: center;
+        border: 1px solid rgb(127, 127, 127);
+        border-collapse: collapse;
+
+    }
+    .first_td_scd{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        width: 120px;
+        background-color: rgb(232, 232, 232);
+    }
+    #first_td_scd2{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        width: 480px;
+        background-color: rgb(244, 244, 244);
+    }
+    #first_td_scd3{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        background-color: rgb(244, 244, 244);
+    }
+    .card_content{
+        width: 472px;
+        height: 30px;
+    }
+    .card_won{
+        height: 30px;
+        width: 240px;
+    }
