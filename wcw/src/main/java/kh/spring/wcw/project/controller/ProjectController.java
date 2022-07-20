@@ -470,7 +470,7 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/file/list")
-	public ModelAndView selectFileProject(
+	public ModelAndView selectListFileProject(
 			ModelAndView mv
 			, HttpSession session
 			, @RequestParam(name = "project") int pr_no
@@ -490,10 +490,35 @@ public class ProjectController {
 		}
 		
 		List<Project> folderList = service.selectListFolderProject(pr_no);
+		List<Project> fileList = service.selectListFileProject(pr_no, "project");
 		
 		mv.addObject("folderList", folderList);
+		mv.addObject("fileList", fileList);
 		mv.setViewName("project/file/list");
 		return mv;
+	}
+	
+	@PostMapping("/file/update")
+	@ResponseBody
+	public String selectListFileProject(
+			HttpSession session
+			, @RequestParam int pr_no
+			, Project project
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		int result = service.updateFileProject(project);
+		
+		return String.valueOf(result);
 	}
 	
 	@PostMapping("/folder/insert")
@@ -551,7 +576,10 @@ public class ProjectController {
 			return "-2";
 		}
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return gson.toJson(service.selectListFolderProject(pr_no));
+		Map<String, List<Project>> map = new HashMap<String, List<Project>>();
+		map.put("folderList", service.selectListFolderProject(pr_no));
+		map.put("fileList", service.selectListFileProject(pr_no, "project"));
+		return gson.toJson(map);
 	}
 	
 	@PostMapping("/folder/update")

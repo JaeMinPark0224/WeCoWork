@@ -79,4 +79,6 @@ public interface ProjectService {
 	public int updateFolderProject(Project project);
 	
 	public List<Project> selectListFileProject(int no, String type);
+	
+	public int updateFileProject(Project project);
 }

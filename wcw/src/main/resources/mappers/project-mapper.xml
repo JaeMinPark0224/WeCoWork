@@ -432,10 +432,23 @@
 	</update>
 	
 	<select id="selectListFileProject" parameterType="map" resultType="Project">
-		select *
-			from tb_project_file
+		select tpf.*
 			<if test='type.equals("board")'>
+				from tb_project_file tpf
 				where pb_no = #{no}
 			</if>
+			<if test='type.equals("project")'>
+				, tpff.pr_no
+				from TB_PROJECT_FILE tpf
+			    join TB_PROJECT_FILE_FOLDER tpff
+			    on tpf.pff_no = tpff.pff_no
+				where pr_no = #{no}
+			</if>
 	</select>
+	
+	<update id="updateFileProject" parameterType="Project">
+		update tb_project_file
+			set pf_name = #{pf_name}
+			where pf_no = #{pf_no}
+	</update>
 </mapper>
