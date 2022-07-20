@@ -42,6 +42,12 @@ public class Vacation {
 	private int vu_count;
 	private int vu_use_Days;
 	private Date vu_register_Date;
+	private String vaca_denied;
+	
+	private String name;
+	private String dept_name;
+	private int cp_no;
+	
 	@Override
 	public String toString() {
 		return "Vacation [vaca_no=" + vaca_no + ", emp_no=" + emp_no + ", vaca_sort=" + vaca_sort + ", vaca_start="
@@ -49,6 +55,7 @@ public class Vacation {
 				+ ", vaca_req_date=" + vaca_req_date + ", vaca_confirm=" + vaca_confirm + ", vaca_approver="
 				+ vaca_approver + ", vaca_allday=" + vaca_allday + ", vu_no=" + vu_no + ", vu_year=" + vu_year
 				+ ", vu_count=" + vu_count + ", vu_use_Days=" + vu_use_Days + ", vu_register_Date=" + vu_register_Date
+				+ ", vaca_denied=" + vaca_denied + ", name=" + name + ", dept_name=" + dept_name + ", cp_no=" + cp_no
 				+ "]";
 	}
 	public Vacation() {
@@ -149,6 +156,30 @@ public class Vacation {
 	}
 	public void setVaca_confirm(String vaca_confirm) {
 		this.vaca_confirm = vaca_confirm;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public int getCp_no() {
+		return cp_no;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	public void setCp_no(int cp_no) {
+		this.cp_no = cp_no;
+	}
+	public String getVaca_denied() {
+		return vaca_denied;
+	}
+	public void setVaca_denied(String vaca_denied) {
+		this.vaca_denied = vaca_denied;
 	}
 	
 	

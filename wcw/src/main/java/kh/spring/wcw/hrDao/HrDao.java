@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
+import kh.spring.wcw.vacation.domain.Vacation;
 
 @Repository
 public class HrDao {
@@ -239,5 +240,15 @@ public class HrDao {
 	}
 	public List<Employee> selectEmp(int cp_no) {
 		return sqlsession.selectList("hrMapper.selectEmp", cp_no);
+	}
+	
+	//휴가내역 조회
+	public List<Vacation> selectVacation(Vacation vacation) {
+		return sqlsession.selectList("hrMapper.selectVacation", vacation);
+	}
+	
+	//휴가 승인반려
+	public int updateVacation(Vacation vacation) {
+		return sqlsession.update("hrMapper.updateVacation", vacation);
 	}
 }

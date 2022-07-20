@@ -67,7 +67,7 @@ public class VacationController {
 			// Calculate the number of days between dates
 			    long timeDiff = Math.abs(dateAfter.getTime() - dateBefore.getTime());
 			    double daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
-			    if(vaca_select_allday == "1") {
+			    if(vaca_select_allday.equals("1")) {
 			    	vacation.setVaca_cnt(daysDiff+1);
 			    } else {
 			    	vacation.setVaca_cnt(daysDiff+0.5);

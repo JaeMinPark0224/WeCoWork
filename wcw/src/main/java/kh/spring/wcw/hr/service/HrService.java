@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
+import kh.spring.wcw.vacation.domain.Vacation;
 
 /**
  *   직원 서비스 
@@ -170,6 +171,18 @@ public interface HrService {
 	 */
 	public List<Employee> selectEmp(int cp_no);
 	
+	/**
+	 * @param cp_no
+	 * @return 인사팀용 휴가 신청 리스트
+	 * @author Jinjeong Lee
+	 */
+	public List<Vacation> selectVacation(Vacation vacation);
 	
+	/**
+	 * @param 회사 번호, 사원 번호
+	 * @return 업데이트 결과값 (성공 여부)
+	 * @author Jinjeong Lee
+	 */
+	public int updateVacation(Vacation vacation);
 	
 }

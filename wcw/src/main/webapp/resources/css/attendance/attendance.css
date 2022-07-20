@@ -12,6 +12,11 @@ select {
 	font-family: NotoSansR;
 	color: rgb(94, 94, 94);	
 }
+hr{
+    background-color: rgb(236, 236, 236);
+    height: 1.5px;
+    border: 0px;
+}
 /* 리스트페이지 */
 /* 리스트페이지 */
 /* 리스트페이지 */

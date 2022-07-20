@@ -19,23 +19,25 @@
 	, VACA_SORT, VACA_START, VACA_END
 	, VACA_CNT, VACA_COMMENT, VACA_REQ_DATE
 	, VACA_CONFIRM, VACA_APPROVER, vaca_allday
+	, VACA_DENIED_TXT
 	) values(
 	(#{emp_no}||#{vaca_req_date}), #{emp_no}
 	, #{vaca_sort}, #{vaca_start}, #{vaca_end}
 	, #{vaca_cnt}, #{vaca_comment}, #{vaca_req_date}
 	, 1, 100, #{vaca_allday}
+	, NULL
 	)
 </insert>
-<select id="selectVacation">
+<select id="selectVacation" parameterType="Vacation" resultType="Vacation">
 	select * 
-	from tb_vacation v join tb_vacation_use u on v.emp_no = u.emp_no
-	where emp_no = #{emp_no} 
-	and vaca_start between '#{vu_year}-01-01' and '#{vu_year}-12-31'
+	from tb_vacation v left outer join tb_vacation_use u on v.emp_no = u.emp_no
+	where v.emp_no = #{emp_no} 
+	and v.vaca_start between #{vu_year}||'-01-01' and #{vu_year}||'-12-31'
 	<if test='!vaca_confirm.equals("0")'>
-	and vaca_confirm = #{vaca_confirm}
+	and v.vaca_confirm = #{vaca_confirm}
 	</if>
 	<if test='!vaca_sort.equals("0")'>
-	and vaca_sort = #{vaca_sort}
+	and v.vaca_sort = #{vaca_sort}
 	</if>
 </select>
 

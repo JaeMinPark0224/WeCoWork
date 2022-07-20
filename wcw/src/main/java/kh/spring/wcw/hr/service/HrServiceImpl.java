@@ -11,6 +11,7 @@ import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hrDao.HrDao;
+import kh.spring.wcw.vacation.domain.Vacation;
 
 @Service
 public class HrServiceImpl implements HrService {
@@ -176,4 +177,15 @@ public class HrServiceImpl implements HrService {
 	public List<Employee> selectEmp(int cp_no) {
 		return dao.selectEmp(cp_no);
 	};
+	
+	//휴가신청내역 조회
+	@Override
+	public List<Vacation> selectVacation(Vacation vacation) {
+		return dao.selectVacation(vacation);
+	};
+	
+	@Override
+	public int updateVacation(Vacation vacation) {
+		return dao.updateVacation(vacation);
+	}
 }

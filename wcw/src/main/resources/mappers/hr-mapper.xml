@@ -359,4 +359,37 @@
 	join tb_department d on e.dept_no=d.dept_no
 	where cp_no = #{cp_no}
 </select>
+
+<!-- 휴가신청내역조회 -->
+<select id="selectVacation" parameterType="Vacation" resultType="Vacation">
+	select v.*, u.*, e.name, d.dept_name 
+	from tb_vacation v 
+	left outer join tb_vacation_use u on v.emp_no = u.emp_no
+	join tb_employee e on v.emp_no = e.emp_no
+	join tb_department d on d.dept_no = e.dept_no
+	where d.cp_no = #{cp_no} 
+	and vaca_start between #{vu_year}||'-01-01' and #{vu_year}||'-12-31'
+	<if test='!vaca_confirm.equals("0")'>
+	and vaca_confirm = #{vaca_confirm}
+	</if>
+	<if test='!vaca_sort.equals("0")'>
+	and vaca_sort = #{vaca_sort}
+	</if>
+	<if test='!name.equals("0")'>
+	and e.emp_no = #{emp_no}
+	</if>
+	<if test='!dept_name.equals("0")'>
+	and d.dept_name = #{dept_name}
+	</if>
+</select>
+
+<!-- 휴가 승인/반려 -->
+<update id="updateVacation" parameterType="Vacation">
+	update tb_vacation set
+	vaca_confirm = #{vaca_confirm},
+	VACA_DENIED_TXT = #{vaca_denied},
+	VACA_APPROVER = #{vaca_approver}
+	where vaca_no = #{vaca_no}
+</update>
+
 </mapper>

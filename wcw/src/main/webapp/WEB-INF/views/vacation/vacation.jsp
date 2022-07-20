@@ -298,11 +298,12 @@
 		$('#year_select').append('<option value="'+i+'">'+i+'년</option>');
 	}
 	
-	$(vaca_list_search_btn).click(function(){
+	$("#vaca_list_search_btn").click(function(){
 		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/vacation/select",
 			type: "post",
+			dataType : "json",
 			data: {year_select:$('#year_select').val()
 				, vaca_confirm:$('#vaca_confirm').val()
 				, vaca_sort:$('#vaca_sort').val()
@@ -313,14 +314,6 @@
 				var html;
 				for(var i = 0; i < result.length; i++){
 					var vo = result[i];
-					/* <td style="width: 14%">신청일</td>
-					<td style="width: 11%">휴가 구분</td>
-					<td style="width: 11%">전일/반일</td>
-					<td style="width: 16%">시작일</td>
-					<td style="width: 16%">종료일</td>
-					<td style="width: 10%">사용일수</td>
-					<td style="width: 10%">잔여일수</td>
-					<td style="width: 12%">결재상태</td> */
 					html = "";
 					html += '<tr class="table_content_white">';
                     html += '<td >'+vo.vaca_req_date.substr(0,10)+'</td>';
@@ -348,24 +341,19 @@
 	                    	html += "반일-오후";
 	                    }
 	                html += '</td>';
-                    html += '<td >'+vo.vaca_start+'</td>';
-                    html += '<td >'+vo.vaca_end+'</td>';
+                    html += '<td >'+vo.vaca_start.substr(0,10)+'</td>';
+                    html += '<td >'+vo.vaca_end.substr(0,10)+'</td>';
                     html += '<td >'+vo.vaca_cnt+'</td>';
+                    html += '<td >'+'계산못함'+'</td>';
                     html += '<td >';
-	                    if(vo.att_clock_out == null) {
-	                    	html += "-";}
-	                    else{
-	                    	html += vo.att_clock_out;
+	                    if(vo.vaca_confirm == '1') {
+	                    	html += "진행중";}
+	                    else if(vo.vaca_confirm == '2'){
+	                    	html += "승인";
+	                    }else if(vo.vaca_confirm == '3'){
+	                    	html += "반려";
 	                    }
-                    html += '</td>';
-                    html += '<td >'+vo.ip_clock_in+'</td>';
-                    html += '<td >';
-	                    if(vo.ip_clock_out == null) {
-	                    	html += "-";}
-	                    else{
-	                    	html += vo.ip_clock_out;
-	                    }
-                    html += '</td>';
+	            	html += '</td>';
                     html += '</tr>';
                     $('#vaca_date_search_table').append(html);
 				}

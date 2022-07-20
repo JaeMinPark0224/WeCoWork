@@ -29,6 +29,7 @@ import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hr.service.HrService;
 import kh.spring.wcw.mail.Mail;
+import kh.spring.wcw.vacation.domain.Vacation;
 
 @Controller
 @RequestMapping("/hr")
@@ -709,4 +710,47 @@ public class HrController {
 		return mv;
 	}
 	
+	@PostMapping("/attendance/vacation/select")
+	@ResponseBody
+	public String selectVacation(
+			Vacation vacation
+			, HttpSession session
+			, @RequestParam(name="year_select") String year_select
+			, @RequestParam(name="vaca_confirm") String vaca_confirm
+			, @RequestParam(name="vaca_sort") String vaca_sort
+			, @RequestParam(name="dept_name") String dept_name
+			, @RequestParam(name="name") String name
+			) {
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int cp_no = loginSSInfo.getCp_no();
+		vacation.setCp_no(cp_no);
+		vacation.setDept_name(dept_name);
+		vacation.setName(name);
+		vacation.setVu_year(year_select);
+		vacation.setVaca_confirm(vaca_confirm);
+		vacation.setVaca_sort(vaca_sort);
+		List<Vacation> result = hrService.selectVacation(vacation);
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
+		
+		return gsonObj.toJson(result);
+	}
+	
+	@PostMapping("/attendance/vacation/update")
+	@ResponseBody
+	public int updateVacation(
+			Vacation vacation
+			, HttpSession session
+			, @RequestParam(name="modal_vaca_confirm") String modal_vaca_confirm
+			, @RequestParam(name="modal_vaca_denied") String modal_vaca_denied
+			, @RequestParam(name="vaca_no") String vaca_no
+			) {
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int vaca_approver = loginSSInfo.getEmp_no();
+		vacation.setVaca_confirm(modal_vaca_confirm);
+		vacation.setVaca_denied(modal_vaca_denied);
+		vacation.setVaca_no(vaca_no);
+		vacation.setVaca_approver(vaca_approver);
+		int result = hrService.updateVacation(vacation);
+		return result;
+	}
 }

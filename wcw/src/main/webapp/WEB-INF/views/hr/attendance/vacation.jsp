@@ -151,6 +151,73 @@
 	color: rgb(94, 94, 94);
 }
 
+/* 모달 */
+#modal{
+	width: 280px;
+    height: 482px;
+    position: absolute;
+    top: 50%;
+    left: 450px;
+    background-color: white;
+    display: none;
+    box-shadow: 3px 3px 10px rgb(210 210 210);
+}
+.tb_read{
+   	cursor: pointer;
+   }
+#modal_section{
+    display: block;
+    margin: 0 auto;
+    width: 226px;
+    margin-top: 30px;
+}
+.modal_title{
+    font-family: NotoSansR;
+    display: block;
+    font-size: 11px;
+    margin-bottom: 5px;
+    color: rgb(158, 158, 158);
+}
+.modal_content{
+    font-family: NotoSansB;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 20px;
+    color: rgb(94, 94, 94);
+}
+#modal_vaca_denied{
+    font-family: NotoSansB;
+    font-size: 12px;
+    width: 225px;
+    height: 30px;
+    margin-bottom: 22px;
+    color: rgb(94, 94, 94);
+    border: 1px solid rgb(224, 224, 224);
+}
+#modal_vaca_confirm{
+    font-family: NotoSansB;
+    font-size: 12px;
+    width: 225px;
+    height: 30px;
+    margin-bottom: 22px;
+    color: rgb(94, 94, 94);
+}
+#modal_btn{
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 207px;
+}
+#modal_edit{
+    color: rgb(75, 77, 178);
+}
+#modal_cancel, #modal_edit{
+    width: 100px;
+    height: 38px;
+    border: 0px;
+    font-family: NotoSansR;
+    font-size: 12px;
+    background-color: white;
+}
 </style>
 </head>
 <body>
@@ -189,7 +256,7 @@
 				<select name="emp_name" id="emp_name">
 					<option value="0">전체</option>
 				</select>
-				<button type="submit" class="btn_format_mini_gray" id="att_date_search_btn">조회</button>
+				<button type="submit" class="btn_format_mini_gray" id="vaca_list_search_btn">조회</button>
 			</div>
 			<div class="attendance_main_box">
 				<div class="attendance_main_box_top">
@@ -197,7 +264,7 @@
 				</div>
 				<div class="attendance_main_box_container">
 					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table" id="att_date_search_table">
+						<table class="attendance_main_box_content_table" id="vaca_date_search_table">
 							<tr class="table_title">
 								<td style="width: 6%">사번</td>
 								<td style="width: 10%">성명</td>
@@ -217,154 +284,163 @@
 			
 		</div>
 	</div>
+	<div id="modal">
+        <div id="modal_section">
+            <span class="modal_title">사원번호</span>
+            <span class="modal_content" id="e_no">사원번호 출력</span>
+            <span class="modal_title">휴가 신청자</span>
+            <span class="modal_content" id="e_name">사원명 출력</span>
+            <span class="modal_title">부서</span>
+            <span class="modal_content" id="d_name">부서명 출력</span>
+            <span class="modal_title">휴가 사유</span>
+            <span class="modal_content" id="v_comment">휴가 사유 출력</span>
+            <span class="modal_title">결재 상태</span>
+            <span class="modal_content" id="v_confirm">결재 상태 출력</span>
+            <span class="modal_title">승인</span>
+            <select name="modal_vaca_confirm" id="modal_vaca_confirm">
+			    <option value="2">승인</option>
+			    <option value="3">반려</option>
+			</select>
+            <span class="modal_title" id="v_denied">반려사유</span>
+            <input type="text" id="modal_vaca_denied" value="">
+            <input type="hidden" value="" id="e_no">
+        </div>
+        <hr>
+        <div id="modal_btn">
+        	<input type="button" value="수정" id="modal_edit">
+            <input type="button" value="확인" id="modal_cancel">
+        </div>
+    </div>
 </section>
 <script>
-
-/* 년월, 주차 선택 후 날짜표시 */
 	
-	$("#att_month").on("input", week_input_function);
-	
-	$("#week_select").on("input", week_input_function);
-	
-	function week_input_function() {
-		if($('#att_month').val() == "") {
-			return;
-		}
-		$(".date_div").contents().filter(function(){ return this.nodeType != 1; }).remove();
-		console.log('input'); // input check
-		var dt = new Date($('#att_month').val()); // 월별 첫번째날로 date 생성
-		var weekNum = $('#week_select').val(); //원하는 주차(사용자 입력값)
-		var monthTemp = dt.getMonth(); //월 
-		var startDate;
-		var endDate;
-		if(weekNum != 1) {
-			dt.setDate(dt.getDate() + ((weekNum-1) * 7));
-			startDate = new Date(dt.getTime());
-			endDate = new Date(dt.getTime());
-			while(startDate.getDay() != 1) { // 1 = 월요일
-				startDate.setDate(startDate.getDate()-1);
-			}
-			while(endDate.getDay() != 0) {
-				endDate.setDate(endDate.getDate() + 1);
-				if(endDate.getMonth() != monthTemp) {
-					endDate.setDate(endDate.getDate() - 1);
-					break;
-				}
-			}
-		} else if(weekNum ==1) {
-			startDate = new Date(dt.getTime());
-			endDate = new Date(dt.getTime());
-			while(endDate.getDay() != 0) { // day = 0~6 일~토요일
-				endDate.setDate(endDate.getDate() + 1);
-			}
-		}
-
-		console.log(startDate.toISOString().split('T')[0]);
-		$('#startDate').append(startDate.toISOString().split('T')[0]);
-		$('#endDate').append(endDate.toISOString().split('T')[0]);
+/* 입사년도 부터 지금년도까지 셀렉박스에 추가 */	
+	var joinYear = '${loginSSInfo.join_date}'.substr(0,4);
+	var currentYear = (new Date()).getFullYear();
+	for(var i = currentYear; i >= Number(joinYear); i--) {
+		$('#year_select').append('<option value="'+i+'">'+i+'년</option>');
 	}
-	
-	$("#att_date_search_btn").click(function(){
-		$(".table_title").nextAll().remove();
+
+/* 휴가 내역 조회 */
+$(vaca_list_search_btn).click(function(){
+		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
-			url: "<%=request.getContextPath()%>/hr/attendance/selectWeekly",
+			url: "<%=request.getContextPath()%>/hr/attendance/vacation/select",
 			type: "post",
-			data: {att_date_start_str:$('#startDate').text()
-				, att_date_end_str:$('#endDate').text()
+			dataType: "json",
+			data: {year_select:$('#year_select').val()
+				, vaca_confirm:$('#vaca_confirm').val()
+				, vaca_sort:$('#vaca_sort').val()
 				, dept_name:$('#dept_name').val()
-				, name:$('#emp_name').text()
-				, emp_no : $('#emp_name').val()
-			} ,
-			dataType:"json",
+				, name:$('#emp_name').val()
+			},
+			
 			success: function(result){
 				console.log(result);
-				var day = ['일', '월', '화', '수', '목', '금', '토'];
 				var html;
-				var extendtime = 144000000;
-				var worktimetotal = 0;
 				for(var i = 0; i < result.length; i++){
 					var vo = result[i];
-					if(vo.att_clock_out != null) {
-						var worktimedaily = new Date(vo.att_clock_out).getTime()-new Date(vo.att_clock_in).getTime(); 
-					} else {
-						worktimedaily = 0;
-					}
-					worktimetotal = worktimetotal + worktimedaily;  
 					html = "";
 					html += '<tr class="table_content_white">';
-                    html += '<td >'+day[new Date(vo.att_date).getDay()]+'</td>';
-                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
-                    if(vo.att_clock_out != null) {
-	                    html += '<td >'+ tohhmmss(worktimedaily)+'</td>';
-                    } else {
-                    	html += '<td >'+ '근무중'+'</td>';
-                    }
-                    html += '<td >'+vo.att_clock_in+'</td>';
+                    html += '<td class="tb_read">'+vo.emp_no+'</td>';
+                    html += '<td class="tb_read">'+vo.name+'</td>';
+                    html += '<td >'+vo.vaca_req_date.substr(0,10)+'</td>';
                     html += '<td >';
-                    if(vo.att_clock_out == null) {
-                    	html += "-";}
-                    else{
-                    	html += vo.att_clock_out;
-                    }
-               		html += '</td>';
-                    html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
+	                    if(vo.vaca_sort == '1') {
+	                    	html += "연차휴가";}
+	                    else if(vo.vaca_sort == 2){
+	                    	html += "출산휴가";
+	                    }else if(vo.vaca_sort == 3){
+	                    	html += "배우자 출산휴가";
+	                    }else if(vo.vaca_sort == 4){
+	                    	html += "생리휴가";
+	                    }else if(vo.vaca_sort == 5){
+	                    	html += "가족 돌봄 휴가";
+	                    }else{
+	                    	html += "error";
+	                    }
+	                html += '</td>';
+	                html += '<td >';
+	                    if(vo.vaca_allday == '1') {
+	                    	html += "전일";}
+	                    else if(vo.vaca_allday == 2){
+	                    	html += "반일-오전";
+	                    }else if(vo.vaca_allday == 3){
+	                    	html += "반일-오후";
+	                    }
+	                html += '</td>';
+                    html += '<td >'+vo.vaca_start.substr(0,10)+'</td>';
+                    html += '<td >'+vo.vaca_end.substr(0,10)+'</td>';
+                    html += '<td >'+vo.vaca_cnt+'</td>';
+                    html += '<td >'+'아직못계산'+'</td>';
+                    html += '<td class="tb_read">';
+	                    if(vo.vaca_confirm == '1') {
+	                    	html += "진행중";}
+	                    else if(vo.vaca_confirm == '2'){
+	                    	html += "승인";
+	                    }else if(vo.vaca_confirm == '3'){
+	                    	html += "반려";
+	                    }
+                	html += '</td>';
                     html += '</tr>';
-                    $('#att_appr_date_search_table').append(html);
+                    $('#vaca_date_search_table').append(html);
 				}
-				html = "";
-				html += '<tr class="table_content_white">';
-                html += '<td >'+vo.emp_no+'</td>';
-                html += '<td >'+vo.name+'</td>';
-                html += '<td >'+vo.dept_name+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal)+'</td>';
-                html += '<td >'+'40시간'+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal/((result.length == 0)?1:result.length))+'</td>';
-                html += '</tr>';
-                $('#att_date_search_table').append(html);
-                
-               	var worktimearray = [0, 0, 0, 0, 0, 0, 0];
-                for(var i = 0; i < 6; i++){
-                	var worktimedaily = 0;
-                	if(result[i] != undefined) {
-	                	if(result[i].att_clock_out != null) {
-							worktimedaily = new Date(result[i].att_clock_out).getTime()-new Date(result[i].att_clock_in).getTime(); 
-							worktimedaily = worktimedaily / 3600000;
-						} else {
-							worktimedaily = 0;
+				$(".tb_read").off("click");
+				$(".tb_read").on("click", function(){$("#modal").show()});
+				$('#e_no').text(vo.emp_no);
+				$('#e_name').text(vo.name);
+				$('#d_name').text(vo.dept_name);
+				$('#v_comment').text(vo.vaca_comment);
+				if(vo.vaca_confirm == '1') {
+					$('#v_confirm').text("진행중")}
+                else if(vo.vaca_confirm == '2'){
+                	$('#v_confirm').text("승인")
+                }else if(vo.vaca_confirm == '3'){
+                	$('#v_confirm').text("반려")
+                }
+				$("#modal_edit").off("click");
+				$("#modal_edit").on("click", function updateVaca(){
+					$.ajax({
+						url: "<%=request.getContextPath()%>/hr/attendance/vacation/update",
+						type: "post",
+						data: {
+							vaca_no: vo.vaca_no
+							, modal_vaca_confirm: $('#modal_vaca_confirm').val()
+							, modal_vaca_denied: $('#modal_vaca_denied').val()
+						},
+						success: function(result){
+							alert("요청이 완료되었습니다. result = " + result);
+						},
+						error: function(error){
+							alert("요청 실패") ;
 						}
-	                	var dayIndex = new Date(result[i].att_date).getDay();
-	                	if(dayIndex == 0) {
-	                		dayIndex = 7;
-	                	}
-	                	worktimearray[dayIndex-1] = worktimedaily; 
-                	}
-                }
-                for(var i = 0; i < 6; i++){
-	               	myChart1.data.datasets[0].data[i] = worktimearray[i];
-                }
-               	myChart1.update();
+					});
+				});
 			},
 			error: function(error){
-				alert(error); 
+				alert("요청 실패") ;
 			}
 		});
-	});
-	// 숫자를 hh:mm:ss로 바꾸는 함수
-	function tohhmmss(num) {
-		var stringHMS = '';
-		num = num / 1000;
-		var hh = Math.floor(num/3600);
-		var mm = Math.floor((num - (hh * 3600))/60);
-		var ss = num - (hh * 3600) - (mm * 60);
-		stringHMS = hh + '시간 ' + mm + "분 " + ss +'초';
-		if(num < 0) {
-			stringHMS = "-";
-		}
+	});	
 
-		return stringHMS;
-	}
-	
+//모달 내 수정버튼 클릭 시
+function updateVaca(){
+	$.ajax({
+		url: "<%=request.getContextPath()%>/hr/attendance/vacation/update",
+		type: "post",
+		data: {
+			vaca_no: vo.vaca_no
+			, modal_vaca_confirm: $('#modal_vaca_confirm').val()
+			, modal_vaca_denied: $('#modal_vaca_denied').val()
+		},
+		success: function(result){
+			alert("요청이 완료되었습니다. result = " + result);
+		},
+		error: function(error){
+			alert("요청 실패") ;
+		}
+	});
+}
 
 /*//////////////부서, 성명 선택///////// */
 // 셀렉박스 초기화
@@ -435,6 +511,10 @@ function employeeSelectFirstRemove() {
 	$("#emp_name").children("[value = '0']").remove();
 }
 
+// 모달 숨기기
+$("#modal_cancel").click(function(){
+	$("#modal").hide();
+})
 </script>
 </body>
 </html>
