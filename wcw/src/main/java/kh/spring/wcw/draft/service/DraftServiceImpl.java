@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.wcw.company.dao.CompanyDao;
 import kh.spring.wcw.company.domain.Company;
+import kh.spring.wcw.draft.dao.DraftDao;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hrDao.HrDao;
 
 @Service
 public class DraftServiceImpl implements DraftService {
 	@Autowired
-	private HrDao dao;
+	private DraftDao dao;
 	
 	public List<Employee> selectEmployeeList(int cp_no) {
 		return dao.selectEmployeeList(cp_no);

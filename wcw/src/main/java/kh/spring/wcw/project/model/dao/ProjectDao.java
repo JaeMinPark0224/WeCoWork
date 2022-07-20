@@ -161,4 +161,8 @@ public class ProjectDao {
 		return sqlsession.selectList("Project.selectListFileProject", map);
 	}
 	
+	public int updateFileProject(Project project) {
+		return sqlsession.update("Project.updateFileProject", project);
+	}
+	
 }

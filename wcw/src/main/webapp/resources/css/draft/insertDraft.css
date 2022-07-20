@@ -37,6 +37,7 @@
     }
     #draft_select{
         margin-right: 400px;
+        display: inline;
     }
     #tables{
         margin-top: 60px;

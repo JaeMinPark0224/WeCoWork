@@ -2,6 +2,7 @@ package kh.spring.wcw.draft.dao;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,7 +17,7 @@ public class DraftDao {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	public Employee selectEmployeeList(int cp_no){
-		return sqlsession.selectOne("employeeMapper.selectEmployee", cp_no);
+	public List<Employee> selectEmployeeList(int cp_no){
+		return sqlsession.selectList("draftMapper.selectEmployee", cp_no);
 	}
 }

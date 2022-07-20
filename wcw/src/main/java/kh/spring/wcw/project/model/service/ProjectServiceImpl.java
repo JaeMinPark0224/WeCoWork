@@ -187,5 +187,10 @@ public class ProjectServiceImpl implements ProjectService{
 		return dao.selectListFileProject(no, type);
 	}
 
+	@Override
+	public int updateFileProject(Project project) {
+		return dao.updateFileProject(project);
+	}
+
 
 }
