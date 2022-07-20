@@ -43,8 +43,8 @@
         margin-top: 60px;
     }
 
-    #ok_btn{
-        margin: 0 auto;
+    #ok_btn1, #ok_btn2, #ok_btn3{
+        margin-left: 500px;
         display: block;
         margin-top: 95px;
         width: 115px;
@@ -55,6 +55,9 @@
         background-color: rgb(75, 77, 178);
         border: 0px;
         margin-bottom: 220px;
+    }
+    #ok_btn2, #ok_btn3{
+    	display: none;	
     }
 
 

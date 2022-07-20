@@ -13,4 +13,28 @@
     order by job_level desc, name
 </select>
 
+<!-- 기안 insert -->
+<insert id="">
+	insert all
+		
+		<if test="dr_sort == 1 or dr_sort == 2"> 
+			into tb_draft ((select nvl(max(dr_no),0)+1 from tb_draft), ep_no, dr_sort, dr_sult, ) 
+			values ()
+		</if>
+		<if test="dr_sort == 2"> 
+			into tb_draft ((select nvl(max(dr_no),0)+1 from tb_draft), ep_no, dr_sort, dr_sult, ) 
+			values ()
+		</if>
+		<if test="dr_sort == 3"> 
+			into tb_draft ((select nvl(max(dr_no),0)+1 from tb_draft), ep_no, dr_sort, dr_sult, ) 
+			values ()
+		</if>
+	
+	
+	
+	
+	
+	select * from dual
+</insert>
+
 </mapper>

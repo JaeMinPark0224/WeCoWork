@@ -23,7 +23,6 @@
 <section id="section">
         <span class="title">기안 작성</span><br>
         <div id="content">
-        	<form>
 			            <span class="sub_title" id="draft_select_title">기안 분류</span>
 			            <select id="draft_select" class="select">
 			                <option value="1">기안서</option>
@@ -31,12 +30,11 @@
 			                <option value="3">정산서</option>
 			            </select>
 			            <span class="sub_title" id="emp_select_title">결재자</span>
-			            <select id="emp_select1" class="select">
+			            <select id="emp_select1" emp_no class="select">
 			            	<option selected disabled value="default">결재자1</option>
 			            	<c:forEach items="${employeeList}" var="list">
 			            		<c:if test="${list.job_level < loginSSInfo.job_level}">
-			            			<option value="${list.job_level}">${list.name}</option>
-			            			<%-- <input class="emp_no" type="hidden" value="${list.emp_no}"> --%>
+			            			<option value="${list.job_level}" emp_no="${list.emp_no}">${list.name}</option>
 			            		</c:if>
 			            	</c:forEach>
 			            </select>
@@ -49,96 +47,121 @@
 			                <option value="default">선택안함</option>
 			            </select>
 			            <div id="tables">
-			                <table class="table" id="table1" border="1px">
-			                    <tr>
-			                        <td class="first_td">기안 제목</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">목적</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">기안 내용</td>
-			                        <td class="first_td_textarea"><textarea class="textarea" class="write_td"></textarea></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">비고</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                </table>
-			                <table class="table" id="table2">
-			                    <tr>
-			                        <td class="first_td">결의서 제목</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">지출 예정 일자</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">결의서 내용</td>
-			                        <td class="first_td_textarea"><textarea class="textarea" class="write_td"></textarea></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">비고</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                </table>
-			                <table class="table" id="table3" border="1px">
-			                    <tr>
-			                        <td class="first_td">정산서 제목</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">발생 기간</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">목적</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">기안 내용</td>
-			                        <td class="first_td_textarea"><textarea class="textarea" class="write_td"></textarea></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td"></td>
-			                        <td class="count_td">
-			                            <table id="second_table"> 
-			                                <tr class="second_tr">
-			                                    <td class="first_td_scd">항목</td>
-			                                    <td id="first_td_scd2">내용</td>
-			                                    <td id="first_td_scd3">금액(숫자)</td>
-			                                </tr>
-			                                <tr class="second_tr">
-			                                    <td class="first_td_scd">법인 카드</td>
-			                                    <td><input type="text" class="card_content"></td>
-			                                    <td><input type="number" class="card_won" id="cp_card"></td>
-			                                </tr>
-			                                <tr class="second_tr">
-			                                    <td class="first_td_scd">개인 카드</td>
-			                                    <td><input type="text" class="card_content"></td>
-			                                    <td><input type="number" class="card_won" id="ep_card"></td>
-			                                </tr>
-			                                <tr class="second_tr">
-			                                    <td class="first_td_scd">합계</td>
-			                                    <td></td>
-			                                    <td><input type="number" class="card_won" id="total_won" readonly></td>
-			                                </tr>
-			                            </table>
-			                        </td>
-			                    </tr>
-			                    <tr>
-			                        <td class="first_td">비고</td>
-			                        <td><input type="text" class="write_td"></td>
-			                    </tr>
-			                </table>
-			                <input type="submit" id="ok_btn" value="상신">
+				            <form action="<%=request.getContextPath()%>/draft/insert.do" method="post">
+					            <input type="hidden" name="emp_no_1" class="emp_no_1">
+		        				<input type="hidden" name="emp_no_2" class="emp_no_2">
+		        				<input type="hidden" name="emp_no_3" class="emp_no_3">
+		        				<input type="hidden" name="dr_sort" class="dr_sort" value="1">
+				                <table class="table" id="table1">
+				                    <tr>
+				                        <td class="first_td">기안 제목</td>
+				                        <td><input type="text" class="write_td" name="dr_title"></td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">목적</td>
+				                        <td><input type="text" class="write_td" name="dr_purpose"></td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">기안 내용</td>
+				                        <td class="first_td_textarea">
+				                        	<textarea class="textarea" class="write_td" name="dr_content"></textarea>
+				                        </td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td" name="dr_comment">비고</td>
+				                        <td><input type="text" class="write_td"></td>
+				                    </tr>
+				                </table>
+				                <input type="submit" id="ok_btn1" value="상신" style="display: block;">
+	        				</form>
+	        				<form action="<%=request.getContextPath()%>/draft/insert.do" method="post">
+	        					<input type="hidden" name="emp_no_1" class="emp_no_1">
+		        				<input type="hidden" name="emp_no_2" class="emp_no_2">
+		        				<input type="hidden" name="emp_no_3" class="emp_no_3">
+		        				<input type="hidden" name="dr_sort" class="dr_sort" value="2">
+		        				<table class="table" id="table2">
+				                    <tr>
+				                        <td class="first_td">결의서 제목</td>
+				                        <td><input type="text" class="write_td" name="dr_title"></td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">지출 예정 일자</td>
+				                        <td><input type="text" class="write_td" name="dr_expect_date"></td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">결의서 내용</td>
+				                        <td class="first_td_textarea">
+				                        	<textarea class="textarea" class="write_td" name="dr_content"></textarea>
+				                        </td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">비고</td>
+				                        <td><input type="text" class="write_td" name="dr_comment"></td>
+				                    </tr>
+				                </table>
+				                <input type="submit" id="ok_btn2" value="상신">
+	        				</form>
+	        				<form action="<%=request.getContextPath()%>/draft/insert.do" method="post">
+	        					<input type="hidden" name="emp_no_1" class="emp_no_1">
+		        				<input type="hidden" name="emp_no_2" class="emp_no_2">
+		        				<input type="hidden" name="emp_no_3" class="emp_no_3">
+		        				<input type="hidden" name="dr_sort" class="dr_sort" value="3">
+		        				<table class="table" id="table3">
+				                    <tr>
+				                        <td class="first_td">정산서 제목</td>
+				                        <td><input type="text" class="write_td" name="dr_title"></td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">발생 기간</td>
+				                        <td><input type="text" class="write_td" name="spend_date"></td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">지출 목적</td>
+				                        <td><input type="text" class="write_td" name="spend_purpose"></td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">기안 내용</td>
+				                        <td class="first_td_textarea">
+				                        	<textarea class="textarea" class="write_td" name="dr_content"></textarea>
+				                        </td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td"></td>
+				                        <td class="count_td">
+				                            <table id="second_table"> 
+				                                <tr class="second_tr">
+				                                    <td class="first_td_scd">항목</td>
+				                                    <td id="first_td_scd2">내용</td>
+				                                    <td id="first_td_scd3">금액(숫자)</td>
+				                                </tr>
+				                                <tr class="second_tr">
+				                                    <td class="first_td_scd">법인 카드</td>
+				                                    <td><input type="text" class="card_content" name="spend_content"></td>
+				                                    <td><input type="number" class="card_won" id="cp_card" name="spend_amount"></td>
+				                                </tr>
+				                                <tr class="second_tr">
+				                                    <td class="first_td_scd">개인 카드</td>
+				                                    <td><input type="text" class="card_content" name="spend_content_prvt"></td>
+				                                    <td><input type="number" class="card_won" id="ep_card" name="spend_amount_prvt"></td>
+				                                </tr>
+				                                <tr class="second_tr">
+				                                    <td class="first_td_scd">합계</td>
+				                                    <td></td>
+				                                    <td><input type="number" class="card_won" id="total_won" name="spend_sum" readonly></td>
+				                                </tr>
+				                            </table>
+				                        </td>
+				                    </tr>
+				                    <tr>
+				                        <td class="first_td">비고</td>
+				                        <td><input type="text" class="write_td"></td>
+				                    </tr>
+				                </table>
+				                <input type="submit" id="ok_btn3" value="상신">
+	        				</form>
 			            </div>
-            </form>
         </div>
-    </section>
+</section>
 <script>
 // 기안 분류 변경 시
 $("#draft_select").on('change', function() {
@@ -147,88 +170,113 @@ $("#draft_select").on('change', function() {
 		$('#table1').show();
 		$('#table2').hide();
 		$('#table3').hide();
+		$('#ok_btn1').show();
+		$('#ok_btn2').hide();
+		$('#ok_btn3').hide();
 	}
 	else if(option == 2){
 		$('#table1').hide();
 		$('#table2').show();
 		$('#table3').hide();
+		$('#ok_btn1').hide();
+		$('#ok_btn2').show();
+		$('#ok_btn3').hide();
 	}
 	else if(option == 3){
 		$('#table1').hide();
 		$('#table2').hide();
 		$('#table3').show();
+		$('#ok_btn1').hide();
+		$('#ok_btn2').hide();
+		$('#ok_btn3').show();
 	}
 });
 
 // 결재자 선택
 $('#emp_select1').change(function(){
+	
 	// 결재자1 선택이 되었으면
+	$('#emp_select3').children().remove();
+	$('#emp_select3').attr("disabled", true);
+	var option = $("<option selected disabled value='default'>" + "결재자3" + "</option>");
+	$('#emp_select3').append(option);
+	
 	if($('#emp_select1').val() != "default"){
 		// 결재자2 선택할 수 있도록
 		$('#emp_select2').children().remove();
 		<c:forEach items="${employeeList}" var="employee">
 			if("${employee.job_level}" < $('#emp_select1').val()) {
-				var option = $("<option value='"+ ${employee.job_level}+"'>" + "${employee.name}" + "</option>");
+				var option = $("<option value='${employee.job_level}' emp_no='${employee.emp_no}'>${employee.name}</option>");
 				$('#emp_select2').append(option);
 			}
 		</c:forEach>
 		// 결재자2에 선택안함 옵션 추가
 		$('#emp_select2').append("<option value='default'>선택안함</option>");
-		
-		// 결재자1에 '대표' 선택시 결재자2 선택 불가
-		if($('#emp_select1').val() == "0"){
-			$('#emp_select2').attr("disabled", true);
-			var option = $("<option>" + "결재자2" + "</option>");
-			$('#emp_select2').append(option);
-			
-			$('#emp_select3').attr("disabled", true);
-			var option2 = $("<option>" + "결재자3" + "</option>");
-			$('#emp_select3').append(option2);
-		}
-		if($('#emp_select1').val() != "0"){
-			$('#emp_select2').removeAttr("disabled");
-		}
 	}
+	
+	// 결재자1에 '대표' 선택시 결재자2 선택 불가
+	if($('#emp_select1').val() == "0"){
+		$('#emp_select2').attr("disabled", true);
+		var option = $("<option selected disabled>" + "결재자2" + "</option>");
+		$('#emp_select2').append(option);
+		
+		$('#emp_select3').attr("disabled", true);
+		var option2 = $("<option selected disabled>" + "결재자3" + "</option>");
+		$('#emp_select3').append(option2);
+	}
+	if($('#emp_select1').val() != "0"){
+		$('#emp_select2').removeAttr("disabled");
+	}
+	$(".emp_no_1").val($("#emp_select1 option:selected").attr("emp_no"));
 })
 
+
+
+
 $('#emp_select2').change(function(){
+	$('#emp_select3').attr("disabled", true);
+	
 	// 결재자2가 선택이 되었으면
 	if($('#emp_select2').val() != "default"){
 		// 결재자3 선택할 수 있도록
 		$('#emp_select3').removeAttr("disabled");
 	}
+	// 결재자2가 선택되지 않았다면
+	if($('#emp_select2').val() == "default"){
+		// 결재자3 선택 못하도록
+		$('#emp_select3').attr("disabled", true);
+		var option = $("<option selected disabled value='default'>" + "결재자3" + "</option>");
+		$('#emp_select3').append(option);
+	}
 
 	// 결재자2 선택이 되었으면
 		if($('#emp_select2').val() != "default"){
+			
 			// 결재자3 선택할 수 있도록
 			$('#emp_select3').children().remove();
 			<c:forEach items="${employeeList}" var="employee">
 				if("${employee.job_level}" < $('#emp_select2').val()) {
-					var option = $("<option value='"+ ${employee.job_level}+"'>" + "${employee.name}" + "</option>");
+					var option = $("<option value='${employee.job_level}' emp_no='${employee.emp_no}'>${employee.name}</option>");
 					$('#emp_select3').append(option);
 				}
 			</c:forEach>
-			// 결자저2에 선택안함 옵션 추가
+			// 결재자2에 선택안함 옵션 추가
 			$('#emp_select3').append("<option value='default'>선택안함</option>");
-			
-			// 결재자2에 '대표' 선택시 결재자3 선택 불가
-			if($('#emp_select2').val() == "0"){
-				$('#emp_select3').attr("disabled", true);
-				var option = $("<option>" + "결재자3" + "</option>");
-				$('#emp_select3').append(option);
-			}
-			if($('#emp_select2').val() != "0"){
-				$('#emp_select3').removeAttr("disabled");
-			}
 		}
+
+		// 결재자2에 '대표' 선택시 결재자3 선택 불가
+		if($('#emp_select2').val() == "0"){
+			$('#emp_select3').attr("disabled", true);
+			var option = $("<option>" + "결재자3" + "</option>");
+			$('#emp_select3').append(option);
+		}
+	$(".emp_no_2").val($("#emp_select2 option:selected").attr("emp_no"));
 })
 
 
-
-
-
-
-
+$('#emp_select3').change(function(){
+	$(".emp_no_3").val($("#emp_select3 option:selected").attr("emp_no"));
+})
 </script>
 
 
