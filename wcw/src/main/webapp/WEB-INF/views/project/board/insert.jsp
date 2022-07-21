@@ -253,26 +253,38 @@
 		treeData.length = 0
 		for (var i = 0; i < list.length; i++) {
 			let tempParent;
-			if(list[i].pff_level == 0) {
-				tempParent = "#";
+			if(list[i].pf_no == 0) {
+				if(list[i].pff_level == 0) {
+					tempParent = "#";
+				}
+				else if(list[i].pff_level != 0) {
+					tempParent = list[i].pff_ref;
+				}
+				vo = {
+					"id" : list[i].pff_no,
+					"parent" : tempParent,
+					"text" : list[i].pff_name,
+					"type" : "folder"
+				};
 			}
-			else if(list[i].pff_level != 0) {
-				tempParent = list[i].pff_ref;
+			else {
+				tempParent = list[i].pff_no;
+				vo = {
+					"id" : "file_"+list[i].pf_no,
+					"parent" : tempParent,
+					"text" : list[i].pf_name,
+					"type" : "file",
+					a_attr : {file_url : list[i].pf_url
+								, pb_no : list[i].pb_no}
+				};	
 			}
-			vo = {
-				"id" : list[i].pff_no,
-				"parent" : tempParent,
-				"text" : list[i].pff_name,
-				"type" : "folder"
-			};
-			console.log("vo :");
-			console.log(vo);
 			treeData.push(vo);
 		}
 	}
 	
 	// 트리 데이터 불러오기 ajax
 	function treeDataAjax() {
+		console.log("treeDataAjax");
 		$.ajax({
 			type: "POST",
 			url: "<%= request.getContextPath()%>/project/folder/list",
@@ -281,11 +293,12 @@
 			},
 			dataType : "json",
 			success: function(result) {
+				console.log(result);
 				if(result == -1) {
 					location.href = "<%= request.getContextPath()%>/login";					
 					return;
 				}
-				treeDataCreate(result);
+				treeDataCreate(result.folderList.concat(result.fileList));
 				$('#project_file_tree').jstree(true).settings.core.data = treeData;
 				$('#project_file_tree').jstree(true).refresh();
 			},

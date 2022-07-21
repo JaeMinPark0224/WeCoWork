@@ -49,22 +49,6 @@
 			calendar.render();
 		})
 	})();
-	var workEventSource = {
-			id : "workEvent",
-			events : [
-				{
-					title: "event 1",
-					start: "2022-07-18",
-					end: "2022-07-20",
-					color: "#4B4DB2"
-				},
-				{
-					title: "event 2",
-					start: "2022-07-22",
-					end: "2022-07-24"
-				},
-			]
-	};
 </script>
 <script type="text/javascript">
 	// 서브 버튼 생성
@@ -116,6 +100,7 @@
 			id : "allEvent",
 			events : workAllEvents
 	};
+	console.log(workAllEventSource);
 	
 	// 전체 업무 보기
 	$("#project_calendar_all_btn").on("click", function() {

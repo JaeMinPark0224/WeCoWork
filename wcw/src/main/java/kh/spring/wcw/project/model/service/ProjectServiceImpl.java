@@ -69,6 +69,11 @@ public class ProjectServiceImpl implements ProjectService{
 	public Project selectOneBoardProject(int pb_no) {
 		return dao.selectOneBoardProject(pb_no);
 	}
+	
+	@Override
+	public int deleteBoardProject(int pb_no) {
+		return dao.deleteBoardProject(pb_no);
+	}
 
 	@Override
 	public int insertBoardFixProject(Project project) {
@@ -163,6 +168,11 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
+	public int deleteTodoProject(int pt_no) {
+		return dao.deleteTodoProject(pt_no);
+	}
+	
+	@Override
 	public List<Project> selectListCalendarProject(Project project) {
 		return dao.selectListCalendarProject(project);
 	}
@@ -192,5 +202,14 @@ public class ProjectServiceImpl implements ProjectService{
 		return dao.updateFileProject(project);
 	}
 
+	@Override
+	public int insertFileProject(Project project) {
+		return dao.insertFileProject(project);
+	}
+
+	@Override
+	public int deleteFileProject(Project project) {
+		return dao.deleteFileProject(project);
+	}
 
 }

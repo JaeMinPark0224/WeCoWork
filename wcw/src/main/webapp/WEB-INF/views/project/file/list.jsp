@@ -27,6 +27,9 @@
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 		<div id="project_file_tree">
 		</div>
+		<form id="uploadForm">
+			<input type="file" name="project_file" id="project_file_input_file" style="display : none;">
+		</form>
 	</div>
 </section>
 <script type="text/javascript">
@@ -82,7 +85,8 @@ vo = {
 	parent : "${file.pff_no}",
 	text : "${file.pf_name}",
 	type : "file",
-	a_attr : {file_url : "${file.pf_url}"}
+	a_attr : {file_url : "${file.pf_url}"
+				, pb_no : "${file.pb_no}"}
 }
 treeFileDate.push(vo);
 </c:forEach>
@@ -113,7 +117,8 @@ function treeDataCreate(list) {
 				"parent" : tempParent,
 				"text" : list[i].pf_name,
 				"type" : "file",
-				a_attr : {file_url : list[i].pf_url}
+				a_attr : {file_url : list[i].pf_url
+							, pb_no : list[i].pb_no}
 			};	
 		}
 		treeData.push(vo);
@@ -144,7 +149,7 @@ $('#project_file_tree').jstree({
 						"separator_before"	: false,
 						"separator_after"	: true,
 						"_disabled"			: false,
-						"label"				: "Create",
+						"label"				: "Folder Create",
 						"action"			: function (data) {
 							var inst = $.jstree.reference(data.reference),
 								obj = inst.get_node(data.reference);
@@ -190,9 +195,9 @@ $('#project_file_tree').jstree({
 						"icon"				: false,
 						"separator_after"	: false,
 						"_disabled"			: false,
-						"label"				: "file upload",
+						"label"				: "File Upload",
 						"action"			: function (data) {
-							console.log(data);
+							$("#project_file_input_file").get(0).click();
 						}
 					}
 				};
@@ -204,15 +209,15 @@ $('#project_file_tree').jstree({
 						"icon"				: false,
 						"separator_after"	: false,
 						"_disabled"			: false,
-						"label"				: "download",
+						"label"				: "Download",
 						"action"			: function (data) {
 							console.log(data);
 							download(data.reference[0].attributes.getNamedItem("file_url").value, data.reference[0].text);
 						}
 					},
 					"rename" : {
-						"separator_before"	: false,
-						"separator_after"	: false,
+						"separator_before"	: true,
+						"separator_after"	: true,
 						"_disabled"			: false,
 						"label"				: "Rename",
 						"action"			: function (data) {
@@ -220,12 +225,51 @@ $('#project_file_tree').jstree({
 								obj = inst.get_node(data.reference);
 							inst.edit(obj);
 						}
+					},
+					"delete" : {
+						"separator_before"	: true,
+						"separator_after"	: true,
+						"_disabled"			: false,
+						"label"				: "Delete",
+						"action"			: function (data) {
+							deleteFile(data);
+						}
 					}
 				}
 			}
 		}
 	},
 	'plugins' : ["contextmenu", "wholerow" ,"types"]
+});
+
+// 파일 업로드 기능 구현
+$("#project_file_input_file").on("change", function() {
+	$("#project_file_modal_background").css("display", "block");
+	var form = $("#uploadForm")[0];
+	var formData = new FormData(form);
+	formData.append("pff_no", $('#project_file_tree').jstree(true).get_selected());
+	formData.append("pf_name", $(this).get(0).files[0].name);
+	formData.append("pr_no", js_pr_no);
+	$.ajax({
+		type: "POST",
+		url: "<%= request.getContextPath()%>/project/file/insert",
+		data: formData,
+		enctype : "multipart/form-data",
+		contentType : false,
+		processData : false,
+		success: function(result) {
+			if(result == -1) {
+				location.href = "<%= request.getContextPath()%>/login";					
+				return;
+			}
+			if(result == 1) {
+				treeDataAjax();
+			}
+		},
+		error: function(request, status, error) {
+			alert("fail");
+		}
+	});
 });
 
 // 노드 선택
@@ -268,8 +312,8 @@ $('#project_file_tree').on("create_node.jstree", function (event, data) {
 
 // 노드 이름 변경
 $('#project_file_tree').on("rename_node.jstree", function (event, data) {
-	//$("#project_file_modal_background").css("display", "block");
-	if(data.node.type == "folder" && false) {
+	$("#project_file_modal_background").css("display", "block");
+	if(data.node.type == "folder") {
 		$.ajax({
 			type: "POST",
 			url: "<%= request.getContextPath()%>/project/folder/update",
@@ -385,6 +429,44 @@ function download(url, name) {
                 link.click();
                 document.body.removeChild(link);
           })
+}
+
+//파일 삭제 함수
+function deleteFile(data) {
+	let pb_no = data.reference[0].getAttributeNode("pb_no").value;
+	let pf_no = data.reference[0].getAttributeNode("id").value.split("_")[1];
+	let pf_url = data.reference[0].getAttributeNode("file_url").value.split("/");
+	pf_url = pf_url[pf_url.length - 1];
+	$.ajax({
+		type: "POST",
+		url: "<%= request.getContextPath()%>/project/file/delete",
+		data: {
+			pr_no : js_pr_no,
+			pf_no : pf_no,
+			pb_no : pb_no,
+			pf_name : pf_url
+		},
+		success: function(result) {
+			if(result == -1) {
+				location.href = "<%= request.getContextPath()%>/login";					
+				return;
+			}
+			else if(result == -2) {
+				location.href = "<%= request.getContextPath()%>/project/list";	
+				return;
+			}
+			else if(result == 1) {
+				treeDataAjax();
+			}
+			else if(result == 0) {
+				alert("파일 삭제에 실패했습니다.\n게시물 파일은 게시물 삭제시에만 삭제 가능합니다.");
+				treeDataAjax();
+			}
+		},
+		error: function(request, status, error) {
+			alert("fail");
+		}
+	});
 }
 </script>
 </body>

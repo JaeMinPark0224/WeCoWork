@@ -34,6 +34,8 @@ public interface ProjectService {
 	
 	public Project selectOneBoardProject(int pb_no);
 	
+	public int deleteBoardProject(int pb_no);
+	
 	public int insertBoardFixProject(Project project);
 	
 	public int deleteBoardFixProject(Project project);
@@ -70,6 +72,8 @@ public interface ProjectService {
 	
 	public int updateTodoProject(Project project);
 	
+	public int deleteTodoProject(int pt_no);
+	
 	public List<Project> selectListCalendarProject(Project project);
 	
 	public List<Project> selectListFolderProject(int pr_no);
@@ -81,4 +85,8 @@ public interface ProjectService {
 	public List<Project> selectListFileProject(int no, String type);
 	
 	public int updateFileProject(Project project);
+	
+	public int insertFileProject(Project project);
+	
+	public int deleteFileProject(Project project);
 }

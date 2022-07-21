@@ -205,6 +205,11 @@
 			where pb_no = #{pb_no}
 	</select>
 	
+	<delete id="deleteBoardProject" parameterType="_int">
+		delete from tb_project_board
+		where pb_no = #{pb_no}
+	</delete>
+	
 	<insert id="insertBoardFixProject" parameterType="Project">
 		insert into tb_project_board_fix
 		(pb_no, emp_no)
@@ -303,7 +308,7 @@
 		    from tb_project_work tpw
 		    join tb_employee te
 		    on tpw.ep_no = te.emp_no
-		    where pr_no = 1
+		    where pr_no = #{pr_no}
             order by pw_ref_no desc, (case when pw_order = 0 then 1 else 2 end),pw_order desc
 	</select>
 	
@@ -374,19 +379,30 @@
 	</insert>
 	
 	<update id="updateTodoProject" parameterType="Project">
+		<if test="pt_complete_yn != null">
 		update tb_project_todo
 			set pt_complete_yn = #{pt_complete_yn}
 			where pt_no = #{pt_no}
+		</if>
+		<if test="pt_complete_yn == null">
+		update tb_project_todo
+			set pt_content = #{pt_content}
+				, pt_date = #{pt_date} 
+			where pt_no = #{pt_no}
+		</if>
 	</update>
+	
+	<delete id="deleteTodoProject" parameterType="_int">
+		delete from tb_project_todo
+			where pt_no = #{pt_no}
+	</delete>
 	
 	<select id="selectListCalendarProject" parameterType="Project" resultType="Project">
 		select tpw.pw_no, tpw.pw_title, tpw.pw_start_date, tpw.pw_end_date, tpw.pw_status, tpw.pw_priority
 		    from tb_project_work tpw
-		    join tb_project_work_participant tpwp
-		    on tpw.pw_no = tpwp.pw_no
 		    where tpw.pr_no = #{pr_no} 
 		    <if test='emp_no != 0'>
-			    and tpwp.emp_no = #{emp_no}
+			    and tpw.pw_no in (select pw_no from tb_project_work_participant where emp_no = #{emp_no})
 		    </if>
 	</select>
 	
@@ -451,4 +467,20 @@
 			set pf_name = #{pf_name}
 			where pf_no = #{pf_no}
 	</update>
+	
+	<insert id="insertFileProject" parameterType="Project">
+		insert into tb_project_file
+		(pf_no, pf_url
+		, pf_date
+		, pff_no, pf_name)
+		values
+		((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
+		, default
+		, #{pff_no}, #{pf_name})
+	</insert>
+	
+	<delete id="deleteFileProject" parameterType="Project">
+		delete from tb_project_file
+		where pf_no = #{pf_no}
+	</delete>
 </mapper>

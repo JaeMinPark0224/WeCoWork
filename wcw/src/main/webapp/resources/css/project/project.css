@@ -657,7 +657,6 @@ section {
 	background-color: rgb(230, 230, 230);
 	font-family: NotoSansR;
 	font-size: 12px;	
-	margin-right: 10px;
 }
 
 .project_notice_title_span {
@@ -1058,8 +1057,7 @@ section {
 	color: white;
 	background-color: #4B4DB2;
 	display: block;
-	margin-top: 70px;
-	margin-left: 282.5px;
+	margin: 70px auto 0px;
 	cursor: pointer;
 }
 
@@ -1630,6 +1628,7 @@ section {
 	width: 0px;
 	height: 25px;
 	background-color: rgb(75, 77, 178);
+	transition : width 0.5s ease;
 }
 
 #project_todo_content_wrap {
@@ -1834,8 +1833,19 @@ section {
 
 .project_todo_update_grid {
 	display: grid;
-	grid-template-columns: 100px 400px 40px;
+	grid-template-columns: 100px 400px 40px 40px;
 	column-gap: 10px;
+}
+
+.project_todo_list_update_btn {
+	text-align: center;
+	font-size: 13px;
+	font-family: NotoSansR;
+	height: 20px;
+	line-height: 20px;
+	cursor: pointer;
+	user-select: none;
+	color: rgb(94, 94, 94);
 }
 
 .project_todo_list_delete_btn {
@@ -2197,7 +2207,7 @@ section {
 
 #project_file_modal_background {
 	display: none;
-	z-index: 2;
+	z-index: 100;
 	background-color: rgba(128, 128, 128, 0.356);
 	position: fixed;
 	left: 0;

@@ -60,6 +60,10 @@ public class ProjectDao {
 		return sqlsession.selectOne("Project.selectOneBoardProject", pb_no);
 	}
 	
+	public int deleteBoardProject(int pb_no) {
+		return sqlsession.delete("Project.deleteBoardProject", pb_no);
+	}
+	
 	public int insertBoardFixProject(Project project) {
 		return sqlsession.insert("Project.insertBoardFixProject", project);
 	}
@@ -135,7 +139,11 @@ public class ProjectDao {
 	}
 	
 	public int updateTodoProject(Project project) {
-		return sqlsession.insert("Project.updateTodoProject", project);
+		return sqlsession.update("Project.updateTodoProject", project);
+	}
+	
+	public int deleteTodoProject(int pt_no) {
+		return sqlsession.delete("Project.deleteTodoProject", pt_no);
 	}
 	
 	public List<Project> selectListCalendarProject(Project project) {
@@ -163,6 +171,14 @@ public class ProjectDao {
 	
 	public int updateFileProject(Project project) {
 		return sqlsession.update("Project.updateFileProject", project);
+	}
+	
+	public int insertFileProject(Project project) {
+		return sqlsession.insert("Project.insertFileProject", project);
+	}
+	
+	public int deleteFileProject(Project project) {
+		return sqlsession.delete("Project.deleteFileProject", project);
 	}
 	
 }

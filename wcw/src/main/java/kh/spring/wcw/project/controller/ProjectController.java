@@ -216,6 +216,28 @@ public class ProjectController {
 		//mv.setViewName("redirect:/project/board/insert?project="+project.getPr_no());
 		return mv;
 	}
+	
+	@PostMapping("/board/delete")
+	public ModelAndView deleteBoardProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		
+		int result = service.deleteBoardProject(project.getPb_no());
+		mv.setViewName("redirect:/project/board/list?project="+project.getPr_no());
+		return mv;
+	}
+	
+	
+	
+	
 	@GetMapping("/board/read")
 	public ModelAndView selectOneBoardProject(
 			ModelAndView mv
@@ -244,20 +266,21 @@ public class ProjectController {
 			ModelAndView mv
 			, HttpSession session
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
+			, Project project
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
 			return mv;
 		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
-		projectObj.setEmp_no(loginSSInfo.getEmp_no());
-		projectObj.setPr_no(pr_no);
-		if(service.selectEmpProject(projectObj) == null) {
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		project.setPr_no(pr_no);
+		if(service.selectEmpProject(project) == null) {
 			mv.setViewName("redirect:/project/list");
 			return mv;
 		}
 		
-		List<Project> workList = service.selectListWorkProject(projectObj);
+		List<Project> workList = service.selectListWorkProject(project);
 		
 		// 프로젝트 번호 저장
 		mv.addObject("pr_no", pr_no);
@@ -431,12 +454,49 @@ public class ProjectController {
 			ModelAndView mv
 			, Project project
 			, HttpSession session
+			, @RequestParam int pr_no
+			, @RequestParam(required = false) String pt_year
+			, @RequestParam(required = false) String pt_date_str
 			) {
 		
 		if(!wcwutill.loginChk(session)) {
 			return "-1";
 		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm");
+		LocalDateTime local_pt_date = LocalDateTime.from(dateFormat.parse(pt_year+pt_date_str));
+		Timestamp pt_date = Timestamp.valueOf(local_pt_date);
+		project.setPt_date(pt_date);
 		int result = service.updateTodoProject(project);
+		return String.valueOf(result);
+	}
+	
+	@PostMapping("/todo/delete")
+	@ResponseBody
+	public String deleteTodoProject(
+			ModelAndView mv
+			, @RequestParam int pt_no
+			, @RequestParam int pr_no
+			, HttpSession session
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		int result = service.deleteTodoProject(pt_no);
 		return String.valueOf(result);
 	}
 	
@@ -500,7 +560,7 @@ public class ProjectController {
 	
 	@PostMapping("/file/update")
 	@ResponseBody
-	public String selectListFileProject(
+	public String updateFileProject(
 			HttpSession session
 			, @RequestParam int pr_no
 			, Project project
@@ -518,6 +578,101 @@ public class ProjectController {
 		}
 		int result = service.updateFileProject(project);
 		
+		return String.valueOf(result);
+	}
+	
+	@PostMapping("/file/insert")
+	@ResponseBody
+	public String insertFileProject(
+			HttpSession session
+			, @RequestParam(name = "project_file", required = false) MultipartFile project_file
+			, @RequestParam int pr_no
+			, Project project
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		
+		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+				"cloud_name", "dfam8azdg",
+				"api_key", "882165332977633",
+				"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
+				"secure", true));
+		@SuppressWarnings("rawtypes")
+		Map uploadResult = null;
+		try {
+			uploadResult = cloudinary.uploader().upload(
+					project_file.getBytes()
+					, ObjectUtils.asMap("resource_type", "auto"));
+			logger.info("filename : {}", project_file.getOriginalFilename());
+			logger.info("upload result : {}", uploadResult);
+			logger.info("result URL : {}", uploadResult.get("url"));
+			project.setPf_url((String)uploadResult.get("url"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		int result = service.insertFileProject(project);
+		
+		return String.valueOf(result);
+	}
+	
+	@PostMapping("/file/delete")
+	@ResponseBody
+	public String deleteFileProject(
+			HttpSession session
+			, @RequestParam int pr_no
+			, Project project
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		projectObj.setEmp_no(emp_no);
+		projectObj.setPr_no(pr_no);
+		if(service.selectEmpProject(projectObj) == null) {
+			return "-2";
+		}
+		
+		if(project.getPb_no() != 0) {
+			return "0";
+		}
+		
+		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+				"cloud_name", "dfam8azdg",
+				"api_key", "882165332977633",
+				"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
+				"secure", true));
+		@SuppressWarnings("rawtypes")
+		Map uploadResult = null;
+		int result = 0;
+		try {
+			if(project.getPf_name().contains(".")) {
+				project.setPf_name((project.getPf_name().split("\\."))[0]);
+				uploadResult = cloudinary.uploader().destroy(project.getPf_name(), ObjectUtils.asMap("resource_type", "image"));
+			}
+			else {
+				uploadResult = cloudinary.uploader().destroy(project.getPf_name(), ObjectUtils.asMap("resource_type", "raw"));
+			}
+			logger.info("delete pf_name : {}", project.getPf_name());
+			logger.info("delete result : {}", uploadResult);
+			logger.info("delete result2 : {}", uploadResult.get("result"));
+			if(((String) uploadResult.get("result")).equals("ok")) {
+				result = service.deleteFileProject(project);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return String.valueOf(result);
 	}
 	
@@ -575,7 +730,7 @@ public class ProjectController {
 		if(service.selectEmpProject(projectObj) == null) {
 			return "-2";
 		}
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Gson gson = new GsonBuilder().create();
 		Map<String, List<Project>> map = new HashMap<String, List<Project>>();
 		map.put("folderList", service.selectListFolderProject(pr_no));
 		map.put("fileList", service.selectListFileProject(pr_no, "project"));

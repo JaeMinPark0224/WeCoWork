@@ -44,8 +44,24 @@
 			<button class="project_board_read_btn">확인</button>
 		</div>
 	</div>
+	<form action="<%= request.getContextPath()%>/project/board/delete" id="project_board_delete_form" method="post">
+		<input type="hidden" name="pr_no" id="pr_no">
+		<input type="hidden" name="pb_no" id="pb_no">
+	</form>
 </section>
 <script type="text/javascript">
+//프로젝트 번호
+var js_pr_no = (new URL(location.href).searchParams).get('project');
+
+//게시글 번호
+var js_pb_no = (new URL(location.href).searchParams).get('no');
+console.log(js_pb_no);
+
+//게시판 서브 버튼 생성
+$("#project_main_tab_wrap").append("<div id='project_board_sub_btn_wrap'></div>")
+$("#project_board_sub_btn_wrap").append("<button id='project_board_update_btn' class='project_board_sub_btn'>수정하기</button>");
+$("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' class='project_board_sub_btn'>삭제하기</button>");
+
 	$('.project_board_read_btn').on('click', function() {
 		location.href = "<%= request.getContextPath()%>/project/board/list/?project=${pr_no}";
 	})
@@ -74,6 +90,16 @@
 	                document.body.removeChild(link);
 	          })
 	}
+	
+	// 게시글 삭제 기능
+	$("#project_board_delete_btn").on("click", function() {
+		if(!confirm("게시글을 삭제하겠습니까?")) {
+			return;
+		}
+		$("#pr_no").val(js_pr_no);
+		$("#pb_no").val(js_pb_no);
+		$("#project_board_delete_form").get(0).submit();
+	});
 	
 </script>
 </body>
