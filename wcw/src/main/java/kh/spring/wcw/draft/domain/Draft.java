@@ -20,11 +20,11 @@ public class Draft {
 	private String dr_amount;
 	private int dr_tier;
 	
-	private String spend_sort;
+	private String spend_date;
 	private String spend_purpose;
-	private String spend_conetent;
+	private String spend_content;
 	private int spend_amount;
-	private String spend_conetent_prvt;
+	private String spend_content_prvt;
 	private int spend_amount_prvt;
 	private int spend_sum;
 	
@@ -49,9 +49,9 @@ public class Draft {
 		return "Draft [dr_no=" + dr_no + ", ep_no=" + ep_no + ", dr_sort=" + dr_sort + ", dr_result=" + dr_result
 				+ ", dr_title=" + dr_title + ", dr_content=" + dr_content + ", dr_purpose=" + dr_purpose + ", dr_date="
 				+ dr_date + ", dr_due_date=" + dr_due_date + ", dr_comment=" + dr_comment + ", dr_expect_date="
-				+ dr_expect_date + ", dr_amount=" + dr_amount + ", dr_tier=" + dr_tier + ", spend_sort=" + spend_sort
-				+ ", spend_purpose=" + spend_purpose + ", spend_conetent=" + spend_conetent + ", spend_amount="
-				+ spend_amount + ", spend_conetent_prvt=" + spend_conetent_prvt + ", spend_amount_prvt="
+				+ dr_expect_date + ", dr_amount=" + dr_amount + ", dr_tier=" + dr_tier + ", spend_date=" + spend_date
+				+ ", spend_purpose=" + spend_purpose + ", spend_content=" + spend_content + ", spend_amount="
+				+ spend_amount + ", spend_content_prvt=" + spend_content_prvt + ", spend_amount_prvt="
 				+ spend_amount_prvt + ", spend_sum=" + spend_sum + ", appr_no_1=" + appr_no_1 + ", appr_no_2="
 				+ appr_no_2 + ", appr_no_3=" + appr_no_3 + ", emp_no_1=" + emp_no_1 + ", emp_no_2=" + emp_no_2
 				+ ", emp_no_3=" + emp_no_3 + ", appr_order_1=" + appr_order_1 + ", appr_order_2=" + appr_order_2
@@ -164,12 +164,12 @@ public class Draft {
 		this.dr_tier = dr_tier;
 	}
 
-	public String getSpend_sort() {
-		return spend_sort;
+	public String getSpend_date() {
+		return spend_date;
 	}
 
-	public void setSpend_sort(String spend_sort) {
-		this.spend_sort = spend_sort;
+	public void setSpend_date(String spend_date) {
+		this.spend_date = spend_date;
 	}
 
 	public String getSpend_purpose() {
@@ -180,12 +180,12 @@ public class Draft {
 		this.spend_purpose = spend_purpose;
 	}
 
-	public String getSpend_conetent() {
-		return spend_conetent;
+	public String getSpend_content() {
+		return spend_content;
 	}
 
-	public void setSpend_conetent(String spend_conetent) {
-		this.spend_conetent = spend_conetent;
+	public void setSpend_content(String spend_content) {
+		this.spend_content = spend_content;
 	}
 
 	public int getSpend_amount() {
@@ -196,12 +196,12 @@ public class Draft {
 		this.spend_amount = spend_amount;
 	}
 
-	public String getSpend_conetent_prvt() {
-		return spend_conetent_prvt;
+	public String getSpend_content_prvt() {
+		return spend_content_prvt;
 	}
 
-	public void setSpend_conetent_prvt(String spend_conetent_prvt) {
-		this.spend_conetent_prvt = spend_conetent_prvt;
+	public void setSpend_content_prvt(String spend_content_prvt) {
+		this.spend_content_prvt = spend_content_prvt;
 	}
 
 	public int getSpend_amount_prvt() {
@@ -339,5 +339,6 @@ public class Draft {
 	public void setAppr_date_3(Date appr_date_3) {
 		this.appr_date_3 = appr_date_3;
 	}
+	
 	
 }

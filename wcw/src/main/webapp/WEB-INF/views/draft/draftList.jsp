@@ -38,7 +38,7 @@
             <c:if test="${not empty draftList}">
 		        <c:forEach items="${draftList}" var="list">
 					<tr class="list">
-						<td class="tb_read"></td>
+						<td class="tb_read" value="${list.dr_no}"></td>
 						<td class="tb_read" value="${list.dr_no}">${list.dr_no}</td>
 						<c:if test="${list.dr_sort eq 1}">
 							<td class="tb_read" value="${list.dr_no}">기안서</td>
@@ -68,20 +68,20 @@
 						<c:if test="${list.dr_result eq 5}">
 							<td class="tb_read" value="${list.dr_no}">상신</td>
 						</c:if>
-						<td class="tb_read"></td>
+						<td class="tb_read" value="${list.dr_no}"></td>
 					</tr>
 				</c:forEach>
 			</c:if>
 			<c:if test="${empty draftList}">
 				<tr class="list">
-					<td class="tb_read"></td>
-					<td class="tb_read"></td>
-					<td class="tb_read"></td>
-					<td class="tb_read"></td>
-					<td class="tb_read"></td>
-					<td class="tb_read"></td>
-					<td class="tb_read"></td>
-					<td class="tb_read"></td>
+					<td class="tb_read2"></td>
+					<td class="tb_read2"></td>
+					<td class="tb_read2"></td>
+					<td class="tb_read2"></td>
+					<td class="tb_read2"></td>
+					<td class="tb_read2"></td>
+					<td class="tb_read2"></td>
+					<td class="tb_read2"></td>
 				</tr>
 			</c:if>
         </table>
@@ -105,8 +105,17 @@
     </div>
 </section>
 <script>
+// 새 기안 작성 버튼 클릭 시
 $('#create_btn').click(function(){
 	location.href="<%= request.getContextPath() %>/draft/insert";
+})
+</script>
+<script>
+// 기안 정보 클릭 시 해당 기안의 상세보기 페이지로 이동
+$('.tb_read').click(function(){
+	drNo = $(this).val();
+	location.href="<%= request.getContextPath() %>/draft/select";
+	<%-- location.href="<%= request.getContextPath() %>/draft/select?drNo="+drNo; --%>
 })
 </script>
 </body>

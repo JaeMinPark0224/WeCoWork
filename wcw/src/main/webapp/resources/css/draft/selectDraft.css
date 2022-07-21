@@ -1,0 +1,158 @@
+@charset "UTF-8";
+#section{
+        margin-left: 60px;
+        width: 1200px;
+        color: rgb(94, 94, 94);
+        position: relative;
+    }
+    .title{
+        display: inline-block;
+        font-family: NotoSansB;
+        font-size: 14px;
+        margin-top: 105px;
+        margin-left: 65px;
+        color: rgb(75, 77, 178);
+    }
+    .content{
+       margin-top: 70px;
+       margin-left: 65px; 
+       margin-bottom: 120px;
+       position: relative;
+    }
+    #draft_info{
+        float: left;
+    }
+    #sign_info{
+        float: right;
+        margin-top: 13px;
+        margin-right: 65px;
+    }
+    #sign_info_tb{
+        border-collapse: collapse;
+        border: 1px solid rgb(127, 127, 127);
+        margin-bottom: 75px;
+    }
+    .info_title{
+        display: inline-block;
+        width: 120px;
+        font-family: NotoSansB;
+        font-size: 13px;
+        color: rgb(94, 94, 94);
+        margin-bottom: 7px;
+    }
+    .info_text{
+        display: inline-block;
+        width: 120px;
+        font-family: NotoSansR;
+        font-size: 13px;
+        color: rgb(94, 94, 94);
+    }
+    .s_date{
+        width: 125px;
+        height: 35px;
+    }
+    .s_sign{
+        height: 65px;
+    }
+    .s_name{
+        height: 30px;
+    }
+
+    /* 기안서 출력부분 */
+    #draft{
+        clear: both;
+    }
+    .table{
+        /* width: 1065px; */
+        text-align: center;
+        border: 1px solid rgb(127, 127, 127);
+        border-collapse: collapse;
+    }
+    td, tr{
+        border: 1px solid rgb(127, 127, 127);
+        border-collapse: collapse;
+    }
+    .first_td{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        height: 50px;
+        width: 150px;
+    }
+    .second_td{
+        width: 885px;
+        height: 40px;
+        font-family: NotoSansR;
+        font-size: 13px;
+        text-align: left;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    #second_td_big{
+        height: 200px;
+    }
+    .textarea{
+        resize: none;
+        width: 885px;
+        height: 200px;
+        font-family: NotoSansR;
+        font-size: 13px;
+    }
+
+
+    /* 정산서 */
+    .count_td{
+        height: 180px;
+    }
+    #second_table{
+        margin: 0 auto;
+        text-align: center;
+        border: 1px solid rgb(127, 127, 127);
+        border-collapse: collapse;
+        width: 885px;
+    }
+    .second_td_first_line{
+    	height: 30px;
+    }
+    .first_td_scd{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        background-color: rgb(232, 232, 232);
+    }
+    #first_td_scd2{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        background-color: rgb(244, 244, 244);
+    }
+    #first_td_scd3{
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        font-family: NotoSansB;
+        background-color: rgb(244, 244, 244);
+    }
+    
+    /* 하단 버튼 */
+    #buttons{
+        margin: 0 auto;
+        text-align: center;
+        width: 800px;
+        margin-top: 70px;
+        margin-bottom: 220px;
+    }
+    .btn{
+        width: 115px;
+        height: 40px;
+        font-family: NotoSansR;
+        font-size: 12px;
+        border: 0px;
+    }
+    #ok_btn{
+        background-color: rgb(230, 230, 230);
+        color: rgb(51, 51, 51);
+    }
+    #del_btn, #accept_btn, #return_btn{
+        background-color:rgb(75, 77, 178);
+        color: white;
+    }

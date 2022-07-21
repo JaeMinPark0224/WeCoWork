@@ -29,6 +29,7 @@
     }
     td{
         height: 60px;
+        vertical-align: middle;
     }
     tr > td:first-child, .list:nth-child(9){
         width: 35px;

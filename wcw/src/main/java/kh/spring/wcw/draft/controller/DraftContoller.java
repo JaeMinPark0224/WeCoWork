@@ -34,15 +34,7 @@ public class DraftContoller {
 		// 회사 번호 가져오기
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
 		int cp_no = loginInfo.getCp_no();
-			
-		// 직위 레벨 가져오기
-		String job_level = loginInfo.getJob_level();
-				
-		if(job_level.equals("0")) {
-			rttr.addFlashAttribute("msg", "대표직은 기안 작성이 불가합니다.");
-			mv.setViewName("redirect:/"); // 결재함 리스트로 이동 TODO
-			return mv;
-		}
+		
 		// 회사가 가진 모든 직원 이름 정보 가져오기
 		List<Employee> employeeList = draftService.selectEmployeeList(cp_no);
 		System.out.println("전체 직원 목록: " + employeeList);
@@ -75,9 +67,18 @@ public class DraftContoller {
 		int offset = (currentPage - 1) * cotentLimit;
 		RowBounds rowBounds = new RowBounds(offset, cotentLimit);
 		
-		// 기안을 조회할 직원 번호 가져오기
+		// 직위 레벨 가져오기 (대표직 확인)
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
 		int ep_no = loginInfo.getEmp_no();
+		
+		// 대표적인지 확인하기
+		String job_level = loginInfo.getJob_level();
+		
+		if(job_level.equals("0")) {
+			rttr.addFlashAttribute("msg", "대표직은 기안함 이용이 불가합니다.");
+			mv.setViewName("redirect:/");
+			return mv;
+		}
 		
 		// 자신이 작성한 기안 리스트 조회
 		List<Draft> draftList = draftService.selectListDraft(ep_no, rowBounds);
@@ -94,8 +95,6 @@ public class DraftContoller {
 		
 		return mv;
 	}
-	
-	
 	
 	// 기안 작성 기능
 	@PostMapping("/insert.do")
@@ -116,6 +115,18 @@ public class DraftContoller {
 		
 		rttr.addFlashAttribute("msg", "기안 상신 완료");
 		mv.setViewName("redirect:/draft/list");
+		return mv;
+	}
+	
+	// 기안 상세 조회 기능
+	@GetMapping("/select")
+	public ModelAndView selectDraft(
+			ModelAndView mv
+			, HttpSession session
+			, RedirectAttributes rttr
+			, @RequestParam(name="drNo", required = false) String page) {
+		
+		mv.setViewName("draft/selectDraft");
 		return mv;
 	}
 }
