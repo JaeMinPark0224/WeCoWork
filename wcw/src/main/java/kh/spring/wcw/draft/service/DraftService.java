@@ -31,6 +31,13 @@ public interface DraftService {
 	 * @author ybseo
 	 */
 	public List<Draft> selectListDraft(int ep_no,  RowBounds rowBounds);
+	
+	/**
+	 * @param 기안 번호
+	 * @return 기안 정보 (결재자가 1명 이상이 될 수 있으므로 List)
+	 * @author ybseo
+	 */
+	public List<Draft> selectDraft(int dr_no, int dr_sort);
 
 	
 

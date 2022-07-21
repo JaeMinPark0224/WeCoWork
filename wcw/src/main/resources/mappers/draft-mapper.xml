@@ -45,13 +45,13 @@
 					(select nvl(max(dr_no),99)+1 from tb_draft),
 					#{emp_no_1}, 1, 3)
 					
-		<if test='emp_no_2 != "" and !emp_no_2.equals("")'>
+		<if test='emp_no_2 != null &amp;&amp; !emp_no_2.equals("")'>
 			into tb_approval (appr_no, dr_no, emp_no, appr_order, appr_result)
 			values ((select nvl(max(appr_no),0)+2 from tb_approval),
 					(select nvl(max(dr_no),99)+1 from tb_draft),
 					#{emp_no_2}, 2, 4)
 		</if>	
-		<if test='emp_no_3 != "" and !emp_no_3.equals("")'>
+		<if test='emp_no_3 != null &amp;&amp; !emp_no_3.equals("")'>
 			into tb_approval (appr_no, dr_no, emp_no, appr_order, appr_result)
 			values ((select nvl(max(appr_no),0)+3 from tb_approval),
 					(select nvl(max(dr_no),99)+1 from tb_draft),
@@ -65,6 +65,51 @@
 	select dr_no, dr_sort, dr_title, dr_date, dr_due_date, dr_result
 	from tb_draft
 	where ep_no = #{ep_no}
+	order by dr_date desc
+</select>
+
+<select id="selectDraft" parameterType="hashmap" resultType="Draft">
+	<if test="dr_sort == 3">
+		select t1.*, te1.name name_a, td1.dept_name dept_name_a, jt1.job_title job_title_a
+	    from
+	    (
+		    select d.dr_no, d.ep_no, d.dr_sort, d.dr_result, d.dr_title, d.dr_content, d.dr_purpose, 
+		    d.dr_date, d.dr_due_date, d.dr_comment, d.dr_expect_date, d.dr_amount, s.spend_date, s.spend_purpose, 
+		    s.spend_content, s.spend_amount, s.spend_amount_prvt, s.spend_content_prvt, s.spend_sum, a.appr_no, 
+		    a.emp_no, a.appr_order, a.appr_result, a.appr_date, e.name, e.sign, j.job_title
+		    
+		    from tb_draft d join tb_spend s on d.dr_no = s.dr_no
+		                    join tb_approval a on d.dr_no = a.dr_no
+		                    join tb_employee e on a.emp_no = e.emp_no
+		                    join tb_job_title j on e.job_title_no = j.job_title_no
+		                    join tb_department d1 on e.dept_no = d1.dept_no
+		    where d.dr_no =#{dr_no}
+	                             
+	    ) t1
+		    join tb_employee te1 on t1.ep_no = te1.emp_no
+		    join tb_department td1 on te1.dept_no = td1.dept_no
+		    join tb_job_title jt1 on te1.job_title_no = jt1.job_title_no
+	    order by appr_order
+	</if>
+	<if test="dr_sort == 1 or dr_sort == 2">
+		select t1.*, te1.name name_a, td1.dept_name dept_name_a, jt1.job_title job_title_a
+	    from
+	    (
+		    select d.dr_no, d.ep_no, d.dr_sort, d.dr_result, d.dr_title, d.dr_content, d.dr_purpose, 
+		    d.dr_date, d.dr_due_date, d.dr_comment, d.dr_expect_date, d.dr_amount, a.appr_no, 
+		    a.emp_no, a.appr_order, a.appr_result, a.appr_date, e.name, e.sign, j.job_title
+		    
+		    from tb_draft d join tb_approval a on d.dr_no = a.dr_no
+		                    join tb_employee e on a.emp_no = e.emp_no
+		                    join tb_job_title j on e.job_title_no = j.job_title_no
+		                    join tb_department d1 on e.dept_no = d1.dept_no
+		    where d.dr_no = #{dr_no}                           
+	    ) t1
+	    	join tb_employee te1 on t1.ep_no = te1.emp_no
+		    join tb_department td1 on te1.dept_no = td1.dept_no
+		    join tb_job_title jt1 on te1.job_title_no = jt1.job_title_no
+	    order by appr_order
+	</if>
 </select>
 
 </mapper>

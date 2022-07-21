@@ -25,136 +25,231 @@
     <div class="content">
         <div id="draft_info">
             <span class="info_title">기안 번호</span>
-            <span class="info_text">기안 번호 출력</span><br>
-            <span class="info_title">기안 분류</span>
-            <span class="info_text">기안 분류 출력</span><br>
-            <span class="info_title">기안자 부서</span>
-            <span class="info_text">기안자 부서 출력</span><br>
+            <span class="info_text">${draft[0].dr_no}</span><br>
+            <span class="info_title">기안 구분</span>
+            	<c:if test="${draft[0].dr_sort == 1}">
+            		<span class="info_text">기안서</span><br>
+            	</c:if>
+            	<c:if test="${draft[0].dr_sort == 2}">
+            		<span class="info_text">지출결의서</span><br>
+            	</c:if>
+            	<c:if test="${draft[0].dr_sort == 3}">
+            		<span class="info_text">정산서</span><br>
+            	</c:if>
             <span class="info_title">기안자</span>
-            <span class="info_text">기안자 출력</span><br>
+            <span class="info_text">${draft[0].name_a}</span><br>
             <span class="info_title">기안자 직위</span>
-            <span class="info_text">기안자 직위 출력</span><br>
+            <span class="info_text">${draft[0].job_title_a}</span><br>
+            <span class="info_title">기안자 부서</span>
+            <span class="info_text">${draft[0].dept_name_a}</span><br>
             <span class="info_title">기안일</span>
-            <span class="info_text">기안일 출력</span><br>
+            <span class="info_text">${draft[0].dr_date}</span><br>
         </div>
         <div id="sign_info">
             <table border="1" id="sign_info_tb">
                 <!-- 결재 날짜 -->
                 <tr>
-                    <td class="s_date" id="1_date"></td>
-                    <td class="s_date" id="2_date"></td>
-                    <td class="s_date" id="3_date"></td>
+                	<c:if test="${not empty draft[0].appr_date}">
+                		<td class="s_date" id="1_date">${draft[0].appr_date}</td>
+                	</c:if>
+                	<c:if test="${empty draft[0].appr_date}">
+                		<td class="s_date" id="1_date">${draft[0].appr_date}</td>
+                	</c:if>
+                    <c:if test="${not empty draft[1].appr_date}">
+                		<td class="s_date" id="2_date">${draft[1].appr_date}</td>
+                	</c:if>
+                	<c:if test="${empty draft[1].appr_date}">
+                		<td class="s_date" id="2_date"></td>
+                	</c:if>
+                	<c:if test="${not empty draft[2].appr_date}">
+                		<td class="s_date" id="3_date">${draft[2].appr_date}</td>
+                	</c:if>
+                	<c:if test="${empty draft[2].appr_date}">
+                		<td class="s_date" id="3_date"></td>
+                	</c:if>
                 </tr>
                 <!-- 결재자 서명 -->
                 <tr>
-                    <td class="s_sign" id="1_sign"></td>
-                    <td class="s_sign" id="2_sign"></td>
-                    <td class="s_sign" id="3_sign"></td>
+                	<c:if test="${not empty draft[0].sign}">
+                		<td class="s_sign" id="1_sign">${draft[0].sign}</td>
+                	</c:if>
+                	<c:if test="${empty draft[0].sign}">
+                		<td class="s_sign" id="1_sign"></td>
+                	</c:if>
+                	<c:if test="${not empty draft[1].sign}">
+                		<td class="s_sign" id="2_sign">${draft[1].sign}</td>
+                	</c:if>
+                	<c:if test="${empty draft[1].sign}">
+                		<td class="s_sign" id="2_sign"></td>
+                	</c:if>
+                	<c:if test="${not empty draft[2].sign}">
+                		<td class="s_sign" id="3_sign">${draft[2].sign}</td>
+                	</c:if>
+                	<c:if test="${empty draft[2].sign}">
+                		<td class="s_sign" id="3_sign"></td>
+                	</c:if>
                 </tr>
                 <!-- 결자재 성명 -->
                 <tr>
-                    <td class="s_name" id="1_name"></td>
-                    <td class="s_name" id="2_name"></td>
-                    <td class="s_name" id="3_name"></td>
+                	<c:if test="${not empty draft[0].emp_no}">
+                		<td class="s_name" id="1_name">${draft[0].name}&nbsp;&nbsp;${draft[0].job_title}</td>
+                	</c:if>
+                	<c:if test="${empty draft[0].emp_no}">
+                		<td class="s_name" id="1_name">─</td>
+                	</c:if>
+                	<c:if test="${not empty draft[1].job_title}">
+                		<td class="s_name" id="2_name">${draft[1].name}&nbsp;&nbsp;${draft[1].job_title}</td>
+                	</c:if>
+                	<c:if test="${empty draft[1].job_title}">
+                		<td class="s_name" id="2_name">─</td>
+                	</c:if>
+                	<c:if test="${not empty draft[2].job_title}">
+                		<td class="s_name" id="3_name">${draft[2].name}&nbsp;&nbsp;${draft[2].job_title}</td>
+                	</c:if>
+                	<c:if test="${empty draft[2].job_title}">
+                		<td class="s_name" id="3_name">─</td>
+                	</c:if>
                 </tr>
             </table>
         </div>
 
 
         <div id="draft">
-            <table class="table" id="table1">
-                <tr>
-                    <td class="first_td">기안 제목</td>
-                    <td class="second_td">기안 제목 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">목적</td>
-                    <td class="second_td">기안 목적 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">기안 내용</td>
-                    <td class="second_td" id="second_td_big">기안 내용 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">비고</td>
-                    <td class="second_td">기안 비고 출력</td>
-                </tr>
-            </table>
-            <table class="table" id="table2">
-                <tr>
-                    <td class="first_td">결의서 제목</td>
-                    <td class="second_td">결의서 제목 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">지출 예정 일자</td>
-                    <td class="second_td">지출 예정 일자 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">결의서 내용</td>
-                    <td class="second_td" id="second_td_big">결의서 내용 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">비고</td>
-                    <td class="second_td">결의서 비고 출력</td>
-                </tr>
-            </table>
-            <table class="table" id="table3">
-                <tr>
-                    <td class="first_td">정산서 제목</td>
-                    <td class="second_td">정산서 제목 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">발생 기간</td>
-                    <td class="second_td">발생 기간 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">지출 목적</td>
-                    <td class="second_td">지출 목적 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td">정산서 내용</td>
-                    <td class="second_td" id="second_td_big">정산서 내용 출력</td>
-                </tr>
-                <tr>
-                    <td class="first_td"></td>
-                    <td class="count_td">
-                        <table id="second_table"> 
-                            <tr class="second_tr">
-                                <td class="first_td_scd" class="second_td_first_line"style="width: 13%;">항목</td>
-                                <td id="first_td_scd2" class="second_td_first_line" style="width: 60%;">내용</td>
-                                <td id="first_td_scd3" class="second_td_first_line" style="width: 47%;">금액(숫자)</td>
-                            </tr>
-                            <tr class="second_tr">
-                                <td class="first_td_scd">법인 카드</td>
-                                <td class="second_td">법인카드 내용 출력</td>
-                                <td class="second_td">법인카드 금액(숫자) 출력</td>
-                            </tr>
-                            <tr class="second_tr">
-                                <td class="first_td_scd">개인 카드</td>
-                                <td class="second_td">개인카드 내용 출력</td>
-                                <td class="second_td">갸인카드 금액(숫자) 출력</td>
-                            </tr>
-                            <tr class="second_tr">
-                                <td class="first_td_scd">합계</td>
-                                <td></td>
-                                <td class="second_td">합계 금액 출력</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="first_td">비고</td>
-                    <td class="second_td">정산서 비고 출력</td>
-                </tr>
-            </table>
+        	<c:if test="${draft[0].dr_sort == 1}">
+	            <table class="table" id="table1">
+	                <tr>
+	                    <td class="first_td">기안 제목</td>
+	                    <td class="second_td">${draft[0].dr_title}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">목적</td>
+	                    <td class="second_td">${draft[0].dr_purpose}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">기안 내용</td>
+	                    <td class="second_td" id="second_td_big">${draft[0].dr_content}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">비고</td>
+	                    <td class="second_td">${draft[0].dr_comment}</td>
+	                </tr>
+	            </table>
+            </c:if>
+            <c:if test="${draft[0].dr_sort == 2}">
+	            <table class="table" id="table2">
+	                <tr>
+	                    <td class="first_td">결의서 제목</td>
+	                    <td class="second_td">${draft[0].dr_title}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">지출 예정 일자</td>
+	                    <td class="second_td">${draft[0].dr_expect_date}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">결의서 내용</td>
+	                    <td class="second_td" id="second_td_big">${draft[0].dr_content}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">비고</td>
+	                    <td class="second_td">${draft[0].dr_comment}</td>
+	                </tr>
+	            </table>
+            </c:if>
+            <c:if test="${draft[0].dr_sort == 3}">
+	            <table class="table" id="table3">
+	                <tr>
+	                    <td class="first_td">정산서 제목</td>
+	                    <td class="second_td">${draft[0].dr_title}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">발생 기간</td>
+	                    <td class="second_td">${draft[0].spend_date}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">지출 목적</td>
+	                    <td class="second_td">${draft[0].spend_purpose}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">정산서 내용</td>
+	                    <td class="second_td" id="second_td_big">${draft[0].dr_content}</td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td"></td>
+	                    <td class="count_td">
+	                        <table id="second_table"> 
+	                            <tr class="second_tr">
+	                                <td class="first_td_scd" class="second_td_first_line"style="width: 13%;">항목</td>
+	                                <td id="first_td_scd2" class="second_td_first_line" style="width: 60%;">내용</td>
+	                                <td id="first_td_scd3" class="second_td_first_line" style="width: 47%;">금액(숫자)</td>
+	                            </tr>
+	                            <tr class="second_tr">
+	                                <td class="first_td_scd">법인 카드</td>
+	                                <td class="second_td">${draft[0].spend_content}</td>
+	                                <td class="second_td">${draft[0].spend_amount}</td>
+	                            </tr>
+	                            <tr class="second_tr">
+	                                <td class="first_td_scd">개인 카드</td>
+	                                <td class="second_td">${draft[0].spend_content_prvt}</td>
+	                                <td class="second_td">${draft[0].spend_amount_prvt}</td>
+	                            </tr>
+	                            <tr class="second_tr">
+	                                <td class="first_td_scd">합계</td>
+	                                <td></td>
+	                                <td class="second_td">${draft[0].spend_sum}</td>
+	                            </tr>
+	                        </table>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="first_td">비고</td>
+	                    <td class="second_td">${draft[0].dr_comment}</td>
+	                </tr>
+	            </table>
+            </c:if>
         </div>
         <div id="buttons">
-            <input type="button" value="삭제" id="del_btn" class="btn">
+            <!-- 삭제 버튼 -->
+            <c:if test="${draft[0].name_a == loginSSInfo.name && draft[0].appr_result == 3}">
+            	<input type="button" value="삭제" id="del_btn" class="btn">
+            </c:if>
+            
+            <!-- 확인 버튼 -->
             <input type="button" value="확인" id="ok_btn" class="btn">
-            <input type="button" value="승인" id="accept_btn" class="btn">
-            <input type="button" value="반려" id="return_btn" class="btn">
+            
+            <!-- 승인 버튼 -->
+            <c:if test="${draft[0].name == loginSSInfo.name && draft[0].appr_result == 3}">
+            	<input type="button" value="승인" id="accept_btn" class="btn">
+            </c:if>
+            <c:if test="${draft[1].name == loginSSInfo.name && draft[1].appr_result == 3}">
+            	<input type="button" value="승인" id="accept_btn" class="btn">
+            </c:if>
+            <c:if test="${draft[2].name == loginSSInfo.name && draft[2].appr_result == 3}">
+            	<input type="button" value="승인" id="accept_btn" class="btn">
+            </c:if>
+            
+            <!-- 반려 버튼 -->
+            <c:if test="${draft[0].name == loginSSInfo.name && draft[0].appr_result == 3}">
+            	<input type="button" value="반려" id="return_btn" class="btn">
+            </c:if>
+            <c:if test="${draft[1].name == loginSSInfo.name && draft[1].appr_result == 3}">
+            	<input type="button" value="반려" id="return_btn" class="btn">
+            </c:if>
+            <c:if test="${draft[2].name == loginSSInfo.name && draft[2].appr_result == 3}">
+            	<input type="button" value="반려" id="return_btn" class="btn">
+            </c:if>
         </div>
     </div>
 </section>
+<script>
+// 확인 버튼 클릭 시
+$('#ok_btn').click(function(){
+	//결재자면 결재함으로, 기안자면 기안함으로
+	<%-- if(${draft[0].name} == ${loginSSInfo.name} || ${draft[1].name} == ${loginSSInfo.name} || ${draft[2].name} == ${loginSSInfo.name}){
+		// TODO 결재함으로 변경
+		location.href="<%= request.getContextPath() %>/";
+	} --%>
+	location.href="<%= request.getContextPath() %>/draft/list";
+})
+</script>
 </body>
 </html>

@@ -103,7 +103,9 @@ public class DraftContoller {
 			, HttpSession session
 			, RedirectAttributes rttr
 			, Draft draft) {
+	
 		System.out.println("draft: " + draft);
+		
 		// 기안을 작성하는 직원 번호 가져오기
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
 		int ep_no = loginInfo.getEmp_no();
@@ -124,8 +126,17 @@ public class DraftContoller {
 			ModelAndView mv
 			, HttpSession session
 			, RedirectAttributes rttr
-			, @RequestParam(name="drNo", required = false) String page) {
+			, @RequestParam(name="dr_sort", required = false) int dr_sort
+			, @RequestParam(name="drNo", required = false) String dr_no_str) {
+		System.out.println("dr_sort: " + dr_sort);
+		System.out.println("dr_no_str: " + dr_no_str);
+		int dr_no = Integer.parseInt(dr_no_str);
+		List<Draft> draft = null;
 		
+		// 상세 조회할 기안 정보 가져오기
+		draft = draftService.selectDraft(dr_no, dr_sort);
+
+		mv.addObject("draft", draft);
 		mv.setViewName("draft/selectDraft");
 		return mv;
 	}

@@ -28,7 +28,7 @@
             <tr class="first_line">
                 <td></td>
                 <td style="width: 14%">기안 번호</td>
-                <td style="width: 12%;">구분</td>
+                <td style="width: 12%;">분류</td>
                 <td style="width: 22%;">기안 제목</td>
                 <td style="width: 17%;">기안일</td>
                 <td style="width: 17%;">처리기한</td>
@@ -37,38 +37,38 @@
             </tr>
             <c:if test="${not empty draftList}">
 		        <c:forEach items="${draftList}" var="list">
-					<tr class="list">
-						<td class="tb_read" value="${list.dr_no}"></td>
-						<td class="tb_read" value="${list.dr_no}">${list.dr_no}</td>
+					<tr class="list" dr_sort>
+						<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}"></td>
+						<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">${list.dr_no}</td>
 						<c:if test="${list.dr_sort eq 1}">
-							<td class="tb_read" value="${list.dr_no}">기안서</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">기안서</td>
 						</c:if>
 						<c:if test="${list.dr_sort eq 2}">
-							<td class="tb_read" value="${list.dr_no}">지출결의서</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">지출결의서</td>
 						</c:if>
 						<c:if test="${list.dr_sort eq 3}">
-							<td class="tb_read" value="${list.dr_no}">정산서</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">정산서</td>
 						</c:if>
-						<td class="tb_read" value="${list.dr_no}">${list.dr_title}</td>
-						<td class="tb_read" value="${list.dr_no}">${list.dr_date}</td>
-						<td class="tb_read" value="${list.dr_no}">${list.dr_due_date}</td>
+						<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">${list.dr_title}</td>
+						<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">${list.dr_date}</td>
+						<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">${list.dr_due_date}</td>
 						
 						<c:if test="${list.dr_result eq 1}">
-							<td class="tb_read" value="${list.dr_no}">진행중</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">진행중</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 2}">
-							<td class="tb_read" value="${list.dr_no}">완료:승인</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료:승인</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 3}">
-							<td class="tb_read" value="${list.dr_no}">완료:부결</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료:부결</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 4}">
-							<td class="tb_read" value="${list.dr_no}">완료:반려</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료:반려</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 5}">
-							<td class="tb_read" value="${list.dr_no}">상신</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">상신</td>
 						</c:if>
-						<td class="tb_read" value="${list.dr_no}"></td>
+						<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}"></td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -113,9 +113,9 @@ $('#create_btn').click(function(){
 <script>
 // 기안 정보 클릭 시 해당 기안의 상세보기 페이지로 이동
 $('.tb_read').click(function(){
-	drNo = $(this).val();
-	location.href="<%= request.getContextPath() %>/draft/select";
-	<%-- location.href="<%= request.getContextPath() %>/draft/select?drNo="+drNo; --%>
+	var drNo = $(this).attr("value");
+	var dr_sort = $(this).attr("dr_sort");
+	location.href="<%= request.getContextPath() %>/draft/select?dr_sort="+dr_sort+"&drNo="+drNo;
 })
 </script>
 </body>

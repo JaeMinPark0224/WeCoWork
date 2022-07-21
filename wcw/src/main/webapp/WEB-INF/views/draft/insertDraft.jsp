@@ -68,8 +68,8 @@
 				                        </td>
 				                    </tr>
 				                    <tr>
-				                        <td class="first_td" name="dr_comment">비고</td>
-				                        <td><input type="text" class="write_td"></td>
+				                        <td class="first_td">비고</td>
+				                        <td><input type="text" class="write_td" name="dr_comment"></td>
 				                    </tr>
 				                </table>
 				                <input type="submit" id="ok_btn1" value="상신" style="display: block;">
@@ -154,7 +154,7 @@
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">비고</td>
-				                        <td><input type="text" class="write_td"></td>
+				                        <td><input type="text" class="write_td" name="dr_comment"></td>
 				                    </tr>
 				                </table>
 				                <input type="submit" id="ok_btn3" value="상신">
@@ -241,15 +241,15 @@ $('#emp_select2').change(function(){
 		// 결재자3 선택할 수 있도록
 		$('#emp_select3').removeAttr("disabled");
 	}
-	// 결재자2가 선택되지 않았다면
-	if($('#emp_select2').val() == null){
-		// 결재자3 선택 못하도록
+	// 결재자2에 '대표' 선택시 결재자3 선택 불가
+	if($('#emp_select2').val() == "0"){
 		$('#emp_select3').attr("disabled", true);
-		var option = $("<option selected disabled>" + "결재자3" + "</option>");
+		$('#emp_select3').children().remove();
+		var option = $("<option>선택안함</option>");
 		$('#emp_select3').append(option);
 	}
 
-	// 결재자2 선택이 되었으면
+		// 결재자2 선택이 되었으면
 		if($('#emp_select2').val() != null){
 			
 			// 결재자3 선택할 수 있도록
@@ -263,13 +263,17 @@ $('#emp_select2').change(function(){
 			// 결재자2에 선택안함 옵션 추가
 			$('#emp_select3').append("<option>선택안함</option>");
 		}
-
-		// 결재자2에 '대표' 선택시 결재자3 선택 불가
-		if($('#emp_select2').val() == "0"){
+	
+		// 결재자2가 선택되지 않았다면
+		if($('#emp_select2').val() == null || ($('#emp_select2').val() == '선택안함')){
+			console.log($('#emp_select2').val());
+			// 결재자3 선택 못하도록
 			$('#emp_select3').attr("disabled", true);
-			var option = $("<option>" + "결재자3" + "</option>");
+			$('#emp_select3').children().remove();
+			var option = $("<option>선택안함</option>");
 			$('#emp_select3').append(option);
 		}
+		
 	$(".emp_no_2").val($("#emp_select2 option:selected").attr("emp_no"));
 })
 

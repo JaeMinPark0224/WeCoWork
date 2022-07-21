@@ -47,6 +47,9 @@
         margin-left: 910px;
         cursor: pointer;
     }
+    .tb_read{
+    	cursor: pointer;
+    }
 
     .list{
     	background-color: rgb(244, 244, 244);

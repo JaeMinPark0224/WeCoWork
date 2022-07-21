@@ -31,18 +31,30 @@ public class Draft {
 	private int appr_no_1;
 	private int appr_no_2;
 	private int appr_no_3;
-	private String emp_no_1;
-	private String emp_no_2;
-	private String emp_no_3;
+	private int emp_no;
+	private Integer emp_no_1;
+	private Integer emp_no_2;
+	private Integer emp_no_3;
+	private int appr_order;
 	private int appr_order_1;
 	private int appr_order_2;
 	private int appr_order_3;
+	private int appr_result;
 	private int appr_result_1;
 	private int appr_result_2;
 	private int appr_result_3;
+	private Date appr_date;
 	private Date appr_date_1;
 	private Date appr_date_2;
 	private Date appr_date_3;
+	
+	private String name; //결재자 이름
+	private String sign; // 결재자 사인
+	private String job_title; // 결재자 직급
+	
+	private String name_a; //기안자 이름
+	private String job_title_a; // 기안자 직급
+	private String dept_name_a; // 기안자 부서
 	
 	@Override
 	public String toString() {
@@ -53,11 +65,14 @@ public class Draft {
 				+ ", spend_purpose=" + spend_purpose + ", spend_content=" + spend_content + ", spend_amount="
 				+ spend_amount + ", spend_content_prvt=" + spend_content_prvt + ", spend_amount_prvt="
 				+ spend_amount_prvt + ", spend_sum=" + spend_sum + ", appr_no_1=" + appr_no_1 + ", appr_no_2="
-				+ appr_no_2 + ", appr_no_3=" + appr_no_3 + ", emp_no_1=" + emp_no_1 + ", emp_no_2=" + emp_no_2
-				+ ", emp_no_3=" + emp_no_3 + ", appr_order_1=" + appr_order_1 + ", appr_order_2=" + appr_order_2
-				+ ", appr_order_3=" + appr_order_3 + ", appr_result_1=" + appr_result_1 + ", appr_result_2="
-				+ appr_result_2 + ", appr_result_3=" + appr_result_3 + ", appr_date_1=" + appr_date_1 + ", appr_date_2="
-				+ appr_date_2 + ", appr_date_3=" + appr_date_3 + "]";
+				+ appr_no_2 + ", appr_no_3=" + appr_no_3 + ", emp_no=" + emp_no + ", emp_no_1=" + emp_no_1
+				+ ", emp_no_2=" + emp_no_2 + ", emp_no_3=" + emp_no_3 + ", appr_order=" + appr_order + ", appr_order_1="
+				+ appr_order_1 + ", appr_order_2=" + appr_order_2 + ", appr_order_3=" + appr_order_3 + ", appr_result="
+				+ appr_result + ", appr_result_1=" + appr_result_1 + ", appr_result_2=" + appr_result_2
+				+ ", appr_result_3=" + appr_result_3 + ", appr_date=" + appr_date + ", appr_date_1=" + appr_date_1
+				+ ", appr_date_2=" + appr_date_2 + ", appr_date_3=" + appr_date_3 + ", name=" + name + ", sign=" + sign
+				+ ", job_title=" + job_title + ", name_a=" + name_a + ", job_title_a=" + job_title_a + ", dept_name_a="
+				+ dept_name_a + "]";
 	}
 
 	public int getDr_no() {
@@ -244,28 +259,44 @@ public class Draft {
 		this.appr_no_3 = appr_no_3;
 	}
 
-	public String getEmp_no_1() {
+	public int getEmp_no() {
+		return emp_no;
+	}
+
+	public void setEmp_no(int emp_no) {
+		this.emp_no = emp_no;
+	}
+
+	public Integer getEmp_no_1() {
 		return emp_no_1;
 	}
 
-	public void setEmp_no_1(String emp_no_1) {
+	public void setEmp_no_1(Integer emp_no_1) {
 		this.emp_no_1 = emp_no_1;
 	}
 
-	public String getEmp_no_2() {
+	public Integer getEmp_no_2() {
 		return emp_no_2;
 	}
 
-	public void setEmp_no_2(String emp_no_2) {
+	public void setEmp_no_2(Integer emp_no_2) {
 		this.emp_no_2 = emp_no_2;
 	}
 
-	public String getEmp_no_3() {
+	public Integer getEmp_no_3() {
 		return emp_no_3;
 	}
 
-	public void setEmp_no_3(String emp_no_3) {
+	public void setEmp_no_3(Integer emp_no_3) {
 		this.emp_no_3 = emp_no_3;
+	}
+
+	public int getAppr_order() {
+		return appr_order;
+	}
+
+	public void setAppr_order(int appr_order) {
+		this.appr_order = appr_order;
 	}
 
 	public int getAppr_order_1() {
@@ -292,6 +323,14 @@ public class Draft {
 		this.appr_order_3 = appr_order_3;
 	}
 
+	public int getAppr_result() {
+		return appr_result;
+	}
+
+	public void setAppr_result(int appr_result) {
+		this.appr_result = appr_result;
+	}
+
 	public int getAppr_result_1() {
 		return appr_result_1;
 	}
@@ -314,6 +353,14 @@ public class Draft {
 
 	public void setAppr_result_3(int appr_result_3) {
 		this.appr_result_3 = appr_result_3;
+	}
+
+	public Date getAppr_date() {
+		return appr_date;
+	}
+
+	public void setAppr_date(Date appr_date) {
+		this.appr_date = appr_date;
 	}
 
 	public Date getAppr_date_1() {
@@ -339,6 +386,53 @@ public class Draft {
 	public void setAppr_date_3(Date appr_date_3) {
 		this.appr_date_3 = appr_date_3;
 	}
-	
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+
+	public String getJob_title() {
+		return job_title;
+	}
+
+	public void setJob_title(String job_title) {
+		this.job_title = job_title;
+	}
+
+	public String getName_a() {
+		return name_a;
+	}
+
+	public void setName_a(String name_a) {
+		this.name_a = name_a;
+	}
+
+	public String getJob_title_a() {
+		return job_title_a;
+	}
+
+	public void setJob_title_a(String job_title_a) {
+		this.job_title_a = job_title_a;
+	}
+
+	public String getDept_name_a() {
+		return dept_name_a;
+	}
+
+	public void setDept_name_a(String dept_name_a) {
+		this.dept_name_a = dept_name_a;
+	}
+
 }

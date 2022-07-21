@@ -26,6 +26,8 @@
         float: right;
         margin-top: 13px;
         margin-right: 65px;
+        font-family: NotoSansR;
+        font-size: 12px;
     }
     #sign_info_tb{
         border-collapse: collapse;
@@ -50,12 +52,15 @@
     .s_date{
         width: 125px;
         height: 35px;
+        text-align: center;
     }
     .s_sign{
         height: 65px;
+        text-align: center;
     }
     .s_name{
         height: 30px;
+        text-align: center;
     }
 
     /* 기안서 출력부분 */
@@ -147,6 +152,7 @@
         font-family: NotoSansR;
         font-size: 12px;
         border: 0px;
+        cursor: pointer;
     }
     #ok_btn{
         background-color: rgb(230, 230, 230);
