@@ -87,8 +87,8 @@ COMMENT ON COLUMN TB_COMPANY.CP_APPR_YN IS '승인: Y / 비승인: N';
 CREATE TABLE TB_DRAFT (
 	DR_NO	            NUMBER		            NOT NULL,
 	EP_NO	            NUMBER		            NOT NULL,
-	DR_SORT	            NUMBER		            NOT NULL,
-	DR_TIER	            NUMBER		            NOT NULL,
+	DR_SORT	            VARCHAR2(10)		            NOT NULL,
+	DR_TIER	            NUMBER		            NULL,
 	DR_RESULT	        NUMBER		 DEFAULT 5            NOT NULL,
 	DR_TITLE	        VARCHAR2(600)		    NOT NULL,
 	DR_CONTENT	        VARCHAR2(1000)		    NULL,
@@ -117,7 +117,7 @@ CREATE TABLE TB_APPROVAL (
 	EMP_NO	    NUMBER		            NOT NULL,
 	APPR_ORDER	NUMBER		            NOT NULL,
 	APPR_RESULT	NUMBER		            NOT NULL,
-	APPR_DATE	DATE	DEFAULT SYSDATE	NULL
+	APPR_DATE	DATE	NULL
 );
 
 COMMENT ON COLUMN TB_APPROVAL.APPR_ORDER IS '1,2,4,8,';
