@@ -18,7 +18,7 @@
 	IP_CLOCK_IN, IP_CLOCK_OUT,
 	ATT_status
 	) values(
-	(select to_char(sysdate, 'yyyymmdd')||'01'||#{emp_no} from dual)
+	(select to_char(sysdate, 'yyyymmdd')||#{cp_no}||#{emp_no} from dual)
 	, #{emp_no}, sysdate
 	, sysdate, null
 	, #{ip_clock_in}, null
@@ -81,6 +81,6 @@
 </select>
 
 <!-- /////////////////월간근태///////////////// -->
-
+<select id=""></select>
 
 </mapper>

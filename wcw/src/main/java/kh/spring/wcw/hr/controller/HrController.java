@@ -3,8 +3,10 @@ package kh.spring.wcw.hr.controller;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -692,6 +694,27 @@ public class HrController {
 		mv.addObject("empList", empList);
 		mv.setViewName("hr/attendance/monthly");
 		return mv;
+	}
+	@PostMapping("/attendance/monthly/select")
+	@ResponseBody
+	public String selectMonthlyAttendanceHr(
+			Attendance attendance
+			, HttpSession session
+			,@RequestParam(name="att_month") String att_month
+			, @RequestParam(name="dept_name") String dept_name
+			, @RequestParam(name="name") String name
+			, @RequestParam(name="emp_no") int emp_no
+			) {
+		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
+		attendance.setCp_no(loginSSInfo.getCp_no());
+		attendance.setEmp_no(emp_no);
+		attendance.setAtt_month(att_month);
+		attendance.setDept_name(dept_name);
+		attendance.setName(name);
+		List<Attendance> result = hrService.selectMonthlyAttendance(attendance);
+		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd").serializeNulls().create();
+		
+		return gsonObj.toJson(result);
 	}
 	
 	@GetMapping("/attendance/vacation")

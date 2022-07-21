@@ -33,7 +33,6 @@ public class Attendance {
 	private Timestamp att_clock_out;
 	private String ip_clock_in;
 	private String ip_clock_out;
-	private String att_status;
 	
 	private int att_appr_no;
 	private String att_appr_content;
@@ -50,15 +49,22 @@ public class Attendance {
 	private String dept_name;
 	private int cp_no;
 	
+	private int vaca_confirm;
+	private Date vaca_start;
+	private Date vaca_end;
+	private String att_month;
+	
 	@Override
 	public String toString() {
 		return "Attendance [att_no=" + att_no + ", emp_no=" + emp_no + ", att_date=" + att_date + ", att_clock_in="
 				+ att_clock_in + ", att_clock_out=" + att_clock_out + ", ip_clock_in=" + ip_clock_in + ", ip_clock_out="
-				+ ip_clock_out + ", att_status=" + att_status + ", att_appr_no=" + att_appr_no + ", att_appr_content="
-				+ att_appr_content + ", att_appr_result=" + att_appr_result + ", att_appr_clock_in=" + att_appr_clock_in
+				+ ip_clock_out + ", att_appr_no=" + att_appr_no + ", att_appr_content=" + att_appr_content
+				+ ", att_appr_result=" + att_appr_result + ", att_appr_clock_in=" + att_appr_clock_in
 				+ ", att_appr_clock_out=" + att_appr_clock_out + ", att_appr_date=" + att_appr_date
 				+ ", att_appr_req_date=" + att_appr_req_date + ", att_date_start=" + att_date_start + ", att_date_end="
-				+ att_date_end + ", name=" + name + ", dept_name=" + dept_name + ", cp_no=" + cp_no + "]";
+				+ att_date_end + ", name=" + name + ", dept_name=" + dept_name + ", cp_no=" + cp_no + ", vaca_confirm="
+				+ vaca_confirm + ", vaca_start=" + vaca_start + ", vaca_end=" + vaca_end + ", att_month=" + att_month
+				+ "]";
 	}	public Attendance() {
 		super();
 	}
@@ -99,9 +105,6 @@ public class Attendance {
 		return ip_clock_out;
 	}
 
-	public String getAtt_status() {
-		return att_status;
-	}
 
 	public int getAtt_appr_no() {
 		return att_appr_no;
@@ -164,9 +167,6 @@ public class Attendance {
 		this.ip_clock_out = ip_clock_out;
 	}
 
-	public void setAtt_status(String att_delete_yn) {
-		this.att_status = att_delete_yn;
-	}
 
 	public void setAtt_appr_no(int att_appr_no) {
 		this.att_appr_no = att_appr_no;
@@ -217,6 +217,30 @@ public class Attendance {
 	}
 	public void setCp_no(int cp_no) {
 		this.cp_no = cp_no;
+	}
+	public int getVaca_confirm() {
+		return vaca_confirm;
+	}
+	public void setVaca_confirm(int vaca_confirm) {
+		this.vaca_confirm = vaca_confirm;
+	}
+	public Date getVaca_start() {
+		return vaca_start;
+	}
+	public Date getVaca_end() {
+		return vaca_end;
+	}
+	public void setVaca_start(Date vaca_start) {
+		this.vaca_start = vaca_start;
+	}
+	public void setVaca_end(Date vaca_end) {
+		this.vaca_end = vaca_end;
+	}
+	public String getAtt_month() {
+		return att_month;
+	}
+	public void setAtt_month(String att_month) {
+		this.att_month = att_month;
 	}
 	
 	

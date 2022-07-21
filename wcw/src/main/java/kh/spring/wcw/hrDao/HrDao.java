@@ -251,4 +251,9 @@ public class HrDao {
 	public int updateVacation(Vacation vacation) {
 		return sqlsession.update("hrMapper.updateVacation", vacation);
 	}
+	
+	//월간 근태 조회
+	public List<Attendance> selectMonthlyAttendance(Attendance attendance){
+		return sqlsession.selectList("hrMapper.selectMonthlyAttendance", attendance);
+	}
 }

@@ -97,14 +97,31 @@
 	/* background-color: rgb(159, 197, 232); */
 /* 	box-sizing: border-box; */
 }
-#bluechip{
+.bluechip{
+	width: 12px;
+	height: 12px;
+	background-color: rgb(75, 77, 178);
+	border-radius: 50%;
+	margin: 0 auto;
+}
+
+.bluechipT {
 	width: 12px;
 	height: 12px;
 	background-color: rgb(75, 77, 178);
 	border-radius: 50%;
 	margin-right: 5px;
 }
-#pinkchip{
+
+.pinkchip{
+	width: 12px;
+	height: 12px;
+	background-color: rgb(242, 205, 220);
+	border-radius: 50%;
+	margin: 0 auto;
+}
+
+.pinkchipT {
 	width: 12px;
 	height: 12px;
 	background-color: rgb(242, 205, 220);
@@ -112,6 +129,7 @@
 	margin-left: 10px;
 	margin-right: 5px;
 }
+
 #att_month_text, #dept_name_txt, #emp_name_txt{
 	height: 25px;
 	line-height: 25px;
@@ -183,9 +201,9 @@
 					<div class="attendance_main_box_content">
 						<div id="abovetable_flex">
 							<div class="font_title">휴가</div>
-							<div id="pinkchip"></div>
+							<div class="pinkchipT"></div>
 							<div class="font_title">출근</div>	
-							<div id="bluechip"></div>
+							<div class="bluechipT"></div>
 						</div>
 						<table class="attendance_main_box_content_table" id="att_date_search_table" style="margin-top: 10px;">
 							<tr class="table_title">
@@ -206,6 +224,8 @@
 	</div>
 </section>
 <script>
+
+////기준년월 선택시 표 변화하는것
 	$("#att_month").on("change", function(){
 		let year = $(this).val().substring(0,4);
 		let month = $(this).val().substring(5,7);
@@ -225,92 +245,110 @@
 		}
 	});
 
-	$("#att_date_search_btn").click(function(){
+	$("#att_date_search_btn").click(searchBtnFnc);
+	function searchBtnFnc() {
 		$(".table_title").nextAll().remove();
 		$.ajax({
-			url: "<%=request.getContextPath()%>/hr/attendance/selectWeekly",
 			type: "post",
-			data: {att_date_start_str:$('#startDate').text()
-				, att_date_end_str:$('#endDate').text()
+			url : "<%=request.getContextPath()%>/hr/attendance/monthly/select",
+			data : {att_month:$('#att_month').val()
 				, dept_name:$('#dept_name').val()
 				, name:$('#emp_name').text()
 				, emp_no : $('#emp_name').val()
 			} ,
-			dataType:"json",
-			success: function(result){
+			dataType : "json",
+			success : function(result) {
 				console.log(result);
-				var day = ['일', '월', '화', '수', '목', '금', '토'];
-				var html;
-				var extendtime = 144000000;
-				var worktimetotal = 0;
-				for(var i = 0; i < result.length; i++){
+				console.log(employee);
+				allAttFnc(result);
+				/* for(var i = 0; i < result.length; i++){
 					var vo = result[i];
-					if(vo.att_clock_out != null) {
-						var worktimedaily = new Date(vo.att_clock_out).getTime()-new Date(vo.att_clock_in).getTime(); 
-					} else {
-						worktimedaily = 0;
-					}
-					worktimetotal = worktimetotal + worktimedaily;  
+					var date = $('#att_month').val()+'-'+(i+1)
 					html = "";
 					html += '<tr class="table_content_white">';
-                    html += '<td >'+day[new Date(vo.att_date).getDay()]+'</td>';
-                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
-                    if(vo.att_clock_out != null) {
-	                    html += '<td >'+ tohhmmss(worktimedaily)+'</td>';
-                    } else {
-                    	html += '<td >'+ '근무중'+'</td>';
-                    }
-                    html += '<td >'+vo.att_clock_in+'</td>';
-                    html += '<td >';
-                    if(vo.att_clock_out == null) {
-                    	html += "-";}
-                    else{
-                    	html += vo.att_clock_out;
-                    }
-               		html += '</td>';
-                    html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
+					html += '<td >'+vo.name+'</td>';
+					html += '<td >'+vo.dept_name+'</td>';
+					for(var j=0; j<) {
+						if(date == vo.att_date && vo.vaca_confirm ==null){
+							html += '<div class="bluechip"></div>'
+						} else if(date >= vo.vaca_start && date <= vo.vaca_end && vo.vaca_confirm == 2){
+							html += '<div class="pinkchip"></div>'
+						} else{
+							html +=""
+						}
+						$('.date_td').append(html);
+					} 
+					
+					html += '<td >'+'출근수'+'</td>';
+					html += '<td >'+'휴가수'+'</td>';
                     html += '</tr>';
                     $('#att_appr_date_search_table').append(html);
-				}
-				html = "";
-				html += '<tr class="table_content_white">';
-                html += '<td >'+vo.emp_no+'</td>';
-                html += '<td >'+vo.name+'</td>';
-                html += '<td >'+vo.dept_name+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal)+'</td>';
-                html += '<td >'+'40시간'+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
-                html += '<td >'+tohhmmss(worktimetotal/((result.length == 0)?1:result.length))+'</td>';
-                html += '</tr>';
-                $('#att_date_search_table').append(html);
-                
-               	var worktimearray = [0, 0, 0, 0, 0, 0, 0];
-                for(var i = 0; i < 6; i++){
-                	var worktimedaily = 0;
-                	if(result[i] != undefined) {
-	                	if(result[i].att_clock_out != null) {
-							worktimedaily = new Date(result[i].att_clock_out).getTime()-new Date(result[i].att_clock_in).getTime(); 
-							worktimedaily = worktimedaily / 3600000;
-						} else {
-							worktimedaily = 0;
-						}
-	                	var dayIndex = new Date(result[i].att_date).getDay();
-	                	if(dayIndex == 0) {
-	                		dayIndex = 7;
-	                	}
-	                	worktimearray[dayIndex-1] = worktimedaily; 
-                	}
-                }
-                for(var i = 0; i < 6; i++){
-	               	myChart1.data.datasets[0].data[i] = worktimearray[i];
-                }
-               	myChart1.update();
+				} */
 			},
-			error: function(error){
-				alert(error); 
+			error : function(error) {
+				alert(error);
 			}
 		});
-	});
+		
+	}
+	
+	function allAttFnc(attendanceList) {
+		//1. 행 생성 employee의 개수 만큼 생성
+		for(var i = 0; i < employee.length; i++) {
+			if(employee[i].resign_yn == "N") {
+				let htmlTr = "<tr class='table_content_white' emp_no='"+employee[i].emp_no+"' style='border-bottom : 2px solid rgb(224,224,224);'></tr>"
+				$("#att_date_search_table").append(htmlTr);
+			}
+		}
+		//2. 열 생성
+		let columnLength = $(".table_title").children().length;
+		for(var i = 0; i < columnLength; i++) {
+			let htmlTd = '';
+			if(i == 0 || i == 1 || i == columnLength - 1 || 1 == columnLength - 2) {
+				htmlTd = "<td></td>"
+			}
+			else {
+				htmlTd = "<td class='date_td'></td>"
+			}
+			$(".table_content_white").append(htmlTd);
+		}
+		//3. 이름 부서 대입
+		for(var i = 0 ; i < employee.length; i++) {
+			$(".table_content_white[emp_no = "+employee[i].emp_no+"]").children().eq(0).text(employee[i].name);
+			$(".table_content_white[emp_no = "+employee[i].emp_no+"]").children().eq(1).text(employee[i].dept_name);
+		}
+		//4. 값 대입
+		for(var i = 0; i < attendanceList.length; i++) {
+			let htmlChip = '';
+			let tdDate = '';
+			if(attendanceList[i].att_date != null) {
+				htmlChip += '<div class="bluechip"></div>';
+				tdDate = attendanceList[i].att_date.split("-")[2];
+				tdDate = parseInt(tdDate) - 1;
+				if($(".table_content_white[emp_no = "+attendanceList[i].emp_no+"]").children(".date_td").eq(tdDate).children().length == 0) {
+					$(".table_content_white[emp_no = "+attendanceList[i].emp_no+"]").children(".date_td").eq(tdDate).append(htmlChip);
+				}
+			}
+			else if (attendanceList[i].vaca_start != null) {
+				vacaStartDate = new Date(attendanceList[i].vaca_start);
+				vacaEndDate = new Date(attendanceList[i].vaca_end);
+				let tdDateCnt = 0;
+				while(vacaStartDate <= vacaEndDate) {
+					let htmlChip = '<div class="pinkchip"></div>';
+					tdDate = attendanceList[i].vaca_start.split("-")[2];
+					tdDate = parseInt(tdDate) - 1 + tdDateCnt++;
+					$(".table_content_white[emp_no = "+attendanceList[i].emp_no+"]").children(".date_td").eq(tdDate).append(htmlChip);
+					vacaStartDate.setDate(vacaStartDate.getDate() + 1);
+				}
+			}
+		}
+		//5. 출근, 휴가 대입
+		for(var i = 0; i < employee.length; i++) {
+			$(".table_content_white").eq(i).children().last().prev().text($(".table_content_white").eq(i).find(".bluechip").length);
+			$(".table_content_white").eq(i).children().last().text($(".table_content_white").eq(i).find(".pinkchip").length);
+		}
+	}
+	
 	// 숫자를 hh:mm:ss로 바꾸는 함수
 	function tohhmmss(num) {
 		var stringHMS = '';
@@ -361,6 +399,7 @@ var employeeVo;
 		dept_name : "${emp.dept_name}"
 		,name : "${emp.name}"
 		,emp_no : "${emp.emp_no}"
+		,resign_yn : "${emp.resign_yn}"
 	}
 	employee.push(employeeVo);
 </c:forEach>

@@ -354,7 +354,7 @@
 	select dept_name, dept_no from tb_department where cp_no = #{cp_no}
 </select>
 <select id="selectEmp" resultType="Employee" parameterType="_int" >
-	select d.dept_name, e.name , e.emp_no
+	select d.dept_name, e.name , e.emp_no, e.RESIGN_YN
 	from tb_employee e
 	join tb_department d on e.dept_no=d.dept_no
 	where cp_no = #{cp_no}
@@ -391,5 +391,29 @@
 	VACA_APPROVER = #{vaca_approver}
 	where vaca_no = #{vaca_no}
 </update>
+
+<!-- 월간근태용 - 휴가리스트, 근태리스트 조회 -->
+<select id="selectMonthlyAttendance" parameterType="Attendance" resultType="Attendance">
+select * from
+    (select cp_no, te.name, ta.emp_no ,td.dept_name ,att_date, null vaca_start, null vaca_end, null vaca_confirm
+        from tb_attendance ta
+        join tb_employee te on ta.emp_no = te.emp_no
+        join tb_department td on te.dept_no = td.dept_no
+    union
+    select cp_no, te.name, tv.emp_no ,td.dept_name, null, vaca_start, vaca_end, vaca_confirm
+        from tb_vacation tv
+        join tb_employee te on tv.emp_no = te.emp_no
+        join tb_department td on te.dept_no = td.dept_no)
+where cp_no = #{cp_no}
+and (att_date between #{att_month}||'-01' and #{att_month}||'-31' 
+    or vaca_start between #{att_month}||'-01' and #{att_month}||'-31'
+    or vaca_end between #{att_month}||'-01' and #{att_month}||'-31')
+<if test='emp_no != 0'>
+and emp_no = #{emp_no}
+</if>
+<if test='!dept_name.equals("0")'>
+and dept_name = #{dept_name}
+</if>    
+</select>
 
 </mapper>

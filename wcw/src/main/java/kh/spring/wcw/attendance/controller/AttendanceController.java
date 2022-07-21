@@ -48,6 +48,7 @@ public class AttendanceController {
 			return "session is empty";
 		}
 		attendance.setEmp_no(loginSSInfo.getEmp_no());
+		attendance.setCp_no(loginSSInfo.getCp_no());
 		attendance.setIp_clock_in(WCWUtill.getClientIP(request));
 		int result = service.insertAttendance(attendance);
 		return String.valueOf(result);

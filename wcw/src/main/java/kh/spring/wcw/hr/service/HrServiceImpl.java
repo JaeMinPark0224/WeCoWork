@@ -184,8 +184,17 @@ public class HrServiceImpl implements HrService {
 		return dao.selectVacation(vacation);
 	};
 	
+	//휴가 승인,반려
 	@Override
 	public int updateVacation(Vacation vacation) {
 		return dao.updateVacation(vacation);
 	}
+	
+	//월간근태 조회
+	@Override
+	public List<Attendance> selectMonthlyAttendance(Attendance attendance) {
+		return dao.selectMonthlyAttendance(attendance);
+	}
+	
+	
 }

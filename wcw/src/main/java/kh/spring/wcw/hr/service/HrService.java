@@ -185,4 +185,12 @@ public interface HrService {
 	 */
 	public int updateVacation(Vacation vacation);
 	
+	/**
+	 * @param 회사 번호
+	 * @return 근태, 휴가 정보 리스트
+	 * @author Jinjeong Lee
+	 */
+	public List<Attendance> selectMonthlyAttendance(Attendance attendance);
+	
+	
 }
