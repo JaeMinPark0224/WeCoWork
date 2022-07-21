@@ -1,0 +1,74 @@
+@charset "UTF-8";
+#section{
+        margin-left: 60px;
+        width: 1200px;
+        color: rgb(94, 94, 94);
+        position: relative;
+    }
+    .title{
+        display: inline-block;
+        font-family: NotoSansB;
+        font-size: 14px;
+        margin-top: 105px;
+        margin-left: 65px;
+        color: rgb(75, 77, 178);
+    }
+    .content{
+       margin-top: 70px;
+       margin-left: 65px; 
+       margin-bottom: 120px;
+    }
+    .table{
+        width: 1070px;
+        text-align: center;
+        font-size: 12px;
+        font-family: NotoSansR;
+        border-spacing: 0px;
+    }
+    td{
+        height: 60px;
+    }
+    tr > td:first-child, tr > td:last-child{
+        width: 35px;
+    }
+    .first_line{
+        font-family: NotoSansB;
+        background-color: rgb(224, 224, 224);
+    }
+    #create_btn{
+        width: 115px;
+        height: 40px;
+        background-color: rgb(230, 230, 230);
+        color: rgb(51, 51, 51);
+        border: 0px;
+        font-family: NotoSansR;
+        font-size: 12px;
+        margin-left: 910px;
+        cursor: pointer;
+    }
+
+    .list{
+    	background-color: rgb(244, 244, 244);
+    	font-family: NotoSansR;
+        font-size: 12px;
+    	vertical-align: middle;
+    	text-align: center;
+    	color: rgb(94, 94, 94);
+    }
+    
+    #pageing_all{
+       margin: 45px 0px 220px 0px;
+    	text-align: center;
+    	font-family: 'NotoSansR';
+    	width: 1070px;
+    }
+    
+    .page{
+    	background-color: rgb(236, 236, 236);
+        border-radius: 3px;
+        color: rgb(127, 127, 127);
+        padding: 8px 11px 8px 11px;
+        display: inline-block;
+        margin: 0px 2px;
+        font-size: 10.5px;
+     }
