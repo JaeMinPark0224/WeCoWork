@@ -180,7 +180,7 @@
 					<div class="left_menu_1depth_title" open_chk="f">결재<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content" id="draft_list">기안함</div>
-						<div class="left_menu_2depth_content">결재함</div>
+						<div class="left_menu_2depth_content" id="appr_list">결재함</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -420,7 +420,10 @@
 	$('#draft_list').click(function() {
 		location.href = '<%= request.getContextPath()%>/draft/list';
 	});
-// 결재함 URL 	TODO
+// 결재함 URL
+	$('#appr_list').click(function() {
+		location.href = '<%= request.getContextPath()%>/draft/appr/list';
+	});
 </script>
 <script>
 	$('.test_login_btn').click(function() {

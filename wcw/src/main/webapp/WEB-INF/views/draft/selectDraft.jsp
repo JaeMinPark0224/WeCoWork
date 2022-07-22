@@ -243,12 +243,7 @@
 <script>
 // 확인 버튼 클릭 시
 $('#ok_btn').click(function(){
-	//결재자면 결재함으로, 기안자면 기안함으로
-	<%-- if(${draft[0].name} == ${loginSSInfo.name} || ${draft[1].name} == ${loginSSInfo.name} || ${draft[2].name} == ${loginSSInfo.name}){
-		// TODO 결재함으로 변경
-		location.href="<%= request.getContextPath() %>/";
-	} --%>
-	location.href="<%= request.getContextPath() %>/draft/list";
+	window.history.back();
 })
 </script>
 </body>

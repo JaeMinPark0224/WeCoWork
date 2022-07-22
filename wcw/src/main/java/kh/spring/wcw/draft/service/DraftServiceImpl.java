@@ -28,10 +28,16 @@ public class DraftServiceImpl implements DraftService {
 		return dao.insertDraft(draft);
 	}
 	
-	// 기안 리스트 조회
+	// 기안함 리스트 조회
 	@Override
 	public List<Draft> selectListDraft(int ep_no, RowBounds rowBounds){
 		return dao.selectListDraft(ep_no, rowBounds);
+	}
+	
+	// 결재함 리스트 조회
+	@Override
+	public List<Draft> selectListAppr(int emp_no, RowBounds rowBounds){
+		return dao.selectListAppr(emp_no, rowBounds);
 	}
 
 	// 기안 상세 보기

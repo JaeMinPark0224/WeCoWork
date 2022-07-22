@@ -27,10 +27,17 @@ public interface DraftService {
 	
 	/**
 	 * @param 직원 번호
-	 * @return 기안 리스트
+	 * @return 기안함 리스트
 	 * @author ybseo
 	 */
 	public List<Draft> selectListDraft(int ep_no,  RowBounds rowBounds);
+	
+	/**
+	 * @param 직원 번호
+	 * @return 결재함 리스트
+	 * @author ybseo
+	 */
+	public List<Draft> selectListAppr(int emp_no,  RowBounds rowBounds);
 	
 	/**
 	 * @param 기안 번호

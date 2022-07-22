@@ -27,9 +27,14 @@ public class DraftDao {
 		return sqlsession.insert("draftMapper.insertDraft", darft);
 	}
 	
-	// 기안 리스트 조회
+	// 기안함 리스트
 	public List<Draft> selectListDraft(int ep_no, RowBounds rowBounds){
 		return sqlsession.selectList("draftMapper.selectListDraft", ep_no, rowBounds);
+	}
+	
+	// 결재함 리스트
+	public List<Draft> selectListAppr(int emp_no, RowBounds rowBounds){
+		return sqlsession.selectList("draftMapper.selectListAppr", emp_no, rowBounds);
 	}
 	
 	// 기안 상세 보기

@@ -31,7 +31,7 @@ public class Draft {
 	private int appr_no_1;
 	private int appr_no_2;
 	private int appr_no_3;
-	private int emp_no;
+	private int emp_no; // 결재자 사번
 	private Integer emp_no_1;
 	private Integer emp_no_2;
 	private Integer emp_no_3;

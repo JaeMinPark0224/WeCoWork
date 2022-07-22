@@ -45,7 +45,7 @@ public class DraftContoller {
 		return mv;
 	}
 	
-	// 기안 리스트 페이지로 이동
+	// 기안함 페이지로 이동
 	@GetMapping("/list")
 	public ModelAndView selectListDraft(
 			ModelAndView mv
@@ -95,6 +95,48 @@ public class DraftContoller {
 		
 		return mv;
 	}
+	
+	// 결재함 페이지로 이동
+		@GetMapping("/appr/list")
+		public ModelAndView selectListAppr(
+				ModelAndView mv
+				, HttpSession session
+				, RedirectAttributes rttr
+				, @RequestParam(name="page", required = false) String page) {
+			int currentPage = 1; // 현재 페이지
+			int cotentLimit = 25; // 한 페이지에 보여질 직원 정보 갯수
+			
+			String currentPageStr = page;
+			try {
+				if(currentPageStr != null && !currentPageStr.equals("")) {
+					currentPage = Integer.parseInt(currentPageStr);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			int offset = (currentPage - 1) * cotentLimit;
+			RowBounds rowBounds = new RowBounds(offset, cotentLimit);
+			
+			// 자신의 사번 가져오기
+			Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+			int emp_no = loginInfo.getEmp_no();
+			
+			// 자신이 결재할, 결재한 기안 리스트 불러오기
+			List<Draft> apprList = draftService.selectListAppr(emp_no, rowBounds);
+			
+			int totalpageCnt = apprList.size()/cotentLimit + 1;
+			int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
+			int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
+			
+			mv.addObject("totalpageCnt", totalpageCnt);
+			mv.addObject("startPage", startPage);
+			mv.addObject("endPage", endPage);
+			mv.addObject("apprList", apprList);
+			mv.setViewName("draft/approvalList");
+			
+			return mv;
+		}
 	
 	// 기안 작성 기능
 	@PostMapping("/insert.do")
