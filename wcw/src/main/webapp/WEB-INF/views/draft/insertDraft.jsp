@@ -55,16 +55,16 @@
 				                <table class="table" id="table1">
 				                    <tr>
 				                        <td class="first_td">기안 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">목적</td>
-				                        <td><input type="text" class="write_td" name="dr_purpose"></td>
+				                        <td><input type="text" class="write_td" name="dr_purpose" id="dr_purpose"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">기안 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -82,16 +82,16 @@
 		        				<table class="table" id="table2">
 				                    <tr>
 				                        <td class="first_td">결의서 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title"></td>
+				                        <td><input type="text" class="write_td" name="dr_title"  id="dr_title1"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">지출 예정 일자</td>
-				                        <td><input type="text" class="write_td" name="dr_expect_date"></td>
+				                        <td><input type="text" class="write_td" name="dr_expect_date" id="dr_expect_date"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">결의서 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content2"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -109,20 +109,20 @@
 		        				<table class="table" id="table3">
 				                    <tr>
 				                        <td class="first_td">정산서 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title2"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">발생 기간</td>
-				                        <td><input type="text" class="write_td" name="spend_date"></td>
+				                        <td><input type="text" class="write_td" name="spend_date" id="spend_date"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">지출 목적</td>
-				                        <td><input type="text" class="write_td" name="spend_purpose"></td>
+				                        <td><input type="text" class="write_td" name="spend_purpose"  id="spend_purpose"></td>
 				                    </tr>
 				                    <tr>
-				                        <td class="first_td">기안 내용</td>
+				                        <td class="first_td">상세 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content" id="dr_content2"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -251,7 +251,6 @@ $('#emp_select2').change(function(){
 
 		// 결재자2 선택이 되었으면
 		if($('#emp_select2').val() != null){
-			
 			// 결재자3 선택할 수 있도록
 			$('#emp_select3').children().remove();
 			<c:forEach items="${employeeList}" var="employee">
@@ -266,7 +265,6 @@ $('#emp_select2').change(function(){
 	
 		// 결재자2가 선택되지 않았다면
 		if($('#emp_select2').val() == null || ($('#emp_select2').val() == '선택안함')){
-			console.log($('#emp_select2').val());
 			// 결재자3 선택 못하도록
 			$('#emp_select3').attr("disabled", true);
 			$('#emp_select3').children().remove();
@@ -309,10 +307,73 @@ $('.card_won').focusout(function(){
 })
 </script> 
 <script>
+// 유효성 체크
 $('.submit').submit(function(){
+	$(".emp_no_1").val($("#emp_select1 option:selected").attr("emp_no"));
+	$(".emp_no_2").val($("#emp_select2 option:selected").attr("emp_no"));
+	$(".emp_no_3").val($("#emp_select3 option:selected").attr("emp_no"));
+	console.log($('#draft_select').val());
+	
+	// 결재자 1명 이상 선택하도록
 	if($('#emp_select1').val() == null){
 		alert("결재자를 1명 이상 선택해 주세요.");
 		return false;
+	}
+	
+	if($('#draft_select').val() == 1){
+		// 기안서
+		if(($('#dr_title').val() == null) || ($('#dr_title').val() == "")){
+			alert("기안 제목을 작성해 주세요.");
+			return false;
+		}
+		if(($('#dr_content').val() == null) || ($('#dr_content').val() == "")){
+			alert("기안 내용을 작성해 주세요.");
+			return false;
+		}
+		if(($('#dr_purpose').val() == null) || ($('#dr_purpose').val() == "")){
+			alert("기안 목적을 작성해 주세요.");
+			return false;
+		}	
+	}
+	
+	if($('#draft_select').val() == 2){
+		// 지출결의서
+		if(($('#dr_title1').val() == null) || ($('#dr_title1').val() == "")){
+			alert("결의서 제목을 작성해 주세요.");
+			return false;
+		}
+		if(($('#dr_content2').val() == null) || ($('#dr_content2').val() == "")){
+			alert("결의서 내용을 작성해 주세요.");
+			return false;
+		}
+		if(($('#dr_expect_date').val() == null) || ($('#dr_expect_date').val() == "")){
+			alert("지출 예정 일자를 작성해 주세요.");
+			return false;
+		}	
+	}
+	
+	if($('#draft_select').val() == 3){
+		// 정산서
+		if(($('#dr_title2').val() == null) || ($('#dr_title2').val() == "")){
+			alert("정산서 제목을 작성해 주세요.");
+			return false;
+		}
+		if(($('#spend_date').val() == null) || ($('#spend_date').val() == "")){
+			alert("발생 기간을 작성해 주세요.");
+			return false;
+		}
+		if(($('#spend_purpose').val() == null) || ($('#spend_purpose').val() == "")){
+			alert("지출 목적을 작성해 주세요.");
+			return false;
+		}
+		if(($('#dr_content2').val() == null) || ($('#dr_content2').val() == "")){
+			alert("상세 내용 작성해 주세요.");
+			return false;
+		}
+		if(($('#cp_card').val() == null ||$('#cp_card').val() == "") && ($('#ep_card').val() == null || $('#ep_card').val() == "")){
+			alert("법인 또는 개인 카드 사용 금액을 작성해 주세요.");
+			return false;
+		}	
 	}
 })
 </script>

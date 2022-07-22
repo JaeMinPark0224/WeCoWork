@@ -70,19 +70,19 @@
                 </tr>
                 <!-- 결재자 서명 -->
                 <tr>
-                	<c:if test="${not empty draft[0].sign}">
+                	<c:if test="${not empty draft[0].sign && draft[0].appr_result == 1}">
                 		<td class="s_sign" id="1_sign">${draft[0].sign}</td>
                 	</c:if>
                 	<c:if test="${empty draft[0].sign}">
                 		<td class="s_sign" id="1_sign"></td>
                 	</c:if>
-                	<c:if test="${not empty draft[1].sign}">
+                	<c:if test="${not empty draft[1].sign && draft[1].appr_result == 1}">
                 		<td class="s_sign" id="2_sign">${draft[1].sign}</td>
                 	</c:if>
                 	<c:if test="${empty draft[1].sign}">
                 		<td class="s_sign" id="2_sign"></td>
                 	</c:if>
-                	<c:if test="${not empty draft[2].sign}">
+                	<c:if test="${not empty draft[2].sign && draft[2].appr_result == 1}">
                 		<td class="s_sign" id="3_sign">${draft[2].sign}</td>
                 	</c:if>
                 	<c:if test="${empty draft[2].sign}">

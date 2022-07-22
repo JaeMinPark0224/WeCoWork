@@ -48,13 +48,13 @@ public class Draft {
 	private Date appr_date_2;
 	private Date appr_date_3;
 	
-	private String name; //°áÀçÀÚ ÀÌ¸§
-	private String sign; // °áÀçÀÚ »çÀÎ
-	private String job_title; // °áÀçÀÚ Á÷±Ş
+	private String name; //ê²°ì¬ì ì´ë¦„
+	private String sign; // ê²°ì¬ì ì‚¬ì¸
+	private String job_title; // ê²°ì¬ì ì§ê¸‰
 	
-	private String name_a; //±â¾ÈÀÚ ÀÌ¸§
-	private String job_title_a; // ±â¾ÈÀÚ Á÷±Ş
-	private String dept_name_a; // ±â¾ÈÀÚ ºÎ¼­
+	private String name_a; //ê¸°ì•ˆì ì´ë¦„
+	private String job_title_a; // ê¸°ì•ˆì ì§ê¸‰
+	private String dept_name_a; // ê¸°ì•ˆì ë¶€ì„œ
 	
 	@Override
 	public String toString() {

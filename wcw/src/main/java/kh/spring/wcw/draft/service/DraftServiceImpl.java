@@ -16,25 +16,25 @@ public class DraftServiceImpl implements DraftService {
 	@Autowired
 	private DraftDao dao;
 	
-	// Á÷¿ø ¸®½ºÆ® Á¶È¸
+	// ì§ì› ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	@Override
 	public List<Employee> selectEmployeeList(int cp_no) {
 		return dao.selectEmployeeList(cp_no);
 	}
 	
-	// ±â¾È ÀÛ¼º
+	// ê¸°ì•ˆ ì‘ì„±
 	@Override
 	public int insertDraft(Draft draft) {
 		return dao.insertDraft(draft);
 	}
 	
-	// ±â¾È ¸®½ºÆ® Á¶È¸
+	// ê¸°ì•ˆ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	@Override
 	public List<Draft> selectListDraft(int ep_no, RowBounds rowBounds){
 		return dao.selectListDraft(ep_no, rowBounds);
 	}
 
-	// ±â¾È »ó¼¼ º¸±â
+	// ê¸°ì•ˆ ìƒì„¸ ë³´ê¸°
 	@Override
 	public List<Draft> selectDraft(int dr_no, int dr_sort){
 		return dao.selectDraft(dr_no, dr_sort);

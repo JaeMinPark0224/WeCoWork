@@ -110,6 +110,20 @@ public class DraftContoller {
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
 		int ep_no = loginInfo.getEmp_no();
 		
+		if(draft.getEmp_no_1() != null) {
+			int one = draft.getEmp_no_1();
+			System.out.println("결재자1: " + one);
+		}
+		if(draft.getEmp_no_2() != null) {
+			int two = draft.getEmp_no_2();
+			System.out.println("결재자2: " + two);
+		}
+		if(draft.getEmp_no_3() != null) {
+			int three = draft.getEmp_no_3();
+			System.out.println("결재자3: " + three);
+		}
+		
+		
 		draft.setEp_no(ep_no);
 		
 		// 기안 insert하러 가기
