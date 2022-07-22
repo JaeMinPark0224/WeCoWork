@@ -45,4 +45,9 @@ public class DraftServiceImpl implements DraftService {
 	public List<Draft> selectDraft(int dr_no, int dr_sort){
 		return dao.selectDraft(dr_no, dr_sort);
 	}
+	
+	//가안 삭제하기
+	public int deleteDraft(int dr_no, int dr_sort, int ep_no) {
+		return dao.deleteDraft(dr_no, dr_sort, ep_no);
+	}
 }

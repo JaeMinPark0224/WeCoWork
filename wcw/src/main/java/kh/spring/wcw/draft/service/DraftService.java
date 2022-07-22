@@ -46,6 +46,11 @@ public interface DraftService {
 	 */
 	public List<Draft> selectDraft(int dr_no, int dr_sort);
 
-	
+	/**
+	 * @param 기안 번호, 직원 번호
+	 * @return delete 후 결과값 (성공 여부)
+	 * @author ybseo
+	 */
+	public int deleteDraft(int dr_no, int dr_sort, int ep_no);
 
 }

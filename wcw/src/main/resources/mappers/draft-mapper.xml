@@ -124,4 +124,18 @@
 	</if>
 </select>
 
+<!-- 기안 삭제 -->
+<delete id="deleteDraft1" parameterType="hashmap">
+	delete from tb_spend
+	where dr_no = #{dr_no}
+</delete>
+<delete id="deleteDraft2" parameterType="hashmap">
+	delete from tb_approval
+	where dr_no = #{dr_no}
+</delete>
+<delete id="deleteDraft3" parameterType="hashmap">
+	delete from tb_draft
+	where dr_no = #{dr_no} and ep_no = #{ep_no}
+</delete>
+
 </mapper>

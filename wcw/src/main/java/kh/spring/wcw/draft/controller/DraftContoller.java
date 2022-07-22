@@ -165,14 +165,14 @@ public class DraftContoller {
 			System.out.println("결재자3: " + three);
 		}
 		
-		
 		draft.setEp_no(ep_no);
 		
 		// 기안 insert하러 가기
-		int result = draftService.insertDraft(draft);
+		draftService.insertDraft(draft);
 		
-		rttr.addFlashAttribute("msg", "기안 상신 완료");
+		rttr.addFlashAttribute("msg", "기안이 상신되었습니다.");
 		mv.setViewName("redirect:/draft/list");
+		
 		return mv;
 	}
 	
@@ -196,4 +196,35 @@ public class DraftContoller {
 		mv.setViewName("draft/selectDraft");
 		return mv;
 	}
+		
+	// 기안 삭제 기능
+		@GetMapping("/delete")
+		public ModelAndView deleteDraft(
+				ModelAndView mv
+				, HttpSession session
+				, RedirectAttributes rttr
+				, @RequestParam(name="dr_sort", required = false) int dr_sort
+				, @RequestParam(name="dr_no", required = false) String dr_no_str) {
+
+			System.out.println("dr_no_str: " + dr_no_str);
+			int dr_no = Integer.parseInt(dr_no_str);
+			List<Draft> draft = null;
+			
+			// 기안을 작성한 직원 번호 가져오기
+			Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+			int ep_no = loginInfo.getEmp_no();
+			
+			// 기안 삭제하기
+			int result = draftService.deleteDraft(dr_no, dr_sort, ep_no);
+			
+			if (result > 0) {
+				rttr.addFlashAttribute("msg", "기안 삭제 완료");
+				mv.setViewName("redirect:/draft/list");
+			} else {
+				rttr.addFlashAttribute("msg", "기안 삭제 실패");
+				mv.setViewName("redirect:/draft/list");
+			}
+			
+			return mv;
+		}
 }

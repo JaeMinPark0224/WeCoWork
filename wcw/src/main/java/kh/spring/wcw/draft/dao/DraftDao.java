@@ -45,4 +45,23 @@ public class DraftDao {
 		System.out.println(dr_sort);
 		return sqlsession.selectList("draftMapper.selectDraft", map);
 	}
+	
+	//가안 삭제하기
+	public int deleteDraft(int dr_no, int dr_sort, int ep_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int result1 = 0;
+		map.put("dr_no", dr_no);
+		map.put("dr_sort", dr_sort);
+		map.put("ep_no", ep_no);
+		System.out.println("dr_sort: " + dr_sort);
+		if(dr_sort == 3) {
+			sqlsession.delete("draftMapper.deleteDraft1", map);
+			result1 = 1;
+		}
+		int result2 = sqlsession.delete("draftMapper.deleteDraft2", map);
+		int result3 = sqlsession.delete("draftMapper.deleteDraft3", map);
+		int result = result1 + result2 + result3;
+		
+		return result;
+	}
 }

@@ -91,7 +91,7 @@
 				                    <tr>
 				                        <td class="first_td">결의서 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content2"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content1"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -137,12 +137,12 @@
 				                                <tr class="second_tr">
 				                                    <td class="first_td_scd">법인 카드</td>
 				                                    <td><input type="text" class="card_content" name="spend_content"></td>
-				                                    <td><input type="number" class="card_won" id="cp_card" name="spend_amount"></td>
+				                                    <td><input type="number" class="card_won" id="cp_card" name="spend_amount" min="0" value="0" required></td>
 				                                </tr>
 				                                <tr class="second_tr">
 				                                    <td class="first_td_scd">개인 카드</td>
 				                                    <td><input type="text" class="card_content" name="spend_content_prvt"></td>
-				                                    <td><input type="number" class="card_won" id="ep_card" name="spend_amount_prvt"></td>
+				                                    <td><input type="number" class="card_won" id="ep_card" name="spend_amount_prvt" min="0"  value="0" required></td>
 				                                </tr>
 				                                <tr class="second_tr">
 				                                    <td class="first_td_scd">합계</td>
@@ -312,7 +312,6 @@ $('.submit').submit(function(){
 	$(".emp_no_1").val($("#emp_select1 option:selected").attr("emp_no"));
 	$(".emp_no_2").val($("#emp_select2 option:selected").attr("emp_no"));
 	$(".emp_no_3").val($("#emp_select3 option:selected").attr("emp_no"));
-	console.log($('#draft_select').val());
 	
 	// 결재자 1명 이상 선택하도록
 	if($('#emp_select1').val() == null){
@@ -326,7 +325,7 @@ $('.submit').submit(function(){
 			alert("기안 제목을 작성해 주세요.");
 			return false;
 		}
-		if(($('#dr_content').val() == null) || ($('#dr_content').val() == "")){
+		if(($('textarea#dr_content').val() == null) || ($('textarea#dr_content').val() == "")){
 			alert("기안 내용을 작성해 주세요.");
 			return false;
 		}
@@ -342,7 +341,7 @@ $('.submit').submit(function(){
 			alert("결의서 제목을 작성해 주세요.");
 			return false;
 		}
-		if(($('#dr_content2').val() == null) || ($('#dr_content2').val() == "")){
+		if(($('textarea#dr_content1').val() == null) || ($('textarea#dr_content1').val() == "")){
 			alert("결의서 내용을 작성해 주세요.");
 			return false;
 		}
@@ -366,14 +365,10 @@ $('.submit').submit(function(){
 			alert("지출 목적을 작성해 주세요.");
 			return false;
 		}
-		if(($('#dr_content2').val() == null) || ($('#dr_content2').val() == "")){
-			alert("상세 내용 작성해 주세요.");
+		if(($('textarea#dr_content2').val() == null) || ($('textarea#dr_content2').val() == "")){
+			alert("정산서 상세 내용 작성해 주세요.");
 			return false;
 		}
-		if(($('#cp_card').val() == null ||$('#cp_card').val() == "") && ($('#ep_card').val() == null || $('#ep_card').val() == "")){
-			alert("법인 또는 개인 카드 사용 금액을 작성해 주세요.");
-			return false;
-		}	
 	}
 })
 </script>

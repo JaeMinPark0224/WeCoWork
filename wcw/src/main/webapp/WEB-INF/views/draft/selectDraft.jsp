@@ -245,6 +245,15 @@
 $('#ok_btn').click(function(){
 	window.history.back();
 })
+
+// 삭제 버튼 클릭 시
+$('#del_btn').click(function(){
+	var dr_no = ${draft[0].dr_no};
+	var dr_sort = ${draft[0].dr_sort};
+	console.log(dr_no);
+	console.log(dr_sort);
+	location.href="<%= request.getContextPath() %>/draft/delete?dr_sort="+dr_sort+"&dr_no="+dr_no;
+})
 </script>
 </body>
 </html>
