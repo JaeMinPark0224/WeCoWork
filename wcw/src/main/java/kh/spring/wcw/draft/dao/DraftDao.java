@@ -64,4 +64,36 @@ public class DraftDao {
 		
 		return result;
 	}
+	
+	// 기안 결재자 수 확인
+	public int checkApproval(int dr_no) {
+		return sqlsession.selectOne("draftMapper.checkApproval", dr_no);
+	}
+	
+	// 시안 순번 확인
+	public int checkApprOrder(int dr_no, int emp_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("dr_no", dr_no);
+		map.put("emp_no", emp_no);
+		return sqlsession.selectOne("draftMapper.checkApprOrder", map);
+	}
+	
+	// 기안 승인용 업데이트
+	public int updateDraft(int dr_no, int cnt, int apprOrder) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("dr_no", dr_no);
+		map.put("cnt", cnt);
+		map.put("apprOrder", apprOrder);
+		
+		int result = -1;
+		
+		result = sqlsession.update("draftMapper.updateTbApproval1", map);
+		if(cnt == 3 && apprOrder == 2) {
+			System.out.println("안가요");
+		} else {
+			result = sqlsession.update("draftMapper.updateTbApproval2", map);
+		}
+		
+		return result;
+	}
 }

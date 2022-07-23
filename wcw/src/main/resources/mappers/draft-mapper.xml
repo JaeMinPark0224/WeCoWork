@@ -138,4 +138,110 @@
 	where dr_no = #{dr_no} and ep_no = #{ep_no}
 </delete>
 
+<!-- 기안의 결재 단계 확인 -->
+<select id="checkApproval" parameterType="_int" resultType="_int">
+	select count(*) cnt from tb_approval where dr_no =#{dr_no}
+</select>
+
+<!-- 결재자의 결재 순서 확인 -->
+<select id="checkApprOrder" parameterType="hashmap" resultType="_int">
+	select appr_order
+    from tb_approval
+    where dr_no = #{dr_no} and emp_no = ${emp_no}
+</select>
+
+<!-- 기안 승인: 결재자 부분-->
+<update id="updateTbApproval1" parameterType="map">
+		update tb_approval
+        set appr_result = case
+        					<if test="cnt == 1">
+        						when appr_order = #{apprOrder} then 1
+        					</if>
+        					<if test="cnt == 2 and apprOrder == 1">
+        						when appr_order = #{apprOrder} then 1
+								when appr_order = #{apprOrder}+1 then 3
+        					</if>
+        					<if test="cnt == 2 and apprOrder == 2">
+        						when appr_order = #{apprOrder}-1 then 1
+        						when appr_order = #{apprOrder} then 1
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 1">
+        						when appr_order = #{apprOrder} then 1
+								when appr_order = #{apprOrder}+1 then 3
+								when appr_order = #{apprOrder}+2 then 4
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 2">
+        						when appr_order = #{apprOrder}-1 then 1
+        						when appr_order = #{apprOrder} then 1
+								when appr_order = #{apprOrder}+1 then 3
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 3">
+        						when appr_order = #{apprOrder}-2 then 1
+        						when appr_order = #{apprOrder}-1 then 1
+        						when appr_order = #{apprOrder} then 1
+        					</if>
+                          end
+            , appr_date = case
+            				<if test="cnt == 1">
+        						when appr_order = #{apprOrder} then sysdate
+        					</if>
+        					<if test="cnt == 2 and apprOrder == 1">
+        						when appr_order = #{apprOrder} then sysdate
+								when appr_order = #{apprOrder}+1 then null
+        					</if>
+        					<if test="cnt == 2 and apprOrder == 2">
+        						when appr_order = #{apprOrder}-1 then sysdate
+        						when appr_order = #{apprOrder} then sysdate
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 1">
+        						when appr_order = #{apprOrder} then sysdate
+								when appr_order = #{apprOrder}+1 then null
+								when appr_order = #{apprOrder}+2 then null
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 2">
+        						when appr_order = #{apprOrder}-1 then sysdate
+        						when appr_order = #{apprOrder} then sysdate
+								when appr_order = #{apprOrder}+1 then null
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 3">
+        						when appr_order = #{apprOrder}-2 then sysdate
+        						when appr_order = #{apprOrder}-1 then sysdate
+        						when appr_order = #{apprOrder} then sysdate
+        					</if>
+                          end
+        where dr_no = #{dr_no}
+</update>
+
+<!-- 기안 승인: 기안 부분-->
+<update id="updateTbApproval2" parameterType="map">
+	<if test="cnt == 1">
+		update tb_draft
+   		set dr_result = 2
+   		where dr_no = #{dr_no}
+	</if>
+	
+	<if test="cnt == 2 and apprOrder == 1">
+		update tb_draft
+   		set dr_result = 1
+   		where dr_no = #{dr_no}
+	</if>
+	<if test="cnt == 2 and apprOrder == 2">
+		update tb_draft
+   		set dr_result = 2
+   		where dr_no = #{dr_no}
+	</if>
+	
+	<if test="cnt == 3 and apprOrder == 1">
+		update tb_draft
+   		set dr_result = 1
+   		where dr_no = #{dr_no}
+	</if>
+	<if test="cnt == 3 and apprOrder == 3">
+		update tb_draft
+   		set dr_result = 2
+   		where dr_no = #{dr_no}
+	</if>
+</update>
+
+
 </mapper>

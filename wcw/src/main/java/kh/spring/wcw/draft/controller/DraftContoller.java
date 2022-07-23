@@ -227,4 +227,52 @@ public class DraftContoller {
 			
 			return mv;
 		}
+		
+	// 기안 승인 및 반려 기능
+	@GetMapping("/update")
+	public ModelAndView approvalDraft(
+		ModelAndView mv
+		, HttpSession session
+		, RedirectAttributes rttr
+		, @RequestParam(name="dr_no", required = false) String dr_no_str
+		, @RequestParam(name="dr_sort", required = false) int dr_sort
+		) {
+		System.out.println("dr_no_str: " + dr_no_str);
+		int dr_no = Integer.parseInt(dr_no_str);
+		System.out.println("dr_no: " + dr_no);
+		
+		// 승인
+			// 기안 결재자 수 확인
+			int cnt = draftService.checkApproval(dr_no);
+			System.out.println("cnt: " + cnt);
+			
+			// 기안을 결재하는 직원 번호 가져오기
+			Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+			int emp_no = loginInfo.getEmp_no();
+			System.out.println("emp_no: " + emp_no);
+			
+			// 기안을 결재하는 직원의 결재 순번 확인
+			int apprOrder =  draftService.checkApprOrder(dr_no, emp_no);
+			System.out.println("apprOrder: " + apprOrder);
+			
+			// 기안 번호, 승인하는 직원의 결재 순번, 기안 결재자수를 가지고 업데이트 하러 가기
+			int result = draftService.updateDraft(dr_no, cnt, apprOrder);
+			
+			if (result == -1) {
+				System.out.println("기안 업데이트 실패");
+				
+				rttr.addFlashAttribute("msg", "기안 업데이트 실패");
+				mv.setViewName("redirect:/draft/list");
+			} else {
+				rttr.addFlashAttribute("msg", "기안이 승인되었습니다.");
+				mv.setViewName("redirect:/draft/appr/list");
+			}
+			
+			
+		// 부결
+			//TODO
+			
+		return mv;
+	}
+
 }

@@ -52,5 +52,26 @@ public interface DraftService {
 	 * @author ybseo
 	 */
 	public int deleteDraft(int dr_no, int dr_sort, int ep_no);
+	
+	/**
+	 * @param 기안 번호
+	 * @return 해당 기안의 결재자 수
+	 * @author ybseo
+	 */
+	public int checkApproval(int dr_no);
+	
+	/**
+	 * @param 기안 번호, 직원 번호
+	 * @return 해당 직원의 결재 번호
+	 * @author ybseo
+	 */
+	public int checkApprOrder(int dr_no, int emp_no);
+	
+	/**
+	 * @param 기안 번호, 해당 기안의 총 결재자 수, 결재하는 직원의 결재 순서
+	 * @return 기안 업데이트 결과 (승인 ver)
+	 * @author ybseo
+	 */
+	public int updateDraft(int dr_no, int cnt, int apprOrder);
 
 }

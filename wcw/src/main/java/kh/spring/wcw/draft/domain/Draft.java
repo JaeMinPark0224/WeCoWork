@@ -56,6 +56,8 @@ public class Draft {
 	private String job_title_a; // 기안자 직급
 	private String dept_name_a; // 기안자 부서
 	
+	private int cnt; // 결재자 수
+
 	@Override
 	public String toString() {
 		return "Draft [dr_no=" + dr_no + ", ep_no=" + ep_no + ", dr_sort=" + dr_sort + ", dr_result=" + dr_result
@@ -72,7 +74,7 @@ public class Draft {
 				+ ", appr_result_3=" + appr_result_3 + ", appr_date=" + appr_date + ", appr_date_1=" + appr_date_1
 				+ ", appr_date_2=" + appr_date_2 + ", appr_date_3=" + appr_date_3 + ", name=" + name + ", sign=" + sign
 				+ ", job_title=" + job_title + ", name_a=" + name_a + ", job_title_a=" + job_title_a + ", dept_name_a="
-				+ dept_name_a + "]";
+				+ dept_name_a + ", cnt=" + cnt + "]";
 	}
 
 	public int getDr_no() {
@@ -435,4 +437,12 @@ public class Draft {
 		this.dept_name_a = dept_name_a;
 	}
 
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
 }

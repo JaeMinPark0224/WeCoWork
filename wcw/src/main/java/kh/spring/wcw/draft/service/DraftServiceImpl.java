@@ -46,8 +46,23 @@ public class DraftServiceImpl implements DraftService {
 		return dao.selectDraft(dr_no, dr_sort);
 	}
 	
-	//가안 삭제하기
+	// 가안 삭제하기
 	public int deleteDraft(int dr_no, int dr_sort, int ep_no) {
 		return dao.deleteDraft(dr_no, dr_sort, ep_no);
+	}
+	
+	// 기안의 결재자 수 확인
+	public int checkApproval(int dr_no) {
+		return dao.checkApproval(dr_no);
+	}
+	
+	// 기안 순번 확인
+	public int checkApprOrder(int dr_no, int emp_no) {
+		return dao.checkApprOrder(dr_no, emp_no);
+	}
+	
+	// 기안 승인용 업데이트
+	public int updateDraft(int dr_no, int cnt, int apprOrder) {
+		return dao.updateDraft(dr_no, cnt, apprOrder);
 	}
 }

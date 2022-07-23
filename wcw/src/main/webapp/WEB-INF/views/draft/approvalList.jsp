@@ -59,13 +59,13 @@
 							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">진행중</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 2}">
-							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료:승인</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료: 승인</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 3}">
-							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료:부결</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료: 부결</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 4}">
-							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료:반려</td>
+							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">완료: 반려</td>
 						</c:if>
 						<c:if test="${list.dr_result eq 5}">
 							<td class="tb_read" value="${list.dr_no}" dr_sort="${list.dr_sort}">상신</td>

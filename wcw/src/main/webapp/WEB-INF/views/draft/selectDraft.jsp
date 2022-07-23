@@ -53,7 +53,7 @@
                 		<td class="s_date" id="1_date">${draft[0].appr_date}</td>
                 	</c:if>
                 	<c:if test="${empty draft[0].appr_date}">
-                		<td class="s_date" id="1_date">${draft[0].appr_date}</td>
+                		<td class="s_date" id="1_date"></td>
                 	</c:if>
                     <c:if test="${not empty draft[1].appr_date}">
                 		<td class="s_date" id="2_date">${draft[1].appr_date}</td>
@@ -250,9 +250,18 @@ $('#ok_btn').click(function(){
 $('#del_btn').click(function(){
 	var dr_no = ${draft[0].dr_no};
 	var dr_sort = ${draft[0].dr_sort};
-	console.log(dr_no);
-	console.log(dr_sort);
 	location.href="<%= request.getContextPath() %>/draft/delete?dr_sort="+dr_sort+"&dr_no="+dr_no;
+})
+
+// 승인 버튼 클릭 시
+$('#accept_btn').click(function(){
+	// var sign = ${draft[0].sign};
+	// 서명 등록이 안 되어 있을 시 승인 불가
+	// TODO
+	
+	var dr_no = ${draft[0].dr_no};
+	var dr_sort = ${draft[0].dr_sort};
+	location.href="<%= request.getContextPath() %>/draft/update?dr_sort="+dr_sort+"&dr_no="+dr_no;
 })
 </script>
 </body>
