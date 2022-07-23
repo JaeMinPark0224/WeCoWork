@@ -43,7 +43,7 @@ public class EmployeeDao {
 	}
 	
 	// 비밀번호 찾기
-	public String selectEmployeePwd(String cp_name, String email, String name){
+	public Employee selectEmployeePwd(String cp_name, String email, String name){
 		HashMap<String, String> map= new HashMap<>();
 		map.put("cp_name", cp_name);
 		map.put("email", email);
@@ -97,5 +97,12 @@ public class EmployeeDao {
 		map.put("emp_no", no);
 		map.put("pwd", pwd);
 		return sqlsession.update("employeeMapper.updateEmployeePwd", map);
+	}
+	
+	public int updateFindPwd(String email, String pwd) {
+		HashMap<String, Object> map= new HashMap<>();
+		map.put("email", email);
+		map.put("pwd", pwd);
+		return sqlsession.update("employeeMapper.updateFindPwd", map);
 	}
 }

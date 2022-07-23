@@ -24,14 +24,14 @@
 </select>
 
 <!-- 바밀번호 찾기 -->
-<select id="selectEmployeePwd" parameterType="hashmap" resultType="string">
-	select pwd 
-	from tb_employee 
-   		join tb_department using(dept_no) 
-    	join tb_company using(cp_no)
-	where cp_name = #{cp_name}
-    	and email = #{email}
-    	and name = #{name}
+<select id="selectEmployeePwd" parameterType="hashmap" resultType="Employee">
+	select e.pwd
+	from tb_employee e
+   		join tb_department d using (dept_no) 
+    	join tb_company c on d.cp_no = c.cp_no
+	where c.cp_name = #{cp_name}
+    	and e.email = #{email}
+    	and e.name = #{name}
 </select>
 
 <!-- 난수 insert -->
@@ -67,7 +67,7 @@
 	where emp_no = #{emp_no}
 </update>
 
-<!-- 프로필 사진 update -->
+<!-- 서명 update -->
 <update id="updateEmployeeSign" parameterType="hashmap">
 	update tb_employee
 	set sign = #{sign}
@@ -79,6 +79,13 @@
 	update tb_employee
 	set pwd = #{pwd}
 	where emp_no = #{emp_no}
+</update>
+
+<!-- 비밀번호 찾기용 update -->
+<update id="updateFindPwd" parameterType="hashmap">
+	update tb_employee
+	set pwd = #{pwd}
+    where email = #{email}
 </update>
 
 </mapper>

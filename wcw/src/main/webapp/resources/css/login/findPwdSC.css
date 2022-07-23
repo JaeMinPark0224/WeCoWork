@@ -27,13 +27,6 @@
            text-align: center;
            margin-bottom: 60px;
        }
-       #id_text, #pwd_text{
-           font-family: NotoSansR;
-           font-size: 12px;
-       }
-       #id_text{
-       		margin-bottom: 10px;
-       }
        
        #go_login, #ok{
            width: 180px;
@@ -48,19 +41,28 @@
             background-color: white;
             color: #4B4DB2;
             border: 1px solid #4B4DB2;;
+            cursor: pointer;
        }
        #ok{
             background-color: #4B4DB2;
             color: white;
+            cursor: pointer;
        }
        #f_btn{
             display: block;
             margin: 0 auto;
-            width: 380px;
+            width: 366px;
        }
-       #find_pwd{
-        margin-left: 12.5px;
+       .newPwd{
+        width: 360px;
+            height: 40px;
+            margin-bottom: 10px;
+            border: 1px solid rgb(158, 158, 158);
+            border-radius: 3px;
+            font-size: 12px;
+            font-family: NotoSansR;
        }
+
        #last{
            width: 380px;
            margin: 0 auto;

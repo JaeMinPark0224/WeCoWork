@@ -63,7 +63,7 @@ public interface EmployeeService {
 	 * @return 직원 비밀번호 정보
 	 * @author ybseo
 	 */
-	public String selectEmployeePwd(String cp_name, String email, String name);
+	public Employee selectEmployeePwd(String cp_name, String email, String name);
 	
 	/**
 	 * @param emp_no(사번), profile_url(cloudinary에 저장한 프로필 이미지 url)
@@ -85,5 +85,12 @@ public interface EmployeeService {
 	 * @author ybseo
 	 */
 	public int updateEmployeePwd(int emp_no, String pwd);
+	
+	/**
+	 * @param id(email), pwd(변경하고자 하는 비밀번호)
+	 * @return pwd UPDATE 후 결과값 - 성공 여부 (int)
+	 * @author ybseo
+	 */
+	public int updateFindPwd(String email, String pwd);
 
 }

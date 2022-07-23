@@ -71,7 +71,7 @@ public class MainController {
 			) {
 		Company result2 = null;
 		
-		// 난수 비밀번호 단어 암호화
+		// 비밀번호 단어 암호화
 	    try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(pwd.getBytes());
@@ -203,7 +203,7 @@ public class MainController {
 	}
 	
 	// 비밀번호 찾기 기능
-	@PostMapping("find/pwd.do")
+	@PostMapping("/find/pwd.do")
 	public ModelAndView selectFindPwd(
 			ModelAndView mv
 			, RedirectAttributes rttr
@@ -211,15 +211,55 @@ public class MainController {
 			, @RequestParam(name="email") String email
 			, @RequestParam(name="name") String name) {
 		
-		String result = empService.selectEmployeePwd(cp_name, email, name);
+		Employee result = empService.selectEmployeePwd(cp_name, email, name);
 		if(result == null) {
-			rttr.addFlashAttribute("msg", "입력한 정보에 해당하는 비밀번호를 찾을 수 없습니다. 입력값 확인 후 다시 시도해 주세요.");
+			rttr.addFlashAttribute("msg", "입력한 정보에 해당하는 직원을 찾을 수 없습니다. 입력값 확인 후 다시 시도해 주세요.");
 			mv.setViewName("redirect:/find/pwd");
 			return mv;
 		}
-		mv.addObject("emailInfo", email);
-		mv.addObject("pwdInfo", result);
+		mv.addObject("email", email);
+		mv.addObject("result", result);
 		mv.setViewName("login/findPwdSC");
+		return mv;
+	}
+	
+	// 비밀번호 찾기용 비밀번호 변경 기능
+	@PostMapping("/updatePwd")
+	public ModelAndView updateFindPwd(
+			ModelAndView mv
+			, RedirectAttributes rttr
+			, @RequestParam(name="email") String email
+			, @RequestParam(name="newPwd") String pwd) {
+		System.out.println("왔다!!!!!!!!!!!");
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(pwd.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			StringBuffer hexString = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				String hex = Integer.toHexString(0xff & byteData[i]);
+				if (hex.length() == 1) {
+					hexString.append('0');
+				}
+				hexString.append(hex);
+			}
+			pwd = hexString.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		
+		// 비밀번호 변경하기
+		int result = empService.updateFindPwd(email, pwd);
+		System.out.println(result);
+		if(result == 1) {
+			rttr.addFlashAttribute("msg" , "비밀번호 변경에 성공했습니다. 로그인 후 이용해 주세요.");
+			mv.setViewName("redirect:/login");
+		}
+		
 		return mv;
 	}
 
@@ -361,6 +401,27 @@ public class MainController {
 		// 비밀번호 변경 시
 		if(employee_pwd.length() > 7) {
 			System.out.println("변경 예정 비밀번호: " + employee_pwd);
+			
+			try {
+				MessageDigest md = MessageDigest.getInstance("SHA-256");
+				md.update(employee_pwd.getBytes());
+				byte byteData[] = md.digest();
+				StringBuffer sb = new StringBuffer();
+				for (int i = 0; i < byteData.length; i++) {
+					sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+				}
+				StringBuffer hexString = new StringBuffer();
+				for (int i = 0; i < byteData.length; i++) {
+					String hex = Integer.toHexString(0xff & byteData[i]);
+					if (hex.length() == 1) {
+						hexString.append('0');
+					}
+					hexString.append(hex);
+				}
+				employee_pwd = hexString.toString();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
 			
 			// 변경 예정 비밀번호를 세센에 담아주기
 			loginInfo.setPwd(employee_pwd);

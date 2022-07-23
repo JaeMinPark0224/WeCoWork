@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	// 비밀번호 찾기
 	@Override
-	public String selectEmployeePwd(String cp_name, String email, String name) {
+	public Employee selectEmployeePwd(String cp_name, String email, String name) {
 		return dao.selectEmployeePwd(cp_name, email, name);
 	}
 	
@@ -76,6 +76,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public int updateEmployeePwd(int emp_no, String pwd) {
 		return dao.updateEmployeePwd(emp_no, pwd);
+	}
+	
+	// 비밀번호 찾기용 update
+	@Override
+	public int updateFindPwd(String email, String pwd) {
+		return dao.updateFindPwd(email, pwd);
 	}
 	
 }

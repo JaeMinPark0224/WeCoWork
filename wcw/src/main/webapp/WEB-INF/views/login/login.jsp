@@ -11,6 +11,11 @@
 <meta charset="UTF-8">
 <title>로그인</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script>
+<c:if test="${not empty msg}">
+alert("${msg}");
+</c:if>
+</script>
 </head>
 <script>
 $(function(){
@@ -125,9 +130,6 @@ $(function(){
     </div>
 </section>
 <script>
-<c:if test="${not empty msg}">
-	alert("${msg}");
-</c:if>
 
 	// 비밀번호 찾기 버튼 클릭 시 
 	$("#findPwd").click(function(){
