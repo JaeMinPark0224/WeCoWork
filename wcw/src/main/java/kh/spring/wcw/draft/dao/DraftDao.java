@@ -79,19 +79,26 @@ public class DraftDao {
 	}
 	
 	// 기안 승인용 업데이트
-	public int updateDraft(int dr_no, int cnt, int apprOrder) {
+	public int updateDraft(int dr_no, int cnt, int apprOrder, int num) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("dr_no", dr_no);
 		map.put("cnt", cnt);
 		map.put("apprOrder", apprOrder);
 		
 		int result = -1;
-		
-		result = sqlsession.update("draftMapper.updateTbApproval1", map);
-		if(cnt == 3 && apprOrder == 2) {
-			System.out.println("안가요");
-		} else {
-			result = sqlsession.update("draftMapper.updateTbApproval2", map);
+		// 승인
+		if(num == 1) {
+			result = sqlsession.update("draftMapper.updateTbApproval1", map);
+			if(cnt == 3 && apprOrder == 2) {
+				System.out.println("안가요");
+			} else {
+				result = sqlsession.update("draftMapper.updateTbApproval2", map);
+			}
+		} 
+		// 반려
+		else if(num == 2) {
+			result = sqlsession.update("draftMapper.updateTbApproval3", map);
+			result = sqlsession.update("draftMapper.updateTbApproval4", dr_no);
 		}
 		
 		return result;

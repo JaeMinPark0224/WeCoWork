@@ -62,7 +62,7 @@ public class DraftServiceImpl implements DraftService {
 	}
 	
 	// 기안 승인용 업데이트
-	public int updateDraft(int dr_no, int cnt, int apprOrder) {
-		return dao.updateDraft(dr_no, cnt, apprOrder);
+	public int updateDraft(int dr_no, int cnt, int apprOrder, int num) {
+		return dao.updateDraft(dr_no, cnt, apprOrder, num);
 	}
 }

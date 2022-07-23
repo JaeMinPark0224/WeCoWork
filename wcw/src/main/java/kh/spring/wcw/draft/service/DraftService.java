@@ -72,6 +72,6 @@ public interface DraftService {
 	 * @return 기안 업데이트 결과 (승인 ver)
 	 * @author ybseo
 	 */
-	public int updateDraft(int dr_no, int cnt, int apprOrder);
+	public int updateDraft(int dr_no, int cnt, int apprOrder, int num);
 
 }

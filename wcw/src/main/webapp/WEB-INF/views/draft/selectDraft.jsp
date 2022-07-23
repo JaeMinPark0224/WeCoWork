@@ -52,40 +52,53 @@
                 	<c:if test="${not empty draft[0].appr_date}">
                 		<td class="s_date" id="1_date">${draft[0].appr_date}</td>
                 	</c:if>
-                	<c:if test="${empty draft[0].appr_date}">
+                	<c:if test="${empty draft[0].appr_date && draft[0].appr_result == 2}">
+                		<td class="s_date" id="1_date" style="color: #CC3D3D;">반려</td>
+                	</c:if>
+                	<c:if test="${empty draft[0].appr_date && draft[0].appr_result != 2}">
                 		<td class="s_date" id="1_date"></td>
                 	</c:if>
+                	
                     <c:if test="${not empty draft[1].appr_date}">
                 		<td class="s_date" id="2_date">${draft[1].appr_date}</td>
                 	</c:if>
-                	<c:if test="${empty draft[1].appr_date}">
+                	<c:if test="${empty draft[1].appr_date && draft[1].appr_result == 2}">
+                		<td class="s_date" id="2_date" style="color: #CC3D3D;">반려</td>
+                	</c:if>
+                	<c:if test="${empty draft[1].appr_date && draft[1].appr_result != 2}">
                 		<td class="s_date" id="2_date"></td>
                 	</c:if>
+                	
                 	<c:if test="${not empty draft[2].appr_date}">
                 		<td class="s_date" id="3_date">${draft[2].appr_date}</td>
                 	</c:if>
-                	<c:if test="${empty draft[2].appr_date}">
+                	<c:if test="${empty draft[2].appr_date && draft[2].appr_result == 2}">
+                		<td class="s_date" id="3_date" style="color: #CC3D3D;">반려</td>
+                	</c:if>
+                	<c:if test="${empty draft[2].appr_date && draft[2].appr_result != 2}">
                 		<td class="s_date" id="3_date"></td>
                 	</c:if>
                 </tr>
                 <!-- 결재자 서명 -->
                 <tr>
-                	<c:if test="${not empty draft[0].sign && draft[0].appr_result == 1}">
-                		<td class="s_sign" id="1_sign">${draft[0].sign}</td>
+                	<c:if test="${draft[0].appr_result == 1}">
+                		<td class="s_sign" id="1_sign"><img src="${draft[0].sign}"></td>
                 	</c:if>
-                	<c:if test="${empty draft[0].sign}">
+                	<c:if test="${draft[0].appr_result != 1}">
                 		<td class="s_sign" id="1_sign"></td>
                 	</c:if>
-                	<c:if test="${not empty draft[1].sign && draft[1].appr_result == 1}">
-                		<td class="s_sign" id="2_sign">${draft[1].sign}</td>
+
+                	<c:if test="${draft[1].appr_result == 1}">
+                		<td class="s_sign" id="2_sign"><img src="${draft[1].sign}"></td>
                 	</c:if>
-                	<c:if test="${empty draft[1].sign}">
-                		<td class="s_sign" id="2_sign"></td>
+                	<c:if test="${draft[1].appr_result != 1}">
+                		<td class="s_sign" id="2_sign"><img></td>
                 	</c:if>
-                	<c:if test="${not empty draft[2].sign && draft[2].appr_result == 1}">
-                		<td class="s_sign" id="3_sign">${draft[2].sign}</td>
+                	
+                	<c:if test="${draft[2].appr_result == 1}">
+                		<td class="s_sign" id="3_sign"><img src="${draft[2].sign}"></td>
                 	</c:if>
-                	<c:if test="${empty draft[2].sign}">
+                	<c:if test="${draft[2].appr_result != 1}">
                 		<td class="s_sign" id="3_sign"></td>
                 	</c:if>
                 </tr>
@@ -255,13 +268,30 @@ $('#del_btn').click(function(){
 
 // 승인 버튼 클릭 시
 $('#accept_btn').click(function(){
-	// var sign = ${draft[0].sign};
-	// 서명 등록이 안 되어 있을 시 승인 불가
-	// TODO
-	
-	var dr_no = ${draft[0].dr_no};
-	var dr_sort = ${draft[0].dr_sort};
-	location.href="<%= request.getContextPath() %>/draft/update?dr_sort="+dr_sort+"&dr_no="+dr_no;
+	if(${empty loginSSInfo.sign}){
+		alert("서명 등록 후 기안 결재를 진행해 주세요.");
+		location.href="<%= request.getContextPath() %>/mypage";
+		return;
+	} else {
+		var num = 1;
+		var dr_no = ${draft[0].dr_no};
+		var dr_sort = ${draft[0].dr_sort};
+		location.href="<%= request.getContextPath() %>/draft/update?dr_sort="+dr_sort+"&dr_no="+dr_no+"&num="+num;
+	}
+})
+
+// 반려 버튼 클릭 시
+$('#return_btn').click(function(){
+	if(${empty loginSSInfo.sign}){
+		alert("서명 등록 후 기안 결재를 진행해 주세요.");
+		location.href="<%= request.getContextPath() %>/mypage";
+		return;
+	} else {
+		var num = 2;
+		var dr_no = ${draft[0].dr_no};
+		var dr_sort = ${draft[0].dr_sort};
+		location.href="<%= request.getContextPath() %>/draft/update?dr_sort="+dr_sort+"&dr_no="+dr_no+"&num="+num;	
+	}
 })
 </script>
 </body>

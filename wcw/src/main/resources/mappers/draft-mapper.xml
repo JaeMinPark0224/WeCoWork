@@ -79,7 +79,7 @@
 	order by dr_date desc
 </select>
 
-<!-- 기안 상세보기 -->
+<!-- 기안 정보 (상세보기용)-->
 <select id="selectDraft" parameterType="hashmap" resultType="Draft">
 	<if test="dr_sort == 3">
 		select t1.*, te1.name name_a, td1.dept_name dept_name_a, jt1.job_title job_title_a
@@ -241,6 +241,47 @@
    		set dr_result = 2
    		where dr_no = #{dr_no}
 	</if>
+</update>
+
+<!-- 기안 반려: 결재자 부분-->
+<update id="updateTbApproval3" parameterType="map">
+		update tb_approval
+        set appr_result = case
+        					<if test="cnt == 1">
+        						when appr_order = #{apprOrder} then 2
+        					</if>
+        					<if test="cnt == 2 and apprOrder == 1">
+        						when appr_order = #{apprOrder} then 2
+								when appr_order = #{apprOrder}+1 then 4
+        					</if>
+        					<if test="cnt == 2 and apprOrder == 2">
+        						when appr_order = #{apprOrder}-1 then 1
+        						when appr_order = #{apprOrder} then 2
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 1">
+        						when appr_order = #{apprOrder} then 2
+								when appr_order = #{apprOrder}+1 then 4
+								when appr_order = #{apprOrder}+2 then 4
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 2">
+        						when appr_order = #{apprOrder}-1 then 1
+        						when appr_order = #{apprOrder} then 3
+								when appr_order = #{apprOrder}+1 then 4
+        					</if>
+        					<if test="cnt == 3 and apprOrder == 3">
+        						when appr_order = #{apprOrder}-2 then 1
+        						when appr_order = #{apprOrder}-1 then 1
+        						when appr_order = #{apprOrder} then 2
+        					</if>
+                          end
+        where dr_no = #{dr_no}
+</update>
+
+<!-- 기안 반려: 기안 부분-->
+<update id="updateTbApproval4" parameterType="_int">
+	update tb_draft
+   	set dr_result = 4
+   	where dr_no = #{dr_no}
 </update>
 
 

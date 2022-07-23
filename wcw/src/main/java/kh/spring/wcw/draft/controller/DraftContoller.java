@@ -230,18 +230,19 @@ public class DraftContoller {
 		
 	// 기안 승인 및 반려 기능
 	@GetMapping("/update")
-	public ModelAndView approvalDraft(
+	public ModelAndView updateDraft(
 		ModelAndView mv
 		, HttpSession session
 		, RedirectAttributes rttr
+		, @RequestParam(name="num", required = false) int num // 1=승인 / 2=반려
 		, @RequestParam(name="dr_no", required = false) String dr_no_str
 		, @RequestParam(name="dr_sort", required = false) int dr_sort
 		) {
+		System.out.println("num: " + num);
 		System.out.println("dr_no_str: " + dr_no_str);
 		int dr_no = Integer.parseInt(dr_no_str);
 		System.out.println("dr_no: " + dr_no);
 		
-		// 승인
 			// 기안 결재자 수 확인
 			int cnt = draftService.checkApproval(dr_no);
 			System.out.println("cnt: " + cnt);
@@ -255,22 +256,35 @@ public class DraftContoller {
 			int apprOrder =  draftService.checkApprOrder(dr_no, emp_no);
 			System.out.println("apprOrder: " + apprOrder);
 			
-			// 기안 번호, 승인하는 직원의 결재 순번, 기안 결재자수를 가지고 업데이트 하러 가기
-			int result = draftService.updateDraft(dr_no, cnt, apprOrder);
+		if(num == 1) {
+		// 승인
+			// 기안 번호, 승인하는 직원의 결재 순번, 기안 결재자수를 가지고 승인 하러 가기
+			int result = draftService.updateDraft(dr_no, cnt, apprOrder, num);
 			
 			if (result == -1) {
-				System.out.println("기안 업데이트 실패");
+				System.out.println("기안 승인 실패");
 				
-				rttr.addFlashAttribute("msg", "기안 업데이트 실패");
-				mv.setViewName("redirect:/draft/list");
+				rttr.addFlashAttribute("msg", "기안 승인 실패");
+				mv.setViewName("redirect:/draft/appr/list");
 			} else {
 				rttr.addFlashAttribute("msg", "기안이 승인되었습니다.");
 				mv.setViewName("redirect:/draft/appr/list");
 			}
+		} else if (num == 2) {
+		// 반려
+			// 기안 번호, 승인하는 직원의 결재 순번, 기안 결재자수를 가지고 반려 하러 가기
+			int result = draftService.updateDraft(dr_no, cnt, apprOrder, num);
 			
-			
-		// 부결
-			//TODO
+			if (result == -1) {
+				System.out.println("기안 반려 실패");
+				
+				rttr.addFlashAttribute("msg", "기안 반려 실패");
+				mv.setViewName("redirect:/draft/appr/list");
+			} else {
+				rttr.addFlashAttribute("msg", "기안이 반려되었습니다.");
+				mv.setViewName("redirect:/draft/appr/list");
+			}
+		}
 			
 		return mv;
 	}
