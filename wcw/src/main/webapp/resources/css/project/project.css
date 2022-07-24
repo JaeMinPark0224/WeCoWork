@@ -208,7 +208,7 @@ section {
 #project_list_wrap {
 	display: grid;
 	grid-template-columns: 190px 190px 190px 190px 190px;
-	grid-template-rows: 190px 190px 190px 190px 190px;
+	grid-template-rows: 190px;
 	gap: 30px;
 }
 
@@ -237,7 +237,7 @@ section {
 	position: absolute;
 	left: 35px;
 	top: 30px;
-	width: 120px;
+	width: 110px;
 }
 
 .project_list_update {
@@ -354,6 +354,31 @@ section {
 	color: white;
 }
 
+.project_list_page_btn_wrap {
+	margin-top: 30px;
+	display: flex;
+	width: 1070px;
+	justify-content: center;
+	gap: 10px;
+}
+
+.project_page_btn {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+	text-align: center;
+	line-height: 30px;
+}
+
+.project_page_btn i {
+	line-height: 30px !important;
+}
+
 /* 메인페이지 */
 /* 메인페이지 */
 /* 메인페이지 */
@@ -371,6 +396,7 @@ section {
 	font-size: 14px;
 	font-family: NotoSansB;
 	color: rgb(94, 94, 94);
+	cursor: pointer;
 }
 
 #project_main_header_btn_wrap {
@@ -404,6 +430,7 @@ section {
 	margin-top: 15px;
 	margin-left: 20px;
 	float: right;
+	cursor: pointer;
 }
 
 #project_main_title {
@@ -411,6 +438,7 @@ section {
 	font-family: NotoSansB;
 	color: rgb(94, 94, 94);
 	margin-bottom: 30px;
+	cursor: pointer;
 }
 
 #project_main_tab_wrap {
@@ -1044,9 +1072,8 @@ section {
 .project_board_read_hr {
 	width: 680px;
 	height: 1px;
-	background-color: rgb(94, 94, 94);
-	margin-top: 80px;
-	margin-bottom: 80px;
+	background-color: rgb(224, 224, 224);
+	margin-bottom: 60px;
 }
 
 .project_board_read_btn {
@@ -1061,6 +1088,128 @@ section {
 	cursor: pointer;
 }
 
+.project_board_read_comment_wrap {
+	display: flex;
+}
+
+.project_board_read_comemnt_content_flex {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.project_board_read_comemnt_title {
+	font-size: 13px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+	width: 60px;
+	height: 30px;
+}
+
+.project_board_read_comemnt_content_wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+/* .project_board_read_comemnt_content_wrap {
+	display: grid;
+	width: 620px;
+	grid-template-rows: 40px 60px;
+	row-gap: 15px;
+} */
+
+.project_board_read_comemnt_content_profile_wrap {
+	display: grid;
+	grid-template-columns: 40px 50px 50px 355px 105px;
+	column-gap: 5px;
+}
+
+.project_board_read_comemnt_content_profile_img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: rgb(230, 230, 230);
+}
+
+.project_board_read_comemnt_content_profile_name {
+	font-size: 13px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+	justify-self: end;
+	line-height: 40px;
+}
+
+.project_board_read_comemnt_content_profile_job {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	justify-self: start;
+	line-height: 40px;
+}
+
+.project_board_read_comemnt_content_date {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	justify-self: end;
+	line-height: 40px;
+}
+
+.project_board_read_comemnt_content_input_wrap {
+	display: grid;
+	grid-template-columns: 510px 90px;
+	column-gap: 20px;
+}
+
+.project_board_read_comemnt_content_input {
+	width: 510px;
+	height: 60px;
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	resize: none;
+	overflow: hidden;
+}
+
+.project_board_read_comemnt_content_delete_btn {
+	width: 90px;
+	height: 30px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+	justify-self: end;
+	align-self: center;
+}
+
+.project_board_read_comemnt_content_update_btn {
+	width: 90px;
+	height: 30px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+}
+
+.project_board_read_comemnt_content_input_btn {
+	width: 90px;
+	height: 30px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+}
+
+.project_board_read_comemnt_content {
+	width: 510px;
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+}
 /* 프로젝트 업무 생성 리스트 페이지 */
 /* 프로젝트 업무 생성 리스트 페이지 */
 /* 프로젝트 업무 생성 리스트 페이지 */
@@ -1577,6 +1726,115 @@ section {
 	top: 0px;
 	right: 0px;
 }
+
+.project_work_read_comment_flex {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.project_work_read_comemnt_content_wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.project_work_read_comemnt_content_profile_wrap {
+	display: grid;
+	grid-template-columns: 40px 50px 50px 470px 105px;
+	column-gap: 5px;
+}
+
+.project_work_read_comemnt_content_input_wrap {
+	display: grid;
+	grid-template-columns: 625px 90px;
+	column-gap: 20px;
+}
+
+.project_work_read_comemnt_content_profile_img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: rgb(230, 230, 230);
+}
+
+.project_work_read_comemnt_content_profile_name {
+	font-size: 13px;
+	font-family: NotoSansB;
+	color: rgb(94, 94, 94);
+	justify-self: end;
+	line-height: 40px;
+}
+
+.project_work_read_comemnt_content_profile_job {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	justify-self: start;
+	line-height: 40px;
+}
+
+.project_work_read_comemnt_content_date {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	justify-self: end;
+	line-height: 40px;
+}
+
+.project_work_read_comemnt_content_input {
+	width: 625px;
+	height: 60px;
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	resize: none;
+	overflow: hidden;
+}
+
+.project_work_read_comemnt_content {
+	width: 510px;
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+}
+
+.project_work_read_comemnt_content_input_btn {
+	width: 90px;
+	height: 30px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+}
+
+.project_work_read_comemnt_content_delete_btn {
+	width: 90px;
+	height: 30px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+	justify-self: end;
+	align-self: center;
+}
+
+.project_work_read_comemnt_content_update_btn {
+	width: 90px;
+	height: 30px;
+	font-size: 12px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+}
+/* 할일목록 */
+/* 할일목록 */
+/* 할일목록 */
+/* 할일목록 */
+/* 할일목록 */
 
 #project_todo_header_wrap {
 	margin-top: 35px;

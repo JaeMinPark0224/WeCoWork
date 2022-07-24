@@ -65,6 +65,9 @@ public class Project {
 	private Timestamp pf_date;
 	private String pf_name;
 	private List<Map<String, String>> pf_list;
+	private int pc_no;
+	private String pc_content;
+	private Timestamp pc_date;
 	public int getPr_no() {
 		return pr_no;
 	}
@@ -401,6 +404,24 @@ public class Project {
 	public void setPf_list(List<Map<String, String>> pf_list) {
 		this.pf_list = pf_list;
 	}
+	public int getPc_no() {
+		return pc_no;
+	}
+	public void setPc_no(int pc_no) {
+		this.pc_no = pc_no;
+	}
+	public String getPc_content() {
+		return pc_content;
+	}
+	public void setPc_content(String pc_content) {
+		this.pc_content = pc_content;
+	}
+	public Timestamp getPc_date() {
+		return pc_date;
+	}
+	public void setPc_date(Timestamp pc_date) {
+		this.pc_date = pc_date;
+	}
 	@Override
 	public String toString() {
 		return "Project [pr_no=" + pr_no + ", pr_title=" + pr_title + ", pr_content=" + pr_content + ", pr_open_yn="
@@ -418,9 +439,9 @@ public class Project {
 				+ ", pt_date=" + pt_date + ", pt_content=" + pt_content + ", pt_complete_yn=" + pt_complete_yn
 				+ ", pff_no=" + pff_no + ", pff_name=" + pff_name + ", pff_ref=" + pff_ref + ", pff_level=" + pff_level
 				+ ", pff_order=" + pff_order + ", pf_no=" + pf_no + ", pf_url=" + pf_url + ", pf_date=" + pf_date
-				+ ", pf_name=" + pf_name + ", pf_list=" + pf_list + "]";
+				+ ", pf_name=" + pf_name + ", pf_list=" + pf_list + ", pc_no=" + pc_no + ", pc_content=" + pc_content
+				+ ", pc_date=" + pc_date + "]";
 	}
-	
 	
 	
 }

@@ -36,20 +36,21 @@
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 	<div id="project_main_menu_title">게시물 작성</div>
-		<form name="board_form" action="<%= request.getContextPath()%>/project/board/insert.do" method="post" enctype="multipart/form-data">
-			<input type="hidden" value="${pr_no }" name="pr_no">
+		<form name="board_form" action="<%= request.getContextPath()%>/project/board/update.do" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="pb_no" id="pb_no">
+			<input type="hidden" name="pr_no" id="pr_no">
 			<div id="project_board_insert_wrap">
 				<div class="project_board_insert_content">
 					<div class="project_board_insert_div_title">게시물 제목</div>
 					<div class="project_input_wrap">
-						<input type="text" class="project_board_insert_input_text" name="pb_title" id="pb_title" placeholder="게시물 제목을 입력해 주세요. (최대 30자)">
+						<input type="text" class="project_board_insert_input_text" name="pb_title" id="pb_title" placeholder="게시물 제목을 입력해 주세요. (최대 30자)" value="${project.pb_title }">
 						<div class="project_board_input_count">0/30자</div>
 					</div>
 				</div>
 				<div class="project_board_insert_content">
 					<div class="project_board_insert_div_title">게시물 내용</div>
 					<div class="project_input_wrap">
-						<textarea class="project_board_insert_textarea" name="pb_content" id="pb_content" placeholder="프로젝트 내용을 입력해 주세요. (최대 600자)"></textarea>
+						<textarea class="project_board_insert_textarea" name="pb_content" id="pb_content" placeholder="프로젝트 내용을 입력해 주세요. (최대 600자)">${project.pb_content }</textarea>
 						<div class="project_board_input_count">0/600자</div>
 					</div>
 				</div>
@@ -63,7 +64,7 @@
 					<input type="text" class="project_board_parent_no_insert" name="project_parent_no">
 					<input type="file" class="project_board_file_insert" name="project_file">
 				</div>
-				<button type="button" class="project_board_insert_write_btn">작성하기</button>
+				<button type="button" class="project_board_insert_write_btn">수정하기</button>
 			</div>
 		</form>
 	</div>
@@ -71,7 +72,13 @@
 <script type="text/javascript">
 	//프로젝트 번호
 	var js_pr_no = (new URL(location.href).searchParams).get('project');
-
+	
+	//게시글 번호
+	var js_pb_no = (new URL(location.href).searchParams).get('no');
+	
+	$("#pb_no").val(js_pb_no);
+	$("#pr_no").val(js_pr_no);
+	
 	// 맨션 토글 버튼 위치 조정
 	$(".project_insert_toggle_btn_wrap").css("margin-top", "2.5px");
 	$(".project_insert_toggle_btn_wrap").css("margin-right", "10px");

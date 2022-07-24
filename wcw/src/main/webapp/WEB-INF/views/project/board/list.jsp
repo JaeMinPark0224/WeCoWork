@@ -72,6 +72,9 @@
 	</div>
 </section>
 <script type="text/javascript">
+// 프로젝트 번호
+var js_pr_no = (new URL(location.href).searchParams).get('project');
+
 // 게시판 서브 버튼 생성
 $("#project_main_tab_wrap").append("<div id='project_board_sub_btn_wrap'></div>")
 $("#project_board_sub_btn_wrap").append("<button id='project_notice_insert_btn' class='project_board_sub_btn'>공지사항 작성</button>");

@@ -2,6 +2,8 @@ package kh.spring.wcw.project.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
+
 import kh.spring.wcw.project.domain.Project;
 
 /**
@@ -17,6 +19,10 @@ public interface ProjectService {
 	public int insertProjectEmp(Project project);
 	
 	public List<Project> selectListProject(int emp_no);
+	
+	public List<Project> selectListProject(int emp_no, RowBounds rowbounds);
+	
+	public int selectCntProject(int emp_no);
 	
 	public int insertFavoriteProject(Project project);
 	
@@ -36,6 +42,8 @@ public interface ProjectService {
 	
 	public int deleteBoardProject(int pb_no);
 	
+	public int updateBoardProject(Project project);
+	
 	public int insertBoardFixProject(Project project);
 	
 	public int deleteBoardFixProject(Project project);
@@ -53,6 +61,10 @@ public interface ProjectService {
 	public List<Project> selectListSubWorkProject(int pw_no);
 	
 	public Project selectOneWorkProject(int pw_no);
+	
+	public int deleteWorkProject(int pw_no);
+	
+	public int updateWorkProject(Project project);
 	
 	public List<Project> selectListWorkEmpProject(int pw_no);
 	
@@ -89,4 +101,12 @@ public interface ProjectService {
 	public int insertFileProject(Project project);
 	
 	public int deleteFileProject(Project project);
+	
+	public int insertCommentProject(Project project);
+	
+	public List<Project> selectListCommentProject(Project project);
+	
+	public int deleteCommentProject(int pc_no);
+	
+	public int updateCommentProject(Project project);
 }

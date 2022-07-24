@@ -2,6 +2,7 @@ package kh.spring.wcw.project.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,16 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public List<Project> selectListProject(int emp_no) {
 		return dao.selectListProject(emp_no);
+	}
+	
+	@Override
+	public List<Project> selectListProject(int emp_no, RowBounds rowbounds) {
+		return dao.selectListProject(emp_no, rowbounds);
+	}
+	
+	@Override
+	public int selectCntProject(int emp_no) {
+		return dao.selectCntProject(emp_no);
 	}
 
 	@Override
@@ -74,6 +85,11 @@ public class ProjectServiceImpl implements ProjectService{
 	public int deleteBoardProject(int pb_no) {
 		return dao.deleteBoardProject(pb_no);
 	}
+	
+	@Override
+	public int updateBoardProject(Project project) {
+		return dao.updateBoardProject(project);
+	}
 
 	@Override
 	public int insertBoardFixProject(Project project) {
@@ -119,6 +135,19 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public Project selectOneWorkProject(int pw_no) {
 		return dao.selectOneWorkProject(pw_no);
+	}
+	
+	@Override
+	public int deleteWorkProject(int pw_no) {
+		return dao.deleteWorkProject(pw_no);
+	}
+	
+	@Override
+	@Transactional
+	public int updateWorkProject(Project project) {
+		dao.deleteWorkParticipantProject(project.getPw_no());
+		dao.insertWorkParticipantProject(project);
+		return dao.updateWorkProject(project);
 	}
 	
 	@Override
@@ -210,6 +239,26 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int deleteFileProject(Project project) {
 		return dao.deleteFileProject(project);
+	}
+
+	@Override
+	public int insertCommentProject(Project project) {
+		return dao.insertCommentProject(project);
+	}
+
+	@Override
+	public List<Project> selectListCommentProject(Project project) {
+		return dao.selectListCommentProject(project);
+	}
+
+	@Override
+	public int deleteCommentProject(int pc_no) {
+		return dao.deleteCommentProject(pc_no);
+	}
+
+	@Override
+	public int updateCommentProject(Project project) {
+		return dao.updateCommentProject(project);
 	}
 
 }

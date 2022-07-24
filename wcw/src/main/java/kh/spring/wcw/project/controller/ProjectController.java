@@ -15,6 +15,8 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,14 +59,52 @@ public class ProjectController {
 	@GetMapping("/list")
 	public ModelAndView selectListProject(
 			ModelAndView mv
-			,HttpSession session) {
+			,HttpSession session
+			,@RequestParam(name = "page", defaultValue = "0", required = false) String page
+			,@RequestParam(name = "join", required = false) String join
+			,@RequestParam(name = "fav", required = false) String fav
+			,@RequestParam(name = "open", required = false) String open
+			,@RequestParam(name = "complete", required = false) String complete
+			, RedirectAttributes rttr
+			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
 			return mv;
 		}
 		int emp_no = ((Employee)session.getAttribute("loginSSInfo")).getEmp_no();
-		List<Project> projectList = service.selectListProject(emp_no);
-		logger.info("projectList : {}", projectList);
+		
+		// 페이지 숫자 판별
+		if(!StringUtils.isNumeric(page)) {
+			page = "0";
+		}
+		// 페이지가 문자이거나 적지 않으면 1로 설정
+		if(page.equals("0")) {
+			rttr.addAttribute("page", "1");
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		// 한 페이지에 보여줄 프로젝트의 수
+		int pageBlock = 10;
+		// 총 프로젝트의 수
+		int totalCnt = service.selectCntProject(emp_no);
+		// 총 페이지의 수
+		int totalPageCnt = (totalCnt % pageBlock == 0)?(totalCnt / pageBlock):(totalCnt / pageBlock + 1);
+		// 페이지의 번호가 총 페이지의 수보다 크다면 마지막 페이지로 이동
+		if(Integer.parseInt(page) > totalPageCnt) {
+			page = String.valueOf(totalPageCnt);
+			rttr.addAttribute("page", page);
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		int pageInt = Integer.parseInt(page);
+		int offset = (pageInt - 1) * pageBlock;
+		RowBounds rowbounds = new RowBounds(offset, pageBlock);
+		mv.addObject("startPage", (pageInt % pageBlock == 0)?(pageInt-pageBlock+1):(pageInt - pageInt % pageBlock + 1));
+		int endPage = (pageInt +(pageBlock - ((pageInt % pageBlock == 0)?pageBlock:pageInt % pageBlock)));
+		mv.addObject("endPage", ((endPage > totalPageCnt)?totalPageCnt:endPage));
+		mv.addObject("totalPageCnt", totalPageCnt);
+		
+		List<Project> projectList = service.selectListProject(emp_no, rowbounds);
 		mv.addObject("projectList", projectList);
 		mv.setViewName("project/list");
 		return mv;
@@ -73,25 +113,25 @@ public class ProjectController {
 	@GetMapping("/main")
 	public ModelAndView selectOneProject(
 			ModelAndView mv
-			, @RequestParam int project
+			, @RequestParam(name = "project") int pr_no
 			, HttpSession session
+			, Project project
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
 			return mv;
 		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
-		projectObj.setEmp_no(loginSSInfo.getEmp_no());
-		projectObj.setPr_no(project);
-		logger.info("stage1");
+		project.setEmp_no(loginSSInfo.getEmp_no());
 		if(service.selectEmpProject(projectObj) == null) {
-			logger.info("stage2");
 			mv.setViewName("redirect:/project/list");
 			return mv;
 		}
-		projectObj = service.selectProject(project);
-		mv.addObject("project", service.selectProject(project));
-		mv.addObject("pr_no", projectObj.getPr_no());
+		project.setPr_no(pr_no);
+		mv.addObject("project", service.selectProject(pr_no));
+		mv.addObject("pr_no", pr_no);
+		mv.addObject("noticeList", service.selectListNoticeProject(project));
+		mv.addObject("boardList", service.selectListBoardProject(project));
 		mv.setViewName("project/main");
 		return mv;
 	}
@@ -235,28 +275,99 @@ public class ProjectController {
 		return mv;
 	}
 	
-	
-	
-	
-	@GetMapping("/board/read")
-	public ModelAndView selectOneBoardProject(
+	@GetMapping("/board/update")
+	public ModelAndView updateBoardProject(
 			ModelAndView mv
 			, HttpSession session
-			, @RequestParam(required = false , defaultValue = "0") int project
-			, @RequestParam(required = false , defaultValue = "0") int no
+			, Project project
+			, @RequestParam(name = "no", defaultValue = "0") int no
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
 			return mv;
 		}
-		if(project == 0 || no == 0) {
-			mv.setViewName("redirect:/project/list");
+		project.setPb_no(no);
+		mv.addObject("project", service.selectOneBoardProject(project.getPb_no()));
+		mv.setViewName("project/board/update");
+		return mv;
+	}
+	
+	@PostMapping("/board/update.do")
+	public ModelAndView updateDoBoardProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			, @RequestParam(name = "project_file", required = false) List<MultipartFile> board_file
+			, @RequestParam(name = "project_file_name", required = false) List<String> file_name
+			, @RequestParam(name = "project_parent_no", required = false) List<String> folder_no
+			, RedirectAttributes attr
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
 			return mv;
 		}
 		
+		
+		logger.info("board_file : {}", board_file);
+//		if(board_file != null) {
+//			List<Map<String, String>> pf_list = new ArrayList<Map<String, String>>();
+//			Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+//					"cloud_name", "dfam8azdg",
+//					"api_key", "882165332977633",
+//					"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
+//					"secure", true));
+//			@SuppressWarnings("rawtypes")
+//			Map uploadResult = null;
+//			for(int i = 0; i < board_file.size(); i++) {
+//				try {
+//					uploadResult = cloudinary.uploader().upload(
+//							board_file.get(i).getBytes()
+//							, ObjectUtils.asMap("resource_type", "auto"));
+//					logger.info("filename : {}", board_file.get(i).getOriginalFilename());
+//					logger.info("upload result : {}", uploadResult);
+//					logger.info("result URL : {}", uploadResult.get("url"));
+//					Map<String, String> pf_map = new HashMap<String, String>();
+//					pf_map.put("pf_url", (String)uploadResult.get("url"));
+//					pf_map.put("pf_name", board_file.get(i).getOriginalFilename());
+//					pf_map.put("pff_no", folder_no.get(i));
+//					pf_list.add(pf_map);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			project.setPf_list(pf_list);
+//		}
+		logger.info("project : {}", project);
+		int result = service.updateBoardProject(project);
+		
+		
+		
+		mv.setViewName("redirect:/project/board/read?project="+project.getPr_no()+"&no="+project.getPb_no());
+		return mv;
+	}
+	
+	@GetMapping("/board/read")
+	public ModelAndView selectOneBoardProject(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam(name = "project" ,required = false , defaultValue = "0") int pr_no
+			, @RequestParam(required = false , defaultValue = "0") int no
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		if(pr_no == 0 || no == 0) {
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		project.setPr_no(pr_no);
+		project.setPb_no(no);
 		mv.addObject("project", service.selectOneBoardProject(no));
 		mv.addObject("fileList", service.selectListFileProject(no, "board"));
-		mv.addObject("pr_no", project);
+		mv.addObject("commentList", service.selectListCommentProject(project));
+		mv.addObject("pr_no", pr_no);
 		mv.setViewName("project/board/read");
 		return mv;
 	}
@@ -297,6 +408,7 @@ public class ProjectController {
 			, HttpSession session
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
 			, @RequestParam(name = "no", defaultValue = "0") int pw_no
+			, Project project
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
@@ -309,13 +421,15 @@ public class ProjectController {
 			mv.setViewName("redirect:/project/list");
 			return mv;
 		}
-		
+		project.setPw_no(pw_no);
 		Project result = service.selectOneWorkProject(pw_no);
 		List<Project> workerList = service.selectListWorkEmpProject(pw_no);
 		List<Project> subWorkList = service.selectListSubWorkProject(pw_no);
+		List<Project> commentList = service.selectListCommentProject(project);
 		mv.addObject("work", result);
 		mv.addObject("workerList", workerList);
 		mv.addObject("subWorkList", subWorkList);
+		mv.addObject("commentList", commentList);
 		mv.setViewName("project/work/read");
 		return mv;
 	}
@@ -364,6 +478,74 @@ public class ProjectController {
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		project.setEmpNoList(empNoList);
 		service.insertWorkProject(project);
+		rttr.addAttribute("project", project.getPr_no());
+		mv.setViewName("redirect:/project/work/list");
+		return mv;
+	}
+	
+	@PostMapping("/work/delete")
+	public ModelAndView deleteWorkProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			, RedirectAttributes rttr
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		
+		service.deleteWorkProject(project.getPw_no());
+		
+		mv.setViewName("project/work/list");
+		rttr.addAttribute("project", project.getPr_no());
+		mv.setViewName("redirect:/project/work/list");
+		return mv;
+	}
+	
+	@GetMapping("/work/update")
+	public ModelAndView updateWorkProject(
+			ModelAndView mv
+			, HttpSession session
+			, Project project
+			, @RequestParam(name = "project") int pr_no
+			, @RequestParam(name= "no") int pw_no
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		mv.addObject("work", service.selectOneWorkProject(pw_no));
+		mv.addObject("workerList", service.selectListWorkEmpProject(pw_no));
+		mv.setViewName("project/work/update");
+		return mv;
+	}
+	
+	@PostMapping("/work/update.do")
+	public ModelAndView updateDoWorkProject(
+			ModelAndView mv
+			, RedirectAttributes rttr
+			, HttpSession session
+			, Project project
+			, @RequestParam(name = "pw_start_date_str") String pwStartDateStr
+			, @RequestParam(name = "pw_end_date_str") String pwEndDateStr
+			, @RequestParam(name = "empNoList") List<String> empNoList
+			) {
+		if(!wcwutill.loginChk(session)) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime localDateTime = LocalDateTime.from(dateFormat.parse(pwStartDateStr));
+		Timestamp tsStart = Timestamp.valueOf(localDateTime);
+		localDateTime = LocalDateTime.from(dateFormat.parse(pwEndDateStr));
+		Timestamp tsEnd = Timestamp.valueOf(localDateTime);
+		project.setPw_start_date(tsStart);
+		project.setPw_end_date(tsEnd);
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		project.setEmpNoList(empNoList);
+		service.updateWorkProject(project);
 		rttr.addAttribute("project", project.getPr_no());
 		mv.setViewName("redirect:/project/work/list");
 		return mv;
@@ -1047,4 +1229,76 @@ public class ProjectController {
 		return mv;
 	}
 	
+	@PostMapping("/comment/insert")
+	@ResponseBody
+	public String insertCommentProject(
+			HttpSession session
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo= (Employee) session.getAttribute("loginSSInfo");
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		service.insertCommentProject(project);
+		List<Project> commentList = service.selectListCommentProject(project);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		return gson.toJson(commentList);
+	}
+	
+	@PostMapping("/comment/delete")
+	@ResponseBody
+	public String deleteCommentProject(
+			HttpSession session
+			, @RequestParam int pc_no
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo= (Employee) session.getAttribute("loginSSInfo");
+		service.deleteCommentProject(pc_no);
+		List<Project> commentList = service.selectListCommentProject(project);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		return gson.toJson(commentList);
+	}
+	
+	@PostMapping("/comment/update")
+	@ResponseBody
+	public String updateCommentProject(
+			HttpSession session
+			, @RequestParam int pc_no
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo= (Employee) session.getAttribute("loginSSInfo");
+		service.updateCommentProject(project);
+		List<Project> commentList = service.selectListCommentProject(project);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		return gson.toJson(commentList);
+	}
+	
+	@PostMapping("/authority/check")
+	@ResponseBody
+	public String authorityCheckProject(
+			HttpSession session
+			, @RequestParam int pr_no
+			, Project project
+			) {
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo= (Employee) session.getAttribute("loginSSInfo");
+		project.setEmp_no(loginSSInfo.getEmp_no());
+		List<Project> participantAList = service.selectListParticipantProject(pr_no, "A");
+		int result = 0;
+		for(Project pro : participantAList) {
+			if(pro.getEp_no() == loginSSInfo.getEmp_no()) {
+				result = 1;
+			}
+		}
+		return String.valueOf(result);
+	}
 }

@@ -3,9 +3,34 @@
 <div id="project_main_header">
 	<div id="project_main_menu_title">프로젝트</div>
 	<div id="project_main_header_btn_wrap">
-		<button class="btn_main_gray btn_main_float" id="btn_main_delete">삭제하기</button>
-		<button class="btn_main_purple btn_main_float" id="btn_main_complete">완료하기</button>
-		<button class="btn_main_purple btn_main_float" id="btn_main_update">수정하기</button>
+		<script type="text/javascript">
+		var js_pr_no = (new URL(location.href).searchParams).get('project'); 
+			$.ajax({
+				type: "POST",
+				url: "<%= request.getContextPath()%>/project/authority/check",
+				data: {
+					pr_no : js_pr_no,
+				},
+				dataType: "json",
+				success: function(result) {
+					if(result == -1) {
+						
+					}
+					else if(result == 0) {
+						console.log(result);
+					}
+					else if(result == 1) {
+						console.log(result);
+						$("#project_main_header_btn_wrap").append('<button class="btn_main_gray btn_main_float" id="btn_main_delete">삭제하기</button>');
+						$("#project_main_header_btn_wrap").append('<button class="btn_main_purple btn_main_float" id="btn_main_complete">완료하기</button>');
+						$("#project_main_header_btn_wrap").append('<button class="btn_main_purple btn_main_float" id="btn_main_update">수정하기</button>');
+					}
+				},
+				error: function(request, status, error) {
+					alert("fail");
+				}
+			});
+		</script>
 	</div>
 	<div id="project_main_title">프로젝트 제목</div>
 	<div id="project_main_tab_wrap">
@@ -42,7 +67,6 @@
 	</div>
 	<script>
 		$('.project_main_tab').on('click', function() {
-			var js_pr_no = (new URL(location.href).searchParams).get('project'); 
 			switch($(this).index()) {
 			case 0:
 				location.href = "<%= request.getContextPath()%>/project/board/list?project="+js_pr_no;
@@ -63,6 +87,10 @@
 				location.href = "<%= request.getContextPath()%>/project/participant/list?project="+js_pr_no;
 				break;
 			}
+		});
+		
+		$("#project_main_menu_title, #project_main_title").on("click", function() {
+			location.href = "<%= request.getContextPath()%>/project/main?project="+js_pr_no;
 		});
 	</script>
 </div>

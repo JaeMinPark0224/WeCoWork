@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,14 @@ public class ProjectDao {
 	
 	public List<Project> selectListProject(int emp_no) {
 		return sqlsession.selectList("Project.selectListProject", emp_no);
+	}
+	
+	public List<Project> selectListProject(int emp_no, RowBounds rowbounds) {
+		return sqlsession.selectList("Project.selectListProject", emp_no, rowbounds);
+	}
+	
+	public int selectCntProject(int emp_no) {
+		return sqlsession.selectOne("Project.selectCntProject", emp_no);
 	}
 	
 	public int insertFavoriteProject(Project project) {
@@ -64,6 +73,10 @@ public class ProjectDao {
 		return sqlsession.delete("Project.deleteBoardProject", pb_no);
 	}
 	
+	public int updateBoardProject(Project project) {
+		return sqlsession.update("Project.updateBoardProject", project);
+	}
+	
 	public int insertBoardFixProject(Project project) {
 		return sqlsession.insert("Project.insertBoardFixProject", project);
 	}
@@ -98,6 +111,22 @@ public class ProjectDao {
 	
 	public Project selectOneWorkProject(int pw_no) {
 		return sqlsession.selectOne("Project.selectOneWorkProject", pw_no);
+	}
+	
+	public int deleteWorkProject(int pw_no) {
+		return sqlsession.delete("Project.deleteWorkProject", pw_no);
+	}
+	
+	public int updateWorkProject(Project project) {
+		return sqlsession.update("Project.updateWorkProject", project);
+	}
+	
+	public int deleteWorkParticipantProject(int pw_no) {
+		return sqlsession.delete("Project.deleteWorkParticipantProject", pw_no);
+	}
+	
+	public int insertWorkParticipantProject(Project project) {
+		return sqlsession.insert("Project.insertWorkParticipantProject", project);
 	}
 	
 	public List<Project> selectListWorkEmpProject(int pw_no) {
@@ -181,4 +210,19 @@ public class ProjectDao {
 		return sqlsession.delete("Project.deleteFileProject", project);
 	}
 	
+	public int insertCommentProject(Project project) {
+		return sqlsession.insert("Project.insertCommentProject", project);
+	}
+	
+	public List<Project> selectListCommentProject(Project project) {
+		return sqlsession.selectList("Project.selectListCommentProject", project);
+	}
+	
+	public int deleteCommentProject(int pc_no) {
+		return sqlsession.delete("Project.deleteCommentProject", pc_no);
+	}
+	
+	public int updateCommentProject(Project project) {
+		return sqlsession.update("Project.updateCommentProject", project);
+	}
 }

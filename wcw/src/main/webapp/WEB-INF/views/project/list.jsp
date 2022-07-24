@@ -67,9 +67,42 @@
 			</div>
 			</c:forEach>
 		</div>
+		<div class="project_list_page_btn_wrap">
+			<c:if test="${startPage > 5}">
+				<div class="project_page_btn"><i class="fa-solid fa-angle-left"></i></div>
+			</c:if>
+			<c:forEach var="index" begin="${startPage }" end="${endPage }">
+				<div class="project_page_btn">${index }</div>
+			</c:forEach>
+			<c:if test="${endPage ne totalPageCnt}">
+				<div class="project_page_btn"><i class="fa-solid fa-angle-right"></i></div>
+			</c:if>
+		</div>
 	</div>
 </section>
 <script type="text/javascript">
+	// 페이지 번호
+	var js_page_no = (new URL(location.href).searchParams).get('page');
+	
+	// 페이지 번호 url 설정
+	$(".project_page_btn").on("click", function() {
+		let textUrl = "<%= request.getContextPath()%>/project/list?page=";
+		if($(this).children().length == 0) {
+			textUrl += $(this).text();
+			location.href = textUrl;
+		}		
+	});
+	
+	// 페이지 처리
+	for(var i = 0; i < $(".project_page_btn").length; i++) {
+		if($(".project_page_btn").eq(i).text() == js_page_no) {
+			$(".project_page_btn").eq(i).css({
+				"background-color" : "#4B4DB2",
+				color : "white"
+			});
+			break;
+		}
+	}
 	
 	$('.project_list_fav').on('mouseenter', function() {
 		if($(this).attr("favChk") == 'f') {
@@ -185,6 +218,32 @@
 	});	
 	$('.project_list_modal_btn_cancle').on('click', function() {
 		$('#project_list_modal_background').css('display', 'none');
+	});
+	
+	$(".project_tap").on("click", function() {
+		let index = $(this).index();
+		console.log(index);
+		switch(index) {
+		case 0 :
+			console.log("모든 프로젝트");
+			break;
+		case 1 :
+			console.log("참여중 프로젝트");
+			break;
+		case 2 :
+			console.log("즐겨찾기 프로젝트");
+			break;
+		case 3 :
+			console.log("공개 프로젝트");
+			break;
+		case 4 :
+			console.log("비공개 프로젝트");
+			break;
+		case 5 :
+			console.log("완료 프로젝트");
+			break;
+		}
+		<%-- location.href="<%= request.getContextPath()%>/project/list?page=1&join=N&fav=N&open=N&complete=N"; --%>
 	});
 </script>
 </body>

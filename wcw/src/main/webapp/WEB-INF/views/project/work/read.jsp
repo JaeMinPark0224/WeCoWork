@@ -119,16 +119,47 @@
 				<div class="project_work_read_content_hr"></div>
 				<div class="project_work_read_content_left">댓글</div>
 				<div class="project_work_read_content_right">
-					<div class="project_work_read_comment_profile"></div>
-					<div class="project_work_read_comment_input_wrap">
-						<input type="text" class="project_work_read_comment_input_text">
-						<button class="project_work_read_comment_insert_btn">등록</button>
+					<div class="project_work_read_comment_flex">
+						<div class="project_work_read_comemnt_content_wrap">
+							<div class="project_work_read_comemnt_content_profile_wrap">
+								<div class="project_work_read_comemnt_content_profile_img"></div>
+								<div class="project_work_read_comemnt_content_profile_name">${loginSSInfo.name }</div>
+								<div class="project_work_read_comemnt_content_profile_job">${loginSSInfo.job_title }</div>
+							</div>
+							<div class="project_work_read_comemnt_content_input_wrap">
+								<textarea type="text" class="project_work_read_comemnt_content_input" name=""></textarea>
+								<button type="button" class="project_work_read_comemnt_content_input_btn">등록</button>
+							</div>
+						</div>
+						<c:forEach items="${commentList }" var="comment">
+						<div class="project_work_read_comemnt_content_wrap">
+							<div class="project_work_read_comemnt_content_profile_wrap">
+								<div class="project_work_read_comemnt_content_profile_img"></div>
+								<div class="project_work_read_comemnt_content_profile_name">${comment.name }</div>
+								<div class="project_work_read_comemnt_content_profile_job">${comment.job_title }</div>
+								<div class="project_work_read_comemnt_content_date">${fn:substring(comment.pc_date,0,19) }</div>
+								<c:if test="${loginSSInfo.emp_no eq comment.emp_no }">
+									<button type="button" pc_no="${comment.pc_no }" class="project_work_read_comemnt_content_delete_btn">삭제</button>
+								</c:if>
+							</div>
+							<div class="project_work_read_comemnt_content_input_wrap">
+								<div class="project_work_read_comemnt_content">${comment.pc_content }</div>
+								<c:if test="${loginSSInfo.emp_no eq comment.emp_no }">
+									<button type="button" pc_no="${comment.pc_no }" class="project_work_read_comemnt_content_update_btn">수정</button>
+								</c:if>
+							</div>
+						</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	</div>
+	<form action="<%= request.getContextPath()%>/project/work/delete" method="post" id="work_delete">
+		<input type="hidden" name="pw_no" id="pw_no">
+		<input type="hidden" name="pr_no" id="pr_no">
+	</form>
 </section>
 <script type="text/javascript">
 	var js_pr_no = (new URL(location.href).searchParams).get('project'); 
@@ -185,6 +216,135 @@
 	$(".project_work_read_sub_work_add_btn").on("click", function() {
 		location.href = "<%= request.getContextPath()%>/project/work/insert?project="+js_pr_no+"&no="+js_pw_no;
 	});
+	
+	// 업무 수정 기능
+	$("#project_work_update_btn").on("click", function() {
+		location.href = "<%= request.getContextPath()%>/project/work/update?project="+js_pr_no+"&no="+js_pw_no;
+	});
+	
+	// 업무 삭제 기능
+	$("#project_work_delete_btn").on("click", function() {
+		$("#pw_no").val(js_pw_no);
+		$("#pr_no").val(js_pr_no);
+		$("#work_delete").get(0).submit();
+	});
+	
+	// 댓글 등록
+	$(".project_work_read_comemnt_content_input_btn").on("click", function() {
+		$.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/project/comment/insert",
+			dataType: "json",
+			data: {
+				pw_no : js_pw_no,
+				pc_content: $(".project_work_read_comemnt_content_input").val().replaceAll(/(\n|\r\n)/g, "<br>")
+			},
+			success: function(result) {
+				if(result == -1) {
+										
+				}
+				else {
+					console.log(result);
+					createCommentList(result);
+					$(".project_work_read_comemnt_content_input").val('');
+				}
+			},
+			error: function(request, status, error) {
+				alert("fail");
+			}
+		});
+	});
+	
+	// 댓글 삭제
+	$(".project_work_read_comemnt_content_delete_btn").on("click", deleteCommentFnc);
+	
+	// 댓글 삭제 함수
+	function deleteCommentFnc() {
+		$.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/project/comment/delete",
+			dataType: "json",
+			data: {
+				pc_no : $(this).attr("pc_no"),
+				pw_no : js_pw_no
+			},
+			success: function(result) {
+				if(result == -1) {
+										
+				}
+				else {
+					console.log(result);
+					createCommentList(result);
+				}
+			},
+			error: function(request, status, error) {
+				alert("fail");
+			}
+		});
+	}
+	
+	// 댓글 수정
+	$(".project_work_read_comemnt_content_update_btn").on("click", updateBtnFnc);
+	
+	// 댓글 수정 버튼 수정 기능
+	function updateBtnFnc() {
+		console.log($(this));
+		$(this).text("수정 완료");
+		$(this).off("click");
+		$(this).on("click", updateDoCommentFnc);
+		let temtText = $(this).prev().text();
+		$(this).prev().remove();
+		$(this).before('<textarea type="text" class="project_work_read_comemnt_content_input" name="">'+temtText+'</textarea>');
+	}
+	
+	// 댓글 수정 함수
+	function updateDoCommentFnc() {
+		$.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/project/comment/update",
+			dataType: "json",
+			data: {
+				pc_no : $(this).attr("pc_no"),
+				pw_no : js_pw_no,
+				pc_content : $(this).prev().val()
+			},
+			success: function(result) {
+				if(result == -1) {
+										
+				}
+				else {
+					console.log(result);
+					createCommentList(result);
+				}
+			},
+			error: function(request, status, error) {
+				alert("fail");
+			}
+		});
+	}
+	
+	// 댓글리스트 생성
+	function createCommentList(commentList) {
+		$(".project_work_read_comemnt_content_wrap").eq(0).nextAll().remove();
+		for(var i = 0; i < commentList.length; i++) {
+			$(".project_work_read_comment_flex").append('<div class="project_work_read_comemnt_content_wrap"></div');
+			$(".project_work_read_comemnt_content_wrap").last().append('<div class="project_work_read_comemnt_content_profile_wrap"></div');
+			$(".project_work_read_comemnt_content_wrap").last().append('<div class="project_work_read_comemnt_content_input_wrap"></div');
+			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_profile_img"></div>');
+			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_profile_name">'+commentList[i].name+'</div>');
+			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_profile_job">'+commentList[i].job_title+'</div>');
+			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_date">'+commentList[i].pc_date+'</div>');
+			$(".project_work_read_comemnt_content_input_wrap").last().append('<div class="project_work_read_comemnt_content">'+commentList[i].pc_content+'</div>');
+			if(commentList[i].emp_no == ${loginSSInfo.emp_no}) {
+				$(".project_work_read_comemnt_content_profile_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_work_read_comemnt_content_delete_btn">삭제</button>');
+				$(".project_work_read_comemnt_content_input_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_work_read_comemnt_content_input_btn">수정</button>');
+			}
+		}
+		$(".project_work_read_comemnt_content_delete_btn").off("click");
+		$(".project_work_read_comemnt_content_delete_btn").on("click", deleteCommentFnc);
+		$(".project_work_read_comemnt_content_update_btn").off("click");
+		$(".project_work_read_comemnt_content_update_btn").on("click", updateBtnFnc);
+	}
 </script>
 </body>
 </html>

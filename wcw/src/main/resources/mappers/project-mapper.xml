@@ -58,10 +58,25 @@
 		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
 		    on tp.pr_no = ta.pr_fav
 		    where cp_no = (select cp_no
-		    from tb_department td
-		    join tb_employee te
-		    on td.dept_no = te.dept_no
-		    where te.emp_no = #{emp_no})
+                            from tb_department td
+                            join tb_employee te
+                            on td.dept_no = te.dept_no
+                            where te.emp_no = #{emp_no})
+                and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no = tp.pr_no and ep_no = #{emp_no}) is not null)
+		    order by tp.pr_date desc
+	</select>
+	
+	<select id="selectCntProject" parameterType="_int" resultType="_int">
+		select count(tp.pr_no)
+			from tb_project tp
+		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
+		    on tp.pr_no = ta.pr_fav
+		    where cp_no = (select cp_no
+                            from tb_department td
+                            join tb_employee te
+                            on td.dept_no = te.dept_no
+                            where te.emp_no = #{emp_no})
+                and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no = tp.pr_no and ep_no = #{emp_no}) is not null)
 		    order by tp.pr_date desc
 	</select>
 	
@@ -205,6 +220,13 @@
 			where pb_no = #{pb_no}
 	</select>
 	
+	<update id="updateBoardProject" parameterType="Project">
+		update tb_project_board
+			set pb_title = #{pb_title}
+				,pb_content = #{pb_content}
+			where pb_no = #{pb_no}
+	</update>
+	
 	<delete id="deleteBoardProject" parameterType="_int">
 		delete from tb_project_board
 		where pb_no = #{pb_no}
@@ -333,6 +355,22 @@
 		    where pw_no = #{pw_no}
 	</select>
 	
+	<delete id="deleteWorkProject" parameterType="_int">
+		delete from tb_project_work
+			where pw_ref_no = #{pw_no}
+	</delete>
+	
+	<update id="updateWorkProject" parameterType="Project">
+		update tb_project_work
+			set pw_title = #{pw_title}
+				, pw_content = #{pw_content}
+				, pw_status = #{pw_status}
+				, pw_priority = #{pw_priority}
+				, pw_start_date = #{pw_start_date}
+				, pw_end_date = #{pw_end_date}
+			where pw_no = #{pw_no}
+	</update>
+	
 	<select id="selectListWorkEmpProject" parameterType="_int" resultType="Project">
 		select tpwp.emp_no, te.name
 		    from tb_project_work_participant tpwp
@@ -348,6 +386,24 @@
 			values
 			(#{pr_no}, #{emp_no}
 			, default, 'B')
+	</insert>
+	
+	<delete id="deleteWorkParticipantProject">
+		delete from tb_project_work_participant
+		where pw_no = #{pw_no}
+	</delete>
+	
+	<insert id="insertWorkParticipantProject">
+		insert all
+			<foreach collection="empNoList" item="emp_no_index" index="index">
+			into tb_project_work_participant
+			(pwp_no, pw_no
+			, emp_no, pwp_authority)
+			values
+			((SELECT nvl(max(pwp_no),0)+(#{index}+1) from tb_project_work_participant), #{pw_no}
+			, #{emp_no_index}, 'B')
+			</foreach>
+		select * from dual
 	</insert>
 	
 	<update id="updateParticipantProject" parameterType="Project">
@@ -483,4 +539,37 @@
 		delete from tb_project_file
 		where pf_no = #{pf_no}
 	</delete>
+	
+	<insert id="insertCommentProject" parameterType="Project">
+		insert into tb_project_comment
+		(pc_no, emp_no
+		, pb_no, pw_no
+		, pc_content, pc_date)
+		values
+		((SELECT nvl(max(pc_no),0)+1 from tb_project_comment), #{emp_no}
+		, #{pb_no}, #{pw_no}
+		, #{pc_content}, default)
+	</insert>
+	
+	<select id="selectListCommentProject" parameterType="Project" resultType="Project">
+		select pc_no, tpc.emp_no, pb_no, pw_no, pc_content, pc_date, name, job_title
+			from tb_project_comment tpc
+			join tb_employee te
+			on tpc.emp_no = te.emp_no
+			join tb_job_title tjt
+			on te.job_title_no = tjt.job_title_no
+			where (pb_no != 0 and pb_no = #{pb_no}) or (pw_no != 0 and pw_no = #{pw_no})
+			order by pc_date asc
+	</select>
+	
+	<delete id="deleteCommentProject" parameterType="_int">
+		delete from tb_project_comment
+		where pc_no = #{pc_no}
+	</delete>
+	
+	<update id="updateCommentProject">
+		update tb_project_comment
+			set pc_content = #{pc_content}
+			where pc_no = #{pc_no}
+	</update>
 </mapper>
