@@ -205,9 +205,8 @@
 	</if>
 </insert>
 
+<!-- 부서 정보 업데이트 -->
 <update id="updateDepartment" parameterType="hashmap">
-
-	
 	update tb_department
 	set dept_name = #{dept_name}
 	<if test="!dept_upper_name.equals('-2') and emp_no != -1">
@@ -226,7 +225,12 @@
 	where dept_no = #{dept_no}
 </update>
 
-
+<!-- 회사 공지사항 리스트 -->
+<select id="selectListNotice" resultType="Notice">
+	select nt_no, nt_title, nt_content, nt_date
+	from tb_notice
+	where cp_no = #{cp_no}
+</select>
 
 
 

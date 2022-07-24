@@ -208,7 +208,6 @@ public class DraftContoller {
 
 			System.out.println("dr_no_str: " + dr_no_str);
 			int dr_no = Integer.parseInt(dr_no_str);
-			List<Draft> draft = null;
 			
 			// 기안을 작성한 직원 번호 가져오기
 			Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");

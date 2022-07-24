@@ -4,11 +4,11 @@
 
 <!-- 로그인 -->
 <select id="selectEmployee" parameterType="hashmap" resultType="Employee">
-	SELECT * 
-	FROM TB_EMPLOYEE 
-		JOIN TB_DEPARTMENT USING(DEPT_NO) 
-		JOIN TB_COMPANY USING(CP_NO)
-		JOIN TB_JOB_TITLE USING(JOB_TITLE_NO)
+	SELECT e.emp_no, e.email, e.pwd, e.name, e.intl_no, e.phone, e.profile, e.sign, e.join_date, e.resign_yn, e.resign_date, e.hr_yn, d.dept_no, d.dept_name, j.job_title, j.job_level, c.cp_no, c.cp_name
+	FROM TB_EMPLOYEE  e
+		JOIN TB_DEPARTMENT d on e.dept_no = d.dept_no
+		JOIN TB_COMPANY c on d.cp_no = c.cp_no
+		JOIN TB_JOB_TITLE j using (job_title_no)
 	where email=#{email} and pwd=#{pwd}
 </select>
 

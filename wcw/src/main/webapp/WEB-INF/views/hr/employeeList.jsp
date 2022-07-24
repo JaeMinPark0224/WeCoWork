@@ -51,7 +51,7 @@
 						<td class="tb_read">${list.job_title}</td>
 						<td class="tb_read">${list.intl_no}</td>
 						<td class="tb_read"></td>
-						<td class="tb_read last_tb"><input type="hidden" class="empNo" value="${list.emp_no}"></td>
+						<td class="tb_read last_tb"><input type="hidden" class="empNo" name ="empNo" value="${list.emp_no}"></td>
 					</tr>
 				</c:forEach>
 			</c:if>

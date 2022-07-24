@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
+import kh.spring.wcw.notice.domain.Notice;
 import kh.spring.wcw.vacation.domain.Vacation;
 
 /**
@@ -119,7 +120,12 @@ public interface HrService {
 	 */
 	public int updateDepartment(int cp_no, String dept_name, int emp_no, String dept_upper_name, String active_yn, int dept_no);
 	
-	
+	/**
+	 * @param 회사 번호, RowBounds
+	 * @return 회사 공지사항 리스트 (작성일 순)
+	 * @author ybseo
+	 */
+	public List<Notice> selectListNotice(int cp_no, RowBounds rowBounds);
 	
 	
 	

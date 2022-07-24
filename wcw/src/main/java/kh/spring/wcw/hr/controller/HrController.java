@@ -3,10 +3,8 @@ package kh.spring.wcw.hr.controller;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -31,6 +29,7 @@ import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hr.service.HrService;
 import kh.spring.wcw.mail.Mail;
+import kh.spring.wcw.notice.domain.Notice;
 import kh.spring.wcw.vacation.domain.Vacation;
 
 @Controller
@@ -104,50 +103,6 @@ public class HrController {
 		mv.setViewName("hr/employeeList");
 		return mv;
 	}
-	
-	// 직원 리스트 조회 필터 ajax
-//	@PostMapping(value= "/employee/list", produces = "text/plain;charset=UTF-8")
-//	@ResponseBody
-//	public String selectListEmployeeAjax(
-//			HttpServletRequest req
-//			, @RequestParam(name="selectVal", required = false) String selectVal
-//			, @RequestParam(name="page", required = false) String page
-//			, @RequestParam(name="list", required = false) List<Employee> list) {
-//		int currentPage = 1; // 현재 페이지
-//		int cotentLimit = 15; // 한 페이지에 보여질 직원 정보 갯수
-//		
-//		System.out.println("ajax");
-//		System.out.println(selectVal);
-//		System.out.println(page);
-//		String currentPageStr = page;
-//		try {
-//			if(currentPageStr != null && !currentPageStr.equals("")) {
-//				currentPage = Integer.parseInt(currentPageStr);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		int offset = (currentPage - 1) * cotentLimit;
-//		RowBounds rowBounds = new RowBounds(offset, cotentLimit);
-//			
-//		List<Employee> totalList = HrService.selectEmployeeList();
-//			
-//		int totalpageCnt = totalList.size()/cotentLimit + 1;
-//		int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
-//		int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
-//		
-//		list = hrService.selectEmployeeListFilter(selectVal);
-//			
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("employeeList", list);
-//		map.put("totalpageCnt", totalpageCnt);
-//		map.put("startPage", startPage);
-//		map.put("endPage", endPage);
-//		
-//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-//		return gson.toJson(map);
-//	}
 	
 	// 직원 상세 정보 조회
 	@PostMapping(value= "/employee/select", produces = "text/plain;charset=UTF-8")
@@ -561,6 +516,74 @@ public class HrController {
 
 		return result;
 	}
+	
+	// 공지사항 리스트 조회 페이지 이동
+	@GetMapping("/notice/list")
+	public ModelAndView selectListNotice(
+			ModelAndView mv
+			, HttpSession session
+			, @RequestParam(name="page", required = false) String page) {
+			
+		int currentPage = 1; // 현재 페이지
+		int cotentLimit = 25; // 한 페이지에 보여질 직원 정보 갯수
+			
+		String currentPageStr = page;
+		try {
+			if(currentPageStr != null && !currentPageStr.equals("")) {
+				currentPage = Integer.parseInt(currentPageStr);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		int offset = (currentPage - 1) * cotentLimit;
+		RowBounds rowBounds = new RowBounds(offset, cotentLimit);
+
+			
+		// 회사 번호 가져오기
+				int cp_no = -1;
+				Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+				if(loginInfo == null) {
+					Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+					System.out.println("CompanySSinfo: "+CompanySSinfo);
+					cp_no = CompanySSinfo.getCp_no();
+				} else {
+					cp_no = loginInfo.getCp_no();
+				}
+				System.out.println("회사 번호: " + cp_no);
+		
+		// 회사가 가진 공지사항 리스트 가져오기
+		List <Notice> noticeList = hrService.selectListNotice(cp_no, rowBounds);
+		
+		int totalpageCnt = noticeList.size()/cotentLimit + 1;
+		int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
+		int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
+		
+		mv.addObject("totalpageCnt", totalpageCnt);
+		mv.addObject("startPage", startPage);
+		mv.addObject("endPage", endPage);
+		mv.addObject("noticeList", noticeList);
+		mv.setViewName("hr/noticeList");
+			
+		return mv;
+	}
+		
+	// 공지사항 작성 페이지 이동
+	@GetMapping("/notice/insert")
+	public ModelAndView insertNotice(ModelAndView mv) {
+		mv.setViewName("hr/insertNotice");
+		return mv;
+	}
+		
+	// 공지사항 작성 기능
+	// TODO
+		
+	// 공지사항 상세 페이지 이동
+	// TODO
+		
+	// 공지사항 수정 및 삭제 기능
+	// TODO
 
 	
 	

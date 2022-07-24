@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
+import kh.spring.wcw.notice.domain.Notice;
 import kh.spring.wcw.vacation.domain.Vacation;
 
 @Repository
@@ -166,7 +167,10 @@ public class HrDao {
 		return sqlsession.update("hrMapper.updateDepartment", map);
 	}
 	
-	
+	// 공지사항 리스트
+	public List<Notice> selectListNotice(int cp_no, RowBounds rowBounds) {
+		return sqlsession.selectList("hrMapper.selectListNotice", cp_no, rowBounds);
+	}
 	
 	
 	

@@ -11,6 +11,7 @@ import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.hrDao.HrDao;
+import kh.spring.wcw.notice.domain.Notice;
 import kh.spring.wcw.vacation.domain.Vacation;
 
 @Service
@@ -109,7 +110,11 @@ public class HrServiceImpl implements HrService {
 		return dao.updateDepartment(cp_no, dept_name, emp_no, dept_upper_name, active_yn, dept_no);
 	}
 	
-	
+	// 공지사항 리스트
+	@Override
+	public List<Notice> selectListNotice(int cp_no, RowBounds rowBounds) {
+		return dao.selectListNotice(cp_no, rowBounds);
+	}
 	
 	
 	

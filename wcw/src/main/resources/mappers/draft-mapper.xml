@@ -265,7 +265,7 @@
         					</if>
         					<if test="cnt == 3 and apprOrder == 2">
         						when appr_order = #{apprOrder}-1 then 1
-        						when appr_order = #{apprOrder} then 3
+        						when appr_order = #{apprOrder} then 2
 								when appr_order = #{apprOrder}+1 then 4
         					</if>
         					<if test="cnt == 3 and apprOrder == 3">

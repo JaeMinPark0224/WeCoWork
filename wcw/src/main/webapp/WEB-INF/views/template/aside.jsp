@@ -54,7 +54,7 @@
 					<div class="left_menu_1depth_title" open_chk="f">사원 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content" id="emp_list_select">직원 조회</div>
-						<div class="left_menu_2depth_content" id="emp_insert">직원 가입 관리</div>
+						<div class="left_menu_2depth_content" id="emp_insert">직원 계정 생성</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -79,10 +79,8 @@
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">공지 관리<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">공지 관리</div>
-						<div class="left_menu_2depth_content">공지 관리</div>
-						<div class="left_menu_2depth_content">공지 관리</div>
-						<div class="left_menu_2depth_content">공지 관리</div>
+						<div class="left_menu_2depth_content" id="noticeList">공지 리스트</div>
+						<div class="left_menu_2depth_content" id="insertNotice">공지 작성</div>
 					</div>
 				</div>
 			</div>
@@ -99,18 +97,11 @@
 						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
 						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
 						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
 					<div class="left_menu_1depth_title" open_chk="f">즐겨찾기 페이지 폴더 이름2<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
 					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
 						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
 						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
 						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
@@ -130,11 +121,6 @@
 								공지 리스트
 							</a>
 						</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
 					</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -413,6 +399,15 @@
 	});
 	$('#dept_admin').click(function() {
 		location.href = '<%= request.getContextPath()%>/hr/department/admin/list';
+	});
+</script>
+<script>
+//공지 관리 URL
+	$('#noticeList').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/notice/list';
+	});
+	$('#insertNotice').click(function() {
+		location.href = '<%= request.getContextPath()%>/hr/notice/insert';
 	});
 </script>
 <script>
