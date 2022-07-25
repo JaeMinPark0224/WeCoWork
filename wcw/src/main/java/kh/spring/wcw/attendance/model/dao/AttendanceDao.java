@@ -33,6 +33,10 @@ public class AttendanceDao {
 		return sqlsession.selectList("Attendance.selectApprovalAttendance", attendance);
 	}
 	
+	public List<Attendance> selectMonthlyAttendance(Attendance attendance){
+		return sqlsession.selectList("Attendance.selectMonthlyAttendance", attendance);
+	}
+	
 	
 	
 	

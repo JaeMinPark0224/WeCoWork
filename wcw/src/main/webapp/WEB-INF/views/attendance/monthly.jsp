@@ -9,8 +9,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://kit.fontawesome.com/d61a9a42f0.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.11.0,npm/fullcalendar@5.11.0/locales-all.min.js"></script>
 <meta charset="UTF-8">
 <title>월간 근태 관리</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
@@ -119,7 +118,9 @@
 	font-family: NotoSansR;
 	color: rgb(94, 94, 94);
 }
-
+#calendar{
+	font-family: NotoSansR;
+}
 </style>
 </head>
 <body>
@@ -152,6 +153,11 @@
 	</div>
 </section>
 <script>
+// 기준 년월 input tag에 초기 값 넣기
+var today = new Date();
+var month = today.getMonth();
+month = ((month+1) < 10) ? '0'+(month+1) : (month+1);
+$("#att_month").val(today.getFullYear()+"-"+month);
 
 /* 년월, 주차 선택 후 날짜표시 */
 	
@@ -171,11 +177,11 @@
 	}
 	
 /*////////////////// 캘린더 /////////////////// */
-
+var calendar = null;
 	(function() {
 		$(function() {
 			var calendarEl = $("#calendar")[0];
-			var calendar = new FullCalendar.Calendar(calendarEl, {
+			calendar = new FullCalendar.Calendar(calendarEl, {
 				height: '700px',
 				expandRows: true,
 				headerToolbar: {
@@ -183,6 +189,7 @@
 					center: 'title',
 					right: 'next'
 				},
+				locale : 'ko',
 				initialView: 'dayGridMonth',
 				events: [
 				    { // this object will be "parsed" into an Event Object
@@ -193,6 +200,7 @@
 				  ]
 			});
 			calendar.render();
+			calendar.addEventSource(workMyEventSource);
 		})
 	})();
 
@@ -200,7 +208,48 @@
 		$('#calendar').FullCalendar('gotoDate', $('#att_month').val());
 	});
 
+	///캘린더에 나타내기
+// fullcalendar event source 생성
+var workMyEvents = [];
+var vo;
 
+<c:forEach items="${monthlylist}" var="att">
+	console.log("${att}");
+	vo = null;
+	// 근무 
+	<c:if test="${not empty att.att_date}">
+		vo = {
+				title : "출근",
+				start : "${att.att_date}",
+				color : "#4B4DB2"
+		}
+		workMyEvents.push(vo);
+	</c:if>
+	// 휴가 
+	<c:if test="${not empty att.vaca_start && att.vaca_confirm == 2}">
+		vo = {
+				title : "휴가",
+				start : "${att.vaca_start}",
+				end   : "${att.vaca_end}",
+				color : "rgb(242, 205, 220)"
+		}
+		workMyEvents.push(vo);
+	</c:if>
+	<c:if test="${not empty att.vaca_start && att.vaca_confirm == 1}">
+		vo = {
+				title : "휴가 결재중",
+				start : "${att.vaca_start}",
+				end   : "${att.vaca_end}",
+				color : "rgb(224, 224, 224)",
+				textColor : "rgb(94, 94, 94)"
+		}
+		workMyEvents.push(vo);
+	</c:if>
+</c:forEach>
+var workMyEventSource = {
+		id : "myEvent",
+		events : workMyEvents
+};
 </script>
 </body>
 </html>

@@ -168,8 +168,18 @@ public class AttendanceController {
 	
 ///////////////////////////////////////월간 근태 관리//////////////////////////////////
 	
-	@RequestMapping("/monthly")
-	public ModelAndView viewWMonthlyAttendance(ModelAndView mv) {
+	@RequestMapping(value= "/monthly", produces = "text/plain;charset=UTF-8", method = RequestMethod.GET)
+	public ModelAndView viewWMonthlyAttendance(ModelAndView mv
+			, HttpSession session
+			, Attendance attendance
+			) {
+	Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+	int cp_no = loginSSInfo.getCp_no();
+	int emp_no = loginSSInfo.getEmp_no();
+	attendance.setCp_no(cp_no);
+	attendance.setEmp_no(emp_no);
+	List<Attendance> monthlylist = service.selectMonthlyAttendance(attendance);
+	mv.addObject("monthlylist", monthlylist);
 	mv.setViewName("attendance/monthly");
 	return mv;
 }

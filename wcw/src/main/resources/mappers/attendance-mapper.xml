@@ -81,6 +81,21 @@
 </select>
 
 <!-- /////////////////월간근태///////////////// -->
-<select id=""></select>
+<!-- 월간근태용 - 휴가리스트, 근태리스트 조회 -->
+<select id="selectMonthlyAttendance" parameterType="Attendance" resultType="Attendance">
+select * from
+    (select cp_no, te.name, ta.emp_no ,att_date, null vaca_start, null vaca_end, null vaca_confirm
+        from tb_attendance ta
+        join tb_employee te on ta.emp_no = te.emp_no
+        join tb_department td on te.dept_no = td.dept_no
+    union
+    select cp_no, te.name, tv.emp_no, null, vaca_start, vaca_end, vaca_confirm
+        from tb_vacation tv
+        join tb_employee te on tv.emp_no = te.emp_no
+        join tb_department td on te.dept_no = td.dept_no)
+where cp_no = #{cp_no}
+and emp_no = #{emp_no}
+   
+</select>
 
 </mapper>

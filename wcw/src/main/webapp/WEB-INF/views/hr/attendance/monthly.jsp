@@ -247,6 +247,10 @@
 
 	$("#att_date_search_btn").click(searchBtnFnc);
 	function searchBtnFnc() {
+		if($("#att_month").val() == '') {
+			alert("기준 년월을 선택하세요.");
+			return;
+		}
 		$(".table_title").nextAll().remove();
 		$.ajax({
 			type: "post",
@@ -260,7 +264,8 @@
 			success : function(result) {
 				console.log(result);
 				console.log(employee);
-				allAttFnc(result);
+				let empList = createEmpList();
+				allAttFnc(empList, result);
 				/* for(var i = 0; i < result.length; i++){
 					var vo = result[i];
 					var date = $('#att_month').val()+'-'+(i+1)
@@ -292,11 +297,49 @@
 		
 	}
 	
-	function allAttFnc(attendanceList) {
-		//1. 행 생성 employee의 개수 만큼 생성
-		for(var i = 0; i < employee.length; i++) {
-			if(employee[i].resign_yn == "N") {
-				let htmlTr = "<tr class='table_content_white' emp_no='"+employee[i].emp_no+"' style='border-bottom : 2px solid rgb(224,224,224);'></tr>"
+	function createEmpList() {
+		console.log("createEmpList start");
+		let resultList = [];
+		console.log($("#dept_name").val());
+		console.log($("#emp_name").val());
+		let tempDeptName = $("#dept_name").val();
+		let tempEmpName = $("#emp_name").val();
+		// dept_name : 0 == 전체, 부서명 == 부서명
+		// emp_name  : 0 == 전체, 이름 == 이름
+		if(tempDeptName == 0) { // 전체 부서
+			resultList = employee;
+			return resultList;
+		}
+		else { // 개별 부서
+			for(var i = 0; i < employee.length; i++) {
+				if(tempDeptName == employee[i].dept_name) {
+					resultList.push(employee[i]);
+				}
+			}
+		}
+		if(tempEmpName == 0) {
+			return resultList;
+		}
+		else {
+			for(var i = 0; i < resultList.length; i++) {
+				if(tempEmpName == resultList[i].emp_no) {
+					let temp = resultList[i];
+					resultList.length = 0;
+					resultList.push(temp);
+					break;
+				}
+			}
+		}
+		console.log("createEmpList end result :");
+		console.log(resultList);
+		return resultList;
+	}
+	
+	function allAttFnc(employeeList, attendanceList) {
+		//1. 행 생성 employeeList의 개수 만큼 생성
+		for(var i = 0; i < employeeList.length; i++) {
+			if(employeeList[i].resign_yn == "N") {
+				let htmlTr = "<tr class='table_content_white' emp_no='"+employeeList[i].emp_no+"' style='border-bottom : 2px solid rgb(224,224,224);'></tr>"
 				$("#att_date_search_table").append(htmlTr);
 			}
 		}
@@ -313,9 +356,9 @@
 			$(".table_content_white").append(htmlTd);
 		}
 		//3. 이름 부서 대입
-		for(var i = 0 ; i < employee.length; i++) {
-			$(".table_content_white[emp_no = "+employee[i].emp_no+"]").children().eq(0).text(employee[i].name);
-			$(".table_content_white[emp_no = "+employee[i].emp_no+"]").children().eq(1).text(employee[i].dept_name);
+		for(var i = 0 ; i < employeeList.length; i++) {
+			$(".table_content_white[emp_no = "+employeeList[i].emp_no+"]").children().eq(0).text(employeeList[i].name);
+			$(".table_content_white[emp_no = "+employeeList[i].emp_no+"]").children().eq(1).text(employeeList[i].dept_name);
 		}
 		//4. 값 대입
 		for(var i = 0; i < attendanceList.length; i++) {
@@ -343,7 +386,7 @@
 			}
 		}
 		//5. 출근, 휴가 대입
-		for(var i = 0; i < employee.length; i++) {
+		for(var i = 0; i < employeeList.length; i++) {
 			$(".table_content_white").eq(i).children().last().prev().text($(".table_content_white").eq(i).find(".bluechip").length);
 			$(".table_content_white").eq(i).children().last().text($(".table_content_white").eq(i).find(".pinkchip").length);
 		}
@@ -411,10 +454,10 @@ $("#dept_name").on("change", employeeList);
 function employeeList() {
 	let $deptSelect = $("#dept_name");
 	let $employeeSelect = $("#emp_name");
-	// '부서 선택' 옵션 삭제
+/* 	// '부서 선택' 옵션 삭제
 	if($(this).val() != "0") {
 		$deptSelect.children("[value = '0']").remove();
-	}
+	} */
 	
 	// 사원 리스트 초기화
 	$employeeSelect.children().remove();
@@ -426,15 +469,16 @@ function employeeList() {
 			selectOptionAdd($employeeSelect, employeeName, employee[i].emp_no);
 		}
 	}
-	$employeeSelect.off('change');
-	$employeeSelect.on('change', employeeSelectFirstRemove);
+	
+	/* $employeeSelect.off('change');
+	$employeeSelect.on('change', employeeSelectFirstRemove); */
 }
 
-//사원 선택시 이벤트 설정
+/* //사원 선택시 이벤트 설정
 function employeeSelectFirstRemove() {
 	// '사원, 직급 선택' 옵션 삭제
 	$("#emp_name").children("[value = '0']").remove();
-}
+} */
 
 </script>
 </body>
