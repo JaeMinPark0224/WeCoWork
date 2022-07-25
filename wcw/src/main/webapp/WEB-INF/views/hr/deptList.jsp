@@ -78,6 +78,7 @@
 	<!-- 부서 상세 정보 및 수정용 모달 -->
     <div id="modal">
         <div id="modal_section">
+        	
             <span class="modal_title">부서명</span>
             <input type="text" id="d_name">
             <span class="modal_title">부서 책임자</span>
@@ -255,6 +256,8 @@ var js_dept_no;
 			}
 			// 활성화 여부
 			$('#modal_select_yn').val(result.form_dept.active_yn).prop('selected', true);
+			
+			js_dept_no = result.form_dept.dept_no;
 		},
 		error: function(result){
 			console.log("부서 상세 정보 ajax 오류");
@@ -272,7 +275,8 @@ $('#modal_cancel').click(function(){
 
 // 모달 내 수정 버튼 클릭 시
 $('#modal_edit').click(function(){
-	var tf = $('#create_name').val();
+	var tf = $('#d_name').val();
+	console.log(tf);
 	if(tf.length < 1){
 		alert("부서명을 입력 후 생성해 주세요.");
 		return;

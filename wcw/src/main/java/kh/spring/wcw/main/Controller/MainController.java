@@ -318,7 +318,7 @@ public class MainController {
 		
 		if(result > 0 ) {
 			rttr.addAttribute("msg" , "회원가입이 완료되었습니다. 심사 후 입력하신 연락처로 연락드리겠습니다.");
-			mv.setViewName("redirect:/");
+			mv.setViewName("redirect:/login");
 			return mv;
 		}
 		

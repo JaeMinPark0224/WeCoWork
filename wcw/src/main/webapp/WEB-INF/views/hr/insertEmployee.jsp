@@ -156,19 +156,19 @@
 </script>
 <script>
 // 직원 계정 등록을 위한 ajax
-	$("submit").submit(function(){
+	$("#submit").submit(function(){
 		// 유효성 검사 확인
 		if(chkName == false){
 			alert("직원의 성명을 형식에 맞게 입력해 주세요. (한글 2~6자)");
-			return;
+			return false;
 		}
 		if(chkPhone == false){
 			alert("직원의 연락처를 형식에 맞게 입력해 주세요. (숫자 9~12자)");
-			return;
+			return false;
 		}
 		if(intl_no_chk == false){
 			alert("직원의 내선번호를 형식에 맞게 작성해 주세요. (숫자 1~20자)");
-			return;
+			return false;
 		}
 	})
 </script>
