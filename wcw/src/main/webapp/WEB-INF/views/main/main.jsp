@@ -422,21 +422,21 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="main_section">
 	<div id="main_wrap">
-		<div id="main_title">°¡³ª´Ù ÄÄÆÛ´Ï</div>
+		<div id="main_title">ê°€ë‚˜ë‹¤ ì»´í¼ë‹ˆ</div>
 		<div id="main_grid_wrap">
 			<div class="grid_content" id="grid_content_attendance">
-				<div id="grid_content_attendance_title" class="grid_content_title">±ÙÅÂ°ü¸®</div>
-				<div id="grid_content_attendance_date">2022³â 7¿ù 26ÀÏ (È­) 20:06:30</div>
+				<div id="grid_content_attendance_title" class="grid_content_title">ê·¼íƒœê´€ë¦¬</div>
+				<div id="grid_content_attendance_date">2022ë…„ 7ì›” 26ì¼ (í™”) 20:06:30</div>
 				<div id="grid_content_attendance_time_grid">
-					<div class="grid_content_attendance_time_text">Ãâ±Ù½Ã°£</div>
+					<div class="grid_content_attendance_time_text">ì¶œê·¼ì‹œê°„</div>
 					<div class="grid_content_attendance_time_data">08:43:36</div>
-					<div class="grid_content_attendance_time_text">Åð±Ù½Ã°£</div>
-					<div class="grid_content_attendance_time_data">¹Ìµî·Ï</div>
+					<div class="grid_content_attendance_time_text">í‡´ê·¼ì‹œê°„</div>
+					<div class="grid_content_attendance_time_data">ë¯¸ë“±ë¡</div>
 				</div>
 				<div id="grid_content_attendance_hr"></div>
 				<div id="grid_content_attendance_btn_wrap">
-					<button class="grid_content_attendance_btn">Ãâ±Ù</button>
-					<button class="grid_content_attendance_btn">Åð±Ù</button>
+					<button class="grid_content_attendance_btn">ì¶œê·¼</button>
+					<button class="grid_content_attendance_btn">í‡´ê·¼</button>
 				</div>
 			</div>
 			<div class="grid_content" id="grid_content_todo">
@@ -445,13 +445,13 @@
 					<i class="fa-solid fa-plus" id="grid_content_todo_plus"></i>
 				</div>
 				<div id="grid_content_todo_list_flex">
-					<div class="grid_content_todo_list">7¿ù ¿ù¸» º¸°í¼­ ÀÛ¼º</div>
-					<div class="grid_content_todo_list">8¿ù °èÈ¹º¸°í¼­ ÀÛ¼º</div>
-					<div class="grid_content_todo_list">Å×½ºÆ® Å×½ºÆ® Å×½ºÆ®</div>
-					<div class="grid_content_todo_list">Å×½ºÆ® Å×½ºÆ® Å×½ºÆ®</div>
-					<div class="grid_content_todo_list">Å×½ºÆ® Å×½ºÆ® Å×½ºÆ®</div>
-					<div class="grid_content_todo_list">Å×½ºÆ® Å×½ºÆ® Å×½ºÆ®</div>
-					<div class="grid_content_todo_list">Å×½ºÆ® Å×½ºÆ® Å×½ºÆ®</div>
+					<div class="grid_content_todo_list">7ì›” ì›”ë§ ë³´ê³ ì„œ ìž‘ì„±</div>
+					<div class="grid_content_todo_list">8ì›” ê³„íšë³´ê³ ì„œ ìž‘ì„±</div>
+					<div class="grid_content_todo_list">í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸</div>
+					<div class="grid_content_todo_list">í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸</div>
+					<div class="grid_content_todo_list">í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸</div>
+					<div class="grid_content_todo_list">í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸</div>
+					<div class="grid_content_todo_list">í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸</div>
 				</div>
 			</div>
 			<div class="grid_content" id="grid_content_profile">
@@ -459,12 +459,12 @@
 					<div id="grid_content_profile_wrap">
 						<img id="grid_content_profile_img" src="${loginSSInfo.profile }">
 					</div>
-					<div id="grid_content_profile_dept_name">¸¶ÄÉÆÃ¿µ¾÷ÆÀ</div>
+					<div id="grid_content_profile_dept_name">ë§ˆì¼€íŒ…ì˜ì—…íŒ€</div>
 					<div id="grid_content_profile_name_wrap">
-						<div id="grid_content_profile_name">¹ÚÀç¹Î</div>
-						<div id="grid_content_profile_job_name">»ç¿ø</div>
+						<div id="grid_content_profile_name">ë°•ìž¬ë¯¼</div>
+						<div id="grid_content_profile_job_name">ì‚¬ì›</div>
 					</div>
-					<div id="grid_content_profile_logout"><span id="grid_content_profile_logout_span">·Î±×¾Æ¿ô</span></div>
+					<div id="grid_content_profile_logout"><span id="grid_content_profile_logout_span">ë¡œê·¸ì•„ì›ƒ</span></div>
 				</div>
 			</div>
 			<div class="grid_content" id="grid_content_calendar">
@@ -475,66 +475,66 @@
 				<div id="grid_content_calendar_flex">
 					<div class="grid_content_calendar_gird">
 						<div class="grid_content_calendar_date_wrap">
-							<span class="grid_content_calendar_date">27ÀÏ</span>
-							<span class="grid_content_calendar_day">¸ñ¿äÀÏ</span>
+							<span class="grid_content_calendar_date">27ì¼</span>
+							<span class="grid_content_calendar_day">ëª©ìš”ì¼</span>
 						</div>
 						<div class="grid_content_calendar_list_wrap">
-							<div class="grid_content_calendar_list">µî·ÏµÈ ¾÷¹«°¡ ¾ø½À´Ï´Ù.</div>
+							<div class="grid_content_calendar_list">ë“±ë¡ëœ ì—…ë¬´ê°€ ì—†ìŠµë‹ˆë‹¤.</div>
 						</div>
 					</div>
 					<div class="grid_content_calendar_gird">
 						<div class="grid_content_calendar_date_wrap">
-							<span class="grid_content_calendar_date">28ÀÏ</span>
-							<span class="grid_content_calendar_day">¸ñ¿äÀÏ</span>
+							<span class="grid_content_calendar_date">28ì¼</span>
+							<span class="grid_content_calendar_day">ëª©ìš”ì¼</span>
 						</div>
 						<div class="grid_content_calendar_list_wrap">
-							<div class="grid_content_calendar_list">µî·ÏµÈ ¾÷¹«°¡ ¾ø½À´Ï´Ù.</div>
+							<div class="grid_content_calendar_list">ë“±ë¡ëœ ì—…ë¬´ê°€ ì—†ìŠµë‹ˆë‹¤.</div>
 						</div>
 					</div>
 					<div class="grid_content_calendar_gird">
 						<div class="grid_content_calendar_date_wrap">
-							<span class="grid_content_calendar_date">29ÀÏ</span>
-							<span class="grid_content_calendar_day">¸ñ¿äÀÏ</span>
+							<span class="grid_content_calendar_date">29ì¼</span>
+							<span class="grid_content_calendar_day">ëª©ìš”ì¼</span>
 						</div>
 						<div class="grid_content_calendar_list_wrap">
-							<div class="grid_content_calendar_list">µî·ÏµÈ ¾÷¹«°¡ ¾ø½À´Ï´Ù.</div>
+							<div class="grid_content_calendar_list">ë“±ë¡ëœ ì—…ë¬´ê°€ ì—†ìŠµë‹ˆë‹¤.</div>
 						</div>
 					</div>
 					<div class="grid_content_calendar_gird">
 						<div class="grid_content_calendar_date_wrap">
-							<span class="grid_content_calendar_date">30ÀÏ</span>
-							<span class="grid_content_calendar_day">¸ñ¿äÀÏ</span>
+							<span class="grid_content_calendar_date">30ì¼</span>
+							<span class="grid_content_calendar_day">ëª©ìš”ì¼</span>
 						</div>
 						<div class="grid_content_calendar_list_wrap">
-							<div class="grid_content_calendar_list">µî·ÏµÈ ¾÷¹«°¡ ¾ø½À´Ï´Ù.</div>
+							<div class="grid_content_calendar_list">ë“±ë¡ëœ ì—…ë¬´ê°€ ì—†ìŠµë‹ˆë‹¤.</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="grid_content" id="grid_content_approval">
-				<div id="grid_content_approval_title" class="grid_content_title">°áÀç ´ë±â ¹®¼­</div>
+				<div id="grid_content_approval_title" class="grid_content_title">ê²°ìž¬ ëŒ€ê¸° ë¬¸ì„œ</div>
 				<div id="grid_content_approval_tap_wrap">
-					<div class="grid_content_approval_date">±â¾ÈÀÏ</div>
-					<div class="grid_content_approval_app_date">Á¦¸ñ</div>
+					<div class="grid_content_approval_date">ê¸°ì•ˆì¼</div>
+					<div class="grid_content_approval_app_date">ì œëª©</div>
 				</div>
 			</div>
 			<div class="grid_content" id="grid_content_notice">
 				<div id="grid_content_notice_title_wrap">
-					<div id="grid_content_notice_title" class="grid_content_title">°øÁö»çÇ×</div>
-					<div id="grid_content_notice_view">´õº¸±â</div>
+					<div id="grid_content_notice_title" class="grid_content_title">ê³µì§€ì‚¬í•­</div>
+					<div id="grid_content_notice_view">ë”ë³´ê¸°</div>
 				</div>
 				<div id="grid_content_notice_flex">
 					<div class="grid_content_notice_grid">
-						<div class="grid_contetn_notice_list_date" id="grid_contetn_notice_list_date_top">°øÁöÀÏ</div>
-						<div class="grid_contetn_notice_list_title" id="grid_contetn_notice_list_title_top">Á¦¸ñ</div>
+						<div class="grid_contetn_notice_list_date" id="grid_contetn_notice_list_date_top">ê³µì§€ì¼</div>
+						<div class="grid_contetn_notice_list_title" id="grid_contetn_notice_list_title_top">ì œëª©</div>
 					</div>
 					<div class="grid_content_notice_grid">
 						<div class="grid_contetn_notice_list_date">2022-07-27</div>
-						<div class="grid_contetn_notice_list_title">[µðÀÚÀÎÆÀ] 2022³â ÇÏ¹Ý±â ½ÅÁ¦Ç° ½Ã¾È ¿äÃ»</div>
+						<div class="grid_contetn_notice_list_title">[ë””ìžì¸íŒ€] 2022ë…„ í•˜ë°˜ê¸° ì‹ ì œí’ˆ ì‹œì•ˆ ìš”ì²­</div>
 					</div>
 					<div class="grid_content_notice_grid">
 						<div class="grid_contetn_notice_list_date">2022-07-27</div>
-						<div class="grid_contetn_notice_list_title">[ÀÎ»çÆÀ] 2022³â »ó¹Ý±â ÀÎ»ç°í°ú ¾È³»</div>
+						<div class="grid_contetn_notice_list_title">[ì¸ì‚¬íŒ€] 2022ë…„ ìƒë°˜ê¸° ì¸ì‚¬ê³ ê³¼ ì•ˆë‚´</div>
 					</div>
 				</div>
 			</div>
@@ -568,7 +568,7 @@ var calendar;
 		console.log($(".fc-daygrid-day-number"));
 		for(var i = 0; i < $(".fc-daygrid-day-number").length; i++) {
 			console.log("test");
-			$(".fc-daygrid-day-number").eq(i).text($(".fc-daygrid-day-number").eq(i).text().replace("ÀÏ", ""));
+			$(".fc-daygrid-day-number").eq(i).text($(".fc-daygrid-day-number").eq(i).text().replace("ì¼", ""));
 		}
 	})
 })();
