@@ -1,0 +1,58 @@
+@charset "UTF-8";
+#section{
+        margin-left: 60px;
+        width: 1200px;
+        color: rgb(94, 94, 94);
+        position: relative;
+    }
+.title{
+        display: inline-block;
+        font-family: NotoSansB;
+        font-size: 14px;
+        margin-top: 105px;
+        margin-left: 65px;
+        margin-bottom: 70px;
+        color: rgb(75, 77, 178);
+    }
+    .content{
+       margin: 0 auto;
+       margin-bottom: 90px;
+       font-size: 13px;
+       width: 400px;
+       
+    }
+    .ct_title{
+    	font-family: NotoSansB;
+    	font-size: 13px;
+    	margin-bottom: 23px;
+    }
+    .ct_content{
+    	font-family: NotoSansR;
+    	font-size: 13px;
+    	margin-bottom: 75px;
+    }
+    #btns{
+    	width: 400px;
+    	margin-top: 110px;
+    	margin-bottom: 220px;
+    }
+    .btn{
+    	width: 115px;
+    	height: 40px;
+    	border: 0px;
+    	color: rgb(51, 51, 51);
+    	background-color: rgb(230, 230, 230);
+    	font-family: NotoSansR;
+    	font-size: 12px;
+    	cursor: pointer;
+    }
+    .btn1{
+    	width: 115px;
+    	height: 40px;
+    	border: 0px;
+    	color: white;
+    	background-color: rgb(75, 77, 178);
+    	font-family: NotoSansR;
+    	font-size: 12px;
+    	cursor: pointer;
+    }

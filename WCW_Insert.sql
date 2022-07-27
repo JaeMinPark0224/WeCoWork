@@ -329,7 +329,7 @@ INSERT INTO TB_EMPLOYEE
     , '상무1', '0003', '010-0000-0000'
     , NULL, NULL, '127.0.0.1'
     , DEFAULT, NULL, DEFAULT
-    , 10, 3, DEFAULT);    
+    , 10, 3, 'Y');    
     
 INSERT INTO TB_EMPLOYEE
     (EMP_NO, EMAIL, PWD
@@ -342,7 +342,7 @@ INSERT INTO TB_EMPLOYEE
     , '부장1', '0004', '010-0000-0000'
     , NULL, NULL, '127.0.0.1'
     , DEFAULT, NULL, DEFAULT
-    , 10, 4, DEFAULT);    
+    , 10, 4, 'Y');    
     
 INSERT INTO TB_EMPLOYEE
     (EMP_NO, EMAIL, PWD
@@ -355,7 +355,7 @@ INSERT INTO TB_EMPLOYEE
     , '차장1', '0005', '010-0000-0000'
     , NULL, NULL, '127.0.0.1'
     , DEFAULT, NULL, DEFAULT
-    , 10, 5, DEFAULT);    
+    , 10, 5, 'Y');    
     
 INSERT INTO TB_EMPLOYEE
     (EMP_NO, EMAIL, PWD
@@ -368,7 +368,7 @@ INSERT INTO TB_EMPLOYEE
     , '과장1', '0006', '010-0000-0000'
     , NULL, NULL, '127.0.0.1'
     , DEFAULT, NULL, DEFAULT
-    , 10, 6, DEFAULT);    
+    , 10, 6, 'Y');    
 
 INSERT INTO TB_EMPLOYEE
     (EMP_NO, EMAIL, PWD
@@ -381,7 +381,7 @@ INSERT INTO TB_EMPLOYEE
     , '박재민', '0006', '010-0000-0000'
     , NULL, NULL, '127.0.0.1'
     , DEFAULT, NULL, DEFAULT
-    , 10, 6, DEFAULT);   
+    , 10, 6, 'Y');   
 
 INSERT INTO TB_EMPLOYEE
     (EMP_NO, EMAIL, PWD

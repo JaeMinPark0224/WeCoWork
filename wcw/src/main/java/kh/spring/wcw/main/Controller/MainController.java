@@ -33,7 +33,6 @@ import kh.spring.wcw.company.service.CompanyService;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.employee.service.EmployeeService;
 import kh.spring.wcw.mail.Mail;
-import kh.spring.wcw.notice.domain.Notice;
 
 @Controller
 public class MainController {

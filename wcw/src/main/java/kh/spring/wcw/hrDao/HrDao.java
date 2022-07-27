@@ -156,7 +156,14 @@ public class HrDao {
 		return sqlsession.insert("hrMapper.insertNotice", notice);
 	}
 	
-	
+	// 공지사항 상세보기
+	public Notice selectNotice(int cp_no, String nt_no) {
+		Integer.parseInt(nt_no);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("cp_no", cp_no);
+		map.put("nt_no", nt_no);
+		return sqlsession.selectOne("hrMapper.selectNotice", map);
+	}
 	
 	
 	

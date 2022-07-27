@@ -48,7 +48,7 @@ public class HrController {
 			, @RequestParam(name="option", required = false, defaultValue = "date") String selectVal
 			, @RequestParam(name="list", required = false) List<Employee> list) {
 		int currentPage = 1; // 현재 페이지
-		int cotentLimit = 15; // 한 페이지에 보여질 직원 정보 갯수
+		int cotentLimit = 19; // 한 페이지에 보여질 직원 정보 갯수
 		
 		String currentPageStr = page;
 		try {
@@ -610,8 +610,34 @@ public class HrController {
 		return mv;
 	}
 		
-	// 공지사항 상세 페이지 이동
-	// TODO
+	// 공지사항 상세보기	
+	@GetMapping("/notice/select")
+	public ModelAndView selectNotice(
+			ModelAndView mv
+			, @RequestParam(name="num", required = false) String nt_no
+			, HttpSession session
+			, RedirectAttributes rttr
+			) {
+		System.out.println("nt_no: " + nt_no);
+
+		// 회사 번호 가져오기
+		int cp_no = -1;
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+				
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		System.out.println("회사 번호: " + cp_no);
+		
+		Notice notice = hrService.selectNotice(cp_no, nt_no);
+		mv.addObject("notice", notice);
+		mv.setViewName("hr/selectNotice");
+		return mv;
+	}
 		
 	// 공지사항 수정 및 삭제 기능
 	// TODO

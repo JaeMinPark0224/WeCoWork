@@ -93,7 +93,9 @@ $(".page").on('click', function() {
 </script>
 <script>
 $(".tb_read").click(function(){
-	// 공지사항 상세보기 기능
+	var num = $(this).nextAll(".last_tb").children(".ntNo").val();
+	console.log(num);
+	location.href="<%= request.getContextPath() %>/hr/notice/select?num="+num;
 })
 </script>
 </body>

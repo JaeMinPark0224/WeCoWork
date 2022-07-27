@@ -121,7 +121,10 @@ public class HrServiceImpl implements HrService {
 		return dao.insertNotice(notice);
 	}
 	
-	
+	// 공지사항 상세보기
+	public Notice selectNotice(int cp_no, String nt_no) {
+		return dao.selectNotice(cp_no, nt_no);
+	}
 	
 	
 	

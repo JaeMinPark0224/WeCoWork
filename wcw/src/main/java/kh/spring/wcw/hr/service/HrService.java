@@ -134,7 +134,12 @@ public interface HrService {
 	 */
 	public int insertNotice(Notice notice);
 	
-	
+	/**
+	 * @param 회사 번호, 공지사항 번호
+	 * @return 공지사항 정보
+	 * @author ybseo
+	 */
+	public Notice selectNotice(int cp_no, String nt_no);
 	
 	
 	

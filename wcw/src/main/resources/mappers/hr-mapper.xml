@@ -236,6 +236,13 @@
 		)
 </insert>
 
+<!-- 공지사항 상세보기 -->
+<select id="selectNotice" parameterType="hashmap" resultType="Notice">
+	select nt_title, nt_content, nt_date, nt_no, cp_no
+	from tb_notice
+	where cp_no = #{cp_no} and nt_no = #{nt_no}
+</select>
+
 
 
 
