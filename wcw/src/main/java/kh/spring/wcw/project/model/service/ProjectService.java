@@ -18,6 +18,8 @@ public interface ProjectService {
 	
 	public int insertProjectEmp(Project project);
 	
+	public int deleteProject(int pr_no);
+	
 	public List<Project> selectListProject(int emp_no);
 	
 	public List<Project> selectListProject(int emp_no, RowBounds rowbounds);

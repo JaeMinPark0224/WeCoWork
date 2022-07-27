@@ -5,6 +5,7 @@
 	<div id="project_main_header_btn_wrap">
 		<script type="text/javascript">
 		var js_pr_no = (new URL(location.href).searchParams).get('project'); 
+		console.log(window.location.href);
 			$.ajax({
 				type: "POST",
 				url: "<%= request.getContextPath()%>/project/authority/check",
@@ -24,6 +25,39 @@
 						$("#project_main_header_btn_wrap").append('<button class="btn_main_gray btn_main_float" id="btn_main_delete">삭제하기</button>');
 						$("#project_main_header_btn_wrap").append('<button class="btn_main_purple btn_main_float" id="btn_main_complete">완료하기</button>');
 						$("#project_main_header_btn_wrap").append('<button class="btn_main_purple btn_main_float" id="btn_main_update">수정하기</button>');
+						$("#btn_main_delete").on("click", function () {
+							if(confirm("프로젝트를 삭제 하시겠습니까?")) {
+								$.ajax({
+									type: "POST",
+									url: "<%= request.getContextPath()%>/project/delete",
+									data: {
+										pr_no : js_pr_no
+									},
+									success: function(result) {
+										if(result == -1) {
+											location.href = "<%= request.getContextPath()%>/login";					
+											return;
+										}
+										else if(result == -2) {
+											location.href = "<%= request.getContextPath()%>/project/list";					
+											return;
+										}
+										else {
+											alert(result);
+											console.log("success");
+											location.href = "<%= request.getContextPath()%>/project/list";					
+											return;
+										}
+									},
+									error: function(request, status, error) {
+										alert("fail");
+										console.log(request);
+										console.log(status);
+										console.log(error);
+									}
+								});
+							}
+						});
 					}
 				},
 				error: function(request, status, error) {

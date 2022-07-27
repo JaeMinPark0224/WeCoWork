@@ -123,6 +123,7 @@ section {
 	text-align: center;
 	line-height: 40px;
 	margin-top: 70px;
+	cursor: pointer;
 }
 
 .project_input_wrap {

@@ -224,7 +224,7 @@
 				
 			}
 		},
-		'plugins' : ["contextmenu", "wholerow" ,"types"]
+		'plugins' : ["wholerow" ,"types"]
 	});
 	//트리 데이터 생성 함수
 	function treeDataCreate(list) {

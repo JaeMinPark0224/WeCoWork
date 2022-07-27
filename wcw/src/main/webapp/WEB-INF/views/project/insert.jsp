@@ -19,7 +19,6 @@
 	$("#project_section").css("display", "none");
 </script>
 	<div id="project_main_wrap">
-	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 		<form name="project_insert_form">
 			<div id="project_insert_wrap">
 				<div class="project_insert_text_title">프로젝트 제목</div>

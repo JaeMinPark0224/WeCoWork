@@ -22,6 +22,11 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
+	public int deleteProject(int pr_no) {
+		return dao.deleteProject(pr_no);
+	}
+	
+	@Override
 	public int insertProjectEmp(Project project) {
 		return dao.insertProjectEmp(project);
 	}

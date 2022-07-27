@@ -90,7 +90,7 @@ public class ProjectController {
 		// 총 페이지의 수
 		int totalPageCnt = (totalCnt % pageBlock == 0)?(totalCnt / pageBlock):(totalCnt / pageBlock + 1);
 		// 페이지의 번호가 총 페이지의 수보다 크다면 마지막 페이지로 이동
-		if(Integer.parseInt(page) > totalPageCnt) {
+		if(totalPageCnt != 0 && Integer.parseInt(page) > totalPageCnt) {
 			page = String.valueOf(totalPageCnt);
 			rttr.addAttribute("page", page);
 			mv.setViewName("redirect:/project/list");
@@ -165,6 +165,28 @@ public class ProjectController {
 		
 		mv.setViewName("redirect:/project/list");
 		return mv;
+	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public String updateTodoProject(
+			ModelAndView mv
+			, @RequestParam int pr_no
+			, Project project
+			, HttpSession session
+			) {
+		
+		if(!wcwutill.loginChk(session)) {
+			return "-1";
+		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		project.setEmp_no(emp_no);
+		if(service.selectEmpProject(project) == null) {
+			return "-2";
+		}
+		int result = service.deleteProject(pr_no);
+		return String.valueOf(result);
 	}
 	
 	@GetMapping("/board/list")

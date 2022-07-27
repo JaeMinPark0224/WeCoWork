@@ -25,6 +25,10 @@ public class ProjectDao {
 		return sqlsession.insert("Project.insertProjectEmp", project);
 	}
 	
+	public int deleteProject(int pr_no) {
+		return sqlsession.delete("Project.deleteProject", pr_no);
+	}
+	
 	public List<Project> selectListProject(int emp_no) {
 		return sqlsession.selectList("Project.selectListProject", emp_no);
 	}

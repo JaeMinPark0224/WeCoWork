@@ -44,7 +44,7 @@ public class MainController {
 	public ModelAndView readMain(ModelAndView mv
 			, HttpSession session) {
 		if(session.getAttribute("loginSSInfo") == null) {
-			mv.setViewName("redirect:/login"); //TODO 첫화면으로
+			mv.setViewName("main/intro"); //TODO 첫화면으로
 			return mv;
 		}
 		mv.setViewName("main/main");

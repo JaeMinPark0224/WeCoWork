@@ -53,6 +53,11 @@
 		, default)
 	</insert>
 	
+	<delete id="deleteProject">
+		delete from tb_project
+			where pr_no = #{pr_no}
+	</delete>
+	
 	<select id="selectListProject" parameterType="_int" resultType="Project">
 		select tp.*, ta.pr_fav from tb_project tp
 		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
