@@ -22,13 +22,13 @@
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="section">
     <span id="title">공지 작성</span>
-    <form id="submit" action="" method="">
+    <form id="submit" action="<%= request.getContextPath() %>/hr/notice/insert.do" method="post">
         <div id="content">
             <div id="input">
                 <p class="content_txt">공지사항 제목</p>
-                <input type="text" id="noti_title" placeholder=" 공지사항 제목을 입력하세요.">
+                <input type="text" id="noti_title" name="nt_title" maxlength="100" placeholder=" 공지사항 제목을 입력하세요.">
                 <p class="content_txt">공지사항 내용</p>
-                <textarea id="noti_content" placeholder=" 공지사항 내용을 입력하세요."></textarea>
+                <textarea id="noti_content" name="nt_content" maxlength="300" placeholder=" 공지사항 내용을 입력하세요."></textarea>
             </div>
             <input type="submit" id="ok_btn" value="등록">
         </div>

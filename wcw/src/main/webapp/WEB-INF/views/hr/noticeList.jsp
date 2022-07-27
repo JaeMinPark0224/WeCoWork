@@ -35,11 +35,11 @@
             <c:if test="${not empty noticeList}">
 		        <c:forEach items="${noticeList}" var="list">
 					<tr class="list">
-						<td class="tb_read"></td>
-						<td class="tb_read">${list.nt_no}</td>
-						<td class="tb_read">${list.nt_title}</td>
-						<td class="tb_read">${list.nt_date}</td>
-						<td class="tb_read"></td>
+						<td class="tb_read" value="${list.nt_no}"></td>
+						<td class="tb_read" value="${list.nt_no}">${list.nt_no}</td>
+						<td class="tb_read" value="${list.nt_no}">${list.nt_title}</td>
+						<td class="tb_read" value="${list.nt_no}">${list.nt_date}</td>
+						<td class="tb_read" value="${list.nt_no}"></td>
 						<td class="tb_read last_tb"><input type="hidden" name="ntNo" class="ntNo" value="${list.nt_no}"></td>
 					</tr>
 				</c:forEach>
@@ -78,6 +78,23 @@
 $('#create_btn').click(function() {
 	location.href = '<%= request.getContextPath()%>/hr/notice/insert';
 });
+
+// 페이징
+$(".page").on('click', function() {
+	var option = $('#select').val();
+	if($(this).hasClass('page_prev')) {
+		location.href="<%= request.getContextPath() %>/hr/notice/list?page=${startPage-1}&option="+option;
+	} else if($(this).hasClass('page_num')) {
+		location.href="<%= request.getContextPath() %>/hr/notice/list?page="+$(this).text()+"&option="+option;
+	} else if($(this).hasClass('page_post')) {
+		location.href="<%= request.getContextPath() %>/hr/notice/list?page=${endPage+1}&option="+option;
+	}
+});
+</script>
+<script>
+$(".tb_read").click(function(){
+	// 공지사항 상세보기 기능
+})
 </script>
 </body>
 </html>

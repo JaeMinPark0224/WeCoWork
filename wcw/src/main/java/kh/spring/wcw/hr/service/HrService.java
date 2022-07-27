@@ -107,11 +107,11 @@ public interface HrService {
 	public Dept selectOneDepartment(int cp_no, int dept_no);
 	
 	/**
-	 * @param 회사 번호, 부서명, 사원 번호(부서 담장자), 부서 번호(부모 부서 번호)
+	 * @param 회사 번호, 부서명, 부서 번호(부모 부서 번호)
 	 * @return update 결과값 (성공 여부)
 	 * @author ybseo
 	 */
-	public int insertDepartment(int cp_no, String dept_name, int emp_no, int dept_upper_no);
+	public int insertDepartment(int cp_no, String dept_name, int dept_upper_no);
 	
 	/**
 	 * @param 회사 번호, 부서명, 사원 번호(부서 담장자), 부서명(부모 부서 부서명), 부서 활성화 여부
@@ -127,7 +127,12 @@ public interface HrService {
 	 */
 	public List<Notice> selectListNotice(int cp_no, RowBounds rowBounds);
 	
-	
+	/**
+	 * @param 회사 번호, 공지사항 정보
+	 * @return 공지사항
+	 * @author ybseo
+	 */
+	public int insertNotice(Notice notice);
 	
 	
 	

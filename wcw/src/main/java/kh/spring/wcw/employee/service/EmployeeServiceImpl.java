@@ -1,6 +1,7 @@
 package kh.spring.wcw.employee.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public int updateFindPwd(String email, String pwd) {
 		return dao.updateFindPwd(email, pwd);
+	}
+	
+	// 이메일 중복 체크
+	public List<String> checkEmail(String cp_join_email) {
+		return dao.checkEmail(cp_join_email);
 	}
 	
 }

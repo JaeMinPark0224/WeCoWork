@@ -2,6 +2,7 @@ package kh.spring.wcw.employee.dao;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -104,5 +105,10 @@ public class EmployeeDao {
 		map.put("email", email);
 		map.put("pwd", pwd);
 		return sqlsession.update("employeeMapper.updateFindPwd", map);
+	}
+	
+	// 이메일 중복 체크
+	public List<String> checkEmail(String cp_join_email) {
+		return sqlsession.selectList("employeeMapper.checkEmail", cp_join_email);
 	}
 }

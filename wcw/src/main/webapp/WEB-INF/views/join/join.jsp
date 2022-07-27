@@ -77,11 +77,6 @@
 		    		
 		    	if(!pwd.test(pwdVal)){
 		    		chkPwd = false;
-		    		if($("#pwd_1").val() == $("#pwd_2").val()) {
-		    			chkPwd2 = true;
-		    		} else {
-		    			chkPwd2 = false;
-		    		}
 		    	} else {
 		    		chkPwd = true;
 		    	}
@@ -99,11 +94,6 @@
 		    		chkPwdCk = false;
 		    	} else {
 		    		chkPwdCk = true;
-		    		if($("#pwd_1").val() == $("#pwd_2").val()) {
-		    			chkPwd2 = true;
-		    		} else {
-		    			chkPwd2 = false;
-		    		}
 		    	}
 		    });   
 			
@@ -148,33 +138,52 @@
 			return;
 		}
 		
-		// 이메일 전송을 위한 난수 insert 및 이메일 발송
+		// 이메일 중복 체크
 		$.ajax({
-			url: "<%=request.getContextPath()%>/insertRandomNum",
+			url: "<%=request.getContextPath()%>/checkEmail",
 	        type: "post",
-	        data: {employeeEmail: $("#email").val()},
+	        data: {email: $("#email").val()},
 	        success: function(result){
-	        	console.log("난수 insert 및 이메일 발송 성공");	
-	        	$("#d2").show();
-	        	$("#do_btn").show();
-	        	$("#email").css("margin-bottom", "10px");
-	        	$("#email_btn_1").hide();
-	        		
-	        		// email 입력칸 수정 시
-	        		$("#email").on("input", (function(){
-			            $("#d2").hide();
-				        $("#do_btn").hide();
-				        $("#email_btn_1").show();
-				        $("#email").css("margin-bottom", "0px");
-				        $("#email").off("click");
-			        }));
-			        randomNum = Number(result);
+	        	// 이메일이 중복된 경우
+	        	if(result != 0){
+	        		alert("중복된 이메일입니다. 다른 이메일을 사용해 주세요");
+	        	}
+	        	// 이메일이 중복되지 않은 경우
+	        	else {
+	        		// 이메일 전송을 위한 난수 insert 및 이메일 발송
+	        		$.ajax({
+	        			url: "<%=request.getContextPath()%>/insertRandomNum",
+	        	        type: "post",
+	        	        data: {employeeEmail: $("#email").val()},
+	        	        success: function(result){
+	        	        	console.log("난수 insert 및 이메일 발송 성공");	
+	        	        	$("#d2").show();
+	        	        	$("#do_btn").show();
+	        	        	$("#email").css("margin-bottom", "10px");
+	        	        	$("#email_btn_1").hide();
+	        	        		
+	        	        		// email 입력칸 수정 시
+	        	        		$("#email").on("input", (function(){
+	        			            $("#d2").hide();
+	        				        $("#do_btn").hide();
+	        				        $("#email_btn_1").show();
+	        				        $("#email").css("margin-bottom", "0px");
+	        				        $("#email").off("click");
+	        			        }));
+	        			        randomNum = Number(result);
+	        	        },
+	        	       	error: function(result){
+	        	       		console.log(error);
+	        	       		console.log("Ajax error");
+	        	       	}
+	        		})
+	        	}
 	        },
 	       	error: function(result){
 	       		console.log(error);
-	       		console.log("Ajax error");
 	       	}
 		})
+		
 	});
 	
 	// 인증하기 버튼 클릭 시 인증번호 일치 여부 확인

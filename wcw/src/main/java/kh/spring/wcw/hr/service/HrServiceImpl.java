@@ -100,8 +100,8 @@ public class HrServiceImpl implements HrService {
 	
 	// 부서 생성
 	@Override
-	public int insertDepartment(int cp_no, String dept_name, int emp_no, int dept_upper_no) {
-		return dao.insertDepartment(cp_no, dept_name, emp_no, dept_upper_no);
+	public int insertDepartment(int cp_no, String dept_name, int dept_upper_no) {
+		return dao.insertDepartment(cp_no, dept_name, dept_upper_no);
 	}
 	
 	// 부서 업데이트
@@ -116,7 +116,10 @@ public class HrServiceImpl implements HrService {
 		return dao.selectListNotice(cp_no, rowBounds);
 	}
 	
-	
+	// 공지사항 작성
+	public int insertNotice(Notice notice) {
+		return dao.insertNotice(notice);
+	}
 	
 	
 	

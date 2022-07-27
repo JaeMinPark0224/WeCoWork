@@ -127,6 +127,18 @@ $('.tb_read').click(function(){
 	var dr_sort = $(this).attr("dr_sort");
 	location.href="<%= request.getContextPath() %>/draft/select?dr_sort="+dr_sort+"&drNo="+drNo;
 })
+
+// 페이징
+$(".page").on('click', function() {
+		var option = $('#select').val();
+		if($(this).hasClass('page_prev')) {
+			location.href="<%= request.getContextPath() %>/draft/appr/list?page=${startPage-1}&option="+option;
+		} else if($(this).hasClass('page_num')) {
+			location.href="<%= request.getContextPath() %>/draft/appr/list?page="+$(this).text()+"&option="+option;
+		} else if($(this).hasClass('page_post')) {
+			location.href="<%= request.getContextPath() %>/draft/appr/list?page=${endPage+1}&option="+option;
+		}
+	});
 </script>
 </body>
 </html>

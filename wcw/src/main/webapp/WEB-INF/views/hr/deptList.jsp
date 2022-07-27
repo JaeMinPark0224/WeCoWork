@@ -115,18 +115,7 @@
         <div id="modal_section2">
         	<span class="modal_title">부서명</span>
         	<input type="text" placeholder="부서명을 입력해 주세요." id="create_name">
-            <span class="modal_title">부서 책임자</span>
-            <select id="modal2_select_emp">
-                <c:if test="${not empty employeeNameList}">
-            		<c:forEach items="#{employeeNameList}" var="list">
-            			<option class="deptList" value="${list.emp_no}">${list.name}</option>
-            		</c:forEach>
-            		<option id="nope2" value="-2" selected>책임자 없음</option>
-            	</c:if>
-            	<c:if test="${empty employeeNameList}">
-            		<option id="nope2" value="-2">직원 없음</option>
-            	</c:if>
-            </select>
+         
             <span class="modal_title">부모 부서</span>
             <select id="modal2_select_dept">
             	<c:if test="${not empty deptList}">
@@ -323,7 +312,6 @@ $('#modal_edit2').click(function(){
 		url: "<%=request.getContextPath()%>/hr/department/insert",
 		type: "post",
 		data: {dept_name:$('#create_name').val(),
-				emp_no:$('#modal2_select_emp').val(),  // 책임자 사원 번호 
 				dept_upper_no:$('#modal2_select_dept').val()
 				},
 		success: function(result){

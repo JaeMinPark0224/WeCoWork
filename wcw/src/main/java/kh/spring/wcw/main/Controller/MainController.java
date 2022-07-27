@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -24,12 +25,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.company.service.CompanyService;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.employee.service.EmployeeService;
 import kh.spring.wcw.mail.Mail;
+import kh.spring.wcw.notice.domain.Notice;
 
 @Controller
 public class MainController {
@@ -114,6 +118,7 @@ public class MainController {
 		
 		// 퇴사했을 경우 로그인 불가
 		if(result.getResign_yn().equals("Y")) {
+			rttr.addFlashAttribute("msg", "퇴사 직원은 로그인이 불가능합니다.");
 			mv.setViewName("redirect:/login");
 		// 퇴사하지 않았다면 로그인 가능
 		} else {
@@ -162,12 +167,29 @@ public class MainController {
 		return mv;
 	}
 	
+	// 이메일 중복 체크
+	@PostMapping("/checkEmail")
+	@ResponseBody
+	public String checkEmail(
+			@RequestParam(name="email") String cp_join_email) {
+		// 이메일 중복 여부 체크
+		List <String> check = empService.checkEmail(cp_join_email);
+		
+		Gson gsonObj = new GsonBuilder().serializeNulls().create();
+		int result = 0;
+		if(check != null) {
+			result = check.size();
+		}
+//		return gsonObj.toJson(check);
+		return String.valueOf(result);
+	}
+	
 	// 비밀번호 찾기용 난수 저장 및 이메일 전송
 	@PostMapping(value = "/insertRandomNum", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String insertRandomNum(
 			@RequestParam(name="employeeEmail") String email) throws Throwable{
-
+		
 		String randomNum = empService.selectRandomNum(email);
 		
 		// 해당 이메일이 테이블에 없다면 새로운 난수 insert
@@ -317,7 +339,7 @@ public class MainController {
 		int result = cpService.insertBusiness(company);
 		
 		if(result > 0 ) {
-			rttr.addAttribute("msg" , "회원가입이 완료되었습니다. 심사 후 입력하신 연락처로 연락드리겠습니다.");
+			rttr.addFlashAttribute("msg" , "회원가입이 완료되었습니다. 심사 후 입력하신 연락처로 연락드리겠습니다.");
 			mv.setViewName("redirect:/login");
 			return mv;
 		}

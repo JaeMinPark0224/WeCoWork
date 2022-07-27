@@ -88,4 +88,11 @@
     where email = #{email}
 </update>
 
+<!-- 이메일 중복 체크 -->
+<select id="checkEmail" parameterType="string" resultType="string">
+	select email from tb_employee where email=#{cp_join_email}
+	union all
+	select cp_join_email from tb_company where cp_join_email=#{cp_join_email}
+</select>
+
 </mapper>

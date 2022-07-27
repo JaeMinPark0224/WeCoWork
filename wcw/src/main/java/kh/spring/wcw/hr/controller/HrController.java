@@ -450,9 +450,8 @@ public class HrController {
 	public int insertDepartment(
 			HttpSession session
 			, @RequestParam(name="dept_name", required = false) String dept_name
-			, @RequestParam(name="emp_no", required = false) int emp_no
 			, @RequestParam(name="dept_upper_no", required = false) int dept_upper_no) {
-		System.out.println(dept_name + emp_no + dept_upper_no);
+		System.out.println(dept_name + dept_upper_no);
 		
 		// 회사 번호 가져오기
 				int cp_no = -1;
@@ -469,7 +468,7 @@ public class HrController {
 			
 		int result = -1; 
 		// 부서 생성하러 가기
-		result = hrService.insertDepartment(cp_no, dept_name, emp_no, dept_upper_no);
+		result = hrService.insertDepartment(cp_no, dept_name, dept_upper_no);
 		if (result == 1) {
 			System.out.println("부서 생성 성공");
 		} else {
@@ -577,7 +576,39 @@ public class HrController {
 	}
 		
 	// 공지사항 작성 기능
-	// TODO
+	@PostMapping("/notice/insert.do")
+	public ModelAndView insertDoNotice(
+			ModelAndView mv
+			, HttpSession session
+			, RedirectAttributes rttr
+			, Notice notice) {
+		
+		// 회사 번호 가져오기
+		int cp_no = -1;
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		System.out.println("회사 번호: " + cp_no);
+		notice.setCp_no(cp_no);
+		
+		int result = hrService.insertNotice(notice);
+		
+		if(result != 1) {
+			rttr.addFlashAttribute("msg", "공지사항 작성에 실패했습니다. 다시 시도해 주세요.");
+			mv.setViewName("redirect:/hr/notice/insert");
+		} else {
+			rttr.addFlashAttribute("msg", "공지사항이 등록되었습니다.");
+			mv.setViewName("redirect:/hr/notice/list");
+		}
+		
+		return mv;
+	}
 		
 	// 공지사항 상세 페이지 이동
 	// TODO

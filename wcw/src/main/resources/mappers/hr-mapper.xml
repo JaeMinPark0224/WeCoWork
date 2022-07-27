@@ -28,7 +28,7 @@
     		order by e.join_date desc
     	</if>
     	<if test='selectVal.equals("name")'>
-    		order by e.name desc
+    		order by e.name
     	</if>	
 </select>
 
@@ -176,32 +176,20 @@
 	insert 
 	into tb_department 
 	(dept_no, cp_no, dept_name, dept_date, active_yn
-	<if test="num == -2">
+	<if test="dept_upper_no != -1">
 	, dept_upper_no)
 	</if>
-	<if test="num == -1">
-	, emp_no)
-	</if>
-	<if test="num == -100">
+	<if test="dept_upper_no == -1">
 	)
-	</if>
-	<if test="num == 100">
-	, dept_upper_no, emp_no)
 	</if>
 	
 	values 
 	((SELECT NVL(MAX(DEPT_NO), 9)+1 FROM TB_DEPARTMENT), #{cp_no}, #{dept_name}, default, default
-	<if test="num == -2">
+	<if test="dept_upper_no != -1">
 	, #{dept_upper_no})
 	</if>
-	<if test="num == -1">
-	, #{emp_no})
-	</if>
-	<if test="num == -100">
+	<if test="dept_upper_no == -1">
 	)
-	</if>
-	<if test="num == 100">
-	, #{dept_upper_no}, #{emp_no})
 	</if>
 </insert>
 
@@ -230,7 +218,23 @@
 	select nt_no, nt_title, nt_content, nt_date
 	from tb_notice
 	where cp_no = #{cp_no}
+	order by nt_date desc
 </select>
+
+<!-- 공지사항 작성 -->
+<insert id="insertNotice" parameterType="Notice">
+	insert into tb_notice
+		(nt_no, cp_no, nt_title, nt_content, nt_date, nt_cnt)
+	values
+		(
+		(select nvl(max(nt_no), 0)+1 from tb_notice)
+		, #{cp_no}
+		, #{nt_title}
+		, #{nt_content}
+		, default
+		, default
+		)
+</insert>
 
 
 

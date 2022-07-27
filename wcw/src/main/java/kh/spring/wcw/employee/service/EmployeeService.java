@@ -1,6 +1,7 @@
 package kh.spring.wcw.employee.service;
 
 import java.sql.Date;
+import java.util.List;
 
 import kh.spring.wcw.employee.domain.Employee;
 
@@ -92,5 +93,12 @@ public interface EmployeeService {
 	 * @author ybseo
 	 */
 	public int updateFindPwd(String email, String pwd);
+	
+	/**
+	 * @param 회원가입하고자 하는 id(email)
+	 * @return email (사용중인 이메일이 있다면)
+	 * @author ybseo
+	 */
+	public List<String> checkEmail(String cp_join_email);
 
 }

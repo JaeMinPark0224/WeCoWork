@@ -86,7 +86,7 @@
             <span class="form_text">성명 *</span><br>
             <input type="text" class="input_text" name="name" id="e_name" placeholder=" 직원의 성명을 입력해 주세요." required><br>
             <span class="form_text">이메일(아이디) *</span><br> 
-            <input type="text" class="input_text" name="email"placeholder=" 아이디로 사용할 이메일을 입력해 주세요." required><br>
+            <input type="text" class="input_text" name="email" id="e_email" placeholder=" 아이디로 사용할 이메일을 입력해 주세요." required><br>
             <span class="form_text">개인 연락망 *</span><br> 
             <input type="text" class="input_text" name="phone" id="e_phone" placeholder=" 직원의 개인 연락망을 입력해 주세요." required><br>
             <span class="form_text">부서 *</span><br> 
@@ -170,6 +170,30 @@
 			alert("직원의 내선번호를 형식에 맞게 작성해 주세요. (숫자 1~20자)");
 			return false;
 		}
+		
+		var txt = true;
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/checkEmail",
+	        type: "post",
+	        async: false,
+	        data: {email: $("#e_email").val()},
+	        success: function(result){
+	        	// 이메일이 중복된 경우
+	        	if(result != 0){
+	        		txt = false;
+	        	}
+	        },
+	       	error: function(result){
+	       		console.log(error);
+	       	}
+		})
+		
+		if(txt == false){
+			alert("중복된 이메일입니다. 다른 이메일을 사용해 주세요");
+			return false;
+		}
+
 	})
 </script>
 </body>
