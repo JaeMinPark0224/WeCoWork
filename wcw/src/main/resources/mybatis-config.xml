@@ -28,6 +28,7 @@
 		<mapper resource="mappers/vacation-mapper.xml"/>
 		<mapper resource="mappers/chat-mapper.xml"/>
 		<mapper resource="mappers/draft-mapper.xml"/>
+		<mapper resource="mappers/pi-mapper.xml"/>
 	</mappers>
 	
 	

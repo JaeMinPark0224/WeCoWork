@@ -317,7 +317,7 @@
                 	}
                 }
                 for(var i = 0; i < 6; i++){
-	               	myChart1.data.datasets[0].data[i] = worktimearray[i];m
+	               	myChart1.data.datasets[0].data[i] = worktimearray[i];
                 }
                	myChart1.update();
 			},

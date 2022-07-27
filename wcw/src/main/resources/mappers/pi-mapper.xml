@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PI">
+
+<select id="selectUpperDept" parameterType="_int" resultType="Dept">
+select dept_no, dept_name, emp_no, dept_upper_no
+    from tb_department
+    where cp_no = #{cp_no} and active_yn = 'Y'
+</select>
+
+<select id="selectHasUpperDept" parameterType="_int" resultType="Dept">
+select distinct d2.dept_no, d2.dept_name, d2.dept_upper_no
+from tb_department d1, tb_department d2
+where d1.dept_no = d2.dept_upper_no
+and d2.cp_no = #{cp_no}
+</select>
+
+<select id="selectNoUpperDept" parameterType="_int" resultType="Dept">
+select distinct d1.dept_no, d1.dept_name
+from tb_department d1, tb_department d2
+where d1.dept_no != d2.dept_upper_no
+and d1.cp_no = #{cp_no}
+</select>
+
+<select id="selectEmployeeDept" parameterType="_int" resultType="Dept">
+select name, d.emp_no, dept_name, e.dept_no
+from tb_department d
+join tb_employee e on d.dept_no = e.dept_no
+join tb_job_title t on e.job_title_no = t.job_title_no
+where d.cp_no = #{cp_no}
+order by job_level asc
+</select>
+</mapper>
