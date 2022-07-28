@@ -1,0 +1,65 @@
+@charset "UTF-8";
+#section{
+        margin-left: 60px;
+        width: 1200px;
+        color: rgb(94, 94, 94);
+        position: relative;
+    }
+    #title{
+        display: block;
+        font-family: NotoSansB;
+        font-size: 14px;
+        margin-top: 105px;
+        margin-left: 65px;
+        color: rgb(75, 77, 178);
+    }
+    #content{
+        margin-top: 70px;
+        margin-left: 65px; 
+        margin-bottom: 120px;
+    }
+    #input{
+        width: 385px;
+        margin: 0 auto;
+        margin-bottom: 70px;
+    }
+    .content_txt{
+        font-family: NotoSansB;
+        color: rgb(94, 94, 94);
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+    #noti_title{
+        width: 380px;
+        height: 35px;
+        margin-bottom: 60px;
+        font-family: NotoSansR;
+        font-size: 13px;
+    }
+    #noti_content{
+        resize: none;
+        width: 380px;
+        height: 545px;
+        font-family: NotoSansR;
+        font-size: 13px;
+    }
+    #noti_title::placeholder,  #noti_content::placeholder{
+        font-family: NotoSansR;
+        color: rgb(94, 94, 94);
+        font-size: 12px;
+    }
+    #noti_content::placeholder{
+        padding-top: 5px;
+    }
+    #ok_btn{
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 220px;
+        width: 115px;
+        height: 40px;
+        background-color: rgb(75, 77, 178);
+        color: white;
+        border: 0px;
+        font-family: NotoSansR;
+        font-size: 12px;
+    }

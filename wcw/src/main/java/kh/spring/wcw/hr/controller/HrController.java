@@ -101,6 +101,7 @@ public class HrController {
 		mv.addObject("deptList", deptList);
 		mv.addObject("jobList", jobList);
 		mv.setViewName("hr/employeeList");
+		
 		return mv;
 	}
 	
@@ -157,6 +158,7 @@ public class HrController {
 		
 		int result_int = hrService.updateEmployee(cp_no, e_no, dept_name, job_title, intl_no, resign_yn);
 		String result = Integer.toString(result_int);
+		
 		return result;
 	}
 	
@@ -190,6 +192,7 @@ public class HrController {
 		mv.addObject("deptList", deptList);
 		mv.addObject("jobList", jobList);
 		mv.setViewName("hr/insertEmployee");
+		
 		return mv;
 	}
 	
@@ -289,6 +292,7 @@ public class HrController {
 			rttr.addFlashAttribute("msg", "직원 계정 생성 중 오류가 발생했습니다. 다시 시도해 주세요.");
 			mv.setViewName("redirect:/hr/employee/list");
 		}
+		
 		return mv;
 	}
 	
@@ -322,6 +326,7 @@ public class HrController {
 		mv.addObject("deptList", deptList);
 		mv.addObject("adminList", adminList);
 		mv.setViewName("hr/adminDeptSetting");
+		
 		return mv;
 	}
 	
@@ -572,6 +577,7 @@ public class HrController {
 	@GetMapping("/notice/insert")
 	public ModelAndView insertNotice(ModelAndView mv) {
 		mv.setViewName("hr/insertNotice");
+		
 		return mv;
 	}
 		
@@ -636,12 +642,116 @@ public class HrController {
 		Notice notice = hrService.selectNotice(cp_no, nt_no);
 		mv.addObject("notice", notice);
 		mv.setViewName("hr/selectNotice");
+		
 		return mv;
 	}
 		
-	// 공지사항 수정 및 삭제 기능
-	// TODO
-
+	// 공지사항 수정 페이지로 이동
+	@PostMapping("/notice/update")
+	public ModelAndView updateNotice(
+			ModelAndView mv
+			, @RequestParam(name="num", required = false) String nt_no
+			, HttpSession session
+			, RedirectAttributes rttr) {
+		
+		// 회사 번호 가져오기
+		int cp_no = -1;
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+						
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		System.out.println("회사 번호: " + cp_no);
+		
+		// 수정할 공지 정보 알아오기
+		Notice notice = hrService.selectNotice(cp_no, nt_no);
+		
+		mv.addObject("notice", notice);
+		mv.setViewName("hr/updateNotice");
+		
+		return mv;
+	}
+	
+	// 공지사항 수정 기능
+	@PostMapping("/notice/update.do")
+	public ModelAndView updateDoNotice(
+			ModelAndView mv
+			, HttpSession session
+			, RedirectAttributes rttr
+			, Notice notice) {
+		System.out.println("수정할 공지: " + notice);
+		
+		// 회사 번호 가져오기
+		int cp_no = -1;
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+								
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		
+		notice.setCp_no(cp_no);
+		int num = notice.getNt_no();
+		
+		// 공지 업데이트
+		int result = -1;
+		result = hrService.updateNotice(notice);
+		
+		if(result != 1) {
+			rttr.addFlashAttribute("msg", "공지사항 업데이트에 실패했습니다. 다시 시도해 주세요.");
+			mv.addObject("num", num);
+			mv.setViewName("redirect:/hr/notice/update");
+		} else {
+			rttr.addFlashAttribute("msg", "공지사항이 업데이트 되었습니다.");
+			mv.addObject("num", num);
+			mv.setViewName("redirect:/hr/notice/select");
+		}
+		return mv;
+	}
+	
+	// 공지사항 삭제 기능
+	@GetMapping("/notice/delete")
+	public ModelAndView deleteNotice(
+			ModelAndView mv
+			, HttpSession session
+			, RedirectAttributes rttr
+			, @RequestParam(name="num", required = false) String num) {
+		System.out.println("num은 말이죠?: " + num);
+		
+		// 회사 번호 가져오기
+		int cp_no = -1;
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+										
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		
+		int result = -1;
+		// 공지 삭제
+		result = hrService.deleteNotice(cp_no, num);
+		
+		if(result != 1) {
+			rttr.addFlashAttribute("msg", "공지사항 삭제 실패. 다시 시도해 주세요.");
+			mv.addObject("num", num);
+			mv.setViewName("redirect:/hr/notice/select");
+		} else {
+			rttr.addFlashAttribute("msg", "공지사항 삭제가 완료되었습니다.");
+			mv.setViewName("redirect:/hr/notice/list");
+		}
+		
+		return mv;
+	}
 	
 	
 	

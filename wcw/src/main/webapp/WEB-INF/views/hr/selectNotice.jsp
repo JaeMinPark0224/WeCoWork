@@ -11,7 +11,11 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
-
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
@@ -36,6 +40,9 @@
 		<div class="ct_content">
 			${notice.nt_content}
 		</div>
+		<form action="<%= request.getContextPath() %>/hr/notice/update" method="post" name="form">
+			<input type="hidden" id="num" name="num" value="${notice.nt_no}">
+		</form>
 		<div id="btns">
 			<div>
 				<input type="button" class="btn" id="del_btn" value="삭제">
@@ -47,8 +54,15 @@
 </section>
 <script>
 // 삭제 버튼 클릭 시
+$('#del_btn').click(function(){
+	var num = $('#num').val();
+	location.href="<%= request.getContextPath() %>/hr/notice/delete?num="+num;
+})
 
 // 수정 버튼 클릭 시
+$('#edit_btn').click(function(){
+	document.form.submit();
+})
 
 // 확인 버튼 클릭 시
 $('#ok_btn').click(function(){

@@ -165,7 +165,19 @@ public class HrDao {
 		return sqlsession.selectOne("hrMapper.selectNotice", map);
 	}
 	
+	// 공지사항 업데이트
+	public int updateNotice(Notice notice) {
+		return sqlsession.update("hrMapper.updateNotice", notice);
+	}
 	
+	// 공지사항 삭제
+	public int deleteNotice(int cp_no, String nt_no) {
+		Integer.parseInt(nt_no);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("cp_no", cp_no);
+		map.put("nt_no", nt_no);
+		return sqlsession.delete("hrMapper.deleteNotice", map);
+	}
 	
 	
 	

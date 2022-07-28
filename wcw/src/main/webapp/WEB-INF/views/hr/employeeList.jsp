@@ -163,61 +163,6 @@
 		$('#select').val('name').prop('selected', true);
 	}
 	
-// 필터 (였던 것)
-	<%-- $("#select").on('change', function(){
-		var selectVal = $(this).val();
-		console.log(selectVal);
-		$.ajax({
-			url: "<%=request.getContextPath()%>/hr/employee/list",
-			type: "post",
-			data: {selectVal: selectVal, page : 1},
-			dataType: 'json',
-			success: function(result){
-				var html;
-				for(var i = 0; i < result.employeeList.length; i++){
-					var vo = result.employeeList[i];
-					html += '<tr id="list">';
-						html += '<td></td>';
-	                    html += '<td class="tb_read">'+vo.emp_no+'</td>';
-	                    html += '<td class="tb_read">'+vo.name+'</td>';
-	                    html += '<td class="tb_read">'+vo.email+'</td>';
-	                    html += '<td class="tb_read">'+vo.join_date+'</td>';
-	                    html += '<td class="tb_read">'+vo.dept_name+'</td>';
-	                    html += '<td class="tb_read">'+vo.job_title+'</td>';
-	                    html += '<td class="tb_read">'+vo.intl_no+'</td>';
-	                    html += '<td></td>';
-                    html += '</tr>';
-				}
-				
-				var g = "";
-				if(result.startPage > 1){
-					g += '<a class="page" href="/hr/employee/list?page=${startPage-1 }">이전</a>';
-				}
-				var h = "";
-				for(var p = result.startPage; p <= result.endPage; p++){
-					h += '<a class="page" href="/hr/employee/list?page='+p+'">'+p+'</a>';
-				}
-				var i ="";
-				if(result.endPage < result.totalpageCnt){
-					i += '<a class="Page" href="/hr/employee/list?page=${endPage+1 }">다음</a>';
-				}
-				console.log("tlqkf");
-				console.log(result);
-				console.log(result.employeeList.length);
-				
-				$("#first_line").nextAll().remove();
-				$("#table").append(html);
-				$("#p_c").children('.page').remove();
-				$("#p_c").append(g);
-				$("#p_c").append(h);
-				$("#p_c").append(i);
-			},
-			error: function(result){
-				console.log("ajax 오류");
-			}
-		})
-	})	 --%>
-	
 // 사원 상세 정보 모달 띄우기 & 정보 조회
 	$(".tb_read").click(function(){
 		$.ajax({
@@ -250,7 +195,6 @@
 		// 모달 보이게
 		$("#modal").show();
 	})
-	
 	
 // 모달 내 수정버튼 클릭 시
 	$("#modal_edit").on("click", function(){

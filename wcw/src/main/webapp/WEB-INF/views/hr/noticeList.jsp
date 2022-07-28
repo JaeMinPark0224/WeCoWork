@@ -36,7 +36,7 @@
 		        <c:forEach items="${noticeList}" var="list">
 					<tr class="list">
 						<td class="tb_read" value="${list.nt_no}"></td>
-						<td class="tb_read" value="${list.nt_no}">${list.nt_no}</td>
+						<td class="tb_read" value="${list.nt_no}">${list.rownum}</td>
 						<td class="tb_read" value="${list.nt_no}">${list.nt_title}</td>
 						<td class="tb_read" value="${list.nt_no}">${list.nt_date}</td>
 						<td class="tb_read" value="${list.nt_no}"></td>
@@ -94,7 +94,6 @@ $(".page").on('click', function() {
 <script>
 $(".tb_read").click(function(){
 	var num = $(this).nextAll(".last_tb").children(".ntNo").val();
-	console.log(num);
 	location.href="<%= request.getContextPath() %>/hr/notice/select?num="+num;
 })
 </script>

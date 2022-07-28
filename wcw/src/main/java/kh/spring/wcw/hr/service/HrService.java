@@ -128,7 +128,7 @@ public interface HrService {
 	public List<Notice> selectListNotice(int cp_no, RowBounds rowBounds);
 	
 	/**
-	 * @param 회사 번호, 공지사항 정보
+	 * @param 공지사항 정보
 	 * @return 공지사항
 	 * @author ybseo
 	 */
@@ -141,7 +141,19 @@ public interface HrService {
 	 */
 	public Notice selectNotice(int cp_no, String nt_no);
 	
+	/**
+	 * @param 공지사항 정보
+	 * @return 업데이트 결과값
+	 * @author ybseo
+	 */
+	public int updateNotice(Notice notice);
 	
+	/**
+	 * @param 회사 번호, 공지사항 번호
+	 * @return 딜리트 결과값
+	 * @author ybseo
+	 */
+	public int deleteNotice(int cp_no, String num);
 	
 	
 	
