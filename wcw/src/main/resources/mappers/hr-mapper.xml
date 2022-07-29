@@ -405,7 +405,7 @@
 	<if test='!dept_name.equals("0")'>
 	and d.dept_name = #{dept_name}
 	</if>
-	<if test='!emp_no==0)'>
+	<if test='!emp_no==0'>
 	and v.emp_no = #{emp_no}
 	</if>
 </select>

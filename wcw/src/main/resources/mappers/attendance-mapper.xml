@@ -45,7 +45,7 @@
 <select id="selectLastAttendance" parameterType="_int" resultType="Attendance">
 	select att_clock_in, ip_clock_in, att_clock_out, ip_clock_out
 	from tb_attendance
-	where att_date = (select distinct last_value(att_date) over()as lastdate from tb_attendance)
+	where att_date = (select distinct last_value(att_date) over()as lastdate from tb_attendance where emp_no = #{emp_no})
 	and emp_no = #{emp_no}
 </select>
 

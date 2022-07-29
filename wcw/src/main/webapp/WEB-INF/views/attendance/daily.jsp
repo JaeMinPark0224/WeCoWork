@@ -243,7 +243,7 @@
 				alert(result);
 			},
 			error: function(error){
-				alert(error) ;
+				alert("이미 출근 하셨습니다.") ;
 			}
 		});
 	});
