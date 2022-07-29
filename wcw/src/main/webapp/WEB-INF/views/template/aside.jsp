@@ -150,10 +150,6 @@
 					<div class="left_menu_2depth_content_wrap">
 						<div class="left_menu_2depth_content" id="project_list">프로젝트 리스트</div>
 						<div class="left_menu_2depth_content" id="project_insert">프로젝트 생성</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
 					</div>
 				</div>
 			</div>
@@ -371,7 +367,7 @@
 	
 	//project url
 	$('#project_list').click(function() {
-		location.href = '<%= request.getContextPath()%>/project/list';
+		location.href = '<%= request.getContextPath()%>/project/list?page=1&option=all';
 	});
 	$('.profile_circle').click(function() {
 		location.href = '<%= request.getContextPath()%>/mypage';

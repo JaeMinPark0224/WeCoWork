@@ -37,8 +37,6 @@
 			<div class="project_tap">모든 프로젝트</div>
 			<div class="project_tap">참여중 프로젝트</div>
 			<div class="project_tap">즐겨찾기 프로젝트</div>
-			<div class="project_tap">공개 프로젝트</div>
-			<div class="project_tap">비공개 프로젝트</div>
 			<div class="project_tap">완료 프로젝트</div>
 			<div id="project_list_text_box_wrap">
 				<input id="project_list_text_box" type="text"><i class="fa-solid fa-magnifying-glass" id="project_list_search_btn"></i>
@@ -50,8 +48,8 @@
 				<input class="project_list_pr_no_hidden" type="hidden" value="${item.pr_no}">
 				<div class="project_list_color"></div>
 				<div class="project_list_title">${item.pr_title }</div>
-				<div class="project_list_update">업데이트 : ${fn:substring(item.pr_date,0,10) }</div>
-				<div class="project_list_dept">디자인팀 외 1</div>
+				<div class="project_list_update">생성일 : ${fn:substring(item.pr_date,0,10) }</div>
+				<div class="project_list_dept"></div>
 				<c:if test="${item.pr_fav eq '0'}">
 					<img class="project_list_fav" favChk = 'f' src="<%= request.getContextPath()%>/resources/images/bahai-empty.svg">
 				</c:if>
@@ -84,11 +82,21 @@
 	// 페이지 번호
 	var js_page_no = (new URL(location.href).searchParams).get('page');
 	
+	// 페이지 옵션
+	var js_option = (new URL(location.href).searchParams).get('option');
+	
+	// 페이지 검색 
+	var js_search = (new URL(location.href).searchParams).get('search');
+	console.log(js_search);
+	console.log(js_search == null);
 	// 페이지 번호 url 설정
 	$(".project_page_btn").on("click", function() {
 		let textUrl = "<%= request.getContextPath()%>/project/list?page=";
 		if($(this).children().length == 0) {
-			textUrl += $(this).text();
+			textUrl += $(this).text()+"&option="+js_option;
+			if(js_search != null) {
+				textUrl += "&search=" + js_search;
+			}
 			location.href = textUrl;
 		}		
 	});
@@ -226,24 +234,27 @@
 		switch(index) {
 		case 0 :
 			console.log("모든 프로젝트");
+			location.href="<%= request.getContextPath()%>/project/list?page=1&option=all";
 			break;
 		case 1 :
 			console.log("참여중 프로젝트");
+			location.href="<%= request.getContextPath()%>/project/list?page=1&option=participant";
 			break;
 		case 2 :
 			console.log("즐겨찾기 프로젝트");
+			location.href="<%= request.getContextPath()%>/project/list?page=1&option=bookmark";
 			break;
 		case 3 :
-			console.log("공개 프로젝트");
-			break;
-		case 4 :
-			console.log("비공개 프로젝트");
-			break;
-		case 5 :
 			console.log("완료 프로젝트");
+			location.href="<%= request.getContextPath()%>/project/list?page=1&option=complete";
 			break;
 		}
-		<%-- location.href="<%= request.getContextPath()%>/project/list?page=1&join=N&fav=N&open=N&complete=N"; --%>
+	});
+	
+	// 검색 기능
+	$("#project_list_search_btn").on("click", function() {
+		console.log($("#project_list_text_box").val());
+		location.href="<%= request.getContextPath()%>/project/list?page=1&option="+js_option+"&search="+$('#project_list_text_box').val();
 	});
 </script>
 </body>

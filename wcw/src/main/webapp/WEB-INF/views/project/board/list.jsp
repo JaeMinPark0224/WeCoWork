@@ -66,6 +66,17 @@
 						</div>
 					</c:forEach>
 				</div>
+				<div class="project_list_page_btn_wrap">
+					<c:if test="${startPage > 5}">
+						<div class="project_page_btn"><i class="fa-solid fa-angle-left"></i></div>
+					</c:if>
+					<c:forEach var="index" begin="${startPage }" end="${endPage }">
+						<div class="project_page_btn">${index }</div>
+					</c:forEach>
+					<c:if test="${endPage ne totalPageCnt}">
+						<div class="project_page_btn"><i class="fa-solid fa-angle-right"></i></div>
+					</c:if>
+				</div>
 			</div>
 		</div>
 	</div>

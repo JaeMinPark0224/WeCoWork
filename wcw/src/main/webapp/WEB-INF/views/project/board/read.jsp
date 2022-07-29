@@ -32,26 +32,29 @@
 					<div class="project_main_profile_info">${fn:substring(project.pb_date,0,19) }</div>
 				</div>
 			</div>
-			<div class="project_board_read_title" id="project_board_read_title">${project.pb_title }</div>
-			<div class="project_board_read_title">게시물 내용</div>
-			<div class="project_board_read_content">${project.pb_content }</div>
-			<c:if test="${not empty fileList }">
-			<div class="project_board_read_title">파일 업로드</div>
-			<div class="project_board_read_file_wrap">
-				<c:forEach items="${fileList }" var="file">
-					<div class="project_board_read_file"><span class="project_board_read_file_span" url="${file.pf_url }">${file.pf_name }</span></div>
-				</c:forEach>
-			</div>
-			</c:if>
-			<div class="project_board_read_hr"></div>
-			<div class="project_board_read_comment_wrap">
+			<div id="project_board_read_grid">
+				<div class="project_board_read_title">게시물 제목</div>
+				<div class="project_board_read_title" id="project_board_read_title">${project.pb_title }</div>
+				<div class="project_board_read_title">게시물 내용</div>
+				<div class="project_board_read_content">${project.pb_content }</div>
+				<c:if test="${not empty fileList }">
+				<div class="project_board_read_title">파일 업로드</div>
+				<div class="project_board_read_file_wrap">
+					<c:forEach items="${fileList }" var="file">
+						<div class="project_board_read_file"><span class="project_board_read_file_span" url="${file.pf_url }">${file.pf_name }</span></div>
+					</c:forEach>
+				</div>
+				</c:if>
+				<div class="project_board_read_hr"></div>
 				<div class="project_board_read_comemnt_title">댓글</div>
 				<div class="project_board_read_comemnt_content_flex">
 					<div class="project_board_read_comemnt_content_wrap">
 						<div class="project_board_read_comemnt_content_profile_wrap">
 							<div class="project_board_read_comemnt_content_profile_img"></div>
-							<div class="project_board_read_comemnt_content_profile_name">${loginSSInfo.name }</div>
-							<div class="project_board_read_comemnt_content_profile_job">${loginSSInfo.job_title }</div>
+							<div class="project_board_read_comment_content_profile_flex">
+								<div class="project_board_read_comemnt_content_profile_name">${loginSSInfo.name }</div>
+								<div class="project_board_read_comemnt_content_profile_job">${loginSSInfo.job_title }</div>
+							</div>
 						</div>
 						<div class="project_board_read_comemnt_content_input_wrap">
 							<textarea type="text" class="project_board_read_comemnt_content_input" name=""></textarea>
@@ -62,18 +65,20 @@
 						<div class="project_board_read_comemnt_content_wrap">
 							<div class="project_board_read_comemnt_content_profile_wrap">
 								<div class="project_board_read_comemnt_content_profile_img"></div>
-								<div class="project_board_read_comemnt_content_profile_name">${comment.name }</div>
-								<div class="project_board_read_comemnt_content_profile_job">${comment.job_title }</div>
+								<div class="project_board_read_comment_content_profile_flex">
+									<div class="project_board_read_comemnt_content_profile_name">${comment.name }</div>
+									<div class="project_board_read_comemnt_content_profile_job">${comment.job_title }</div>
+								</div>
 								<div class="project_board_read_comemnt_content_date">${fn:substring(comment.pc_date,0,19) }</div>
 								<c:if test="${loginSSInfo.emp_no eq comment.emp_no }">
 									<button type="button" pc_no="${comment.pc_no }" class="project_board_read_comemnt_content_delete_btn">삭제</button>
 								</c:if>
-							</div>
-							<div class="project_board_read_comemnt_content_input_wrap">
-								<div class="project_board_read_comemnt_content">${comment.pc_content }</div>
 								<c:if test="${loginSSInfo.emp_no eq comment.emp_no }">
 									<button type="button" pc_no="${comment.pc_no }" class="project_board_read_comemnt_content_update_btn">수정</button>
 								</c:if>
+							</div>
+							<div class="project_board_read_comemnt_content_input_wrap">
+								<div class="project_board_read_comemnt_content">${comment.pc_content }</div>
 							</div>
 						</div>
 					</c:forEach>
@@ -207,13 +212,12 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 	
 	// 댓글 수정 버튼 수정 기능
 	function updateBtnFnc() {
-		console.log($(this));
 		$(this).text("수정 완료");
 		$(this).off("click");
 		$(this).on("click", updateDoCommentFnc);
-		let temtText = $(this).prev().text();
-		$(this).prev().remove();
-		$(this).before('<textarea type="text" class="project_board_read_comemnt_content_input" name="">'+temtText+'</textarea>');
+		let temtText = $(this).parent().next().children().text();
+		$(this).parent().next().children().remove();
+		$(this).parent().next().append('<textarea type="text" class="project_board_read_comemnt_content_input" name="">'+temtText+'</textarea>');
 	}
 	
 	// 댓글 수정 함수 기능
@@ -225,7 +229,7 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 			data: {
 				pc_no : $(this).attr("pc_no"),
 				pb_no : js_pb_no,
-				pc_content : $(this).prev().val()
+				pc_content : $(this).parent().next().children().val().val().replaceAll(/(\n|\r\n)/g, "<br>")
 			},
 			success: function(result) {
 				if(result == -1) {
@@ -249,13 +253,14 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 			$(".project_board_read_comemnt_content_wrap").last().append('<div class="project_board_read_comemnt_content_profile_wrap"></div');
 			$(".project_board_read_comemnt_content_wrap").last().append('<div class="project_board_read_comemnt_content_input_wrap"></div');
 			$(".project_board_read_comemnt_content_profile_wrap").last().append('<div class="project_board_read_comemnt_content_profile_img"></div>');
-			$(".project_board_read_comemnt_content_profile_wrap").last().append('<div class="project_board_read_comemnt_content_profile_name">'+commentList[i].name+'</div>');
-			$(".project_board_read_comemnt_content_profile_wrap").last().append('<div class="project_board_read_comemnt_content_profile_job">'+commentList[i].job_title+'</div>');
+			$(".project_board_read_comemnt_content_profile_wrap").last().append('<div class="project_board_read_comment_content_profile_flex"></div>');
+			$(".project_board_read_comment_content_profile_flex").last().append('<div class="project_board_read_comemnt_content_profile_name">'+commentList[i].name+'</div>');
+			$(".project_board_read_comment_content_profile_flex").last().append('<div class="project_board_read_comemnt_content_profile_job">'+commentList[i].job_title+'</div>');
 			$(".project_board_read_comemnt_content_profile_wrap").last().append('<div class="project_board_read_comemnt_content_date">'+commentList[i].pc_date+'</div>');
 			$(".project_board_read_comemnt_content_input_wrap").last().append('<div class="project_board_read_comemnt_content">'+commentList[i].pc_content+'</div>');
 			if(commentList[i].emp_no == ${loginSSInfo.emp_no}) {
 				$(".project_board_read_comemnt_content_profile_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_board_read_comemnt_content_delete_btn">삭제</button>');
-				$(".project_board_read_comemnt_content_input_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_board_read_comemnt_content_input_btn">수정</button>');
+				$(".project_board_read_comemnt_content_profile_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_board_read_comemnt_content_update_btn">수정</button>');
 			}
 		}
 		$(".project_board_read_comemnt_content_delete_btn").off("click");

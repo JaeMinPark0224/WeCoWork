@@ -61,10 +61,8 @@ public class ProjectController {
 			ModelAndView mv
 			,HttpSession session
 			,@RequestParam(name = "page", defaultValue = "0", required = false) String page
-			,@RequestParam(name = "join", required = false) String join
-			,@RequestParam(name = "fav", required = false) String fav
-			,@RequestParam(name = "open", required = false) String open
-			,@RequestParam(name = "complete", required = false) String complete
+			,@RequestParam(name = "option", defaultValue = "all", required = false) String option
+			,@RequestParam(name = "search", required = false) String search
 			, RedirectAttributes rttr
 			) {
 		if(!wcwutill.loginChk(session)) {
@@ -83,10 +81,21 @@ public class ProjectController {
 			mv.setViewName("redirect:/project/list");
 			return mv;
 		}
+		
+		// 옵션 선택
+		if(!option.equals("all") && !option.equals("participant") 
+				&& !option.equals("bookmark") && !option.equals("complete")) {
+			option = "all";
+			rttr.addAttribute("page", page);
+			rttr.addAttribute("option", option);
+			mv.setViewName("redirect:/project/list");
+			return mv;
+		}
+		
 		// 한 페이지에 보여줄 프로젝트의 수
 		int pageBlock = 10;
 		// 총 프로젝트의 수
-		int totalCnt = service.selectCntProject(emp_no);
+		int totalCnt = service.selectCntProject(emp_no, option, search);
 		// 총 페이지의 수
 		int totalPageCnt = (totalCnt % pageBlock == 0)?(totalCnt / pageBlock):(totalCnt / pageBlock + 1);
 		// 페이지의 번호가 총 페이지의 수보다 크다면 마지막 페이지로 이동
@@ -104,7 +113,7 @@ public class ProjectController {
 		mv.addObject("endPage", ((endPage > totalPageCnt)?totalPageCnt:endPage));
 		mv.addObject("totalPageCnt", totalPageCnt);
 		
-		List<Project> projectList = service.selectListProject(emp_no, rowbounds);
+		List<Project> projectList = service.selectListProject(emp_no, option, search, rowbounds);
 		mv.addObject("projectList", projectList);
 		mv.setViewName("project/list");
 		return mv;
@@ -169,7 +178,7 @@ public class ProjectController {
 	
 	@PostMapping("/delete")
 	@ResponseBody
-	public String updateTodoProject(
+	public String deleteProject(
 			ModelAndView mv
 			, @RequestParam int pr_no
 			, Project project
@@ -668,15 +677,17 @@ public class ProjectController {
 		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
-		projectObj.setEmp_no(emp_no);
-		projectObj.setPr_no(pr_no);
-		if(service.selectEmpProject(projectObj) == null) {
+		project.setEmp_no(emp_no);
+		project.setPr_no(pr_no);
+		if(service.selectEmpProject(project) == null) {
 			return "-2";
 		}
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm");
-		LocalDateTime local_pt_date = LocalDateTime.from(dateFormat.parse(pt_year+pt_date_str));
-		Timestamp pt_date = Timestamp.valueOf(local_pt_date);
-		project.setPt_date(pt_date);
+		if(pt_year != null && pt_date_str != null) {
+			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm");
+			LocalDateTime local_pt_date = LocalDateTime.from(dateFormat.parse(pt_year+pt_date_str));
+			Timestamp pt_date = Timestamp.valueOf(local_pt_date);
+			project.setPt_date(pt_date);
+		}
 		int result = service.updateTodoProject(project);
 		return String.valueOf(result);
 	}
@@ -1217,6 +1228,9 @@ public class ProjectController {
 			ModelAndView mv
 			, HttpSession session
 			, Project project
+			, @RequestParam(name = "project_file", required = false) List<MultipartFile> board_file
+			, @RequestParam(name = "project_file_name", required = false) List<String> file_name
+			, @RequestParam(name = "project_parent_no", required = false) List<String> folder_no
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
@@ -1224,10 +1238,39 @@ public class ProjectController {
 		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
-		int result = service.insertNoticeProject(project);
+		if(board_file != null) {
+			List<Map<String, String>> pf_list = new ArrayList<Map<String, String>>();
+			Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+					"cloud_name", "dfam8azdg",
+					"api_key", "882165332977633",
+					"api_secret", "lrdbmfClWzNqybNeqXyEoRpFmfg",
+					"secure", true));
+			@SuppressWarnings("rawtypes")
+			Map uploadResult = null;
+			for(int i = 0; i < board_file.size(); i++) {
+				try {
+					uploadResult = cloudinary.uploader().upload(
+							board_file.get(i).getBytes()
+							, ObjectUtils.asMap("resource_type", "auto"));
+					logger.info("filename : {}", board_file.get(i).getOriginalFilename());
+					logger.info("upload result : {}", uploadResult);
+					logger.info("result URL : {}", uploadResult.get("url"));
+					Map<String, String> pf_map = new HashMap<String, String>();
+					pf_map.put("pf_url", (String)uploadResult.get("url"));
+					pf_map.put("pf_name", board_file.get(i).getOriginalFilename());
+					pf_map.put("pff_no", folder_no.get(i));
+					pf_list.add(pf_map);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			project.setPf_list(pf_list);
+		}
+		service.insertNoticeProject(project);
 		mv.setViewName("redirect:/project/board/list?project="+project.getPr_no());
 		return mv;
 	}
+	
 	
 	@GetMapping("/notice/read")
 	public ModelAndView	selectListNoticeProject(
@@ -1246,7 +1289,9 @@ public class ProjectController {
 		project.setPn_no(pn_no);
 		Project result = service.selectOneNoticeProject(project);
 		mv.addObject("pr_no", pr_no);
-		mv.addObject("notice", result);
+		mv.addObject("project", result);
+		mv.addObject("fileList", service.selectListFileProject(pn_no, "notice"));
+		mv.addObject("commentList", service.selectListCommentProject(project));
 		mv.setViewName("project/notice/read");
 		return mv;
 	}

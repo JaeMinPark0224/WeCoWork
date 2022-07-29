@@ -1,24 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/project/project.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
 <%@ include file="/WEB-INF/views/template/csslink.jsp" %>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/project/project.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/d61a9a42f0.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/jstree/style.css" />
+<script src="<%= request.getContextPath()%>/resources/js/jstree/jstree.js"></script>
+
 <head>
 <meta charset="UTF-8">
 <title>WCW</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
 </head>
 <body>
+<div id="project_board_insert_modal_background">
+	<div id="project_board_insert_modal_wrap">
+		<div id="project_board_insert_modal_grid">
+			<div id="project_board_insert_modal_header">프로젝트 폴더 선택</div>
+			<div id="project_file_tree">
+			</div>
+			<div id="project_board_insert_modal_btn_wrap">
+				<button type="button" class="project_board_insert_modal_btn" id="project_board_insert_modal_cancle_btn">취소</button>
+				<button type="button"class="project_board_insert_modal_btn" id="project_board_insert_modal_add_btn">확인</button>
+			</div>
+		</div>
+	</div>
+	<i class="fa-solid fa-spinner fa-spin-pulse" id="project_board_file_modal_loading"></i>
+</div>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
 <section id="project_section">
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 	<div id="project_main_menu_title">공지사항 작성</div>
-		<form name="notice_form" action="<%= request.getContextPath()%>/project/notice/insert.do" method="post">
+		<form name="board_form" action="<%= request.getContextPath()%>/project/notice/insert.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" value="${pr_no }" name="pr_no">
 			<div id="project_board_insert_wrap">
 				<div class="project_board_insert_content">
@@ -29,7 +47,7 @@
 					</div>
 				</div>
 				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">공지사항 내용</div>
+					<div class="project_board_insert_div_title">게시물 내용</div>
 					<div class="project_input_wrap">
 						<textarea class="project_board_insert_textarea" name="pn_content" id="pb_content" placeholder="공지사항 내용을 입력해 주세요. (최대 600자)"></textarea>
 						<div class="project_board_input_count">0/600자</div>
@@ -37,38 +55,28 @@
 				</div>
 				<div class="project_board_insert_content">
 					<div class="project_board_insert_div_title">파일 업로드</div>
-					<input type="text" class="project_board_insert_input_text">
-				</div>
-				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">해시 태그</div>
-					<input type="text" class="project_board_insert_input_text">
-					<button type="button" class="project_board_insert_btn">추가</button>
-				</div>
-				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">멘션</div>
-					<div class="project_board_insert_mention">
-						<div class="project_board_insert_mention_title">전체 멘션</div>
-						<div class="project_insert_toggle_btn_wrap" toggle_chk="f">
-							<div class="project_insert_toggle_btn_circle"></div>
-							<input type="hidden" name="mention_all" class="project_insert_toggle_value" id="mention_all" value="N">
-						</div>
-						<div class="project_board_insert_mention_title">관리자 멘션</div>
-						<div class="project_insert_toggle_btn_wrap" toggle_chk="f">
-							<div class="project_insert_toggle_btn_circle"></div>
-							<input type="hidden" name="mention_admin" class="project_insert_toggle_value" id="mention_admin" value="N">
-						</div>
+					<div id="project_board_file_list_wrap">
+						<div class="project_board_file_list"></div>
+						<button type="button" id="project_board_file_insert_btn" class="project_board_insert_btn">추가</button>
 					</div>
-					<input type="text" class="project_board_insert_input_text">
-					<button type="button" class="project_board_insert_btn">추가</button>
+					<input type="text" class="project_board_file_name_insert" name="project_file_name">
+					<input type="text" class="project_board_parent_no_insert" name="project_parent_no">
+					<input type="file" class="project_board_file_insert" name="project_file">
 				</div>
-				<button type="button" class="project_board_insert_write_btn">추가</button>
+				<button type="button" class="project_board_insert_write_btn">작성하기</button>
 			</div>
 		</form>
 	</div>
 </section>
 <script type="text/javascript">
+	//프로젝트 번호
+	var js_pr_no = (new URL(location.href).searchParams).get('project');
+
+	// 맨션 토글 버튼 위치 조정
 	$(".project_insert_toggle_btn_wrap").css("margin-top", "2.5px");
 	$(".project_insert_toggle_btn_wrap").css("margin-right", "10px");
+	
+	// 맨션 토글 기능 구현 
 	$('.project_insert_toggle_btn_wrap').on("click", function() {
 		if($(this).attr("toggle_chk") == 'f') {
 			$(this).children(".project_insert_toggle_btn_circle").css({
@@ -87,6 +95,7 @@
 		}
 	});
 	
+	// 게시물 제목 유효성 체크
 	$('#pb_title').on('input', function() {
 		let contentCount = $(this).val();
 		if(contentCount.length == 0 || contentCount == '') {
@@ -101,6 +110,7 @@
 		}
 	});
 	
+	// 게시물 내용 유효성 체크
 	$('#pb_content').on('input', function() {
 		let contentCount = $(this).val();
 		if(contentCount.length == 0 || contentCount == '') {
@@ -115,13 +125,164 @@
 		}
 	});
 	
+	// submit 기능 구현
 	$(".project_board_insert_write_btn").on('click', function() {
 		let text = $('.project_board_insert_textarea').val();
 		text = text.replaceAll(/(\n|\r\n)/g, "<br>");
 		$('.project_board_insert_textarea').val(text);
-		notice_form.submit();
+		
+		
+		// 미사용 input태그 제거
+		$(".project_board_file_name_insert").last().remove();
+		$(".project_board_parent_no_insert").last().remove();
+		$(".project_board_file_insert").last().remove();
+		
+		// 로딩 표시
+		$("#project_board_insert_modal_wrap").css("display","none");
+		$("#project_board_file_modal_loading").css("display", "block");
+		$("#project_board_insert_modal_background").css("display", "block");
+		board_form.submit();
 	});
 	
+	// 파일 업로드 기능 구현
+	$("#project_board_file_insert_btn").on("click", function () {
+		js_pff_no = 0;
+		folder_path.length = 0;
+		console.log("modal open");
+		treeDataAjax();
+		$("#project_board_insert_modal_background").css("display", "block");
+	});
+	
+	// 모달창 닫기
+	$("#project_board_insert_modal_cancle_btn").on("click", function() {
+		$("#project_board_insert_modal_background").css("display", "none");	
+	});
+	
+	// 폴더 선택 확인
+	$("#project_board_insert_modal_add_btn").on("click", function() {
+		if(js_pff_no == 0) {
+			alert("프로젝트 폴더를 선택해주세요.");
+			return;
+		}
+		$("#project_board_insert_modal_background").css("display", "none");	
+		$(".project_board_file_insert").last().click();
+	});
+	
+	// 파일 업로드	
+	$(".project_board_file_insert").on("change", changeHandler);
+	
+	// 파일 업로드 change handler 함수
+	function changeHandler() {
+		$(".project_board_file_name_insert").last().val($(this).get(0).files[0].name);
+		$(".project_board_parent_no_insert").last().val(js_pff_no);
+		console.log($(".project_board_file_name_insert"));
+		console.log($(".project_board_parent_no_insert"));
+		console.log($(".project_board_file_name_insert").val());
+		console.log($(".project_board_parent_no_insert").val());
+		let fullName = $('#project_file_tree').jstree(true).get_path(js_pff_no,"/")+"/"+$(this).get(0).files[0].name;
+		$(".project_board_file_list").append('<div class="project_board_file_list_content">'+fullName+'</div>');
+		$(".project_board_file_list").append('<i class="fa-solid fa-xmark file_delete_btn"></i>');
+		$(".project_board_insert_content").eq(2).append('<input type="text" class="project_board_file_name_insert" name="project_file_name">');
+		$(".project_board_insert_content").eq(2).append('<input type="text" class="project_board_parent_no_insert" name="project_parent_no">');
+		$(".project_board_insert_content").eq(2).append('<input type="file" class="project_board_file_insert" name="project_file">');
+		$(".file_delete_btn").off("click");
+		$(".file_delete_btn").on("click", deleteBtn);
+		$(".project_board_file_insert").off("change");
+		$(".project_board_file_insert").on("change", changeHandler);
+	}
+	
+	// 파일 삭제 기능
+	function deleteBtn() {
+		if(confirm("파일을 삭제하겠습니까?")) {
+			let index = $(this).index(".file_delete_btn");
+			console.log($(".project_board_file_name_insert").eq(index));
+			console.log($(".project_board_parent_no_insert").eq(index));
+			console.log($(".project_board_file_insert").eq(index));
+			console.log($(".project_board_file_name_insert").eq(index).val());
+			console.log($(".project_board_parent_no_insert").eq(index).val());
+			console.log($(".project_board_file_insert").eq(index).val());
+			$(".project_board_file_list_content").eq(index).remove();
+			$(".file_delete_btn").eq(index).remove();
+			$(".project_board_file_name_insert").eq(index).remove();
+			$(".project_board_parent_no_insert").eq(index).remove();
+			$(".project_board_file_insert").eq(index).remove();
+		}
+	}
+	
+	// 트리구조 생성
+	var treeData = [];
+	var vo; 
+	var js_pff_no = 0;
+	var folder_path = [];
+	$('#project_file_tree').jstree({ 
+		'core' : {
+			'data' : treeData,
+			"check_callback" : true
+		},
+		"types" : {
+			"folder" : {
+				icon:"fa-solid fa-folder"
+			},
+			"file" : {
+				icon:"fa-solid fa-file"				
+			}
+		},
+		'plugins' : ["wholerow" ,"types"]
+	});
+	//트리 데이터 생성 함수
+	function treeDataCreate(list) {
+		treeData.length = 0
+		for (var i = 0; i < list.length; i++) {
+			let tempParent;
+			if(list[i].pf_no == 0) {
+				if(list[i].pff_level == 0) {
+					tempParent = "#";
+				}
+				else if(list[i].pff_level != 0) {
+					tempParent = list[i].pff_ref;
+				}
+				vo = {
+					"id" : list[i].pff_no,
+					"parent" : tempParent,
+					"text" : list[i].pff_name,
+					"type" : "folder"
+				};
+				treeData.push(vo);
+			}
+		}
+	}
+	
+	// 트리 데이터 불러오기 ajax
+	function treeDataAjax() {
+		console.log("treeDataAjax");
+		$.ajax({
+			type: "POST",
+			url: "<%= request.getContextPath()%>/project/folder/list",
+			data: {
+				pr_no : js_pr_no
+			},
+			dataType : "json",
+			success: function(result) {
+				console.log(result);
+				if(result == -1) {
+					location.href = "<%= request.getContextPath()%>/login";					
+					return;
+				}
+				treeDataCreate(result.folderList.concat(result.fileList));
+				$('#project_file_tree').jstree(true).settings.core.data = treeData;
+				$('#project_file_tree').jstree(true).refresh();
+			},
+			error: function(request, status, error) {
+				alert("fail");
+			}
+		});
+	}
+	
+	// 노드 선택
+	$('#project_file_tree').on("select_node.jstree", function (event, data) {
+		js_pff_no = data.node.id;
+		folder_path = data.node.parents;
+	});
 </script>
 </body>
 </html>

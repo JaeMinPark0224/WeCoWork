@@ -22,9 +22,9 @@ public interface ProjectService {
 	
 	public List<Project> selectListProject(int emp_no);
 	
-	public List<Project> selectListProject(int emp_no, RowBounds rowbounds);
+	public List<Project> selectListProject(int emp_no, String option, String search, RowBounds rowbounds);
 	
-	public int selectCntProject(int emp_no);
+	public int selectCntProject(int emp_no, String option, String search);
 	
 	public int insertFavoriteProject(Project project);
 	

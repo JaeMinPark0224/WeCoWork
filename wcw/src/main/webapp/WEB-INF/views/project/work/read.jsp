@@ -19,22 +19,22 @@
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>	
 	<div id="project_work_read_wrap">
-		<div id="project_work_read_profile_wrap">
-			<div id="project_work_read_profile_pic">
-				<c:if test="${empty work.profile}">
-			    	<img class="project_worker_profile_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
-			    </c:if>
-			    <c:if test="${not empty work.profile}">
-			        <img class="project_worker_profile_img" src="${work.profile}">
-			   	</c:if>
-			</div>
-			<div id="project_work_read_profile_text_wrap">
-				<div class="project_work_read_profile_text">${work.dept_name }</div>
-				<div class="project_work_read_profile_text"><span class="font_b">${work.name }</span> ${work.job_title }</div>
-				<div class="project_work_read_profile_text">${fn:substring(work.pw_date,0,16) }</div>
-			</div>
-		</div>
 		<div id="project_work_read_content_wrap">
+			<div id="project_work_read_profile_wrap">
+				<div id="project_work_read_profile_pic">
+					<c:if test="${empty work.profile}">
+				    	<img class="project_worker_profile_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
+				    </c:if>
+				    <c:if test="${not empty work.profile}">
+				        <img class="project_worker_profile_img" src="${work.profile}">
+				   	</c:if>
+				</div>
+				<div id="project_work_read_profile_text_wrap">
+					<div class="project_work_read_profile_text">${work.dept_name }</div>
+					<div class="project_work_read_profile_text"><span class="font_b">${work.name }</span> ${work.job_title }</div>
+					<div class="project_work_read_profile_text">${fn:substring(work.pw_date,0,16) }</div>
+				</div>
+			</div>
 			<div id="project_work_read_content_grid_box">
 				<div class="project_work_read_content_left">업무명</div>
 				<div class="project_work_read_content_right"><span class="font_12px">${work.pw_title }</span></div>
@@ -123,8 +123,10 @@
 						<div class="project_work_read_comemnt_content_wrap">
 							<div class="project_work_read_comemnt_content_profile_wrap">
 								<div class="project_work_read_comemnt_content_profile_img"></div>
-								<div class="project_work_read_comemnt_content_profile_name">${loginSSInfo.name }</div>
-								<div class="project_work_read_comemnt_content_profile_job">${loginSSInfo.job_title }</div>
+								<div class="project_work_read_comment_content_profile_flex">
+									<div class="project_work_read_comemnt_content_profile_name">${loginSSInfo.name }</div>
+									<div class="project_work_read_comemnt_content_profile_job">${loginSSInfo.job_title }</div>
+								</div>
 							</div>
 							<div class="project_work_read_comemnt_content_input_wrap">
 								<textarea type="text" class="project_work_read_comemnt_content_input" name=""></textarea>
@@ -135,18 +137,20 @@
 						<div class="project_work_read_comemnt_content_wrap">
 							<div class="project_work_read_comemnt_content_profile_wrap">
 								<div class="project_work_read_comemnt_content_profile_img"></div>
-								<div class="project_work_read_comemnt_content_profile_name">${comment.name }</div>
-								<div class="project_work_read_comemnt_content_profile_job">${comment.job_title }</div>
+								<div class="project_work_read_comment_content_profile_flex">
+									<div class="project_work_read_comemnt_content_profile_name">${comment.name }</div>
+									<div class="project_work_read_comemnt_content_profile_job">${comment.job_title }</div>
+								</div>
 								<div class="project_work_read_comemnt_content_date">${fn:substring(comment.pc_date,0,19) }</div>
 								<c:if test="${loginSSInfo.emp_no eq comment.emp_no }">
 									<button type="button" pc_no="${comment.pc_no }" class="project_work_read_comemnt_content_delete_btn">삭제</button>
 								</c:if>
-							</div>
-							<div class="project_work_read_comemnt_content_input_wrap">
-								<div class="project_work_read_comemnt_content">${comment.pc_content }</div>
 								<c:if test="${loginSSInfo.emp_no eq comment.emp_no }">
 									<button type="button" pc_no="${comment.pc_no }" class="project_work_read_comemnt_content_update_btn">수정</button>
 								</c:if>
+							</div>
+							<div class="project_work_read_comemnt_content_input_wrap">
+								<div class="project_work_read_comemnt_content">${comment.pc_content }</div>
 							</div>
 						</div>
 						</c:forEach>
@@ -288,13 +292,12 @@
 	
 	// 댓글 수정 버튼 수정 기능
 	function updateBtnFnc() {
-		console.log($(this));
 		$(this).text("수정 완료");
 		$(this).off("click");
 		$(this).on("click", updateDoCommentFnc);
-		let temtText = $(this).prev().text();
-		$(this).prev().remove();
-		$(this).before('<textarea type="text" class="project_work_read_comemnt_content_input" name="">'+temtText+'</textarea>');
+		let temtText = $(this).parent().next().children().text();
+		$(this).parent().next().children().remove();
+		$(this).parent().next().append('<textarea type="text" class="project_board_read_comemnt_content_input" name="">'+temtText+'</textarea>');
 	}
 	
 	// 댓글 수정 함수
@@ -306,7 +309,7 @@
 			data: {
 				pc_no : $(this).attr("pc_no"),
 				pw_no : js_pw_no,
-				pc_content : $(this).prev().val()
+				pc_content : $(this).parent().next().children().val().replaceAll(/(\n|\r\n)/g, "<br>")
 			},
 			success: function(result) {
 				if(result == -1) {
@@ -331,13 +334,14 @@
 			$(".project_work_read_comemnt_content_wrap").last().append('<div class="project_work_read_comemnt_content_profile_wrap"></div');
 			$(".project_work_read_comemnt_content_wrap").last().append('<div class="project_work_read_comemnt_content_input_wrap"></div');
 			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_profile_img"></div>');
-			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_profile_name">'+commentList[i].name+'</div>');
-			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_profile_job">'+commentList[i].job_title+'</div>');
+			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comment_content_profile_flex"></div>');
+			$(".project_work_read_comment_content_profile_flex").last().append('<div class="project_work_read_comemnt_content_profile_name">'+commentList[i].name+'</div>');
+			$(".project_work_read_comment_content_profile_flex").last().append('<div class="project_work_read_comemnt_content_profile_job">'+commentList[i].job_title+'</div>');
 			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_date">'+commentList[i].pc_date+'</div>');
 			$(".project_work_read_comemnt_content_input_wrap").last().append('<div class="project_work_read_comemnt_content">'+commentList[i].pc_content+'</div>');
 			if(commentList[i].emp_no == ${loginSSInfo.emp_no}) {
 				$(".project_work_read_comemnt_content_profile_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_work_read_comemnt_content_delete_btn">삭제</button>');
-				$(".project_work_read_comemnt_content_input_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_work_read_comemnt_content_input_btn">수정</button>');
+				$(".project_work_read_comemnt_content_profile_wrap").last().append('<button type="button" pc_no="'+commentList[i].pc_no+'" class="project_work_read_comemnt_content_update_btn">수정</button>');
 			}
 		}
 		$(".project_work_read_comemnt_content_delete_btn").off("click");

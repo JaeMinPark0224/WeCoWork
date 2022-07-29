@@ -221,7 +221,10 @@
 		},
 		"types" : {
 			"folder" : {
-				
+				icon:"fa-solid fa-folder"
+			},
+			"file" : {
+				icon:"fa-solid fa-file"				
 			}
 		},
 		'plugins' : ["wholerow" ,"types"]
@@ -244,19 +247,8 @@
 					"text" : list[i].pff_name,
 					"type" : "folder"
 				};
+				treeData.push(vo);
 			}
-			else {
-				tempParent = list[i].pff_no;
-				vo = {
-					"id" : "file_"+list[i].pf_no,
-					"parent" : tempParent,
-					"text" : list[i].pf_name,
-					"type" : "file",
-					a_attr : {file_url : list[i].pf_url
-								, pb_no : list[i].pb_no}
-				};	
-			}
-			treeData.push(vo);
 		}
 	}
 	

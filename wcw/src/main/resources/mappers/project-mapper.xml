@@ -62,26 +62,57 @@
 		select tp.*, ta.pr_fav from tb_project tp
 		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
 		    on tp.pr_no = ta.pr_fav
+		    <if test='option.equals("all")'>
 		    where cp_no = (select cp_no
                             from tb_department td
                             join tb_employee te
                             on td.dept_no = te.dept_no
                             where te.emp_no = #{emp_no})
                 and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no = tp.pr_no and ep_no = #{emp_no}) is not null)
+			</if>    
+			<if test='option.equals("participant")'>
+		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
+		    </if>            
+		    <if test='option.equals("bookmark")'>
+		    where tp.pr_no in (select pr_no from tb_project_favorite where emp_no = #{emp_no})
+		    </if>
+		    <if test='option.equals("complete")'>
+		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
+    		and pr_complete_yn = 'Y'
+		    </if>
+		    <if test="search != null">
+		    and pr_title like '%'||#{search}||'%'
+		    </if>
 		    order by tp.pr_date desc
 	</select>
 	
-	<select id="selectCntProject" parameterType="_int" resultType="_int">
+	<select id="selectCntProject" parameterType="map" resultType="_int">
 		select count(tp.pr_no)
 			from tb_project tp
 		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
 		    on tp.pr_no = ta.pr_fav
+		    <if test='option.equals("all")'>
 		    where cp_no = (select cp_no
                             from tb_department td
                             join tb_employee te
                             on td.dept_no = te.dept_no
                             where te.emp_no = #{emp_no})
                 and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no = tp.pr_no and ep_no = #{emp_no}) is not null)
+		    </if>
+		    <if test='option.equals("participant")'>
+		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
+		    </if>
+		    <if test='option.equals("bookmark")'>
+		    where tp.pr_no in (select pr_no from tb_project_favorite where emp_no = #{emp_no})
+		    </if>
+		    <if test='option.equals("complete")'>
+		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
+    		and pr_complete_yn = 'Y'
+		    </if>
+		    <if test="search != null">
+		    and pr_title like '%'||#{search}||'%'
+		    </if>
+		    
 		    order by tp.pr_date desc
 	</select>
 	
@@ -251,7 +282,8 @@
 	</delete>
 	
 	<insert id="insertNoticeProject" parameterType="Project">
-		insert into tb_project_notice
+		insert all
+		into tb_project_notice
 		(pn_no, pn_title
 		, pn_content, pn_date
 		, pr_no, emp_no)
@@ -259,7 +291,22 @@
 		((SELECT nvl(max(PN_NO),0)+1 from tb_project_notice), #{pn_title}
 		, #{pn_content} , default
 		, #{pr_no}, #{emp_no})
+		<if test="pf_list != null">
+			<foreach collection="pf_list" item="item" index="index">
+				into tb_project_file
+				(pf_no, pf_url
+				, pf_date, pn_no
+				, pff_no, pf_name)
+				values
+				((SELECT nvl(max(pf_no),0)+(#{index}+1) from tb_project_file), #{item.pf_url}
+				, default, (SELECT nvl(max(PN_NO),0)+1 from tb_project_notice)
+				, #{item.pff_no}, #{item.pf_name})
+			</foreach>
+		</if>
+		select * from dual
 	</insert>
+	
+	
 	
 	<select id="selectListNoticeProject" parameterType="Project" resultType="Project">
 		select tpn.*, te.name, tjt.job_title
@@ -521,6 +568,10 @@
 			    on tpf.pff_no = tpff.pff_no
 				where pr_no = #{no}
 			</if>
+			<if test='type.equals("notice")'>
+				from tb_project_file tpf
+				where pn_no = #{no}
+			</if>
 	</select>
 	
 	<update id="updateFileProject" parameterType="Project">
@@ -548,11 +599,34 @@
 	<insert id="insertCommentProject" parameterType="Project">
 		insert into tb_project_comment
 		(pc_no, emp_no
-		, pb_no, pw_no
+		, pb_no, pw_no, pn_no
 		, pc_content, pc_date)
 		values
 		((SELECT nvl(max(pc_no),0)+1 from tb_project_comment), #{emp_no}
-		, #{pb_no}, #{pw_no}
+		<choose>
+			<when test="pb_no != 0">
+				, #{pb_no}
+			</when>
+			<otherwise>
+				, null
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="pw_no != 0">
+				, #{pw_no}
+			</when>
+			<otherwise>
+				, null
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="pn_no != 0">
+				, #{pn_no}
+			</when>
+			<otherwise>
+				, null
+			</otherwise>
+		</choose>
 		, #{pc_content}, default)
 	</insert>
 	
@@ -563,7 +637,7 @@
 			on tpc.emp_no = te.emp_no
 			join tb_job_title tjt
 			on te.job_title_no = tjt.job_title_no
-			where (pb_no != 0 and pb_no = #{pb_no}) or (pw_no != 0 and pw_no = #{pw_no})
+			where (pb_no != 0 and pb_no = #{pb_no}) or (pw_no != 0 and pw_no = #{pw_no}) or (pn_no != 0 and pn_no = #{pn_no})
 			order by pc_date asc
 	</select>
 	

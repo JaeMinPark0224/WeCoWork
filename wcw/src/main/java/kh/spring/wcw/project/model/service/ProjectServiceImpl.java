@@ -37,13 +37,13 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 	
 	@Override
-	public List<Project> selectListProject(int emp_no, RowBounds rowbounds) {
-		return dao.selectListProject(emp_no, rowbounds);
+	public List<Project> selectListProject(int emp_no, String option, String search, RowBounds rowbounds) {
+		return dao.selectListProject(emp_no, option, search, rowbounds);
 	}
 	
 	@Override
-	public int selectCntProject(int emp_no) {
-		return dao.selectCntProject(emp_no);
+	public int selectCntProject(int emp_no, String option, String search) {
+		return dao.selectCntProject(emp_no, option, search);
 	}
 
 	@Override

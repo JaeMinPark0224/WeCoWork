@@ -36,7 +36,7 @@
 				headerToolbar: {
 					left: 'prev,next today',
 					center: 'title',
-					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+					right: 'dayGridMonth'
 				},
 				initialView: 'dayGridMonth',
 				eventClick: function (info) {

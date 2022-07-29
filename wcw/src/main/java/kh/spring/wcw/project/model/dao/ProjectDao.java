@@ -33,12 +33,20 @@ public class ProjectDao {
 		return sqlsession.selectList("Project.selectListProject", emp_no);
 	}
 	
-	public List<Project> selectListProject(int emp_no, RowBounds rowbounds) {
-		return sqlsession.selectList("Project.selectListProject", emp_no, rowbounds);
+	public List<Project> selectListProject(int emp_no, String option, String search, RowBounds rowbounds) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", emp_no);
+		map.put("option", option);
+		map.put("search", search);
+		return sqlsession.selectList("Project.selectListProject", map, rowbounds);
 	}
 	
-	public int selectCntProject(int emp_no) {
-		return sqlsession.selectOne("Project.selectCntProject", emp_no);
+	public int selectCntProject(int emp_no, String option, String search) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", emp_no);
+		map.put("option", option);
+		map.put("search", search);
+		return sqlsession.selectOne("Project.selectCntProject", map);
 	}
 	
 	public int insertFavoriteProject(Project project) {
