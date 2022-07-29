@@ -48,7 +48,7 @@ public class HrController {
 			, @RequestParam(name="option", required = false, defaultValue = "date") String selectVal
 			, @RequestParam(name="list", required = false) List<Employee> list) {
 		int currentPage = 1; // 현재 페이지
-		int cotentLimit = 19; // 한 페이지에 보여질 직원 정보 갯수
+		int cotentLimit = 15; // 한 페이지에 보여질 직원 정보 갯수
 		
 		String currentPageStr = page;
 		try {

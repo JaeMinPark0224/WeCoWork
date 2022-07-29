@@ -263,7 +263,29 @@ $('#modal_cancel').click(function(){
 })
 
 // 모달 내 수정 버튼 클릭 시
+var chkDeptName = false;
+    
+	// 부서명 유효성 체크
+	$("#d_name").focusout(function(){
+		var nameVal = $("#d_name").val();
+		var name = /^[가-힣]{2,10}$/;
+		    		
+		   if(!name.test(nameVal)){
+			  chkDeptName = false;
+		   } else {
+			  chkDeptName = true;
+		   }
+	});
+	
 $('#modal_edit').click(function(){
+	console.log(chkDeptName);
+	
+	if(chkDeptName == false) {
+		alert("부서명을 형식에 맞게 입력해 주세요. (한글 2~10자)");
+		return;
+	}
+	
+	// 부서명 미입력 시
 	var tf = $('#d_name').val();
 	console.log(tf);
 	if(tf.length < 1){
@@ -301,7 +323,27 @@ $('#create_btn').click(function(){
 	$('#modal2').show();
 })
 // 부서 생성 모달 내 생성 버튼 클릭 시
+var chkDeptName2 = false;
+
+// 부서명 유효성 체크
+	$("#create_name").focusout(function(){
+		var nameVal2 = $("#create_name").val();
+		var name2 = /^[가-힣]{2,10}$/;
+		    		
+		   if(!name2.test(nameVal2)){
+			  chkDeptName2 = false;
+		   } else {
+			  chkDeptName2 = true;
+		   }
+	});
+
 $('#modal_edit2').click(function(){
+	if(chkDeptName2 == false) {
+		alert("부서명을 형식에 맞게 입력해 주세요. (한글 2~10자)");
+		return;
+	}
+	
+	// 부서명 미입력 시
 	var tf = $('#create_name').val();
 	if(tf.length < 1){
 		alert("부서명을 입력 후 생성해 주세요.");

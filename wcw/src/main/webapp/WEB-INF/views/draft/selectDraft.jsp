@@ -140,7 +140,7 @@
 	                </tr>
 	                <tr>
 	                    <td class="first_td">기안 내용</td>
-	                    <td class="second_td" id="second_td_big">${draft[0].dr_content}</td>
+	                    <td style="white-space:pre;" class="second_td" id="second_td_big">${draft[0].dr_content}</td>
 	                </tr>
 	                <tr>
 	                    <td class="first_td">비고</td>
@@ -160,7 +160,7 @@
 	                </tr>
 	                <tr>
 	                    <td class="first_td">결의서 내용</td>
-	                    <td class="second_td" id="second_td_big">${draft[0].dr_content}</td>
+	                    <td style="white-space:pre;" class="second_td" id="second_td_big">${draft[0].dr_content}</td>
 	                </tr>
 	                <tr>
 	                    <td class="first_td">비고</td>
@@ -184,7 +184,7 @@
 	                </tr>
 	                <tr>
 	                    <td class="first_td">정산서 내용</td>
-	                    <td class="second_td" id="second_td_big">${draft[0].dr_content}</td>
+	                    <td style="white-space:pre;" class="second_td" id="second_td_big">${draft[0].dr_content}</td>
 	                </tr>
 	                <tr>
 	                    <td class="first_td"></td>

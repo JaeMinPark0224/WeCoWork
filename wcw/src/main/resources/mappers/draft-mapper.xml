@@ -61,11 +61,29 @@
 	select * from dual
 </insert>
 
+<!-- 사이즈 측정용 기안 리스트 -->
+<select id="selectDraftForSize" parameterType="_int" resultType="Draft">
+	select dr_no, dr_sort, dr_title, dr_date, dr_due_date, dr_result
+	from tb_draft
+	where ep_no = #{ep_no}
+	order by dr_date desc
+</select>
+
 <!-- 기안함 리스트 -->
 <select id="selectListDraft" parameterType="_int" resultType="Draft">
 	select dr_no, dr_sort, dr_title, dr_date, dr_due_date, dr_result
 	from tb_draft
 	where ep_no = #{ep_no}
+	order by dr_date desc
+</select>
+
+<!-- 사이즈 측정용 결재 리스트 -->
+<select id="selectApprForSize" parameterType="_int" resultType="Draft">
+	select d.dr_no, d.dr_sort, d.dr_title, a.emp_no, e2.name name_a, d.dr_due_date, d.dr_date, a.appr_result, d.dr_result
+	from tb_draft d join tb_approval a on a.dr_no = d.dr_no
+                    join tb_employee e on e.emp_no = a.emp_no
+                    join tb_employee e2 on e2.emp_no = d.ep_no
+	where a.emp_no = #{emp_no} and (a.appr_result = 1 or a.appr_result = 2 or a.appr_result = 3)
 	order by dr_date desc
 </select>
 

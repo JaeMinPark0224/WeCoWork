@@ -69,10 +69,12 @@
 
     /* 기안서 출력부분 */
     #draft{
+    	width: 1080px;
         clear: both;
     }
     .table{
-        /* width: 1065px; */
+    	width: 1070px;
+        table-layout: fixed;
         text-align: center;
         border: 1px solid rgb(127, 127, 127);
         border-collapse: collapse;

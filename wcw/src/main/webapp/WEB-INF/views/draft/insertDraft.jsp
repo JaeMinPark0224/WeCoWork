@@ -55,21 +55,21 @@
 				                <table class="table" id="table1">
 				                    <tr>
 				                        <td class="first_td">기안 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title" maxlength="200"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title" maxlength="25"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">목적</td>
-				                        <td><input type="text" class="write_td" name="dr_purpose" id="dr_purpose" maxlength="200"></td>
+				                        <td><input type="text" class="write_td" name="dr_purpose" id="dr_purpose" maxlength="30"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">기안 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content"  maxlength="330"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content"  maxlength="470"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">비고</td>
-				                        <td><input type="text" class="write_td" name="dr_comment" maxlength="330"></td>
+				                        <td><input type="text" class="write_td" name="dr_comment" maxlength="30"></td>
 				                    </tr>
 				                </table>
 				                <input type="submit" id="ok_btn1" value="상신" style="display: block;">
@@ -82,21 +82,21 @@
 		        				<table class="table" id="table2">
 				                    <tr>
 				                        <td class="first_td">결의서 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title1"  maxlength="200"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title1"  maxlength="25"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">지출 예정 일자</td>
-				                        <td><input type="text" class="write_td" name="dr_expect_date" id="dr_expect_date"  maxlength="200"></td>
+				                        <td><input type="text" class="write_td" name="dr_expect_date" id="dr_expect_date"  maxlength="30"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">결의서 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content1"  maxlength="330"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content1"  maxlength="470"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">비고</td>
-				                        <td><input type="text" class="write_td" name="dr_comment" maxlength="330"></td>
+				                        <td><input type="text" class="write_td" name="dr_comment" maxlength="30"></td>
 				                    </tr>
 				                </table>
 				                <input type="submit" id="ok_btn2" value="상신">
@@ -109,7 +109,7 @@
 		        				<table class="table" id="table3">
 				                    <tr>
 				                        <td class="first_td">정산서 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title2" maxlength="200"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title2" maxlength="25"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">발생 기간</td>
@@ -117,12 +117,12 @@
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">지출 목적</td>
-				                        <td><input type="text" class="write_td" name="spend_purpose" id="spend_purpose"  maxlength="330"></td>
+				                        <td><input type="text" class="write_td" name="spend_purpose" id="spend_purpose"  maxlength="30"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">상세 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content" id="dr_content2" maxlength="330"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content" id="dr_content2" maxlength="470"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -154,7 +154,7 @@
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">비고</td>
-				                        <td><input type="text" class="write_td" name="dr_comment"></td>
+				                        <td><input type="text" class="write_td" name="dr_comment" maxlength="30"></td>
 				                    </tr>
 				                </table>
 				                <input type="submit" id="ok_btn3" value="상신">
@@ -211,7 +211,7 @@ $('#emp_select1').change(function(){
 			}
 		</c:forEach>
 		// 결재자2에 선택안함 옵션 추가
-		$('#emp_select2').append("<option>선택안함</option>");
+		$('#emp_select2').append("<option selected>선택안함</option>");
 	}
 	
 	// 결재자1에 '대표' 선택시 결재자2 선택 불가
@@ -260,7 +260,7 @@ $('#emp_select2').change(function(){
 				}
 			</c:forEach>
 			// 결재자2에 선택안함 옵션 추가
-			$('#emp_select3').append("<option>선택안함</option>");
+			$('#emp_select3').append("<option selected>선택안함</option>");
 		}
 	
 		// 결재자2가 선택되지 않았다면

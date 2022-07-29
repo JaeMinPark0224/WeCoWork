@@ -213,7 +213,6 @@
 		// 비밀번호, 비밀번호 확인 체크
         if($("#pwd_1").val() != $("#pwd_2").val()){
  		    alert("비밀번호와 비밀번호 확인이 일치하지 않습니다. 다시 입력해주세요.");
- 		  	$("#pwd_1").focus();
  			return rt = false;
  		}
         // 이메일 인증 확인
@@ -237,10 +236,6 @@
         }
 		if(chkPwd == false){
 			alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 8~20자)");
-			return rt = false;
-		}
-		if(chkPwd2 == false){
-			alert("비밀번호와 비밀번호 확인의 값을 동일하게 입력해 주세요.");
 			return rt = false;
 		}
 		if(chkPwdCk == false){

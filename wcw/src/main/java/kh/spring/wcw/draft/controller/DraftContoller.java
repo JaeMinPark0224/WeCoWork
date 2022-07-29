@@ -53,7 +53,10 @@ public class DraftContoller {
 			, RedirectAttributes rttr
 			, @RequestParam(name="page", required = false) String page) {
 		int currentPage = 1; // 현재 페이지
-		int cotentLimit = 25; // 한 페이지에 보여질 직원 정보 갯수
+		int cotentLimit = 15; // 한 페이지에 보여질 정보 갯수
+		int pageBlock = 5;
+		int startPage = 1;
+		int endPage = 1;
 		
 		String currentPageStr = page;
 		try {
@@ -67,9 +70,10 @@ public class DraftContoller {
 		int offset = (currentPage - 1) * cotentLimit;
 		RowBounds rowBounds = new RowBounds(offset, cotentLimit);
 		
-		// 직위 레벨 가져오기 (대표직 확인)
+		// 사번 가져오기
 		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
 		int ep_no = loginInfo.getEmp_no();
+		System.out.println("ep_no: " + ep_no);
 		
 		// 대표적인지 확인하기
 		String job_level = loginInfo.getJob_level();
@@ -79,15 +83,27 @@ public class DraftContoller {
 			mv.setViewName("redirect:/");
 			return mv;
 		}
+		// 사이즈 측정용 기안 리스트
+		List<Draft> ListSize = draftService.selectDraftForSize(ep_no);
+		
+		int totalCnt = 0;
+		totalCnt = ListSize.size();
+		
+		int totalPageCnt = (totalCnt / cotentLimit) + (totalCnt % cotentLimit == 0 ? 0 : 1);
+		if (currentPage % pageBlock == 0) {
+			startPage = ((currentPage / pageBlock) - 1) * pageBlock + 1;
+		} else {
+			startPage = (currentPage / pageBlock) * pageBlock + 1;
+		}
+		endPage = startPage + pageBlock - 1;
+		if (endPage > totalPageCnt) {
+			endPage = totalPageCnt;
+		}
 		
 		// 자신이 작성한 기안 리스트 조회
 		List<Draft> draftList = draftService.selectListDraft(ep_no, rowBounds);
 		
-		int totalpageCnt = draftList.size()/cotentLimit + 1;
-		int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
-		int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
-		
-		mv.addObject("totalpageCnt", totalpageCnt);
+		mv.addObject("totalPageCnt", totalPageCnt);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
 		mv.addObject("draftList", draftList);
@@ -104,7 +120,10 @@ public class DraftContoller {
 				, RedirectAttributes rttr
 				, @RequestParam(name="page", required = false) String page) {
 			int currentPage = 1; // 현재 페이지
-			int cotentLimit = 25; // 한 페이지에 보여질 직원 정보 갯수
+			int cotentLimit = 15; // 한 페이지에 보여질 정보 갯수
+			int pageBlock = 5;
+			int startPage = 1;
+			int endPage = 1;
 			
 			String currentPageStr = page;
 			try {
@@ -122,14 +141,27 @@ public class DraftContoller {
 			Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
 			int emp_no = loginInfo.getEmp_no();
 			
+			// 사이즈 측정용 기안 리스트
+			List<Draft> ListSize = draftService.selectApprForSize(emp_no);
+			
+			int totalCnt = 0;
+			totalCnt = ListSize.size();
+			
+			int totalPageCnt = (totalCnt / cotentLimit) + (totalCnt % cotentLimit == 0 ? 0 : 1);
+			if (currentPage % pageBlock == 0) {
+				startPage = ((currentPage / pageBlock) - 1) * pageBlock + 1;
+			} else {
+				startPage = (currentPage / pageBlock) * pageBlock + 1;
+			}
+			endPage = startPage + pageBlock - 1;
+			if (endPage > totalPageCnt) {
+				endPage = totalPageCnt;
+			}
+			
 			// 자신이 결재할, 결재한 기안 리스트 불러오기
 			List<Draft> apprList = draftService.selectListAppr(emp_no, rowBounds);
 			
-			int totalpageCnt = apprList.size()/cotentLimit + 1;
-			int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
-			int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
-			
-			mv.addObject("totalpageCnt", totalpageCnt);
+			mv.addObject("totalPageCnt", totalPageCnt);
 			mv.addObject("startPage", startPage);
 			mv.addObject("endPage", endPage);
 			mv.addObject("apprList", apprList);

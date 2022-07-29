@@ -23,7 +23,7 @@
         <div id="section">
             <div id="mid">
                 <p id="mid_text">비밀번호 찾기</p>
-                <form action="<%= request.getContextPath() %>/find/pwd.do" method="post">
+                <form action="<%= request.getContextPath() %>/find/pwd.do" method="post" id="submit">
                     <div id="f_section">
                         <input type="text" placeholder=" 회사명" name="cp" id="cp" required></input><br>
                         <input type="text" placeholder=" 이메일(아이디)" name="email" id="email" required></input>
@@ -110,16 +110,16 @@
 	}))
 	
 	// 최종 확인 버튼 클릭 시
-	$("#find_pwd").on("click", (function(){
+	$("#submit").submit(function(){
 		if($("#do_btn").is(":visible")){
             alert("이메일 인증을 완료해주세요.");
-            return;
+            return false;
         }
 		if($("#email_btn_1").is(":visible")){
             alert("이메일 인증을 완료해주세요.");
-            return;
+            return false;
         }
-	}));
+	})
 	
 </script>
 </body>

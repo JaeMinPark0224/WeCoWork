@@ -21,8 +21,8 @@
                 <form action="<%= request.getContextPath() %>/updatePwd" method="post" id="submit">
                 	<div id="f_section">
                         <input type="hidden" name="email" value="${email}">
-                        <input type="password" id="newPwd1" class="newPwd" name="newPwd" placeholder=" 변경할 비밀번호 입력">
-                        <input type="password" id="newPwd2" class="newPwd" placeholder=" 변경할 비밀번호 입력 확인">
+                        <input type="password" id="newPwd1" class="newPwd" name="newPwd" placeholder=" 변경할 비밀번호 입력" required>
+                        <input type="password" id="newPwd2" class="newPwd" placeholder=" 변경할 비밀번호 입력 확인" required>
                     </div>
                     <div id="f_btn">
                         <input type="button" id="go_login" name="go_login" value="로그인">
@@ -69,16 +69,13 @@ var chkPwd = false;
 			alert("비밀번호와 비밀번호 확인에 입력한 비밀번호를 동일하게 입력해 주세요.");
 			return false;
 		}
-		if(pwd1 == "" || pwd == null){
+		if(pwd1 == "" || pwd1 == null){
 			alert("변경하고자 하는 비밀번호를 새롭게 입력해 주세요.");
 			return false;
 		}
-		
-		if(pwd1 !=""){
-			if(chkPwd == false){
-				alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 8~20자)");
-				return false;
-			}	
+		if(chkPwd == false){
+			alert("비밀번호를 형식에 맞게 입력해 주세요. (영문 대소문자, 숫자 8~20자)");
+			return false;
 		}
 	})
 </script>

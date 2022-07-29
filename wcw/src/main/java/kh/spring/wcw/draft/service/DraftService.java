@@ -30,11 +30,25 @@ public interface DraftService {
 	 * @return 기안함 리스트
 	 * @author ybseo
 	 */
+	public List<Draft> selectDraftForSize(int ep_no);
+	
+	/**
+	 * @param 직원 번호
+	 * @return 기안함 리스트, rowbounds
+	 * @author ybseo
+	 */
 	public List<Draft> selectListDraft(int ep_no,  RowBounds rowBounds);
 	
 	/**
 	 * @param 직원 번호
 	 * @return 결재함 리스트
+	 * @author ybseo
+	 */
+	public List<Draft> selectApprForSize(int emp_no);
+	
+	/**
+	 * @param 직원 번호
+	 * @return 결재함 리스트, rowbounds
 	 * @author ybseo
 	 */
 	public List<Draft> selectListAppr(int emp_no,  RowBounds rowBounds);

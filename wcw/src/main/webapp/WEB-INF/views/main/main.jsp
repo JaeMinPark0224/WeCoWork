@@ -417,6 +417,11 @@
 	color: rgb(94, 94, 94);
 }
 </style>
+<script>
+<c:if test="${not empty msg}">
+	alert("${msg}");
+</c:if>
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>

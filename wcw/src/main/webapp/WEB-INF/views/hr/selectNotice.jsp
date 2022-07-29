@@ -37,7 +37,7 @@
 		<div class="ct_title">
 			공지내용
 		</div>
-		<div class="ct_content">
+		<div class="ct_content" style="white-space:pre;">
 			${notice.nt_content}
 		</div>
 		<form action="<%= request.getContextPath() %>/hr/notice/update" method="post" name="form">

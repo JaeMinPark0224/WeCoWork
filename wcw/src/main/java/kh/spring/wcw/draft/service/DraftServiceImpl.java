@@ -28,10 +28,22 @@ public class DraftServiceImpl implements DraftService {
 		return dao.insertDraft(draft);
 	}
 	
+	// 사이즈 측정용 기안 리스트
+	@Override
+	public List<Draft> selectDraftForSize(int ep_no) {
+		return dao.selectDraftForSize(ep_no);
+	}
+	
 	// 기안함 리스트 조회
 	@Override
 	public List<Draft> selectListDraft(int ep_no, RowBounds rowBounds){
 		return dao.selectListDraft(ep_no, rowBounds);
+	}
+	
+	// 사이즈 측정용 결재 리스트
+	@Override
+	public List<Draft> selectApprForSize(int emp_no) {
+		return dao.selectApprForSize(emp_no);
 	}
 	
 	// 결재함 리스트 조회

@@ -95,7 +95,7 @@
 							<c:forEach begin="${startPage }" end="${endPage }" var="p">
 								<a class="page page_num" >${p}</a>
 							</c:forEach>
-							<c:if test="${endPage < totalpageCnt}">
+							<c:if test="${endPage < totalPageCnt}">
 								<a class="page page_post" >다음</a>
 							</c:if>
 						</c:if>
@@ -122,11 +122,11 @@ $('.tb_read').click(function(){
 $(".page").on('click', function() {
 		var option = $('#select').val();
 		if($(this).hasClass('page_prev')) {
-			location.href="<%= request.getContextPath() %>/draft/list?page=${startPage-1}&option="+option;
+			location.href="<%= request.getContextPath() %>/draft/list?page=${startPage-1}";
 		} else if($(this).hasClass('page_num')) {
-			location.href="<%= request.getContextPath() %>/draft/list?page="+$(this).text()+"&option="+option;
+			location.href="<%= request.getContextPath() %>/draft/list?page="+$(this).text();
 		} else if($(this).hasClass('page_post')) {
-			location.href="<%= request.getContextPath() %>/draft/list?page=${endPage+1}&option="+option;
+			location.href="<%= request.getContextPath() %>/draft/list?page=${endPage+1}";
 		}
 	});
 </script>
