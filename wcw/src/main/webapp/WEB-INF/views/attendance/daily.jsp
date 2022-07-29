@@ -109,6 +109,11 @@
 	color: rgb(94, 94, 94);
 }
 
+.first_box_grid {
+	display: grid;
+	grid-template-columns: 80px 1fr;
+}
+
 </style>
 </head>
 <body>
@@ -133,10 +138,10 @@
 					</div>
 				</div>
 				<div class="attendance_main_box_first_container">
-					<div class="font_title first_box_text">출근 시간 : </div>
-					<div class="font_title first_box_text">퇴근 시간 : </div>
-					<div class="font_title first_box_text">출근 IP : </div>
-					<div class="font_title first_box_text">퇴근 IP : </div>
+					<div class="font_title first_box_text first_box_grid"><span>출근 시간</span><span class="font_content">${lastlist.att_clock_in}</span></div>
+					<div class="font_title first_box_text first_box_grid"><span>퇴근 시간</span><span class="font_content">${lastlist.att_clock_out}</span></div>
+					<div class="font_title first_box_text first_box_grid"><span>출근 IP</span><span class="font_content">${lastlist.ip_clock_in}</span></div>
+					<div class="font_title first_box_text first_box_grid"><span>퇴근 IP</span><span class="font_content">${lastlist.ip_clock_out}</span></div>
 				</div>
 				<div class="attendance_main_box_first_container">
 					<div class="font_title first_box_text">현시각</div>

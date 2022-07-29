@@ -809,17 +809,21 @@ public class HrController {
 	@ResponseBody
 	public String selectApprovalAttendance(
 			Attendance attendance
+			, HttpSession session
 			, @RequestParam(name="att_date_start") String att_date_start
 			, @RequestParam(name="att_date_end") String att_date_end
 			, @RequestParam(name="dept_name") String dept_name
 			, @RequestParam(name="att_appr_result") String att_appr_result
 			) {
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int cp_no = loginSSInfo.getCp_no();
 		Date att_date_start_d = Date.valueOf(att_date_start);
 		Date att_date_end_d = Date.valueOf(att_date_end);
 		attendance.setAtt_date_start(att_date_start_d);
 		attendance.setAtt_date_end(att_date_end_d);
 		attendance.setDept_name(dept_name);
 		attendance.setAtt_appr_result(att_appr_result);
+		attendance.setCp_no(cp_no);
 		List<Attendance> selectResult = hrService.selectApprovalAttendance(attendance);
 		
 		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
@@ -849,12 +853,15 @@ public class HrController {
 	@ResponseBody
 	public String selectWeeklyAttendance(
 			Attendance attendance
+			, HttpSession session
 			,@RequestParam(name="att_date_start_str") String att_date_start
 			, @RequestParam(name="att_date_end_str") String att_date_end
 			, @RequestParam(name="dept_name") String dept_name
 			, @RequestParam(name="name") String name
 			, @RequestParam(name="emp_no") int emp_no
 			) {
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int cp_no = loginSSInfo.getCp_no();
 		Date att_date_start_d = Date.valueOf(att_date_start);
 		Date att_date_end_d = Date.valueOf(att_date_end);
 		attendance.setAtt_date_start(att_date_start_d);
@@ -862,8 +869,9 @@ public class HrController {
 		attendance.setDept_name(dept_name);
 		attendance.setName(name);
 		attendance.setEmp_no(emp_no);
+		attendance.setCp_no(cp_no);
 		List<Attendance> result = hrService.selectWeeklyAttendance(attendance);
-		
+		System.out.println("attendance = "+ attendance);
 		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
 		
 		return gsonObj.toJson(result);
@@ -942,6 +950,7 @@ public class HrController {
 		vacation.setVu_year(year_select);
 		vacation.setVaca_confirm(vaca_confirm);
 		vacation.setVaca_sort(vaca_sort);
+		System.out.println("vacation: " + vacation);
 		List<Vacation> result = hrService.selectVacation(vacation);
 		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
 		

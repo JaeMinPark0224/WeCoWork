@@ -39,7 +39,14 @@
 <select id="selectAttendance" parameterType="Attendance" resultType="Attendance">
 	select * from tb_attendance
 	where emp_no = #{emp_no}
-	and ATT_date between #{att_date_start} and #{att_date_end}
+	and to_char(ATT_date, 'yyyy-mm-dd') between #{att_date_start} and #{att_date_end}
+</select>
+
+<select id="selectLastAttendance" parameterType="_int" resultType="Attendance">
+	select att_clock_in, ip_clock_in, att_clock_out, ip_clock_out
+	from tb_attendance
+	where att_date = (select distinct last_value(att_date) over()as lastdate from tb_attendance)
+	and emp_no = #{emp_no}
 </select>
 
 <!-- 
@@ -77,7 +84,7 @@
 	from tb_attendance_approval appr
 	join tb_attendance att on att.att_no = appr.att_no
 	where att.emp_no = #{emp_no}
-	and ATT_appr_req_date between #{att_date_start} and #{att_date_end}
+	and to_char(ATT_appr_req_date, 'yyyy-mm-dd') between #{att_date_start} and #{att_date_end}
 </select>
 
 <!-- /////////////////월간근태///////////////// -->

@@ -162,7 +162,7 @@
 </section>
 <script>
 $("#att_appr_date_search_btn").click(function(){
-	$(".table_title").eq(1).nextAll().remove();
+	$(".table_title").eq(0).nextAll().remove();
 	$.ajax({
 		url: "<%=request.getContextPath()%>/hr/attendance/approval/select",
 		type: "post",

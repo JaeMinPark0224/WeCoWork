@@ -15,13 +15,15 @@
 	--> 
 	
 <insert id="insertVacation">
-	insert into tb_vacation(VACA_NO, EMP_NO
+	insert into tb_vacation(VACA_NO
+	, EMP_NO
 	, VACA_SORT, VACA_START, VACA_END
 	, VACA_CNT, VACA_COMMENT, VACA_REQ_DATE
 	, VACA_CONFIRM, VACA_APPROVER, vaca_allday
 	, VACA_DENIED_TXT
 	) values(
-	(#{emp_no}||#{vaca_req_date}), #{emp_no}
+	(#{emp_no}||to_char(#{vaca_req_date}, 'yyyymmdd'))
+	, #{emp_no}
 	, #{vaca_sort}, #{vaca_start}, #{vaca_end}
 	, #{vaca_cnt}, #{vaca_comment}, #{vaca_req_date}
 	, 1, 100, #{vaca_allday}

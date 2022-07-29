@@ -37,4 +37,8 @@ public class AttendanceService {
 	public List<Attendance> selectMonthlyAttendance(Attendance attendance){
 		return dao.selectMonthlyAttendance(attendance);
 	}
+	
+	public Attendance selectLastAttendance(int emp_no){
+		return dao.selectLastAttendance(emp_no);
+	}
 }

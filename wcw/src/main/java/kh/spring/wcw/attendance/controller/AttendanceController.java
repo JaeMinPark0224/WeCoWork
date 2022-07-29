@@ -2,6 +2,7 @@ package kh.spring.wcw.attendance.controller;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,15 @@ public class AttendanceController {
 	private AttendanceService service;
 	
 	@RequestMapping("/daily")
-	public ModelAndView viewDailyAttendance(ModelAndView mv) {
+	public ModelAndView viewDailyAttendance(ModelAndView mv
+			, Attendance attendance
+			, HttpSession session
+			) {
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		Attendance lastlist = service.selectLastAttendance(emp_no);
+		
+		mv.addObject("lastlist", lastlist);
 		mv.setViewName("attendance/daily");
 		return mv;
 	}
@@ -63,6 +72,7 @@ public class AttendanceController {
 			) {
 		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
 		attendance.setEmp_no(loginSSInfo.getEmp_no());
+	
 		attendance.setIp_clock_out(WCWUtill.getClientIP(request));
 		int result = service.updateAttendance(attendance);
 		return String.valueOf(result);

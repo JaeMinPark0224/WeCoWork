@@ -83,12 +83,6 @@
 	line-height: 25px;
 }
 
-.charts {
-	width: 955px;
-	height: 450px;
-	display: inline-block;
-	margin-top: 58px;
-}
 
 #attendance_main_box_first_hr {
 	margin-top: 45px;
@@ -226,9 +220,6 @@
 							
 						</table>
 						
-						<div class="charts">
-		                    <canvas id="chart1"></canvas>
-		                </div>
 					</div>
 				</div>
 			</div>
@@ -357,10 +348,7 @@
 	                	worktimearray[dayIndex-1] = worktimedaily; 
                 	}
                 }
-                for(var i = 0; i < 6; i++){
-	               	myChart1.data.datasets[0].data[i] = worktimearray[i];
-                }
-               	myChart1.update();
+               
 			},
 			error: function(error){
 				alert(error); 
@@ -381,27 +369,7 @@
 
 		return stringHMS;
 	}
-	
-/*////////////////// 차트 /////////////////// */
-const chart1 = document.getElementById('chart1').getContext('2d');
-    const myChart1 = new Chart(chart1, {
-        type: 'line',
-        data: {
-            labels: ['월', '화', '수', '목', '금', '토', '일'],
-            datasets: [{
-                label: '근무시간',
-                data: [0, 0, 0, 0, 0, 0, 0],
-                backgroundColor: '#4B4DB2',
-                borderColor: '#4B4DB2'
-                
-            }]
-        },
-        options: {
-            scales: {
-                y: { beginAtZero: true}
-            }
-        }
-    });
+
 
 /*//////////////부서, 성명 선택///////// */
 // 셀렉박스 초기화

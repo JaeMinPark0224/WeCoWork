@@ -37,7 +37,9 @@ public class AttendanceDao {
 		return sqlsession.selectList("Attendance.selectMonthlyAttendance", attendance);
 	}
 	
-	
+	public Attendance selectLastAttendance(int emp_no){
+		return sqlsession.selectOne("Attendance.selectLastAttendance", emp_no);
+	}
 	
 	
 }

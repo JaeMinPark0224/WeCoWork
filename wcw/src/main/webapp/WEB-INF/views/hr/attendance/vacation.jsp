@@ -332,7 +332,8 @@ $(vaca_list_search_btn).click(function(){
 				, vaca_confirm:$('#vaca_confirm').val()
 				, vaca_sort:$('#vaca_sort').val()
 				, dept_name:$('#dept_name').val()
-				, name:$('#emp_name').val()
+				, name:$('#emp_name').text()
+				, emp_no: $('#emp_name').val()
 			},
 			
 			success: function(result){

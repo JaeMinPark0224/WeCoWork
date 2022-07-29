@@ -191,16 +191,24 @@ var calendar = null;
 				},
 				locale : 'ko',
 				initialView: 'dayGridMonth',
+				displayEventTime: false,
+				eventDisplay : "block",
 				events: [
 				    { // this object will be "parsed" into an Event Object
 				      title: 'The Title', // a property!
-				      start: '2018-09-01', // a property!
-				      end: '2018-09-02' // a property! ** see important note below about 'end' **
+				      start: '2020-07-01', // a property!
+				      end: '2020-07-22' // a property! ** see important note below about 'end' **
 				    }
 				  ]
 			});
 			calendar.render();
+			console.log(workMyEventSource);
 			calendar.addEventSource(workMyEventSource);
+			
+			//캘린더 지정한 월루 이동
+			$("#att_date_search_btn").click(function(){
+				calendar.gotoDate( $('#att_month').val());
+			});
 		})
 	})();
 
@@ -208,6 +216,8 @@ var calendar = null;
 		$('#calendar').FullCalendar('gotoDate', $('#att_month').val());
 	});
 
+	
+	
 	///캘린더에 나타내기
 // fullcalendar event source 생성
 var workMyEvents = [];
@@ -230,7 +240,7 @@ var vo;
 		vo = {
 				title : "휴가",
 				start : "${att.vaca_start}",
-				end   : "${att.vaca_end}",
+				end   : "${att.vaca_end} 23:59:59",
 				color : "rgb(242, 205, 220)"
 		}
 		workMyEvents.push(vo);
@@ -239,7 +249,7 @@ var vo;
 		vo = {
 				title : "휴가 결재중",
 				start : "${att.vaca_start}",
-				end   : "${att.vaca_end}",
+				end   : "${att.vaca_end} 23:59:59",
 				color : "rgb(224, 224, 224)",
 				textColor : "rgb(94, 94, 94)"
 		}
