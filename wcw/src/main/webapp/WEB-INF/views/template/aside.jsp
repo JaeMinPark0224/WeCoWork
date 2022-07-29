@@ -89,28 +89,6 @@
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">
 					<div class="left_menu_hr"></div>
-					<div class="left_menu_hr_title">Favorite</div>
-				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">즐겨찾기 페이지 폴더 이름<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-					</div>
-				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">즐겨찾기 페이지 폴더 이름2<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-						<div class="left_menu_2depth_content">즐겨찾기 페이지</div>
-					</div>
-				</div>
-			</div>
-			<div class="left_menu_wrap">
-				<div class="left_menu_title">
-					<div class="left_menu_hr"></div>
 					<div class="left_menu_hr_title">Notice</div>
 				</div>
 				<div class="left_menu_wrap_1depth">
@@ -307,9 +285,6 @@
 		}
 	});
 </script>
-<aside id="favorite_btn_aside">
-	<i class="fa-solid fa-star" id="favorite_btn"></i>
-</aside>
 <script>
 	$("#favorite_btn").on('mouseenter', function() {
 		$(this).css({
