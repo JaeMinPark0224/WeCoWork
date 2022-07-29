@@ -103,4 +103,9 @@ public class DraftDao {
 		
 		return result;
 	}
+	
+	// 기안 자동 부결용
+	public void draftAutoRejected() {
+		sqlsession.update("draftMapper.draftAutoRejected");
+	}
 }

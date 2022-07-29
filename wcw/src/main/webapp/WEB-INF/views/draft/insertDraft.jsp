@@ -55,21 +55,21 @@
 				                <table class="table" id="table1">
 				                    <tr>
 				                        <td class="first_td">기안 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title" maxlength="200"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">목적</td>
-				                        <td><input type="text" class="write_td" name="dr_purpose" id="dr_purpose"></td>
+				                        <td><input type="text" class="write_td" name="dr_purpose" id="dr_purpose" maxlength="200"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">기안 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content"  maxlength="330"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">비고</td>
-				                        <td><input type="text" class="write_td" name="dr_comment"></td>
+				                        <td><input type="text" class="write_td" name="dr_comment" maxlength="330"></td>
 				                    </tr>
 				                </table>
 				                <input type="submit" id="ok_btn1" value="상신" style="display: block;">
@@ -82,21 +82,21 @@
 		        				<table class="table" id="table2">
 				                    <tr>
 				                        <td class="first_td">결의서 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title"  id="dr_title1"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title1"  maxlength="200"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">지출 예정 일자</td>
-				                        <td><input type="text" class="write_td" name="dr_expect_date" id="dr_expect_date"></td>
+				                        <td><input type="text" class="write_td" name="dr_expect_date" id="dr_expect_date"  maxlength="200"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">결의서 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content1"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content1"  maxlength="330"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">비고</td>
-				                        <td><input type="text" class="write_td" name="dr_comment"></td>
+				                        <td><input type="text" class="write_td" name="dr_comment" maxlength="330"></td>
 				                    </tr>
 				                </table>
 				                <input type="submit" id="ok_btn2" value="상신">
@@ -109,20 +109,20 @@
 		        				<table class="table" id="table3">
 				                    <tr>
 				                        <td class="first_td">정산서 제목</td>
-				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title2"></td>
+				                        <td><input type="text" class="write_td" name="dr_title" id="dr_title2" maxlength="200"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">발생 기간</td>
-				                        <td><input type="text" class="write_td" name="spend_date" id="spend_date"></td>
+				                        <td><input type="text" class="write_td" name="spend_date" id="spend_date" maxlength="30"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">지출 목적</td>
-				                        <td><input type="text" class="write_td" name="spend_purpose"  id="spend_purpose"></td>
+				                        <td><input type="text" class="write_td" name="spend_purpose" id="spend_purpose"  maxlength="330"></td>
 				                    </tr>
 				                    <tr>
 				                        <td class="first_td">상세 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content" id="dr_content2"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content" id="dr_content2" maxlength="330"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -136,13 +136,13 @@
 				                                </tr>
 				                                <tr class="second_tr">
 				                                    <td class="first_td_scd">법인 카드</td>
-				                                    <td><input type="text" class="card_content" name="spend_content"></td>
-				                                    <td><input type="number" class="card_won" id="cp_card" name="spend_amount" min="0" value="0" required></td>
+				                                    <td><input type="text" class="card_content" name="spend_content" maxlength="50"></td>
+				                                    <td><input type="number" class="card_won" id="cp_card" name="spend_amount" min="0" value="0" required  max="9999999999"></td>
 				                                </tr>
 				                                <tr class="second_tr">
 				                                    <td class="first_td_scd">개인 카드</td>
-				                                    <td><input type="text" class="card_content" name="spend_content_prvt"></td>
-				                                    <td><input type="number" class="card_won" id="ep_card" name="spend_amount_prvt" min="0"  value="0" required></td>
+				                                    <td><input type="text" class="card_content" name="spend_content_prvt" maxlength="50"></td>
+				                                    <td><input type="number" class="card_won" id="ep_card" name="spend_amount_prvt" min="0"  value="0" required  max="9999999999"></td>
 				                                </tr>
 				                                <tr class="second_tr">
 				                                    <td class="first_td_scd">합계</td>
