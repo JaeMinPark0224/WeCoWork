@@ -66,7 +66,7 @@ $('#edit_btn').click(function(){
 
 // 확인 버튼 클릭 시
 $('#ok_btn').click(function(){
-	window.history.back();
+	location.href="<%= request.getContextPath() %>/hr/notice/list";
 })
 </script>
 </body>

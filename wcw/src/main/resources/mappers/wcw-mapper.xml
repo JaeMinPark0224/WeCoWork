@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wcwMapper">
+
+<!-- 로그인 기능 -->
+<select id="selectLogin" parameterType="Wcw" resultType="Wcw">
+	select id, pwd
+	from wcw
+	where id=#{id} and pwd=#{pwd}
+</select>
+
+<!-- 모든 회사 정보 -->
+<select id="selectCompanyList" resultType="Company">
+	select cp_no, cp_name, cp_url, cp_date, cp_join_name, cp_join_email, cp_join_phone, cp_appr_yn
+	from tb_company
+	order by cp_date
+</select>
+
+<!-- 회사 업데이트 (가입 승인 및 반려 처리) -->
+<update id="updateCompany" parameterType="hashmap">
+	update tb_company
+	<if test="type == 1">
+		set cp_appr_yn = 'Y'
+	</if>
+	<if test="type == 2">
+		set cp_appr_yn = 'N'
+	</if>
+	where cp_no = #{cp_no}
+</update>
+
+</mapper>

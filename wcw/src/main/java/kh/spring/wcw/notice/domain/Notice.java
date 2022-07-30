@@ -2,6 +2,9 @@ package kh.spring.wcw.notice.domain;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Notice {
 //	NT_NO	NUMBER	
 //	CP_NO	NUMBER	

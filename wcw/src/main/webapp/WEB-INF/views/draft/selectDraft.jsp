@@ -256,7 +256,7 @@
 <script>
 // 확인 버튼 클릭 시
 $('#ok_btn').click(function(){
-	window.history.back();
+	location.href="<%= request.getContextPath() %>/draft/list";
 })
 
 // 삭제 버튼 클릭 시
@@ -282,16 +282,10 @@ $('#accept_btn').click(function(){
 
 // 반려 버튼 클릭 시
 $('#return_btn').click(function(){
-	if(${empty loginSSInfo.sign}){
-		alert("서명 등록 후 기안 결재를 진행해 주세요.");
-		location.href="<%= request.getContextPath() %>/mypage";
-		return;
-	} else {
 		var num = 2;
 		var dr_no = ${draft[0].dr_no};
 		var dr_sort = ${draft[0].dr_sort};
 		location.href="<%= request.getContextPath() %>/draft/update?dr_sort="+dr_sort+"&dr_no="+dr_no+"&num="+num;	
-	}
 })
 </script>
 </body>

@@ -264,22 +264,19 @@ $('#modal_cancel').click(function(){
 
 // 모달 내 수정 버튼 클릭 시
 var chkDeptName = false;
-    
-	// 부서명 유효성 체크
-	$("#d_name").focusout(function(){
-		var nameVal = $("#d_name").val();
-		var name = /^[가-힣]{2,10}$/;
-		    		
-		   if(!name.test(nameVal)){
-			  chkDeptName = false;
-		   } else {
-			  chkDeptName = true;
-		   }
-	});
 	
 $('#modal_edit').click(function(){
-	console.log(chkDeptName);
 	
+	// 부서명 유효성 체크
+	var nameVal = $("#d_name").val();
+	var name = /^[가-힣]{2,10}$/;
+		    		
+	if(!name.test(nameVal)){
+		chkDeptName = false;
+	} else {
+		chkDeptName = true;
+	}
+
 	if(chkDeptName == false) {
 		alert("부서명을 형식에 맞게 입력해 주세요. (한글 2~10자)");
 		return;

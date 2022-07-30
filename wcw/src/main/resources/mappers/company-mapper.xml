@@ -3,7 +3,7 @@
 <mapper namespace="companyMapper">
 
 <select id="selectCompany" parameterType="hashmap" resultType="Company">
-	select cp_name, cp_no
+	select cp_name, cp_no, cp_appr_yn
 	from tb_company
 	where cp_join_email=#{email} and cp_pwd=#{pwd}
 </select>

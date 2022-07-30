@@ -15,6 +15,7 @@
 		<typeAlias type="kh.spring.wcw.vacation.domain.Vacation" alias="Vacation"/>
 		<typeAlias type="kh.spring.wcw.dept.domain.Dept" alias="Dept"/>
 		<typeAlias type="kh.spring.wcw.draft.domain.Draft" alias="Draft"/>
+		<typeAlias type="kh.spring.wcw.wcw.domain.Wcw" alias="Wcw"/>
 	</typeAliases>
 	
 	<mappers>
@@ -29,6 +30,7 @@
 		<mapper resource="mappers/chat-mapper.xml"/>
 		<mapper resource="mappers/draft-mapper.xml"/>
 		<mapper resource="mappers/pi-mapper.xml"/>
+		<mapper resource="mappers/wcw-mapper.xml"/>
 	</mappers>
 	
 	
