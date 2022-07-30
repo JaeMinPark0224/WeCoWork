@@ -222,7 +222,7 @@
         </div>
         <div id="buttons">
             <!-- 삭제 버튼 -->
-            <c:if test="${draft[0].name_a == loginSSInfo.name && draft[0].appr_result == 3}">
+            <c:if test="${draft[0].name_a == loginSSInfo.name && (draft[0].appr_result == 3 || draft[0].dr_result == 3)}">
             	<input type="button" value="삭제" id="del_btn" class="btn">
             </c:if>
             
@@ -256,7 +256,8 @@
 <script>
 // 확인 버튼 클릭 시
 $('#ok_btn').click(function(){
-	location.href="<%= request.getContextPath() %>/draft/list";
+	window.history.back();
+	<%-- location.href="<%= request.getContextPath() %>/draft/list"; --%>
 })
 
 // 삭제 버튼 클릭 시

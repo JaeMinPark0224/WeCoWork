@@ -15,17 +15,17 @@ public class WcwService {
 	@Autowired
 	private WcwDao wcwdao;
 	
-	// ·Î±×ÀÎ ±â´É
+	// ë¡œê·¸ì¸ ê¸°ëŠ¥
 	public Wcw selectLogin(Wcw wcw) {
 		return wcwdao.selectLogin(wcw);
 	}
 	
-	// ¸ğµç È¸»ç Á¤º¸
+	// ëª¨ë“  íšŒì‚¬ ì •ë³´
 	public List<Company> selectCompanyList(){
 		return wcwdao.selectCompanyList();
 	}
 	
-	// È¸»ç ¾÷µ¥ÀÌÆ® (°¡ÀÔ ½ÂÀÎ ¹× ¹İ·Á Ã³¸®)
+	// íšŒì‚¬ ì—…ë°ì´íŠ¸ (ê°€ì… ìŠ¹ì¸ ë° ë°˜ë ¤ ì²˜ë¦¬)
 	public int updateCompany(String cp_no, String type){
 		return wcwdao.updateCompany(cp_no, type);
 	}

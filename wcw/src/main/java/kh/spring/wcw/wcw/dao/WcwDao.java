@@ -16,17 +16,17 @@ public class WcwDao {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	// ·Î±×ÀÎ ±â´É
+	// ë¡œê·¸ì¸ ê¸°ëŠ¥
 	public Wcw selectLogin(Wcw wcw) {
 		return sqlsession.selectOne("wcwMapper.selectLogin", wcw);
 	}
 	
-	// ¸ğµç È¸»ç Á¤º¸
+	// ëª¨ë“  íšŒì‚¬ ì •ë³´
 	public List<Company> selectCompanyList(){
 		return sqlsession.selectList("wcwMapper.selectCompanyList");
 	}
 	
-	// È¸»ç ¾÷µ¥ÀÌÆ® (°¡ÀÔ ½ÂÀÎ ¹× ¹İ·Á Ã³¸®)
+	// íšŒì‚¬ ì—…ë°ì´íŠ¸ (ê°€ì… ìŠ¹ì¸ ë° ë°˜ë ¤ ì²˜ë¦¬)
 	public int updateCompany(String cp_no, String type) {
 		Integer.parseInt(type);
 		HashMap<String, Object> map = new HashMap<String, Object>();

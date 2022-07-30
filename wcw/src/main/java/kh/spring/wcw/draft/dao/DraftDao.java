@@ -116,6 +116,14 @@ public class DraftDao {
 	
 	// 기안 자동 부결용
 	public void draftAutoRejected() {
-		sqlsession.update("draftMapper.draftAutoRejected");
+		// draft 테이블 업데이트
+		int result = -1;
+		result = sqlsession.update("draftMapper.draftAutoRejected1");
+		
+		int result2 = -1;
+		// approval 테이블 업데이트
+		result2 = sqlsession.update("draftMapper.draftAutoRejected2");
+		
+		System.out.println("스케줄러 결과 - 기안 업데이트: " + result + "건, 결재자 업데이트: " + result2 + "건");
 	}
 }

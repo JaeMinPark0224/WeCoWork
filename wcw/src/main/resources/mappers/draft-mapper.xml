@@ -302,5 +302,22 @@
    	where dr_no = #{dr_no}
 </update>
 
+<!-- 기안 자동 부결 : tb_draft (스케줄러) -->
+<update id="draftAutoRejected1">
+	update tb_draft
+	set dr_result = 3
+	where to_char(dr_due_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD') and (dr_result = 1 or dr_result = 5)
+</update>
+<!-- 결재자 결재 여부 숨김 : tb_approval (스케줄러) -->
+<update id="draftAutoRejected2">
+	update tb_approval a1
+	set appr_result = 4
+	where a1.dr_no = (select dr_no 
+                	  from tb_draft
+                	  where (to_char(dr_due_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')) 
+                			and (dr_result = 3)
+                	 )
+          and (a1.appr_result = 3)
+</update>
 
 </mapper>
