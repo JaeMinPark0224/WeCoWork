@@ -64,7 +64,7 @@
 				                    <tr>
 				                        <td class="first_td">기안 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content"  maxlength="470"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content"  maxlength="480"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -91,7 +91,7 @@
 				                    <tr>
 				                        <td class="first_td">결의서 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content1"  maxlength="470"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content"  id="dr_content1"  maxlength="480"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>
@@ -122,7 +122,7 @@
 				                    <tr>
 				                        <td class="first_td">상세 내용</td>
 				                        <td class="first_td_textarea">
-				                        	<textarea class="textarea" class="write_td" name="dr_content" id="dr_content2" maxlength="470"></textarea>
+				                        	<textarea class="textarea" class="write_td" name="dr_content" id="dr_content2" maxlength="480"></textarea>
 				                        </td>
 				                    </tr>
 				                    <tr>

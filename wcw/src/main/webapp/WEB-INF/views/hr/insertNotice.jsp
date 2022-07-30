@@ -26,9 +26,9 @@
         <div id="content">
             <div id="input">
                 <p class="content_txt">공지사항 제목</p>
-                <input type="text" id="noti_title" name="nt_title" maxlength="100" placeholder=" 공지사항 제목을 입력하세요." required>
+                <input type="text" id="noti_title" name="nt_title" maxlength="30" placeholder=" 공지사항 제목을 입력하세요." required>
                 <p class="content_txt">공지사항 내용</p>
-                <textarea id="noti_content" name="nt_content" maxlength="300" placeholder=" 공지사항 내용을 입력하세요." required></textarea>
+                <textarea id="noti_content" name="nt_content" maxlength="370" placeholder=" 공지사항 내용을 입력하세요." required></textarea>
             </div>
             <input type="submit" id="ok_btn" value="등록">
         </div>

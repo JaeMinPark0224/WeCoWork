@@ -199,6 +199,10 @@ public class DraftContoller {
 		
 		draft.setEp_no(ep_no);
 		
+		// 기안 내용 줄바꿈처리
+		String content = ((String)draft.getDr_content()).replace("\r\n","<br>");
+		draft.setDr_content(content);
+		
 		// 기안 insert하러 가기
 		draftService.insertDraft(draft);
 		

@@ -530,6 +530,9 @@ public class HrController {
 			
 		int currentPage = 1; // 현재 페이지
 		int cotentLimit = 25; // 한 페이지에 보여질 직원 정보 갯수
+		int pageBlock = 5;
+		int startPage = 1;
+		int endPage = 1;
 			
 		String currentPageStr = page;
 		try {
@@ -557,14 +560,27 @@ public class HrController {
 				}
 				System.out.println("회사 번호: " + cp_no);
 		
+		// 사이즈 측정용 공지사항 리스트
+		List <Notice> ListSize = hrService.selectNoticeForSize(cp_no);
+		
+		int totalCnt = 0;
+		totalCnt = ListSize.size();
+		
+		int totalPageCnt = (totalCnt / cotentLimit) + (totalCnt % cotentLimit == 0 ? 0 : 1);
+		if (currentPage % pageBlock == 0) {
+			startPage = ((currentPage / pageBlock) - 1) * pageBlock + 1;
+		} else {
+			startPage = (currentPage / pageBlock) * pageBlock + 1;
+		}
+		endPage = startPage + pageBlock - 1;
+		if (endPage > totalPageCnt) {
+			endPage = totalPageCnt;
+		}
+		
 		// 회사가 가진 공지사항 리스트 가져오기
 		List <Notice> noticeList = hrService.selectListNotice(cp_no, rowBounds);
 		
-		int totalpageCnt = noticeList.size()/cotentLimit + 1;
-		int startPage = currentPage - (((currentPage % 5) == 0)?4:((currentPage % 5)-1)); 
-		int endPage = ((startPage + 4) > totalpageCnt)?totalpageCnt:(startPage + 4);
-		
-		mv.addObject("totalpageCnt", totalpageCnt);
+		mv.addObject("totalPageCnt", totalPageCnt);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);
 		mv.addObject("noticeList", noticeList);
@@ -603,6 +619,11 @@ public class HrController {
 		System.out.println("회사 번호: " + cp_no);
 		notice.setCp_no(cp_no);
 		
+		// 공지사항 내용 줄바꿈처리
+		String content = ((String)notice.getNt_content()).replace("\r\n","<br>");
+		notice.setNt_content(content);
+		
+		// 공지 insert
 		int result = hrService.insertNotice(notice);
 		
 		if(result != 1) {

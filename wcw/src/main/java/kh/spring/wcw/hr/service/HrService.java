@@ -121,6 +121,13 @@ public interface HrService {
 	public int updateDepartment(int cp_no, String dept_name, int emp_no, String dept_upper_name, String active_yn, int dept_no);
 	
 	/**
+	 * @param 회사 번호
+	 * @return 회사 공지사항 리스트 (사이즈 측정용)
+	 * @author ybseo
+	 */
+	public List<Notice> selectNoticeForSize(int cp_no);
+	
+	/**
 	 * @param 회사 번호, RowBounds
 	 * @return 회사 공지사항 리스트 (작성일 순)
 	 * @author ybseo

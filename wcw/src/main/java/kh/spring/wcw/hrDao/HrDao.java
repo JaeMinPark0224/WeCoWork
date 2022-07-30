@@ -146,6 +146,11 @@ public class HrDao {
 		return sqlsession.update("hrMapper.updateDepartment", map);
 	}
 	
+	// 공자 리스트 사이즈 측정용
+	public List<Notice> selectNoticeForSize(int cp_no){
+		return sqlsession.selectList("hrMapper.selectNoticeForSize", cp_no);
+	}
+	
 	// 공지사항 리스트
 	public List<Notice> selectListNotice(int cp_no, RowBounds rowBounds) {
 		return sqlsession.selectList("hrMapper.selectListNotice", cp_no, rowBounds);

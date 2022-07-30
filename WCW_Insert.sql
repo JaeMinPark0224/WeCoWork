@@ -1,3 +1,7 @@
+INSERT INTO WCW
+    (ID, PWD)
+    VALUES
+    ('wcw001' , 'dkfudgktpdus123');
 
 INSERT INTO TB_COMPANY
     (CP_NO, CP_NAME, CP_URL, CP_DATE

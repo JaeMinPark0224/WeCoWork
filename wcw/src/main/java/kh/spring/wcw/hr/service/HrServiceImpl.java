@@ -110,6 +110,12 @@ public class HrServiceImpl implements HrService {
 		return dao.updateDepartment(cp_no, dept_name, emp_no, dept_upper_name, active_yn, dept_no);
 	}
 	
+	// 공지사항 사이즈 측정용
+	@Override
+	public List<Notice> selectNoticeForSize(int cp_no){
+		return dao.selectNoticeForSize(cp_no);
+	}
+	
 	// 공지사항 리스트
 	@Override
 	public List<Notice> selectListNotice(int cp_no, RowBounds rowBounds) {
