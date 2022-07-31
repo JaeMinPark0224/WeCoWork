@@ -251,6 +251,10 @@ public class HrDao {
 	public List<Employee> selectEmp(int cp_no) {
 		return sqlsession.selectList("hrMapper.selectEmp", cp_no);
 	}
+	// 회사번호 선택
+	public String selectCpJoinDate(int cp_no) {
+		return sqlsession.selectOne("hrMapper.selectCpJoinDate", cp_no);
+	}
 	
 	//휴가내역 조회
 	public List<Vacation> selectVacation(Vacation vacation) {
@@ -266,4 +270,5 @@ public class HrDao {
 	public List<Attendance> selectMonthlyAttendance(Attendance attendance){
 		return sqlsession.selectList("hrMapper.selectMonthlyAttendance", attendance);
 	}
+	
 }

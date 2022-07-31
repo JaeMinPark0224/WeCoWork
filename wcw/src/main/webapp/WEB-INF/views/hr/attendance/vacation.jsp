@@ -314,8 +314,8 @@
 </section>
 <script>
 	
-/* 입사년도 부터 지금년도까지 셀렉박스에 추가 */	
-	var joinYear = '${loginSSInfo.join_date}'.substr(0,4);
+/* 회사 가입년도 부터 지금년도까지 셀렉박스에 추가 */	
+	var joinYear = '${cp_date}'.substr(0,4);
 	var currentYear = (new Date()).getFullYear();
 	for(var i = currentYear; i >= Number(joinYear); i--) {
 		$('#year_select').append('<option value="'+i+'">'+i+'년</option>');
@@ -323,6 +323,10 @@
 
 /* 휴가 내역 조회 */
 $(vaca_list_search_btn).click(function(){
+	if($("#year_select").val() == ""){
+		alert("기준년도를 선택해주세요") ;
+		return;
+	}
 		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/hr/attendance/vacation/select",
@@ -419,7 +423,7 @@ $(vaca_list_search_btn).click(function(){
 				});
 			},
 			error: function(error){
-				alert("요청 실패") ;
+				alert("휴가신청내역 조회에 실패했습니다.") ;
 			}
 		});
 	});	

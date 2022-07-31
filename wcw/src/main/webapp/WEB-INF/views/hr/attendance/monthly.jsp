@@ -247,6 +247,10 @@
 
 	$("#att_date_search_btn").click(searchBtnFnc);
 	function searchBtnFnc() {
+		if($("#att_month").val() == "" ){
+			alert("기준년월을 선택해주세요") ;
+			return;
+		}
 		if($("#att_month").val() == '') {
 			alert("기준 년월을 선택하세요.");
 			return;
@@ -291,7 +295,7 @@
 				} */
 			},
 			error : function(error) {
-				alert(error);
+				alert("월간근태 조회에 실패했습니다.");
 			}
 		});
 		

@@ -162,6 +162,10 @@
 </section>
 <script>
 $("#att_appr_date_search_btn").click(function(){
+	if($("#att_date_start").val() == "" || $("#att_date_end").val() == ""){
+		alert("근무일자를 모두 선택해주세요") ;
+		return;
+	}
 	$(".table_title").eq(0).nextAll().remove();
 	$.ajax({
 		url: "<%=request.getContextPath()%>/hr/attendance/approval/select",
@@ -200,7 +204,7 @@ $("#att_appr_date_search_btn").click(function(){
 			}
 		},
 		error: function(error){
-			alert(error); 
+			alert("근태조정 요청에 실패했습니다."); 
 		}
 	});
 });
@@ -227,6 +231,18 @@ function selectOptionAdd($dom, name, value) {
 <c:forEach items="${deptList}" var="dept">
 	selectOptionAdd($("#dept_name"), "${dept.dept_name}");
 </c:forEach>
+
+
+////////////날짜 유효성 ////////////
+//start input -> end min
+$("#att_date_start").on("input", function() {
+	$("#att_date_end").attr("min", $("#att_date_start").val());
+});
+
+// end input -> start max
+$("#att_date_end").on("input", function() {
+	$("#att_date_start").attr("max", $("#att_date_end").val());
+});
 
 </script>
 </body>

@@ -227,5 +227,10 @@ public interface HrService {
 	 */
 	public List<Attendance> selectMonthlyAttendance(Attendance attendance);
 	
-	
+	/**
+	 * @param 회사 번호
+	 * @return 회사 가입일
+	 * @author Jinjeong Lee
+	 */
+	public String selectCpJoinDate(int cp_no);
 }

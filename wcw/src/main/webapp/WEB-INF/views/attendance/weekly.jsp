@@ -245,6 +245,10 @@
 	}
 	
 	$("#att_date_search_btn").click(function(){
+		if($('#att_month').val() == "") {
+			alert("기준년월을 선택해주세요") ;
+			return;
+		}
 		$(".table_title").nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/attendance/selectWeekly",
@@ -285,8 +289,8 @@
                		html += '</td>';
                     html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
                     html += '</tr>';
-                    $('#att_appr_date_search_table').append(html);
 				}
+                    $('#att_appr_date_search_table').append(html);
 				html = "";
 				html += '<tr class="table_content_white">';
                 html += '<td >'+'${loginSSInfo.emp_no}'+'</td>';
@@ -322,7 +326,7 @@
                	myChart1.update();
 			},
 			error: function(error){
-				alert(error); 
+				alert("주간근태 조회에 실패했습니다.") ;
 			}
 		});
 	});

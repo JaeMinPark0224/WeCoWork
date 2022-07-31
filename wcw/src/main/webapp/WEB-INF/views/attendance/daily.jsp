@@ -156,7 +156,7 @@
 					<div class="attendance_main_box_content">
 						<div id="search_date_range">
 							<div class="font_title">근무일자</div>
-							<input type="date" class="att_date_form" id="att_date_start" name="att_date_start">
+							<input type="date" class="att_date_form" id="att_date_start" name="att_date_start" >
 							<div class="font_content">~</div>
 							<input type="date" class="att_date_form" id="att_date_end" name="att_date_end">
 							<button type="submit" class="btn_format_mini_gray" id="att_date_search_btn">조회</button>
@@ -240,28 +240,38 @@
 			url: "<%=request.getContextPath()%>/attendance/insert",
 			type: "post",
 			success: function(result){
-				alert(result);
+				alert("출근이 완료되었습니다.");
+				location.reload();
 			},
 			error: function(error){
-				alert("이미 출근 하셨습니다.") ;
+				alert("출근에 실패했습니다. 이미 출근처리가 되었는지 확인해주세요.") ;
 			}
 		});
 	});
 	
 	$("#btn_clock_out").click(function(){
+		if("${lastlist.att_clock_out}" != "" && "${lastlist.ip_clock_out}" != ""){
+			alert("퇴근 정보가 이미 존재합니다. 금일 출근이 완료되었는지 확인해주세요.") ;
+			return;
+		}
 		$.ajax({
 			url: "<%=request.getContextPath()%>/attendance/update",
 			type: "post",
 			success: function(result){
-				alert(result);
+				alert("퇴근이 완료되었습니다.");
+				location.reload();
 			},
 			error: function(error){
-				alert(error) ;
+				alert("퇴근 처리에 실패했습니다.") ;
 			}
 		});
 	});
 	
 	$("#att_date_search_btn").click(function(){
+		if($("#att_date_start").val() == "" || $("#att_date_end").val() == ""){
+			alert("근무일자를 모두 선택해주세요") ;
+			return;
+		}
 		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/attendance/select",
@@ -300,12 +310,17 @@
 				}
 			},
 			error: function(error){
-				alert(error); 
+				alert("근태정보 조회에 실패했습니다.") ;
 			}
 		});
 	});
 	
 	$(attendance_modify_submit_btn).click(function(){
+		if($("#att_appr_req_date").val() == "" || $("#att_appr_clock_in").val() == "" || $("#att_appr_clock_out").val() == "" || $("#att_modify_reason_text").val() == ""){
+			alert("조정 근무 일자, 조정 출근 시간, 조정 퇴근시간, 조정사유를 모두 입력해주세요");
+			return;
+		}
+		
 		$.ajax({
 			url: "<%=request.getContextPath()%>/attendance/approval/insert",
 			type: "post",
@@ -316,19 +331,23 @@
 			},
 			
 			success: function(result){
-				alert("요청이 완료되었습니다. result = " + result);
+				alert("요청이 완료되었습니다.");
 				$('#att_appr_req_date').val('');
 				$('#att_appr_clock_in').val('');
 				$('#att_appr_clock_out').val('');
 				$('#att_modify_reason_text').val('');
 			},
 			error: function(error){
-				alert("요청 실패") ;
+				alert("근태조정 요청에 실패했습니다.") ;
 			}
 		});
 	});
 	
 	$("#att_appr_date_search_btn").click(function(){
+		if($("#att_appr_date_start").val() == "" || $("#att_appr_date_end").val() == ""){
+			alert("근무일자를 모두 선택해주세요") ;
+			return;
+		}
 		$(".table_title").eq(1).nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/attendance/approval/select",
@@ -364,7 +383,7 @@
 				}
 			},
 			error: function(error){
-				alert(error); 
+				alert("근태조정 신청내역 조회에 실패했습니다.") ;
 			}
 		});
 	});
@@ -411,6 +430,44 @@ function init() {
 
 init();
 
+
+</script>
+<script>
+var today = new Date();
+var today_year = today.getFullYear();
+var today_month = today.getMonth();
+today_month = ((today_month+1) < 10) ? '0'+(today_month+1) : (today_month+1);
+var today_clockDate = today.getDate();
+today_clockDate = (today_clockDate < 10) ? '0'+today_clockDate : today_clockDate;
+
+//start input -> end min
+$("#att_date_start").on("input", function() {
+	$("#att_date_end").attr("min", $("#att_date_start").val());
+});
+
+// end input -> start max
+$("#att_date_end").on("input", function() {
+	$("#att_date_start").attr("max", $("#att_date_end").val());
+});
+
+//start input -> end min
+$("#att_appr_date_start").on("input", function() {
+	$("#att_appr_date_end").attr("min", $("#att_appr_date_start").val());
+});
+
+// end input -> start max
+$("#att_appr_date_end").on("input", function() {
+	$("#att_appr_date_start").attr("max", $("#att_appr_date_end").val());
+});
+
+/* ///////퇴근 버튼 비활성화 //////////
+$(document).ready(function(){
+	console.log(${lastlist.att_clock_out});
+	console.log("${lastlist.att_clock_out}");
+	if("${lastlist.att_clock_out}" != null && "${lastlist.ip_clock_out}" != null){
+		$("#btn_clock_out").attr('disabled', true);
+	}
+}); */
 
 </script>
 </body>

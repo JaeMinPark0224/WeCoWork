@@ -219,6 +219,11 @@ public class HrServiceImpl implements HrService {
 	public List<Attendance> selectMonthlyAttendance(Attendance attendance) {
 		return dao.selectMonthlyAttendance(attendance);
 	}
+
+	@Override
+	public String selectCpJoinDate(int cp_no) {
+		return dao.selectCpJoinDate(cp_no);
+	}
 	
 	
 }

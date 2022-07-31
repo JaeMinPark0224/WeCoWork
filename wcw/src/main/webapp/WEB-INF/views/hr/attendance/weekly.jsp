@@ -158,9 +158,9 @@
 		<div id="attendance_main_container">
 			<div id="attendance_main_box_first_hr">
 				<div class="font_title" id="att_month_text">기준 년월</div>
-				<input type="month" id="att_month" name="att_month" class="att_date_form">
+				<input type="month" id="att_month" name="att_month" class="att_date_form" required autofocus>
 				<div class="font_title">주차</div>
-				<select name="week" id="week_select">
+				<select name="week" id="week_select" required="required">
 				   	<option value="1">1주차</option>
 				    <option value="2">2주차</option>
 				    <option value="3">3주차</option>
@@ -202,27 +202,6 @@
 				</div>
 			</div>
 			
-			<div class="attendance_main_box">
-				<div class="attendance_main_box_top">
-					<div class="attendance_main_box_title">주간 근태 내역</div>
-				</div>
-				<div class="attendance_main_box_container">
-					<div class="attendance_main_box_content">
-						<table class="attendance_main_box_content_table" id="att_appr_date_search_table">
-							<tr class="table_title">
-								<td style="width: 11%">요일</td>
-								<td style="width: 15%">날짜</td>
-								<td style="width: 17%">근무시간</td>
-								<td style="width: 21%">출근 시간</td>
-								<td style="width: 21%">퇴근 시간</td>
-								<td style="width: 15%">연장 근로 시간</td>
-							</tr>
-							
-						</table>
-						
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>
@@ -273,6 +252,10 @@
 	}
 	
 	$("#att_date_search_btn").click(function(){
+		if($("#att_month").val() == "" || $("#week_select").val() == ""){
+			alert("기준년월과 주차를 선택해주세요") ;
+			return;
+		}
 		$(".table_title").nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/hr/attendance/selectWeekly",
@@ -285,40 +268,20 @@
 			} ,
 			dataType:"json",
 			success: function(result){
-				console.log(result);
-				var day = ['일', '월', '화', '수', '목', '금', '토'];
+				addWeeklyData(result);
+				/* console.log(result);
 				var html;
 				var extendtime = 144000000;
 				var worktimetotal = 0;
 				for(var i = 0; i < result.length; i++){
 					var vo = result[i];
+					console.log(vo);
 					if(vo.att_clock_out != null) {
 						var worktimedaily = new Date(vo.att_clock_out).getTime()-new Date(vo.att_clock_in).getTime(); 
 					} else {
 						worktimedaily = 0;
 					}
 					worktimetotal = worktimetotal + worktimedaily;  
-					html = "";
-					html += '<tr class="table_content_white">';
-                    html += '<td >'+day[new Date(vo.att_date).getDay()]+'</td>';
-                    html += '<td >'+vo.att_date.substr(0,10)+'</td>';
-                    if(vo.att_clock_out != null) {
-	                    html += '<td >'+ tohhmmss(worktimedaily)+'</td>';
-                    } else {
-                    	html += '<td >'+ '근무중'+'</td>';
-                    }
-                    html += '<td >'+vo.att_clock_in+'</td>';
-                    html += '<td >';
-                    if(vo.att_clock_out == null) {
-                    	html += "-";}
-                    else{
-                    	html += vo.att_clock_out;
-                    }
-               		html += '</td>';
-                    html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
-                    html += '</tr>';
-                    $('#att_appr_date_search_table').append(html);
-				}
 				html = "";
 				html += '<tr class="table_content_white">';
                 html += '<td >'+vo.emp_no+'</td>';
@@ -330,6 +293,7 @@
                 html += '<td >'+tohhmmss(worktimetotal/((result.length == 0)?1:result.length))+'</td>';
                 html += '</tr>';
                 $('#att_date_search_table').append(html);
+				}
                 
                	var worktimearray = [0, 0, 0, 0, 0, 0, 0];
                 for(var i = 0; i < 6; i++){
@@ -347,14 +311,52 @@
 	                	}
 	                	worktimearray[dayIndex-1] = worktimedaily; 
                 	}
-                }
+                } */
                
 			},
 			error: function(error){
-				alert(error); 
+				alert("주간근태 조회에 실패했습니다."); 
 			}
 		});
 	});
+	
+	function addWeeklyData(attData) {
+		console.log(attData);
+		let temp_emp_no = 0;
+		// 직원 한명당 행 하나씩 추가
+		for(var i = 0; i < attData.length; i++) {
+			if(temp_emp_no != attData[i].emp_no) {
+				$('#att_date_search_table').append('<tr class="table_content_white" emp_no="'+attData[i].emp_no+'"></tr>');
+				$(".table_content_white[emp_no = "+attData[i].emp_no+"]").append('<td >'+attData[i].emp_no+'</td>');
+				$(".table_content_white[emp_no = "+attData[i].emp_no+"]").append('<td >'+attData[i].name+'</td>');
+				$(".table_content_white[emp_no = "+attData[i].emp_no+"]").append('<td >'+attData[i].dept_name+'</td>');
+				$(".table_content_white[emp_no = "+attData[i].emp_no+"]").append('<td >0</td>');
+				$(".table_content_white[emp_no = "+attData[i].emp_no+"]").append('<td >40시간</td>');
+				$(".table_content_white[emp_no = "+attData[i].emp_no+"]").append('<td ></td>');
+				$(".table_content_white[emp_no = "+attData[i].emp_no+"]").append('<td ></td>');
+				temp_emp_no = attData[i].emp_no;
+			}
+		}
+		// 총 근로 시간 단위(ms)
+		for(var i = 0; i < attData.length; i++) {
+			let worktimedaily = new Date(attData[i].att_clock_out).getTime()-new Date(attData[i].att_clock_in).getTime();
+			worktimedaily = worktimedaily + parseInt($(".table_content_white[emp_no = "+attData[i].emp_no+"] td").eq(3).text());
+			$(".table_content_white[emp_no = "+attData[i].emp_no+"] td").eq(3).text(worktimedaily);
+		}
+		
+		for(var i = 0; i < $(".table_content_white").length; i++) {
+			let attCnt = attData.filter(item => item.emp_no == $(".table_content_white").eq(i).attr("emp_no")).length;
+			$(".table_content_white").eq(i).children('td').eq(5).text(tohhmmss(parseInt($(".table_content_white").eq(i).children('td').eq(3).text()) - 144000000));
+			$(".table_content_white").eq(i).children('td').eq(6).text(tohhmmss(parseInt($(".table_content_white").eq(i).children('td').eq(3).text())/attCnt));
+			$(".table_content_white").eq(i).children('td').eq(3).text(tohhmmss($(".table_content_white").eq(i).children('td').eq(3).text()));
+		}
+		
+        /* html += '<td >'+tohhmmss(worktimetotal)+'</td>';
+        html += '<td >'+'40시간'+'</td>';
+        html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
+        html += '<td >'+tohhmmss(worktimetotal/((result.length == 0)?1:result.length))+'</td>'; */
+	}
+	
 	// 숫자를 hh:mm:ss로 바꾸는 함수
 	function tohhmmss(num) {
 		var stringHMS = '';

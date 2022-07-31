@@ -945,9 +945,11 @@ public class HrController {
 		int cp_no = loginSSInfo.getCp_no();
 		List<Employee> empList = hrService.selectEmp(cp_no);
 		List<Employee> deptList = hrService.selectDept(cp_no);
+		String cp_date = hrService.selectCpJoinDate(cp_no);
 		
 		mv.addObject("deptList", deptList);
 		mv.addObject("empList", empList);
+		mv.addObject("cp_date", cp_date);
 		mv.setViewName("hr/attendance/vacation");
 		return mv;
 	}

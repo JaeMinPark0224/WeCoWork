@@ -452,4 +452,9 @@ and dept_name = #{dept_name}
 </if>    
 </select>
 
+<!-- 회사 가입일 가져오기.. -->
+<select id="selectCpJoinDate" parameterType="_int" resultType="string">
+	select cp_date from tb_company
+	where cp_no = #{cp_no} 
+</select>
 </mapper>

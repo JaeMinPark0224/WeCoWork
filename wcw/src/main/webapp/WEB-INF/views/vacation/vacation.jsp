@@ -266,6 +266,19 @@
 /* 휴가신청 ajax */
 
 	$(vacation_submit_btn).click(function(){
+		if($("#vacation_req_date").val() == "" 
+				|| $("#vacation_start").val() == "" 
+				|| $("#vacation_end").val() == ""
+				|| $("#vaca_select").val() == ""
+				|| $("#vaca_select_allday").val() == ""
+				|| $("#vacation_text").val() == ""){
+			alert("신청 일자, 휴가 구분, 휴가 기간, 전일/반일, 휴가사유를 모두 입력해주세요.") ;
+			return;
+		}
+		if($("#vacation_start").val() != $("#vacation_end").val() && $("#vaca_select_allday").val() != "1"){
+			alert("반일 휴가를 신청할 수 없습니다. 전일을 선택해주세요.") ;
+			return;
+		}
 		$.ajax({
 			url: "<%=request.getContextPath()%>/vacation/insert",
 			type: "post",
@@ -275,7 +288,6 @@
 				, vaca_select:$('#vaca_select').val()
 				, vaca_select_allday:$('#vaca_select_allday').val()
 				, vacation_text:$('#vacation_text').val()
-				, vaca_select_allday:$('#vaca_select_allday').val()
 			},
 			
 			success: function(result){
@@ -291,14 +303,11 @@
 		});
 	});
 		
-	var joinYear = '${loginSSInfo.join_date}'.substr(0,4);
-	joinYear = 2017;
-	var currentYear = (new Date()).getFullYear();
-	for(var i = currentYear; i >= Number(joinYear); i--) {
-		$('#year_select').append('<option value="'+i+'">'+i+'년</option>');
-	}
-	
 	$("#vaca_list_search_btn").click(function(){
+		if($("#year_select").val() == ""){
+			alert("기준년도를 선택해주세요") ;
+			return;
+		}
 		$(".table_title").eq(0).nextAll().remove();
 		$.ajax({
 			url: "<%=request.getContextPath()%>/vacation/select",
@@ -359,10 +368,39 @@
 				}
 			},
 			error: function(error){
-				alert("요청 실패") ;
+				alert("휴가신청내역 조회에 실패했습니다.") ;
 			}
 		});
 	});
+	
+/* 입사년도 부터 지금년도까지 셀렉박스에 추가 */	
+	var joinYear = '${loginSSInfo.join_date}'.substr(0,4);
+	var currentYear = (new Date()).getFullYear();
+	for(var i = currentYear; i >= Number(joinYear); i--) {
+		$('#year_select').append('<option value="'+i+'">'+i+'년</option>');
+	}
+
+////////////날짜선택 유효성 /////////////
+var today = new Date();
+var today_year = today.getFullYear();
+var today_month = today.getMonth();
+today_month = ((today_month+1) < 10) ? '0'+(today_month+1) : (today_month+1);
+var today_clockDate = today.getDate();
+today_clockDate = (today_clockDate < 10) ? '0'+today_clockDate : today_clockDate;
+//신청일자 오늘부터
+$("#vacation_req_date").on("click", function() {
+	$("#vacation_req_date").attr("min", today_year+'-'+today_month+'-'+today_clockDate);
+});
+//휴가기간
+$("#vacation_req_date").on("input", function() {
+	$("#vacation_start").attr("min",$("#vacation_req_date").val());
+});
+$("#vacation_start").on("input", function() {
+	$("#vacation_end").attr("min", $("#vacation_start").val());
+});
+$("#vacation_end").on("input", function() {
+	$("#vacation_start").attr("max", $("#vacation_end").val());
+});
 
 </script>
 </body>
