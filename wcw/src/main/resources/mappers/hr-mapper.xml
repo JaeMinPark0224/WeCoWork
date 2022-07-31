@@ -77,7 +77,7 @@
 	d.dept_upper_no,
 	(select dept_name from tb_department where d.dept_upper_no = dept_no) dept_upper_name
     from tb_department d join tb_department d2 on d.dept_no = d2.dept_no
-	where d.cp_no = 1
+	where d.cp_no = #{cp_no}
     group by d.dept_name, d.dept_no, d.dept_date, d.active_yn, d.emp_no, d.dept_upper_no
 	order by d.dept_no
 </select>
