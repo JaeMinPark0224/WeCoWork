@@ -234,9 +234,16 @@ public class HrDao {
 	public List<Attendance> selectAttendance(Attendance attendance){
 		return sqlsession.selectList("hrMapper.selectAttendance", attendance);
 	}
-	
+	// 근태조정신청 조회
 	public List<Attendance> selectApprovalAttendance(Attendance attendance){
 		return sqlsession.selectList("hrMapper.selectApprovalAttendance", attendance);
+	}
+	//근태조정 신청 결재
+	public int updateApprovalAttendance(Attendance attendance) {
+		return sqlsession.update("hrMapper.updateApprovalAttendance", attendance);
+	}
+	public int updateAttendance(Attendance attendance) {
+		return sqlsession.update("hrMapper.updateAttendance", attendance);
 	}
 	
 	//주간근태조회

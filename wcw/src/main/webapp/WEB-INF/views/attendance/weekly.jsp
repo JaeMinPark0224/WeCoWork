@@ -289,8 +289,8 @@
                		html += '</td>';
                     html += '<td >'+tohhmmss(worktimetotal - extendtime)+'</td>';
                     html += '</tr>';
-				}
                     $('#att_appr_date_search_table').append(html);
+				}
 				html = "";
 				html += '<tr class="table_content_white">';
                 html += '<td >'+'${loginSSInfo.emp_no}'+'</td>';

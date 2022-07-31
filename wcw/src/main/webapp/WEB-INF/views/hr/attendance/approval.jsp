@@ -109,6 +109,65 @@
 	color: rgb(94, 94, 94);
 }
 
+/* 모달 */
+#modal{
+	width: 280px;
+    height: 210px;
+    position: absolute;
+    top: 50%;
+    left: 450px;
+    background-color: white;
+    display: none;
+    box-shadow: 3px 3px 10px rgb(210 210 210);
+}
+.tb_read{
+   	cursor: pointer;
+   }
+#modal_section{
+    display: block;
+    margin: 0 auto;
+    width: 226px;
+    margin-top: 30px;
+}
+.modal_title{
+    font-family: NotoSansR;
+    display: block;
+    font-size: 11px;
+    margin-bottom: 5px;
+    color: rgb(158, 158, 158);
+}
+.modal_content{
+    font-family: NotoSansB;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 20px;
+    color: rgb(94, 94, 94);
+}
+
+#modal_att_confirm{
+    font-family: NotoSansB;
+    font-size: 12px;
+    width: 225px;
+    height: 30px;
+    margin-bottom: 22px;
+    color: rgb(94, 94, 94);
+}
+#modal_btn{
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 207px;
+}
+#modal_edit{
+    color: rgb(75, 77, 178);
+}
+#modal_cancel, #modal_edit{
+    width: 100px;
+    height: 38px;
+    border: 0px;
+    font-family: NotoSansR;
+    font-size: 12px;
+    background-color: white;
+}
 </style>
 </head>
 <body>
@@ -156,8 +215,23 @@
 					</table>
 				</div>
 			</div>
-			
 		</div>
+	</div>
+	<div id="modal">
+		<div id="modal_section">
+			<span class="modal_title">조정 사유</span>
+            <span class="modal_content" id="att_appr_content">조정 사유 출력</span>
+            <span class="modal_title">승인</span>
+			<select name="modal_att_confirm" id="modal_att_confirm">
+			    <option value="1">승인</option>
+			    <option value="2">반려</option>
+			</select>
+		</div>
+		<hr>
+		<div id="modal_btn">
+        	<input type="button" value="결재" id="modal_edit">
+            <input type="button" value="닫기" id="modal_cancel">
+        </div>
 	</div>
 </section>
 <script>
@@ -190,7 +264,7 @@ $("#att_appr_date_search_btn").click(function(){
                 html += '<td >'+vo.att_clock_out+'</td>';
                 html += '<td >'+vo.att_appr_clock_in+'</td>';
                 html += '<td >'+vo.att_appr_clock_out+'</td>';
-                html += '<td >';
+                html += '<td class="tb_read">';
                 if(vo.att_appr_result == 1) {
                 	html += "승인";
                 } else if (vo.att_appr_result == 2) {
@@ -201,6 +275,8 @@ $("#att_appr_date_search_btn").click(function(){
                 html += '</td>';
                 html += '</tr>';
                 $('#att_date_search_table').append(html);
+                $(".tb_read").off("click");
+				$(".tb_read").on("click", {data: result}, openModal);
 			}
 		},
 		error: function(error){
@@ -244,6 +320,44 @@ $("#att_date_end").on("input", function() {
 	$("#att_date_start").attr("max", $("#att_date_end").val());
 });
 
+
+
+////모달 /////
+// 모달 숨기기
+$("#modal_cancel").click(function(){
+	$("#modal").hide();
+})
+function openModal(data) {
+	console.log("openModal");
+	let vo = data.data.data
+	console.log(vo);
+	console.log(vo[0]);
+	let temp_index = $(this).parent().index();
+	console.log($(this).parent().index());
+	$("#modal").css("display", "block");
+	$('#att_appr_content').text(vo[temp_index-1].att_appr_content);
+	$("#modal_edit").off("click");
+	$("#modal_edit").on("click",{att_appr_clock_in : vo[temp_index-1].att_appr_clock_in}
+	, {att_appr_clock_out : vo[temp_index-1].att_appr_clock_out}
+	, function updateVaca(data){
+		let att_appr_clock_in = data.data.att_appr_clock_in;
+		let att_appr_clock_out = data.data.att_appr_clock_out;
+		$.ajax({
+			url: "<%=request.getContextPath()%>/hr/attendance/vacation/update",
+			type: "post",
+			data: {att_appr_result: $('#modal_att_confirm').val()
+				,att_appr_clock_in: att_appr_clock_in
+				,att_appr_clock_out: att_appr_clock_out
+			},
+			success: function(result){
+				alert("요청이 완료되었습니다. result = " + result);
+			},
+			error: function(error){
+				alert("요청 실패") ;
+			}
+		});
+	});
+}
 </script>
 </body>
 </html>

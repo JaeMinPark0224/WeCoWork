@@ -83,13 +83,6 @@
 	line-height: 25px;
 }
 
-.charts {
-	width: 955px;
-	height: 450px;
-	display: inline-block;
-	margin-top: 58px;
-}
-
 #attendance_main_box_first_hr {
 	margin-top: 45px;
 	width: 1070px;
@@ -307,8 +300,8 @@
         </div>
         <hr>
         <div id="modal_btn">
-        	<input type="button" value="수정" id="modal_edit">
-            <input type="button" value="확인" id="modal_cancel">
+        	<input type="button" value="결재" id="modal_edit">
+            <input type="button" value="닫기" id="modal_cancel">
         </div>
     </div>
 </section>
@@ -389,44 +382,57 @@ $(vaca_list_search_btn).click(function(){
                 	html += '</td>';
                     html += '</tr>';
                     $('#vaca_date_search_table').append(html);
-				}
 				$(".tb_read").off("click");
-				$(".tb_read").on("click", function(){$("#modal").show()});
-				$('#e_no').text(vo.emp_no);
-				$('#e_name').text(vo.name);
-				$('#d_name').text(vo.dept_name);
-				$('#v_comment').text(vo.vaca_comment);
-				if(vo.vaca_confirm == '1') {
-					$('#v_confirm').text("진행중")}
-                else if(vo.vaca_confirm == '2'){
-                	$('#v_confirm').text("승인")
-                }else if(vo.vaca_confirm == '3'){
-                	$('#v_confirm').text("반려")
-                }
-				$("#modal_edit").off("click");
-				$("#modal_edit").on("click", function updateVaca(){
-					$.ajax({
-						url: "<%=request.getContextPath()%>/hr/attendance/vacation/update",
-						type: "post",
-						data: {
-							vaca_no: vo.vaca_no
-							, modal_vaca_confirm: $('#modal_vaca_confirm').val()
-							, modal_vaca_denied: $('#modal_vaca_denied').val()
-						},
-						success: function(result){
-							alert("요청이 완료되었습니다. result = " + result);
-						},
-						error: function(error){
-							alert("요청 실패") ;
-						}
-					});
-				});
+				$(".tb_read").on("click", {data: result}, openModal);
+				
+				}
 			},
 			error: function(error){
 				alert("휴가신청내역 조회에 실패했습니다.") ;
 			}
 		});
 	});	
+
+// 모달창 정보 입력 함수 
+function openModal(data) {
+	console.log("openModal");
+	let vo = data.data.data
+	console.log(vo);
+	console.log(vo[0]);
+	let temp_index = $(this).parent().index();
+	console.log($(this).parent().index());
+	$("#modal").css("display", "block");
+	$('#e_no').text(vo[temp_index-1].emp_no);
+	$('#e_name').text(vo[temp_index-1].name);
+	$('#d_name').text(vo[temp_index-1].dept_name);
+	$('#v_comment').text(vo[temp_index-1].vaca_comment);
+	if(vo[temp_index-1].vaca_confirm == '1') {
+		$('#v_confirm').text("진행중")}
+    else if(vo[temp_index-1].vaca_confirm == '2'){
+    	$('#v_confirm').text("승인")
+    }else if(vo[temp_index-1].vaca_confirm == '3'){
+    	$('#v_confirm').text("반려")
+    }
+	$("#modal_edit").off("click");
+	$("#modal_edit").on("click",{vaca_no : vo[temp_index-1].vaca_no}, function updateVaca(data){
+		let temp_vaca_no = data.data.vaca_no;
+		$.ajax({
+			url: "<%=request.getContextPath()%>/hr/attendance/vacation/update",
+			type: "post",
+			data: {
+				vaca_no: temp_vaca_no
+				, modal_vaca_confirm: $('#modal_vaca_confirm').val()
+				, modal_vaca_denied: $('#modal_vaca_denied').val()
+			},
+			success: function(result){
+				alert("요청이 완료되었습니다. result = " + result);
+			},
+			error: function(error){
+				alert("요청 실패") ;
+			}
+		});
+	});
+}
 
 //모달 내 수정버튼 클릭 시
 function updateVaca(){

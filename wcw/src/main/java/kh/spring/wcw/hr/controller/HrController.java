@@ -3,6 +3,7 @@ package kh.spring.wcw.hr.controller;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -850,9 +851,27 @@ public class HrController {
 		Gson gsonObj = new GsonBuilder().setDateFormat("yyyy-MM-dd' / 'HH:mm:ss").serializeNulls().create();
 		
 		return gsonObj.toJson(selectResult);
-				
 	}
-	
+	@PostMapping("/attendance/approval/update")
+	@ResponseBody
+	public int updateApprovalAttendance(
+			Attendance attendance
+			, HttpSession session
+			, @RequestParam(name="att_appr_result") String att_appr_result
+			, @RequestParam(name="att_appr_clock_in") String att_appr_clock_in
+			, @RequestParam(name="att_appr_clock_out") String att_appr_clock_out
+			) {
+		Timestamp att_appr_clock_in_d = Timestamp.valueOf(att_appr_clock_in);
+		Timestamp att_appr_clock_out_d = Timestamp.valueOf(att_appr_clock_out);
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		int emp_no = loginSSInfo.getEmp_no();
+		attendance.setEmp_no(emp_no);
+		attendance.setAtt_appr_clock_in(att_appr_clock_in_d);
+		attendance.setAtt_appr_clock_out(att_appr_clock_out_d);
+		attendance.setAtt_appr_result(att_appr_result);
+		int result = hrService.updateApprovalAttendance(attendance);
+		return result;
+	}
 	
 	@GetMapping("/attendance/weekly")
 	public ModelAndView viewWeeklyAttendanceHr(ModelAndView mv

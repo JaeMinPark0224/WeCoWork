@@ -75,7 +75,7 @@
 	, null
 	, #{att_appr_content}, '3'
 	, #{att_appr_clock_in}, #{att_appr_clock_out}
-	, null, sysdate
+	, null, #{att_appr_req_date}
 	)
 </insert>
 

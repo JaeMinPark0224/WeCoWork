@@ -188,6 +188,14 @@ public interface HrService {
 	
 	/**
 	 * @param Attendance
+	 * @return 근태 정보 수정 요청 결재
+	 * @author Jinjeong Lee
+	 */
+	public int updateApprovalAttendance(Attendance attendance);
+	
+	
+	/**
+	 * @param Attendance
 	 * @return 주간 근태 정보 리스트
 	 * @author Jinjeong Lee
 	 */
