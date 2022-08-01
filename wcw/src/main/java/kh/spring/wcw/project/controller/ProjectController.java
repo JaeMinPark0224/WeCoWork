@@ -62,10 +62,10 @@ public class ProjectController {
 			,@RequestParam(name = "search", required = false) String search
 			, RedirectAttributes rttr
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		int emp_no = ((Employee)session.getAttribute("loginSSInfo")).getEmp_no();
 		
 		// 페이지 숫자 판별
@@ -123,10 +123,10 @@ public class ProjectController {
 			, HttpSession session
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setPr_no(pr_no);
 		project.setEmp_no(loginSSInfo.getEmp_no());
@@ -152,10 +152,10 @@ public class ProjectController {
 			ModelAndView mv
 			, HttpSession session
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		mv.setViewName("project/insert");
 		return mv;
 	}
@@ -167,10 +167,10 @@ public class ProjectController {
 			, HttpSession session
 			, RedirectAttributes rttr
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		int result = service.insertProject(project);
@@ -193,9 +193,9 @@ public class ProjectController {
 			, HttpSession session
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		project.setEmp_no(emp_no);
@@ -212,10 +212,10 @@ public class ProjectController {
 			, HttpSession session
 			, @RequestParam(name = "project", required = false, defaultValue = "0") int pr_no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		mv.addObject("project", service.selectProject(pr_no));
 		mv.setViewName("project/update");
 		return mv;
@@ -228,10 +228,10 @@ public class ProjectController {
 			, HttpSession session
 			, RedirectAttributes rttr
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		int result = service.updateProject(project);
@@ -251,10 +251,10 @@ public class ProjectController {
 			@RequestParam int pr_no
 			, HttpSession session
 			) {
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
-		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
+//		Employee loginSSInfo = (Employee)session.getAttribute("loginSSInfo");
 		int result = service.completeProject(pr_no);
 		return String.valueOf(result);
 	}
@@ -268,10 +268,10 @@ public class ProjectController {
 			, @RequestParam(name= "page", required = false) String page
 			, RedirectAttributes rttr
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setPr_no(pr_no);
 		project.setEmp_no(loginSSInfo.getEmp_no());
@@ -330,10 +330,10 @@ public class ProjectController {
 			, HttpSession session
 			, @RequestParam int project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		mv.addObject("pr_no", project);
 		mv.setViewName("project/board/insert");
 		return mv;
@@ -348,10 +348,10 @@ public class ProjectController {
 			, @RequestParam(name = "project_file_name", required = false) List<String> file_name
 			, @RequestParam(name = "project_parent_no", required = false) List<String> folder_no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		logger.info("board_file : {}", board_file);
@@ -396,10 +396,10 @@ public class ProjectController {
 			, HttpSession session
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		
@@ -415,10 +415,10 @@ public class ProjectController {
 			, Project project
 			, @RequestParam(name = "no", defaultValue = "0") int no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		project.setPb_no(no);
 		mv.addObject("project", service.selectOneBoardProject(project.getPb_no()));
 		mv.addObject("fileList", service.selectListFileProject(no, "board"));
@@ -437,10 +437,10 @@ public class ProjectController {
 			, @RequestParam(name = "delete_pf_list", required = false) List<Integer> delPfList
 			, RedirectAttributes attr
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		
 		if(delPfList != null && delPfList.size() != 0) {
 			for(Integer pf_no : delPfList ) {
@@ -499,10 +499,10 @@ public class ProjectController {
 			, @RequestParam(required = false , defaultValue = "0") int no
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		if(pr_no == 0 || no == 0) {
 			mv.setViewName("redirect:/project/list");
 			return mv;
@@ -524,10 +524,10 @@ public class ProjectController {
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		project.setPr_no(pr_no);
@@ -555,10 +555,10 @@ public class ProjectController {
 			, @RequestParam(name = "no", defaultValue = "0") int pw_no
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		projectObj.setEmp_no(loginSSInfo.getEmp_no());
 		projectObj.setPr_no(pr_no);
@@ -587,10 +587,10 @@ public class ProjectController {
 			, @RequestParam(name = "no", required = false) String pwNoStr
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		if(pwNoStr != null) {
 			mv.addObject("ref_pw_no", pwNoStr);
 		}
@@ -608,10 +608,10 @@ public class ProjectController {
 			, @RequestParam(name = "pw_end_date_str") String pwEndDateStr
 			, @RequestParam(name = "empNoList") List<String> empNoList
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		LocalDateTime localDateTime = LocalDateTime.from(dateFormat.parse(pwStartDateStr));
@@ -635,10 +635,10 @@ public class ProjectController {
 			, Project project
 			, RedirectAttributes rttr
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		
 		service.deleteWorkProject(project.getPw_no());
 		
@@ -656,10 +656,10 @@ public class ProjectController {
 			, @RequestParam(name = "project") int pr_no
 			, @RequestParam(name= "no") int pw_no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		mv.addObject("work", service.selectOneWorkProject(pw_no));
 		mv.addObject("workerList", service.selectListWorkEmpProject(pw_no));
 		mv.setViewName("project/work/update");
@@ -676,10 +676,10 @@ public class ProjectController {
 			, @RequestParam(name = "pw_end_date_str") String pwEndDateStr
 			, @RequestParam(name = "empNoList") List<String> empNoList
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		LocalDateTime localDateTime = LocalDateTime.from(dateFormat.parse(pwStartDateStr));
@@ -704,10 +704,10 @@ public class ProjectController {
 			, Project project
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		
 		SimpleDateFormat todayFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -735,9 +735,9 @@ public class ProjectController {
 			, @RequestParam String pt_date_year
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		
 		
@@ -761,9 +761,9 @@ public class ProjectController {
 			, HttpSession session
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		
@@ -786,9 +786,9 @@ public class ProjectController {
 			, @RequestParam(required = false) String pt_date_str
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		project.setEmp_no(emp_no);
@@ -815,9 +815,9 @@ public class ProjectController {
 			, HttpSession session
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -836,10 +836,10 @@ public class ProjectController {
 			, Project project
 			, @RequestParam(name = "project") int pr_no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		project.setPr_no(pr_no);
@@ -865,10 +865,10 @@ public class ProjectController {
 			, @RequestParam(name = "project") int pr_no
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -895,9 +895,9 @@ public class ProjectController {
 			, Project project
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -919,9 +919,9 @@ public class ProjectController {
 			, Project project
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -962,9 +962,9 @@ public class ProjectController {
 			, Project project
 			) {
 		
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -1013,9 +1013,9 @@ public class ProjectController {
 			, @RequestParam(required = false) String root
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -1049,9 +1049,9 @@ public class ProjectController {
 			, @RequestParam(required = false) String root
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -1073,9 +1073,9 @@ public class ProjectController {
 			, @RequestParam int pr_no
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			return "-1";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "-1";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -1095,10 +1095,10 @@ public class ProjectController {
 			, HttpSession session
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -1142,9 +1142,9 @@ public class ProjectController {
 			, @RequestParam int pr_no
 			, @RequestParam String authority
 			) {
-		if(!wcwutill.loginChk(session)) {
-			return "0";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			return "0";
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		int emp_no = loginSSInfo.getEmp_no();
 		projectObj.setEmp_no(emp_no);
@@ -1201,10 +1201,10 @@ public class ProjectController {
 			, @RequestParam(required = false) String authority
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return "0";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return "0";
+//		}
 		project.setPr_no(pr_no);
 		if(emp_no == 0) {
 			Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
@@ -1223,10 +1223,10 @@ public class ProjectController {
 			, HttpSession session
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return "0";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return "0";
+//		}
 		int result = service.deleteParticipantProject(project);		
 		
 		return String.valueOf(result);
@@ -1239,10 +1239,10 @@ public class ProjectController {
 			, HttpSession session
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return "0";
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return "0";
+//		}
 		int result = service.updateParticipantProject(project);
 		
 		return String.valueOf(result);
@@ -1336,10 +1336,10 @@ public class ProjectController {
 			, HttpSession session
 			, @RequestParam int project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		mv.addObject("pr_no", project);
 		mv.setViewName("project/notice/insert");
 		return mv;
@@ -1354,10 +1354,10 @@ public class ProjectController {
 			, @RequestParam(name = "project_file_name", required = false) List<String> file_name
 			, @RequestParam(name = "project_parent_no", required = false) List<String> folder_no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		if(board_file != null) {
@@ -1399,10 +1399,10 @@ public class ProjectController {
 			, HttpSession session
 			, Project project
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		service.deleteNoticeProject(project.getPn_no());
 		mv.setViewName("redirect:/project/board/list?project="+project.getPr_no());
 		return mv;
@@ -1417,10 +1417,10 @@ public class ProjectController {
 			, @RequestParam(name = "project", defaultValue = "0") int pr_no
 			, @RequestParam(name = "no", defaultValue = "0") int pn_no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setEmp_no(loginSSInfo.getEmp_no());
 		project.setPn_no(pn_no);
@@ -1440,10 +1440,10 @@ public class ProjectController {
 			, Project project
 			, @RequestParam(name = "no", defaultValue = "0") int no
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		project.setPn_no(no);
 		mv.addObject("project", service.selectOneNoticeProject(project));
 		mv.addObject("fileList", service.selectListFileProject(no, "notice"));
@@ -1462,10 +1462,10 @@ public class ProjectController {
 			, @RequestParam(name = "delete_pf_list", required = false) List<Integer> delPfList
 			, RedirectAttributes attr
 			) {
-		if(!wcwutill.loginChk(session)) {
-			mv.setViewName("redirect:/login");
-			return mv;
-		}
+//		if(!wcwutill.loginChk(session)) {
+//			mv.setViewName("redirect:/login");
+//			return mv;
+//		}
 		
 		if(delPfList != null && delPfList.size() != 0) {
 			for(Integer pf_no : delPfList ) {
