@@ -296,6 +296,7 @@
 				$('#vaca_select').val('');
 				$('#vaca_select_allday').val('');
 				$('#vacation_text').val('');
+				location.reload();
 			},
 			error: function(error){
 				alert("휴가 신청에 실패했습니다.") ;
@@ -381,7 +382,7 @@ function vuCountFnc() {
 	console.log($(".table_content_white").length);
 	for(var i = $(".table_content_white").length - 1; i > -1; i--) {
 		if($(".table_content_white").eq(i).children().eq(7).text() == '승인') {
-			var tempVuCount = parseInt($(".table_content_white").eq(i).children().eq(6).text()) - parseInt($(".table_content_white").eq(i).children().eq(5).text());
+			var tempVuCount = parseFloat($(".table_content_white").eq(i).children().eq(6).text()) - parseFloat($(".table_content_white").eq(i).children().eq(5).text());
 			for(var j = i; j > -1 ; j--) {
 				if($(".table_content_white").eq(j).children().eq(1).text() == $(".table_content_white").eq(i).children().eq(1).text()) {
 					$(".table_content_white").eq(j).children().eq(6).text(tempVuCount);

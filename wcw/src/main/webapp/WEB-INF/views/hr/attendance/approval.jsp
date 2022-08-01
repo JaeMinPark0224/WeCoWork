@@ -357,11 +357,11 @@ function openModal(data) {
 				,att_appr_no: att_appr_no
 			},
 			success: function(result){
-				alert("요청이 완료되었습니다. result = " + result);
+				alert("결재가 완료되었습니다.");
 				location.reload();
 			},
 			error: function(error){
-				alert("요청 실패") ;
+				alert("결재에 실패했습니다.") ;
 			}
 		});
 	});

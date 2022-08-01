@@ -387,6 +387,7 @@ $(vaca_list_search_btn).click(function(){
 				
 				}
 				vuCountFnc();
+				
 			},
 			error: function(error){
 				alert("휴가신청내역 조회에 실패했습니다.") ;
@@ -399,7 +400,7 @@ function vuCountFnc() {
 	console.log($(".table_content_white").length);
 	for(var i = $(".table_content_white").length - 1; i > -1; i--) {
 		if($(".table_content_white").eq(i).children().eq(9).text() == '승인') {
-			var tempVuCount = parseInt($(".table_content_white").eq(i).children().eq(8).text()) - parseInt($(".table_content_white").eq(i).children().eq(7).text());
+			var tempVuCount = parseFloat($(".table_content_white").eq(i).children().eq(8).text()) - parseFloat($(".table_content_white").eq(i).children().eq(7).text());
 			for(var j = i; j > -1 ; j--) {
 				if($(".table_content_white").eq(j).children().eq(0).text() == $(".table_content_white").eq(i).children().eq(0).text()
 						&& $(".table_content_white").eq(j).children().eq(3).text() == $(".table_content_white").eq(i).children().eq(3).text()) {
@@ -442,10 +443,11 @@ function openModal(data) {
 				, modal_vaca_denied: $('#modal_vaca_denied').val()
 			},
 			success: function(result){
-				alert("요청이 완료되었습니다. result = " + result);
+				alert("결재가 완료되었습니다.");
+				location.reload();
 			},
 			error: function(error){
-				alert("요청 실패") ;
+				alert("결재에 실패했습니다.") ;
 			}
 		});
 	});
