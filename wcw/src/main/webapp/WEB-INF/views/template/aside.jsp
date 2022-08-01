@@ -25,17 +25,17 @@
 		<c:if test="${not(empty loginSSInfo && empty CompanySSinfo) }">
 			<button class="btn_format_mini logout_btn" id="logout_btn">로그아웃</button>
 		</c:if>
-		<div id="test_login_btn_wrap">
+		<!-- <div id="test_login_btn_wrap">
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
 			<button class="btn_format_mini test_login_btn">테스트 로그인</button>
-			<!-- <button class="btn_format_mini test_login_btn">서유빈</button>
+			<button class="btn_format_mini test_login_btn">서유빈</button>
 			<button class="btn_format_mini test_login_btn">이진정</button>
-			<button class="btn_format_mini test_login_btn">민승택</button> -->
-		</div>
+			<button class="btn_format_mini test_login_btn">민승택</button>
+		</div> -->
 		<form action="<%= request.getContextPath()%>/login.do" method="post" class="test_login_form">
 			<input type="hidden" name="email" value="emp1@email.com">
 			<input type="hidden" name="pwd" value="1234">

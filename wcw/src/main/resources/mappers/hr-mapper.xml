@@ -414,12 +414,13 @@
 
 <!-- 휴가신청내역조회 -->
 <select id="selectVacation" parameterType="Vacation" resultType="Vacation">
-	select v.emp_no, name, v.vaca_no, v.vaca_req_date, v.vaca_sort, v.vaca_allday, v.vaca_start, v.vaca_end, v.vaca_cnt, v.vaca_confirm, v.vaca_comment, d.dept_name 
+	select v.emp_no, name, v.vaca_no, v.vaca_req_date, v.vaca_sort, v.vaca_allday, v.vaca_start, 
+		v.vaca_end, v.vaca_cnt, v.vaca_confirm, v.vaca_comment, d.dept_name, u.vu_use_days, u.vu_count, u.vu_no
 	from tb_vacation v 
-	left outer join tb_vacation_use u on v.emp_no = u.emp_no
+	left outer join tb_vacation_use u on v.emp_no = u.emp_no and v.vaca_sort = u.vaca_sort
 	join tb_employee e on v.emp_no = e.emp_no
 	join tb_department d on d.dept_no = e.dept_no
-	where d.cp_no = #{cp_no} 
+	where d.cp_no = #{cp_no}
 	and to_char(vaca_start, 'yyyy-mm-dd') between #{vu_year}||'-01-01' and #{vu_year}||'-12-31'
 	<if test='!vaca_confirm.equals("0")'>
 	and v.vaca_confirm = #{vaca_confirm}
@@ -433,6 +434,7 @@
 	<if test='!emp_no==0'>
 	and v.emp_no = #{emp_no}
 	</if>
+	order by vaca_req_date desc
 </select>
 
 <!-- 휴가 승인/반려 -->

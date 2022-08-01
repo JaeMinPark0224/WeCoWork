@@ -350,9 +350,9 @@ $(vaca_list_search_btn).click(function(){
 	                    	html += "출산휴가";
 	                    }else if(vo.vaca_sort == 3){
 	                    	html += "배우자 출산휴가";
-	                    }else if(vo.vaca_sort == 4){
-	                    	html += "생리휴가";
 	                    }else if(vo.vaca_sort == 5){
+	                    	html += "생리휴가";
+	                    }else if(vo.vaca_sort == 4){
 	                    	html += "가족 돌봄 휴가";
 	                    }else{
 	                    	html += "error";
@@ -370,7 +370,7 @@ $(vaca_list_search_btn).click(function(){
                     html += '<td >'+vo.vaca_start.substr(0,10)+'</td>';
                     html += '<td >'+vo.vaca_end.substr(0,10)+'</td>';
                     html += '<td >'+vo.vaca_cnt+'</td>';
-                    html += '<td >'+'아직못계산'+'</td>';
+                    html += '<td >'+vo.vu_count+'</td>';
                     html += '<td class="tb_read">';
 	                    if(vo.vaca_confirm == '1') {
 	                    	html += "진행중";}
@@ -386,12 +386,29 @@ $(vaca_list_search_btn).click(function(){
 				$(".tb_read").on("click", {data: result}, openModal);
 				
 				}
+				vuCountFnc();
 			},
 			error: function(error){
 				alert("휴가신청내역 조회에 실패했습니다.") ;
 			}
 		});
 	});	
+
+function vuCountFnc() {
+	console.log("vuCountFnc");
+	console.log($(".table_content_white").length);
+	for(var i = $(".table_content_white").length - 1; i > -1; i--) {
+		if($(".table_content_white").eq(i).children().eq(9).text() == '승인') {
+			var tempVuCount = parseInt($(".table_content_white").eq(i).children().eq(8).text()) - parseInt($(".table_content_white").eq(i).children().eq(7).text());
+			for(var j = i; j > -1 ; j--) {
+				if($(".table_content_white").eq(j).children().eq(0).text() == $(".table_content_white").eq(i).children().eq(0).text()
+						&& $(".table_content_white").eq(j).children().eq(3).text() == $(".table_content_white").eq(i).children().eq(3).text()) {
+					$(".table_content_white").eq(j).children().eq(8).text(tempVuCount);
+				}
+			}
+		}
+	}
+}
 
 // 모달창 정보 입력 함수 
 function openModal(data) {
