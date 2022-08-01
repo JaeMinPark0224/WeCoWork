@@ -32,7 +32,7 @@
 </insert>
 <select id="selectVacation" parameterType="Vacation" resultType="Vacation">
 	select * 
-	from tb_vacation v left outer join tb_vacation_use u on v.emp_no = u.emp_no
+	from tb_vacation v left outer join tb_vacation_use u on v.emp_no = u.emp_no and v.vaca_sort = u.vaca_sort
 	where v.emp_no = #{emp_no} 
 	and v.vaca_start between #{vu_year}||'-01-01' and #{vu_year}||'-12-31'
 	<if test='!vaca_confirm.equals("0")'>

@@ -232,6 +232,9 @@
 		let maxDate = new Date(year,month,0).getDate();
 		// 만약 maxDate가 28이면 28까지 나타난다.
 		// 테이블의 정보를 가져와서 28보다 크면 삭제
+		
+		$(".table_content_white").remove();
+		
 		let $td = $(".date_td"); 
 		for (var i = 0; i < $td.length; i++) {
 			if($td.eq(i).text() > maxDate) {

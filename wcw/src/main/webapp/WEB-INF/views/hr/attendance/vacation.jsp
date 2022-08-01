@@ -231,8 +231,8 @@
 				   	<option value="1">연차휴가</option>
 				    <option value="2">출산휴가</option>
 				    <option value="3">배우자 출산휴가</option>
-				    <option value="4">생리휴가</option>
-				    <option value="5">가족 돌봄 휴가</option>
+				    <option value="4">가족 돌봄 휴가</option>
+				    <option value="5">생리휴가</option>
 				</select>
 				 <div class="font_title height25">결재 상태</div>
 				<select name="vaca_confirm" id="vaca_confirm">

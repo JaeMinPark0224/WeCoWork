@@ -186,8 +186,8 @@
 									<option value="1">연차휴가</option>
 									<option value="2">출산휴가</option>
 									<option value="3">배우자 출산휴가</option>
-									<option value="4">생리휴가</option>
-									<option value="5">가족 돌봄 휴가</option>
+									<option value="4">가족 돌봄 휴가</option>
+									<option value="5">생리휴가</option>
 								</select>
 							</div>
 							<div class="font_title attendance_modify_grid_first_row">휴가 기간</div>
@@ -236,8 +236,8 @@
 							   	<option value="1">연차휴가</option>
 							    <option value="2">출산휴가</option>
 							    <option value="3">배우자 출산휴가</option>
-							    <option value="4">생리휴가</option>
-							    <option value="5">가족 돌봄 휴가</option>
+							    <option value="4">가족 돌봄 휴가</option>
+							    <option value="5">생리휴가</option>
 							</select>
 							<div style="flex-grow : 1; text-align: right;">
 								<button type="button" class="btn_format_mini_gray flex_justify_end" id="vaca_list_search_btn">조회</button>
@@ -291,14 +291,14 @@
 			},
 			
 			success: function(result){
-				alert("요청이 완료되었습니다. result = " + result);
+				alert("휴가 신청이 완료되었습니다.");
 				$('#vacation_req_date').val('');
 				$('#vaca_select').val('');
 				$('#vaca_select_allday').val('');
 				$('#vacation_text').val('');
 			},
 			error: function(error){
-				alert("요청 실패") ;
+				alert("휴가 신청에 실패했습니다.") ;
 			}
 		});
 	});
@@ -333,9 +333,9 @@
 	                    	html += "출산휴가";
 	                    }else if(vo.vaca_sort == 3){
 	                    	html += "배우자 출산휴가";
-	                    }else if(vo.vaca_sort == 4){
-	                    	html += "생리휴가";
 	                    }else if(vo.vaca_sort == 5){
+	                    	html += "생리휴가";
+	                    }else if(vo.vaca_sort == 4){
 	                    	html += "가족 돌봄 휴가";
 	                    }else{
 	                    	html += "error";
@@ -353,7 +353,7 @@
                     html += '<td >'+vo.vaca_start.substr(0,10)+'</td>';
                     html += '<td >'+vo.vaca_end.substr(0,10)+'</td>';
                     html += '<td >'+vo.vaca_cnt+'</td>';
-                    html += '<td >'+'계산못함'+'</td>';
+                    html += '<td >'+vo.vu_count+'</td>';
                     html += '<td >';
 	                    if(vo.vaca_confirm == '1') {
 	                    	html += "진행중";}
@@ -366,12 +366,30 @@
                     html += '</tr>';
                     $('#vaca_date_search_table').append(html);
 				}
+				vuCountFnc();
 			},
 			error: function(error){
 				alert("휴가신청내역 조회에 실패했습니다.") ;
 			}
 		});
 	});
+
+	
+	
+function vuCountFnc() {
+	console.log("vuCountFnc");
+	console.log($(".table_content_white").length);
+	for(var i = $(".table_content_white").length - 1; i > -1; i--) {
+		if($(".table_content_white").eq(i).children().eq(7).text() == '승인') {
+			var tempVuCount = parseInt($(".table_content_white").eq(i).children().eq(6).text()) - parseInt($(".table_content_white").eq(i).children().eq(5).text());
+			for(var j = i; j > -1 ; j--) {
+				if($(".table_content_white").eq(j).children().eq(1).text() == $(".table_content_white").eq(i).children().eq(1).text()) {
+					$(".table_content_white").eq(j).children().eq(6).text(tempVuCount);
+				}
+			}
+		}
+	}
+}
 	
 /* 입사년도 부터 지금년도까지 셀렉박스에 추가 */	
 	var joinYear = '${loginSSInfo.join_date}'.substr(0,4);
