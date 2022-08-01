@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +29,16 @@ import com.cloudinary.utils.ObjectUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import kh.spring.wcw.attendance.model.service.AttendanceService;
 import kh.spring.wcw.common.WCWUtill;
 import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.company.service.CompanyService;
+import kh.spring.wcw.draft.service.DraftService;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.employee.service.EmployeeService;
+import kh.spring.wcw.hr.service.HrService;
 import kh.spring.wcw.mail.Mail;
+import kh.spring.wcw.notice.service.NoticeService;
 import kh.spring.wcw.project.model.service.ProjectService;
 import kh.spring.wcw.todo.service.TodoService;
 
@@ -49,6 +54,14 @@ public class MainController {
 	@Autowired
 	private ProjectService projectService;
 	@Autowired
+	private DraftService draftService;
+	@Autowired
+	private NoticeService noticeService;
+	@Autowired
+	private HrService hrService;
+	@Autowired
+	private AttendanceService attendanceService;
+	@Autowired
 	private WCWUtill wcwutill;
 	
 	// 메인 페이지로 이동
@@ -62,6 +75,19 @@ public class MainController {
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		mv.addObject("todoList", todoService.selectListTodo(loginSSInfo.getEmp_no()));
 		mv.addObject("calendarMyList", projectService.selectListMyCalendarProject(loginSSInfo.getEmp_no()));
+		RowBounds rowBounds = new RowBounds(0, 10);
+		mv.addObject("apprList", draftService.selectListAppr(loginSSInfo.getEmp_no(), rowBounds));
+		int cp_no = -1;
+		Employee loginInfo = (Employee)session.getAttribute("loginSSInfo");
+		if(loginInfo == null) {
+			Company CompanySSinfo = (Company)session.getAttribute("CompanySSinfo");
+			System.out.println("CompanySSinfo: "+CompanySSinfo);
+			cp_no = CompanySSinfo.getCp_no();
+		} else {
+			cp_no = loginInfo.getCp_no();
+		}
+		mv.addObject("noticeList", hrService.selectListNotice(cp_no, rowBounds));
+		mv.addObject("lastlist", attendanceService.selectLastAttendance(loginSSInfo.getEmp_no()));
 		mv.setViewName("main/main");
 		return mv;
 	}

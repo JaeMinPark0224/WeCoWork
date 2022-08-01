@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/template/csslink.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -363,13 +364,12 @@
 	height: 25px;
 	display: grid;
 	grid-template-columns: 130px 1fr;
-	margin-top: 30px;
 }
 
 .grid_content_approval_date {
 	font-size: 14px;
 	font-family: NotoSansB;
-	color: rgb(94, 94, 94);
+	color: rgb(158, 158, 158);
 	height: 25px;
 	line-height: 25px;
 }
@@ -377,7 +377,7 @@
 .grid_content_approval_app_date {
 	font-size: 14px;
 	font-family: NotoSansB;
-	color: rgb(94, 94, 94);
+	color: rgb(158, 158, 158);
 	height: 25px;
 	line-height: 25px;
 }
@@ -417,6 +417,8 @@
 	font-size: 14px;
 	font-family: NotoSansB;
 	color: rgb(158, 158, 158);
+	height: 25px;
+	line-height: 25px;
 }
 
 .grid_contetn_notice_list_title {
@@ -565,6 +567,23 @@
 .grid_content_calendar_list_item:hover {
 	color: #4B4DB2;
 }
+
+#grid_content_approval_flex {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#grid_content_approval_date_top, #grid_content_approval_app_date_top {
+	color: rgb(94, 94, 94);
+}
+
+.appr_url_btn {
+	cursor: pointer;
+}
+.notice_url_btn {
+	cursor: pointer;
+}
 </style>
 <script>
 <c:if test="${not empty msg}">
@@ -598,14 +617,14 @@
 				<div id="grid_content_attendance_date"></div>
 				<div id="grid_content_attendance_time_grid">
 					<div class="grid_content_attendance_time_text">출근시간</div>
-					<div class="grid_content_attendance_time_data">08:43:36</div>
+					<div class="grid_content_attendance_time_data">${fn:substring(lastlist.att_clock_in, 11, 19) }</div>
 					<div class="grid_content_attendance_time_text">퇴근시간</div>
-					<div class="grid_content_attendance_time_data">미등록</div>
+					<div class="grid_content_attendance_time_data"><c:if test="${lastlist.att_clock_out == null }">미등록</c:if><c:if test="${lastlist.att_clock_out != null }">${fn:substring(lastlist.att_clock_out, 11, 19) }</c:if></div>
 				</div>
 				<div id="grid_content_attendance_hr"></div>
 				<div id="grid_content_attendance_btn_wrap">
-					<button class="grid_content_attendance_btn">출근</button>
-					<button class="grid_content_attendance_btn">퇴근</button>
+					<button class="grid_content_attendance_btn" id="btn_clock_in">출근</button>
+					<button class="grid_content_attendance_btn" id="btn_clock_out">퇴근</button>
 				</div>
 			</div>
 			<div class="grid_content" id="grid_content_todo">
@@ -681,13 +700,20 @@
 			</div>
 			<div class="grid_content" id="grid_content_approval">
 				<div id="grid_content_approval_title_wrap">
-					<div id="grid_content_approval_title" class="grid_content_title">공지사항</div>
+					<div id="grid_content_approval_title" class="grid_content_title">결재 대기 문서</div>
 					<div id="grid_content_approval_view">더보기</div>
 				</div>
-				<div id="grid_content_approval_title" class="grid_content_title">결재 대기 문서</div>
-				<div id="grid_content_approval_tap_wrap">
-					<div class="grid_content_approval_date">기안일</div>
-					<div class="grid_content_approval_app_date">제목</div>
+				<div id="grid_content_approval_flex">
+					<div id="grid_content_approval_tap_wrap">
+						<div class="grid_content_approval_date" id="grid_content_approval_date_top">기안일</div>
+						<div class="grid_content_approval_app_date" id="grid_content_approval_app_date_top">제목</div>
+					</div>
+					<c:forEach items="${apprList }" var="appr">
+						<div id="grid_content_approval_tap_wrap">
+							<div class="grid_content_approval_date">${appr.dr_date }</div>
+							<div class="grid_content_approval_app_date"><span class="appr_url_btn" dr_sort="${appr.dr_sort }" dr_no="${appr.dr_no }">${appr.dr_title }</span></div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="grid_content" id="grid_content_notice">
@@ -700,14 +726,12 @@
 						<div class="grid_contetn_notice_list_date" id="grid_contetn_notice_list_date_top">공지일</div>
 						<div class="grid_contetn_notice_list_title" id="grid_contetn_notice_list_title_top">제목</div>
 					</div>
-					<div class="grid_content_notice_grid">
-						<div class="grid_contetn_notice_list_date">2022-07-27</div>
-						<div class="grid_contetn_notice_list_title">[디자인팀] 2022년 하반기 신제품 시안 요청</div>
-					</div>
-					<div class="grid_content_notice_grid">
-						<div class="grid_contetn_notice_list_date">2022-07-27</div>
-						<div class="grid_contetn_notice_list_title">[인사팀] 2022년 상반기 인사고과 안내</div>
-					</div>
+					<c:forEach items="${noticeList }" var="notice">
+						<div class="grid_content_notice_grid">
+							<div class="grid_contetn_notice_list_date">${notice.nt_date }</div>
+							<div class="grid_contetn_notice_list_title"><span class="notice_url_btn" nt_no="${notice.nt_no }">${notice.nt_title }</span></div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -947,6 +971,58 @@ for(var i = 0; i < 4; i++) {
 // 업무명 클릭시 업무 페이지 이동
 $(".grid_content_calendar_list_item").on("click", function() {
 	window.open("<%= request.getContextPath()%>/project/work/read?project="+$(this).attr('pr_no')+"&no="+$(this).attr('pw_no'));
+});
+
+//결제 상세 페이지 이동
+$(".appr_url_btn").on("click", function() {
+	location.href = "<%= request.getContextPath()%>/draft/select?dr_sort="+$(this).attr('dr_sort')+"&drNo="+$(this).attr('dr_no');
+});
+
+// 결제함 이동
+$("#grid_content_approval_view").on("click", function() {
+	location.href = "<%= request.getContextPath()%>/draft/appr/list";
+});
+
+// 공지사황 조회 페이지 이동
+$(".notice_url_btn").on("click", function() {
+	location.href = "<%= request.getContextPath()%>/notice/read?no="+$(this).attr('nt_no');	
+});
+
+// 공지사항 리스트 페이지 이동
+$("#grid_content_notice_view").on("click", function() {
+	location.href = "<%= request.getContextPath()%>/notice/list";
+});
+
+$("#btn_clock_in").click(function(){
+	$.ajax({
+		url: "<%=request.getContextPath()%>/attendance/insert",
+		type: "post",
+		success: function(result){
+			alert("출근이 완료되었습니다.");
+			location.reload();
+		},
+		error: function(error){
+			alert("출근에 실패했습니다. 이미 출근처리가 되었는지 확인해주세요.") ;
+		}
+	});
+});
+
+$("#btn_clock_out").click(function(){
+	if("${lastlist.att_clock_out}" != "" && "${lastlist.ip_clock_out}" != ""){
+		alert("퇴근 정보가 이미 존재합니다. 금일 출근이 완료되었는지 확인해주세요.") ;
+		return;
+	}
+	$.ajax({
+		url: "<%=request.getContextPath()%>/attendance/update",
+		type: "post",
+		success: function(result){
+			alert("퇴근이 완료되었습니다.");
+			location.reload();
+		},
+		error: function(error){
+			alert("퇴근 처리에 실패했습니다.") ;
+		}
+	});
 });
 </script>
 </body>
