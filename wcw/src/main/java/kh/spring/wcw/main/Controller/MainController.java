@@ -476,5 +476,5 @@ public class MainController {
 		mv.setViewName("redirect:/mypage"); // 다시 마이페이지로
 		return mv;
 	}
-	
+		
 }

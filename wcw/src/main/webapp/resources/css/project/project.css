@@ -2540,8 +2540,8 @@ section {
 /* 업무자 삭제 버튼 */
 .work_worker_cancle {
 	position: absolute;
-	top: 5px;
-	right: 5px;
+	top: 9px;
+	right: 9px;
 	color: rgb(94, 94, 94);
 	cursor: pointer;
 }
