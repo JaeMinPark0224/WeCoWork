@@ -122,7 +122,7 @@
 					<div class="project_work_read_comment_flex">
 						<div class="project_work_read_comemnt_content_wrap">
 							<div class="project_work_read_comemnt_content_profile_wrap">
-								<div class="project_work_read_comemnt_content_profile_img"></div>
+								<div class="project_work_read_comemnt_content_profile_img"><c:if test="${not empty loginSSInfo.profile}"><img src="${loginSSInfo.profile}"></c:if></div>
 								<div class="project_work_read_comment_content_profile_flex">
 									<div class="project_work_read_comemnt_content_profile_name">${loginSSInfo.name }</div>
 									<div class="project_work_read_comemnt_content_profile_job">${loginSSInfo.job_title }</div>
@@ -136,7 +136,7 @@
 						<c:forEach items="${commentList }" var="comment">
 						<div class="project_work_read_comemnt_content_wrap">
 							<div class="project_work_read_comemnt_content_profile_wrap">
-								<div class="project_work_read_comemnt_content_profile_img"></div>
+								<div class="project_work_read_comemnt_content_profile_img"><c:if test="${not empty comment.profile}"><img src="${comment.profile}"></c:if></div>
 								<div class="project_work_read_comment_content_profile_flex">
 									<div class="project_work_read_comemnt_content_profile_name">${comment.name }</div>
 									<div class="project_work_read_comemnt_content_profile_job">${comment.job_title }</div>
@@ -341,6 +341,9 @@
 			$(".project_work_read_comemnt_content_wrap").last().append('<div class="project_work_read_comemnt_content_profile_wrap"></div');
 			$(".project_work_read_comemnt_content_wrap").last().append('<div class="project_work_read_comemnt_content_input_wrap"></div');
 			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comemnt_content_profile_img"></div>');
+			if(typeof commentList[i].profile != "undefined") {
+				$(".project_work_read_comemnt_content_profile_img").last().append('<img src="'+commentList[i].profile+'">');
+			}
 			$(".project_work_read_comemnt_content_profile_wrap").last().append('<div class="project_work_read_comment_content_profile_flex"></div>');
 			$(".project_work_read_comment_content_profile_flex").last().append('<div class="project_work_read_comemnt_content_profile_name">'+commentList[i].name+'</div>');
 			$(".project_work_read_comment_content_profile_flex").last().append('<div class="project_work_read_comemnt_content_profile_job">'+commentList[i].job_title+'</div>');

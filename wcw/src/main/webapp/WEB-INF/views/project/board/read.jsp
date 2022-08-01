@@ -20,7 +20,7 @@
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 		<div id="project_board_read_wrap">
-			<div id="project_main_profile_wrap">
+			<%-- <div id="project_main_profile_wrap">
 				<div id="project_main_profile_picture_wrap">
 				</div>
 				<div id="project_main_profile_info_wrap">
@@ -31,10 +31,12 @@
 					</div>
 					<div class="project_main_profile_info">${fn:substring(project.pb_date,0,19) }</div>
 				</div>
-			</div>
+			</div> --%>
 			<div id="project_board_read_grid">
 				<div class="project_board_read_title">게시물 제목</div>
 				<div class="project_board_read_title" id="project_board_read_title">${project.pb_title }</div>
+				<div class="project_board_read_title">작성자</div>
+				<div class="project_board_read_content">${project.name }</div>
 				<div class="project_board_read_title">게시물 내용</div>
 				<div class="project_board_read_content">${project.pb_content }</div>
 				<c:if test="${not empty fileList }">
@@ -50,7 +52,7 @@
 				<div class="project_board_read_comemnt_content_flex">
 					<div class="project_board_read_comemnt_content_wrap">
 						<div class="project_board_read_comemnt_content_profile_wrap">
-							<div class="project_board_read_comemnt_content_profile_img"></div>
+							<div class="project_board_read_comemnt_content_profile_img"><c:if test="${not empty loginSSInfo.profile}"><img src="${loginSSInfo.profile}"></c:if></div>
 							<div class="project_board_read_comment_content_profile_flex">
 								<div class="project_board_read_comemnt_content_profile_name">${loginSSInfo.name }</div>
 								<div class="project_board_read_comemnt_content_profile_job">${loginSSInfo.job_title }</div>
@@ -64,7 +66,7 @@
 					<c:forEach items="${commentList }" var="comment">
 						<div class="project_board_read_comemnt_content_wrap">
 							<div class="project_board_read_comemnt_content_profile_wrap">
-								<div class="project_board_read_comemnt_content_profile_img"></div>
+								<div class="project_board_read_comemnt_content_profile_img"><c:if test="${not empty comment.profile}"><img src="${comment.profile}"></c:if></div>
 								<div class="project_board_read_comment_content_profile_flex">
 									<div class="project_board_read_comemnt_content_profile_name">${comment.name }</div>
 									<div class="project_board_read_comemnt_content_profile_job">${comment.job_title }</div>
@@ -255,6 +257,9 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 			$(".project_board_read_comemnt_content_wrap").last().append('<div class="project_board_read_comemnt_content_profile_wrap"></div');
 			$(".project_board_read_comemnt_content_wrap").last().append('<div class="project_board_read_comemnt_content_input_wrap"></div');
 			$(".project_board_read_comemnt_content_profile_wrap").last().append('<div class="project_board_read_comemnt_content_profile_img"></div>');
+			if(typeof commentList[i].profile != "undefined") {
+				$(".project_board_read_comemnt_content_profile_img").last().append('<img src="'+commentList[i].profile+'">');
+			}
 			$(".project_board_read_comemnt_content_profile_wrap").last().append('<div class="project_board_read_comment_content_profile_flex"></div>');
 			$(".project_board_read_comment_content_profile_flex").last().append('<div class="project_board_read_comemnt_content_profile_name">'+commentList[i].name+'</div>');
 			$(".project_board_read_comment_content_profile_flex").last().append('<div class="project_board_read_comemnt_content_profile_job">'+commentList[i].job_title+'</div>');

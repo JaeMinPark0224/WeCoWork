@@ -730,7 +730,7 @@
 	</insert>
 	
 	<select id="selectListCommentProject" parameterType="Project" resultType="Project">
-		select pc_no, tpc.emp_no, pb_no, pw_no, pc_content, pc_date, name, job_title
+		select te.profile, pc_no, tpc.emp_no, pb_no, pw_no, pc_content, pc_date, name, job_title
 			from tb_project_comment tpc
 			join tb_employee te
 			on tpc.emp_no = te.emp_no
