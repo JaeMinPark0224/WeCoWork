@@ -1854,6 +1854,7 @@ section {
 	color: rgb(94, 94, 94);
 	justify-self: start;
 	line-height: 40px;
+	margin-left: 10px;
 }
 
 .project_work_read_comemnt_content_date {

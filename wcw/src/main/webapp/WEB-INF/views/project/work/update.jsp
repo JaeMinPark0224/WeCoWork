@@ -107,7 +107,7 @@
 					<div class="project_input_count">0/600자</div>
 				</div>
 				<div id="project_work_add_btn_wrap">
-					<button type="button" id="project_work_add_btn">추가</button>
+					<button type="button" id="project_work_add_btn">수정</button>
 				</div>
 			</div>
 		</div>

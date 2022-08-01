@@ -52,7 +52,7 @@
 						<input type="hidden" name="pr_join_open" class="project_insert_toggle_value" id="pr_join_open" value="N">
 					</div>
 				</div>
-				<button type="button" id="project_insert_btn">생성</button>
+				<button type="button" id="project_insert_btn">수정</button>
 			</div>
 		</form>
 	</div>
