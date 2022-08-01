@@ -53,10 +53,25 @@
 		, default)
 	</insert>
 	
-	<delete id="deleteProject">
+	<delete id="deleteProject" parameterType="_int">
 		delete from tb_project
 			where pr_no = #{pr_no}
 	</delete>
+	
+	<update id="updateProject" parameterType="Project">
+		update tb_project
+			set pr_title = #{pr_title},
+				pr_content = #{pr_content},
+				pr_open_yn = #{pr_open_yn},
+				pr_join_open = #{pr_join_open}
+			where pr_no = #{pr_no}
+	</update>
+	
+	<update id="completeProject" parameterType="_int">
+		update tb_project
+			set pr_complete_yn = 'Y'
+			where pr_no = #{pr_no}
+	</update>
 	
 	<select id="selectListProject" parameterType="_int" resultType="Project">
 		select tp.*, ta.pr_fav from tb_project tp
@@ -137,7 +152,9 @@
 	</select>
 	
 	<select id="selectEmpProject" parameterType="hashmap" resultType="Project">
-		select pr_no, ep_no emp_no from tb_project_emp where pr_no = #{pr_no} and ep_no = #{emp_no}
+		select pr_no, ep_no emp_no, pr_emp_authority
+			from tb_project_emp 
+			where pr_no = #{pr_no} and ep_no = #{emp_no}
 	</select>
 	
 	<select id="selectListParticipantProject" parameterType="hashmap" resultType="Project">
@@ -159,6 +176,15 @@
 		    order by tjt.job_level asc
 		</if>
 		<if test='pr_emp_authority.equals("C")'>
+			select te.emp_no ep_no, te.name, td.dept_name
+		  		from tb_employee te
+		    	join tb_department td
+		    	on te.dept_no = td.dept_no
+		    	join tb_job_title tjt
+		    	on te.job_title_no = tjt.job_title_no
+		    	where te.emp_no in (select ep_no from tb_project_emp where pr_no = #{pr_no} and pr_emp_authority = 'C')
+		</if>
+		<if test='pr_emp_authority.equals("D")'>
 		select te.emp_no ep_no, te.name, td.dept_name
 		    from tb_employee te
 		    join tb_department td
@@ -184,6 +210,15 @@
 		    </if>
 	    </if>
 	    <if test='pr_emp_authority.equals("C")'>
+			select DISTINCT td.dept_name
+		  		from tb_employee te
+		    	join tb_department td
+		    	on te.dept_no = td.dept_no
+		    	join tb_job_title tjt
+		    	on te.job_title_no = tjt.job_title_no
+		    	where te.emp_no in (select ep_no from tb_project_emp where pr_no = #{pr_no} and pr_emp_authority = 'C')
+		</if>
+	    <if test='pr_emp_authority.equals("D")'>
 	    select DISTINCT td.dept_name
 		    from tb_employee te
 		    join tb_department td
@@ -306,7 +341,17 @@
 		select * from dual
 	</insert>
 	
+	<delete id="deleteNoticeProject" parameterType="_int">
+		delete from tb_project_notice
+			where pn_no = #{pn_no}
+	</delete>
 	
+	<update id="updateNoticeProject" parameterType="Project">
+		update tb_project_notice
+			set pn_title = #{pn_title}
+				, pn_content = #{pn_content}
+			where pn_no = #{pn_no}
+	</update>
 	
 	<select id="selectListNoticeProject" parameterType="Project" resultType="Project">
 		select tpn.*, te.name, tjt.job_title
@@ -437,7 +482,15 @@
 			, PR_EMP_DATE, PR_EMP_AUTHORITY)
 			values
 			(#{pr_no}, #{emp_no}
-			, default, 'B')
+			, default, 
+			<choose>
+				<when test='pr_emp_authority != null and pr_emp_authority.equals("C")'>
+				'C' )
+				</when>
+				<otherwise>
+				'B')
+				</otherwise>
+			</choose>
 	</insert>
 	
 	<delete id="deleteWorkParticipantProject">
@@ -514,6 +567,12 @@
 		    </if>
 	</select>
 	
+	<select id="selectListMyCalendarProject" parameterType="_int" resultType="Project">
+		select tpw.pr_no, tpw.pw_no, tpw.pw_title, tpw.pw_start_date, tpw.pw_end_date, tpw.pw_status, tpw.pw_priority
+		    from tb_project_work tpw
+		    where tpw.pw_no in (select pw_no from tb_project_work_participant where emp_no = #{emp_no})
+	</select>
+	
 	<select id="selectListFolderProject" parameterType="_int" resultType="Project">	
 		select *
 			from tb_project_file_folder
@@ -558,7 +617,10 @@
 	<select id="selectListFileProject" parameterType="map" resultType="Project">
 		select tpf.*
 			<if test='type.equals("board")'>
+				, tpff.pff_name
 				from tb_project_file tpf
+				join tb_project_file_folder tpff
+				on tpf.pff_no = tpff.pff_no
 				where pb_no = #{no}
 			</if>
 			<if test='type.equals("project")'>
@@ -569,7 +631,10 @@
 				where pr_no = #{no}
 			</if>
 			<if test='type.equals("notice")'>
+				, tpff.pff_name
 				from tb_project_file tpf
+				join tb_project_file_folder tpff
+				on tpf.pff_no = tpff.pff_no
 				where pn_no = #{no}
 			</if>
 	</select>
@@ -581,6 +646,7 @@
 	</update>
 	
 	<insert id="insertFileProject" parameterType="Project">
+		<if test="pb_no == 0 and pn_no == 0">
 		insert into tb_project_file
 		(pf_no, pf_url
 		, pf_date
@@ -589,6 +655,27 @@
 		((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
 		, default
 		, #{pff_no}, #{pf_name})
+		</if>
+		<if test="pb_no != 0 and pn_no == 0">
+		insert into tb_project_file
+		(pf_no, pf_url
+		, pf_date
+		, pff_no, pf_name, pb_no)
+		values
+		((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
+		, default
+		, #{pff_no}, #{pf_name}, #{pb_no})
+		</if>
+		<if test="pb_no == 0 and pn_no != 0">
+		insert into tb_project_file
+		(pf_no, pf_url
+		, pf_date
+		, pff_no, pf_name, pn_no)
+		values
+		((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
+		, default
+		, #{pff_no}, #{pf_name}, #{pn_no})
+		</if>
 	</insert>
 	
 	<delete id="deleteFileProject" parameterType="Project">

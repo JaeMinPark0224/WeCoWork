@@ -35,7 +35,7 @@
 <section id="project_section">
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
-	<div id="project_main_menu_title">공지사항 작성</div>
+	<!-- <div id="project_main_menu_title">공지사항 작성</div> -->
 		<form name="board_form" action="<%= request.getContextPath()%>/project/notice/insert.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" value="${pr_no }" name="pr_no">
 			<div id="project_board_insert_wrap">
@@ -47,7 +47,7 @@
 					</div>
 				</div>
 				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">게시물 내용</div>
+					<div class="project_board_insert_div_title">공지사항 내용</div>
 					<div class="project_input_wrap">
 						<textarea class="project_board_insert_textarea" name="pn_content" id="pb_content" placeholder="공지사항 내용을 입력해 주세요. (최대 600자)"></textarea>
 						<div class="project_board_input_count">0/600자</div>
@@ -127,6 +127,20 @@
 	
 	// submit 기능 구현
 	$(".project_board_insert_write_btn").on('click', function() {
+		if($('#pb_title').val() == "") 	{
+			alert("공지사항 제목을 입력해주세요.");
+			$('#pb_title').focus();
+			return;
+		}
+		
+		if($('#pb_content').val() == "") {
+			alert("공지사항 내용을 입력해주세요.");	
+			$('#pb_content').focus();
+			return;
+		}
+		
+		
+		
 		let text = $('.project_board_insert_textarea').val();
 		text = text.replaceAll(/(\n|\r\n)/g, "<br>");
 		$('.project_board_insert_textarea').val(text);

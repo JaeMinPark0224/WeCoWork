@@ -212,7 +212,7 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 	
 	// 댓글 수정 버튼 수정 기능
 	function updateBtnFnc() {
-		$(this).text("수정 완료");
+		$(this).text("완료");
 		$(this).off("click");
 		$(this).on("click", updateDoCommentFnc);
 		let temtText = $(this).parent().next().children().text();
@@ -229,7 +229,7 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 			data: {
 				pc_no : $(this).attr("pc_no"),
 				pb_no : js_pb_no,
-				pc_content : $(this).parent().next().children().val().val().replaceAll(/(\n|\r\n)/g, "<br>")
+				pc_content : $(this).parent().next().children().val().replaceAll(/(\n|\r\n)/g, "<br>")
 			},
 			success: function(result) {
 				if(result == -1) {

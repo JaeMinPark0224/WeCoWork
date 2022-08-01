@@ -223,11 +223,16 @@
 	
 	// 업무 수정 기능
 	$("#project_work_update_btn").on("click", function() {
-		location.href = "<%= request.getContextPath()%>/project/work/update?project="+js_pr_no+"&no="+js_pw_no;
+		if(confirm("업무를 수정 하시겠습니까?")) {
+			location.href = "<%= request.getContextPath()%>/project/work/update?project="+js_pr_no+"&no="+js_pw_no;
+		}
 	});
 	
 	// 업무 삭제 기능
 	$("#project_work_delete_btn").on("click", function() {
+		if(!confirm("업무를 삭제 하시겠습니까?")) {
+			return;
+		}
 		$("#pw_no").val(js_pw_no);
 		$("#pr_no").val(js_pr_no);
 		$("#work_delete").get(0).submit();
@@ -292,7 +297,7 @@
 	
 	// 댓글 수정 버튼 수정 기능
 	function updateBtnFnc() {
-		$(this).text("수정 완료");
+		$(this).text("완료");
 		$(this).off("click");
 		$(this).on("click", updateDoCommentFnc);
 		let temtText = $(this).parent().next().children().text();

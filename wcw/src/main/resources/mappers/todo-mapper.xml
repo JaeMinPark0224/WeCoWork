@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Todo">
+
+	<insert id="insertTodo" parameterType="Todo">
+		insert into tb_todo
+		(todo_no, emp_no, todo_content)
+		values
+		((SELECT nvl(max(TODO_NO),0)+1 from tb_todo), #{emp_no}, #{todo_content})
+	</insert>
+	
+	<select id="selectListTodo" parameterType="_int" resultType="Todo">
+		select todo_no, todo_content
+			from tb_todo
+			where emp_no = #{emp_no}
+			order by todo_no desc
+	</select>
+	
+	<delete id="deleteTodo" parameterType="_int">
+		delete from tb_todo
+		where todo_no = #{todo_no}
+	</delete>
+	
+</mapper>

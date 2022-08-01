@@ -30,6 +30,16 @@ public class ProjectServiceImpl implements ProjectService{
 	public int insertProjectEmp(Project project) {
 		return dao.insertProjectEmp(project);
 	}
+	
+	@Override
+	public int updateProject(Project project) {
+		return dao.updateProject(project);
+	}
+	
+	@Override
+	public int completeProject(int pr_no) {
+		return dao.completeProject(pr_no);
+	}
 
 	@Override
 	public List<Project> selectListProject(int emp_no) {
@@ -109,6 +119,16 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int insertNoticeProject(Project project) {
 		return dao.insertNoticeProject(project);
+	}
+	
+	@Override
+	public int deleteNoticeProject(int pn_no) {
+		return dao.deleteNoticeProject(pn_no);
+	}
+	
+	@Override
+	public int updateNoticeProject(Project project) {
+		return dao.updateNoticeProject(project);
 	}
 
 	@Override
@@ -264,6 +284,11 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int updateCommentProject(Project project) {
 		return dao.updateCommentProject(project);
+	}
+
+	@Override
+	public List<Project> selectListMyCalendarProject(int emp_no) {
+		return dao.selectListMyCalendarProject(emp_no);
 	}
 
 }

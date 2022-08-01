@@ -16,6 +16,7 @@
 		<typeAlias type="kh.spring.wcw.dept.domain.Dept" alias="Dept"/>
 		<typeAlias type="kh.spring.wcw.draft.domain.Draft" alias="Draft"/>
 		<typeAlias type="kh.spring.wcw.wcw.domain.Wcw" alias="Wcw"/>
+		<typeAlias type="kh.spring.wcw.todo.domain.Todo" alias="Todo"/>
 	</typeAliases>
 	
 	<mappers>
@@ -31,6 +32,7 @@
 		<mapper resource="mappers/draft-mapper.xml"/>
 		<mapper resource="mappers/pi-mapper.xml"/>
 		<mapper resource="mappers/wcw-mapper.xml"/>
+		<mapper resource="mappers/todo-mapper.xml"/>
 	</mappers>
 	
 	

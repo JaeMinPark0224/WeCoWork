@@ -12,6 +12,11 @@
 <meta charset="UTF-8">
 <title>WCW</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script type="text/javascript">
+	<c:if test="${not empty msg}">
+		alert("${msg}");
+	</c:if>
+</script>
 </head>
 <body>
 <div id="project_list_modal_background">
@@ -44,11 +49,11 @@
 		</div>
 		<div id="project_list_wrap">
 			<c:forEach var = "item" items="${projectList }">
-			<div class="project_list_block">
+			<div class="project_list_block" <c:if test="${item.pr_complete_yn eq 'Y' }">style="background-color:rgb(204,204,204);"</c:if>>
 				<input class="project_list_pr_no_hidden" type="hidden" value="${item.pr_no}">
 				<div class="project_list_color"></div>
 				<div class="project_list_title">${item.pr_title }</div>
-				<div class="project_list_update">생성일 : ${fn:substring(item.pr_date,0,10) }</div>
+				<div class="project_list_update">${fn:substring(item.pr_date,0,10) }</div>
 				<div class="project_list_dept"></div>
 				<c:if test="${item.pr_fav eq '0'}">
 					<img class="project_list_fav" favChk = 'f' src="<%= request.getContextPath()%>/resources/images/bahai-empty.svg">
@@ -191,7 +196,12 @@
 				success: function(result) {
 					if(result == 1) {
 						location.href = "<%= request.getContextPath()%>/project/main?project="+$('#project_list_modal_val').val();
-					} else {
+					} 
+					else if(result == 2) {
+						alert("프로젝트 참여 승인 대기중입니다.");
+						return;
+					}
+					else {
 						console.log("heare");
 						$("#project_list_modal_background").css('display', 'block');
 						$('.project_list_modal_btn_participate').off('click');
@@ -206,6 +216,25 @@
 									success: function(result) {
 										if(result == 1) {
 											location.href = "<%= request.getContextPath()%>/project/main?project="+$('#project_list_modal_val').val();											
+										}
+									},
+									error: function(request, status, error) {
+										alert('fail');
+									}
+								});
+							}
+							else {
+								$.ajax({
+									type: "POST",
+									url: "<%= request.getContextPath()%>/project/participant/insert",
+									data: {
+										pr_no : $('#project_list_modal_val').val(),
+										pr_emp_authority : "C"
+									},
+									success: function(result) {
+										if(result == 1) {
+											alert("프로젝트 참여 신청에 성공했습니다.");											
+											$("#project_list_modal_background").css("display", "none");
 										}
 									},
 									error: function(request, status, error) {

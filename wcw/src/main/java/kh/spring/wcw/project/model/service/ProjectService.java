@@ -20,6 +20,10 @@ public interface ProjectService {
 	
 	public int deleteProject(int pr_no);
 	
+	public int updateProject(Project project);
+	
+	public int completeProject(int pr_no);
+	
 	public List<Project> selectListProject(int emp_no);
 	
 	public List<Project> selectListProject(int emp_no, String option, String search, RowBounds rowbounds);
@@ -51,6 +55,10 @@ public interface ProjectService {
 	public int deleteBoardFixProject(Project project);
 	
 	public int insertNoticeProject(Project project);
+	
+	public int deleteNoticeProject(int pn_no);
+	
+	public int updateNoticeProject(Project project);
 	
 	public List<Project> selectListNoticeProject(Project project);
 	
@@ -111,4 +119,6 @@ public interface ProjectService {
 	public int deleteCommentProject(int pc_no);
 	
 	public int updateCommentProject(Project project);
+	
+	public List<Project> selectListMyCalendarProject(int emp_no);
 }

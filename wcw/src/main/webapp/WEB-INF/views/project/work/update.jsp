@@ -293,6 +293,9 @@
 			}
 		}
 		$(".project_work_read_content_worker_wrap").append(appendText);
+		$(".project_work_read_content_worker[emp="+js_emp_no+"]").append('<i class="fa-solid fa-xmark work_worker_cancle" emp="'+js_emp_no+'"></i>');
+		$(".work_worker_cancle").off("click");
+		$(".work_worker_cancle").on("click", workerDelete);
 		$("#project_participant_modal_background").css("display", "none");
 	});
 	
@@ -441,7 +444,14 @@
 		project_work_form.submit();
 	});
 	
-
+	// 업무자 삭제
+	function workerDelete() {
+		console.log("workerDelete");
+		console.log($(this));
+		console.log($(this).parent());
+		$(this).parent().remove();
+	}
+	
 	// 초기값 지정
 	$("#project_work_title_input_text").val("${work.pw_title }");
 	$('#project_work_content_input_textarea').val("${work.pw_content}");
@@ -451,7 +461,9 @@
 	$(".project_work_read_content_priority").eq(${work.pw_priority} - 1).trigger("click");
 	<c:forEach items="${workerList}" var="worker">
 		$(".project_work_read_content_worker_wrap").append('<div class="project_work_read_content_worker" emp="${worker.emp_no}">${worker.name}</div>');
+		$(".project_work_read_content_worker[emp="+${worker.emp_no}+"]").append('<i class="fa-solid fa-xmark work_worker_cancle" emp="${worker.emp_no}"></i>');
 	</c:forEach>
+	$(".work_worker_cancle").on("click", workerDelete);
 	$(".project_work_read_content_date_input_date").eq(0).val("${fn:substring(work.pw_start_date, 0, 10)}T${fn:substring(work.pw_start_date, 11, 16)}");
 	$(".project_work_read_content_date_input_date").eq(1).val("${fn:substring(work.pw_end_date, 0, 10)}T${fn:substring(work.pw_end_date, 11, 16)}");
 </script>

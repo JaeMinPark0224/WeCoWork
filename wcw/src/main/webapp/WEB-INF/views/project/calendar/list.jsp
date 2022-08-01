@@ -30,9 +30,11 @@
 		$(function() {
 			calendarEl = $("#calendar")[0];
 			calendar = new FullCalendar.Calendar(calendarEl, {
-				height: '700px',
+				height: '800px',
 				locale: 'ko',
 				expandRows: true,
+				displayEventTime: false,
+				dayMaxEventRows: true,
 				headerToolbar: {
 					left: 'prev,next today',
 					center: 'title',

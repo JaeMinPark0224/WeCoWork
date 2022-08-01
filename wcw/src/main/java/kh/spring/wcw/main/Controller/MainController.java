@@ -28,11 +28,14 @@ import com.cloudinary.utils.ObjectUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import kh.spring.wcw.common.WCWUtill;
 import kh.spring.wcw.company.domain.Company;
 import kh.spring.wcw.company.service.CompanyService;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.employee.service.EmployeeService;
 import kh.spring.wcw.mail.Mail;
+import kh.spring.wcw.project.model.service.ProjectService;
+import kh.spring.wcw.todo.service.TodoService;
 
 @Controller
 public class MainController {
@@ -41,6 +44,12 @@ public class MainController {
 	private EmployeeService empService;
 	@Autowired
 	private CompanyService cpService;
+	@Autowired
+	private TodoService todoService;
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private WCWUtill wcwutill;
 	
 	// 메인 페이지로 이동
 	@GetMapping("/")
@@ -50,6 +59,9 @@ public class MainController {
 			mv.setViewName("main/intro"); //TODO 첫화면으로
 			return mv;
 		}
+		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
+		mv.addObject("todoList", todoService.selectListTodo(loginSSInfo.getEmp_no()));
+		mv.addObject("calendarMyList", projectService.selectListMyCalendarProject(loginSSInfo.getEmp_no()));
 		mv.setViewName("main/main");
 		return mv;
 	}
@@ -464,5 +476,5 @@ public class MainController {
 		mv.setViewName("redirect:/mypage"); // 다시 마이페이지로
 		return mv;
 	}
-		
+	
 }

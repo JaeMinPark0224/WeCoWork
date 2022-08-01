@@ -287,6 +287,9 @@
 			}
 		}
 		$(".project_work_read_content_worker_wrap").append(appendText);
+		$(".project_work_read_content_worker[emp="+js_emp_no+"]").append('<i class="fa-solid fa-xmark work_worker_cancle" emp="'+js_emp_no+'"></i>');
+		$(".work_worker_cancle").off("click");
+		$(".work_worker_cancle").on("click", workerDelete);
 		$("#project_participant_modal_background").css("display", "none");
 	});
 	
@@ -437,8 +440,13 @@
 		project_work_form.submit();
 	});
 	
-
-	
+	// 업무자 삭제
+	function workerDelete() {
+		console.log("workerDelete");
+		console.log($(this));
+		console.log($(this).parent());
+		$(this).parent().remove();
+	}
 </script>
 </body>
 </html>

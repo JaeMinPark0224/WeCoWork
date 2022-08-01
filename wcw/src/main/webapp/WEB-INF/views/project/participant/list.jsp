@@ -21,6 +21,7 @@
 				<span class="project_participant_modal_tap" chk="f">책임자 박탈</span>
 				<span class="project_participant_modal_tap" chk="f">참여자 강퇴</span>
 				<span class="project_participant_modal_tap_invite">참여자 초대</span>
+				<span class="project_participant_modal_tap_accept">참여 승인</span>
 			</div>
 			<div class="project_participant_modal_name">부서</div>
 			<div class="project_participant_modal_select_wrap">
@@ -94,10 +95,10 @@
 										<div class="project_workder_gird">
 											<div class="project_workder_profile">
 												<c:if test="${empty participant.profile}">
-											    	<img class="project_workder_profile_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
+											    	<img class="project_worker_profile_img" src="<%= request.getContextPath() %>/resources/images/clear.png">
 											    </c:if>
 											    <c:if test="${not empty participant.profile}">
-											        <img class="project_workder_profile_img" src="${participant.profile}">
+											        <img class="project_worker_profile_img" src="${participant.profile}">
 											   	</c:if>
 											</div>
 											<div class="project_workder_name_dept">
@@ -128,12 +129,14 @@ var employee;
 <c:if test="${pr_emp_authority eq 'A'}">
 	$("#project_main_tab_wrap").append("<button id='project_participant_update_btn'>설정</button>");
 	$("#project_main_tab_wrap").append("<button id='project_participant_invite_btn'>초대</button>");
+	$("#project_main_tab_wrap").append("<button id='project_participant_accept_btn'>승인</button>");
 </c:if>
 
 // 모달창 열기
 $("#project_participant_update_btn").on("click", function() {
 	$(".project_participant_modal_tap").css("display", "block");
 	$(".project_participant_modal_tap_invite").css("display", "none");
+	$(".project_participant_modal_tap_accept").css("display", "none");
 	$(".project_participant_modal_tap").css("color", "rgb(51, 51, 51)");
 	$(".project_participant_modal_tap").attr("chk", "f");
 	$(".project_participant_modal_tap").eq(0).css("color", "#4B4DB2");
@@ -319,7 +322,7 @@ $("#project_participant_modal_add_btn").on("click", function() {
 	}
 	let tapIndex = $(".project_participant_modal_tap[chk = 't']").index();
 	tapIndex = ($(".project_participant_modal_tap_invite").css("display") == 'block')?3:tapIndex;
-	console.log(tapIndex);
+	tapIndex = ($(".project_participant_modal_tap_accept").css("display") == 'block')?4:tapIndex;
 	switch(tapIndex) {
 		case 0:
 			adminAdd();
@@ -332,6 +335,9 @@ $("#project_participant_modal_add_btn").on("click", function() {
 			break;
 		case 3:
 			employeInvite();
+			break;
+		case 4:
+			employeAccept();
 			break;
 	}
 });
@@ -361,8 +367,12 @@ function adminAdd() {
 
 //추가 버튼 클릭시 책임자 박탈 기능 ajax
 function adminDelete() {
+	if($(".project_participant_body_wrap").eq(0).find(".project_workder_gird").length == 1) {
+		alert("책임자를 박탈할 수 없습니다.");	
+		return;
+	}
 	let $employeeSelect = $("#project_participant_modal_select_name");
-	let js_emp_no = $employeeSelect.val() 
+	let js_emp_no = $employeeSelect.val();
 	$.ajax({
 		type: "POST",
 		url: "<%= request.getContextPath()%>/project/participant/update",
@@ -413,6 +423,7 @@ $("#project_participant_modal_cancle_btn").on("click", function() {
 // 초대 버튼 클릭시 모달차 열기
 $("#project_participant_invite_btn").on("click", function() {
 	$(".project_participant_modal_tap").css("display", "none");
+	$(".project_participant_modal_tap_accept").css("display", "none");
 	$(".project_participant_modal_tap_invite").css("display", "block");
 	$("#project_participant_modal_background").css("display", "block");
 	inviteList();
@@ -425,7 +436,7 @@ function inviteList() {
 		url: "<%= request.getContextPath()%>/project/participant/list",
 		data: {
 			pr_no : js_pr_no,
-			authority : 'C'
+			authority : 'D'
 		},
 		dataType: "json",
 		success: function(result) {
@@ -457,6 +468,68 @@ function employeInvite() {
 		data: {
 			pr_no : js_pr_no,
 			emp_no : js_emp_no,
+		},
+		dataType: "json",
+		success: function(result) {
+			if(result == 1) {
+				location.reload();
+			}
+		},
+		error: function(request, status, error) {
+			alert("fail");
+		}
+	});
+}
+
+// 승인 버튼 클릭 모달 창 열기
+$("#project_participant_accept_btn").on("click", function() {
+	$(".project_participant_modal_tap").css("display", "none");
+	$(".project_participant_modal_tap_invite").css("display", "none");
+	$(".project_participant_modal_tap_accept").css("display", "block");
+	$("#project_participant_modal_background").css("display", "block");
+	acceptList();
+});
+
+//프로젝트에 참여 신청한 사원 리스트 조회
+function acceptList() {
+	$.ajax({
+		type: "POST",
+		url: "<%= request.getContextPath()%>/project/participant/list",
+		data: {
+			pr_no : js_pr_no,
+			authority : 'C'
+		},
+		dataType: "json",
+		success: function(result) {
+			console.log(result);
+			employee = result.participantList;
+			let $deptSelect = $("#project_participant_modal_select_dept");
+			// 셀렉박스 초기화
+			selectReset();
+			for(var i = 0; i < result.deptList.length; i++) {
+				let deptName = result.deptList[i];
+				selectOptionAdd($deptSelect, deptName);
+			}
+			$deptSelect.off("change");
+			$deptSelect.on("change", employeeList);
+		},
+		error: function(request, status, error) {
+			alert("fail");
+		}
+	});
+}
+
+//프로젝트에 사원 승인하는 ajax 기능
+function employeAccept() {
+	let $employeeSelect = $("#project_participant_modal_select_name");
+	let js_emp_no = $employeeSelect.val() 
+	$.ajax({
+		type: "POST",
+		url: "<%= request.getContextPath()%>/project/participant/update",
+		data: {
+			pr_no : js_pr_no,
+			emp_no : js_emp_no,
+			pr_emp_authority : "B"
 		},
 		dataType: "json",
 		success: function(result) {

@@ -33,9 +33,9 @@
 				</div>
 			</div>
 			<div id="project_board_read_grid">
-				<div class="project_board_read_title">게시물 제목</div>
+				<div class="project_board_read_title">공지사항 제목</div>
 				<div class="project_board_read_title" id="project_board_read_title">${project.pn_title }</div>
-				<div class="project_board_read_title">게시물 내용</div>
+				<div class="project_board_read_title">공지사항 내용</div>
 				<div class="project_board_read_content">${project.pn_content }</div>
 				<c:if test="${not empty fileList }">
 				<div class="project_board_read_title">파일 업로드</div>
@@ -89,7 +89,7 @@
 	</div>
 	<form action="<%= request.getContextPath()%>/project/board/delete" id="project_board_read_form" method="post">
 		<input type="hidden" name="pr_no" id="pr_no">
-		<input type="hidden" name="pb_no" id="pb_no">
+		<input type="hidden" name="pn_no" id="pn_no">
 	</form>
 </section>
 <script type="text/javascript">
@@ -135,22 +135,21 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 	
 	// 게시글 삭제 기능
 	$("#project_board_delete_btn").on("click", function() {
-		if(!confirm("게시글을 삭제하겠습니까?")) {
+		if(!confirm("공지사항을 삭제하겠습니까?")) {
 			return;
 		}
 		$("#pr_no").val(js_pr_no);
-		$("#pb_no").val(js_pb_no);
-		$("#project_board_read_form").get(0).action = "<%= request.getContextPath()%>/project/board/delete";
+		$("#pn_no").val(js_pn_no);
+		$("#project_board_read_form").get(0).action = "<%= request.getContextPath()%>/project/notice/delete";
 		$("#project_board_read_form").get(0).submit();
 	});
 	
 	
 	// 게시글 업데이트 기능
 	$("#project_board_update_btn").on("click", function () {
-		if(!confirm("게시글을 수정하겠습니까?")) {
-			return;
+		if(confirm("공지사항을 수정하겠습니까?")) {
+			location.href = "<%= request.getContextPath()%>/project/notice/update?project="+js_pr_no+"&no="+js_pn_no;
 		}
-		location.href = "<%= request.getContextPath()%>/project/board/update?project="+js_pr_no+"&no="+js_pb_no;
 	});
 	
 	// 댓글 등록
@@ -212,7 +211,7 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 	
 	// 댓글 수정 버튼 수정 기능
 	function updateBtnFnc() {
-		$(this).text("수정 완료");
+		$(this).text("완료");
 		$(this).off("click");
 		$(this).on("click", updateDoCommentFnc);
 		let temtText = $(this).parent().next().children().text();
@@ -229,7 +228,7 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 			data: {
 				pc_no : $(this).attr("pc_no"),
 				pn_no : js_pn_no,
-				pc_content : $(this).parent().next().children().val().val().replaceAll(/(\n|\r\n)/g, "<br>")
+				pc_content : $(this).parent().next().children().val().replaceAll(/(\n|\r\n)/g, "<br>")
 			},
 			success: function(result) {
 				if(result == -1) {

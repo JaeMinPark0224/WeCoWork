@@ -12,6 +12,11 @@
 <meta charset="UTF-8">
 <title>WCW</title>
 <%@ include file="/WEB-INF/views/template/font.jsp" %>
+<script type="text/javascript">
+	<c:if test="${not empty msg}">
+		alert("${msg}");
+	</c:if>
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/template/aside.jsp" %>
@@ -20,7 +25,7 @@
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 		<div id="project_main_container">
 			<div id="project_main_box_title">
-				<div id="project_main_box_title_title">${project.pr_title }프로젝트 제목</div>
+				<div id="project_main_box_title_title">${project.pr_title }</div>
 				<div id="project_main_box_title_content">${project.pr_content }</div>
 				<div id="project_main_box_title_company">${project.cp_name }</div>
 				<div id="project_main_box_title_participant"></div>

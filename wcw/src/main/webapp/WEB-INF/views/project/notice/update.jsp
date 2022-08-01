@@ -36,21 +36,21 @@
 	<div id="project_main_wrap">
 	<%@ include file="/WEB-INF/views/project/projectheader.jsp" %>
 	<!-- <div id="project_main_menu_title">게시물 작성</div> -->
-		<form id="board_form" name="board_form" action="<%= request.getContextPath()%>/project/board/update.do" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="pb_no" id="pb_no">
+		<form id="board_form" name="board_form" action="<%= request.getContextPath()%>/project/notice/update.do" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="pn_no" id="pn_no">
 			<input type="hidden" name="pr_no" id="pr_no">
 			<div id="project_board_insert_wrap">
 				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">게시물 제목</div>
+					<div class="project_board_insert_div_title">공지사항 제목</div>
 					<div class="project_input_wrap">
-						<input type="text" class="project_board_insert_input_text" name="pb_title" id="pb_title" placeholder="게시물 제목을 입력해 주세요. (최대 30자)">
+						<input type="text" class="project_board_insert_input_text" name="pn_title" id="pn_title" placeholder="게시물 제목을 입력해 주세요. (최대 30자)">
 						<div class="project_board_input_count">0/30자</div>
 					</div>
 				</div>
 				<div class="project_board_insert_content">
-					<div class="project_board_insert_div_title">게시물 내용</div>
+					<div class="project_board_insert_div_title">공지사항 내용</div>
 					<div class="project_input_wrap">
-						<textarea class="project_board_insert_textarea" name="pb_content" id="pb_content" placeholder="프로젝트 내용을 입력해 주세요. (최대 600자)"></textarea>
+						<textarea class="project_board_insert_textarea" name="pn_content" id="pn_content" placeholder="프로젝트 내용을 입력해 주세요. (최대 600자)"></textarea>
 						<div class="project_board_input_count">0/600자</div>
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 <script type="text/javascript">
 	//프로젝트 번호
 	var js_pr_no = (new URL(location.href).searchParams).get('project');
-	var js_pb_no = (new URL(location.href).searchParams).get('no');
+	var js_pn_no = (new URL(location.href).searchParams).get('no');
 
 	// 맨션 토글 버튼 위치 조정
 	$(".project_insert_toggle_btn_wrap").css("margin-top", "2.5px");
@@ -108,7 +108,7 @@
 	});
 	
 	// 게시물 제목 유효성 체크
-	$('#pb_title').on('input', function() {
+	$('#pn_title').on('input', function() {
 		let contentCount = $(this).val();
 		if(contentCount.length == 0 || contentCount == '') {
 			$(this).next().text('0/30자');
@@ -123,7 +123,7 @@
 	});
 	
 	// 게시물 내용 유효성 체크
-	$('#pb_content').on('input', function() {
+	$('#pn_content').on('input', function() {
 		let contentCount = $(this).val();
 		if(contentCount.length == 0 || contentCount == '') {
 			$(this).next().text('0/600자');
@@ -140,15 +140,15 @@
 	// submit 기능 구현
 	$(".project_board_insert_write_btn").on('click', function() {
 		
-		if($('#pb_title').val() == "") 	{
+		if($('#pn_title').val() == "") 	{
 			alert("게시물 제목을 입력해주세요.");
-			$('#pb_title').focus();
+			$('#pn_title').focus();
 			return;
 		}
 		
-		if($('#pb_content').val() == "") {
+		if($('#pn_content').val() == "") {
 			alert("게시물 내용을 입력해주세요.");	
-			$('#pb_content').focus();
+			$('#pn_content').focus();
 			return;
 		}
 		
@@ -317,12 +317,12 @@
 	});
 	
 	// 초기값 입력
-	$("#pb_title").val("${project.pb_title }");
-	$('#pb_content').val("${project.pb_content}");
-	$("#pb_title").trigger("input");
-	$("#pb_content").trigger("input");
+	$("#pn_title").val("${project.pn_title }");
+	$('#pn_content').val("${project.pn_content}");
+	$("#pn_title").trigger("input");
+	$("#pn_content").trigger("input");
 	$(".file_delete_btn").on("click", deleteBtn);
-	$("#pb_no").val(js_pb_no);
+	$("#pn_no").val(js_pn_no);
 	$("#pr_no").val(js_pr_no);
 </script>
 </body>

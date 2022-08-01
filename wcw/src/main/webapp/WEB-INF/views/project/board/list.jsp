@@ -23,6 +23,9 @@
 			<div class="project_board_list_flex_box_header">공지사항</div>
 			<div class="project_board_list_flex_box_body">
 				<div class="project_board_list_flex_box_body_container">
+					<c:if test="${fn:length(noticeList) == 0 }">
+						<div class="project_board_list_none">등록된 공지사항이 없습니다.</div>
+					</c:if>
 					<c:forEach items="${noticeList }" var="notice">
 						<div class="project_board_title"><span class="project_notice_title_span" pn_no="${notice.pn_no }">${notice.pn_title }</span></div>
 						<div class="project_board_writer">${notice.name } ${notice.job_title }</div>
@@ -51,6 +54,9 @@
 			<div class="project_board_list_flex_box_board_header">게시물</div>
 			<div class="project_board_list_flex_box_board_body">
 				<div class="project_board_list_flex_box_body_container_fix">
+					<c:if test="${fn:length(boardList) == 0 }">
+						<div class="project_board_list_none">등록된 게시물이 없습니다.</div>
+					</c:if>
 					<c:forEach items="${boardList }" var="board">
 						<div class="project_board_list_gird_rows" pr_no = "${board.pb_no }">
 							<input class="project_board_num" type="hidden" value="${board.pb_no }">
@@ -66,17 +72,19 @@
 						</div>
 					</c:forEach>
 				</div>
-				<div class="project_list_page_btn_wrap">
-					<c:if test="${startPage > 5}">
-						<div class="project_page_btn"><i class="fa-solid fa-angle-left"></i></div>
-					</c:if>
-					<c:forEach var="index" begin="${startPage }" end="${endPage }">
-						<div class="project_page_btn">${index }</div>
-					</c:forEach>
-					<c:if test="${endPage ne totalPageCnt}">
-						<div class="project_page_btn"><i class="fa-solid fa-angle-right"></i></div>
-					</c:if>
-				</div>
+				<c:if test="${fn:length(boardList) != 0 }">
+					<div class="project_list_page_btn_wrap">
+						<c:if test="${startPage > 5}">
+							<div class="project_page_btn"><i class="fa-solid fa-angle-left"></i></div>
+						</c:if>
+						<c:forEach var="index" begin="${startPage }" end="${endPage }">
+							<div class="project_page_btn">${index }</div>
+						</c:forEach>
+						<c:if test="${endPage ne totalPageCnt}">
+							<div class="project_page_btn"><i class="fa-solid fa-angle-right"></i></div>
+						</c:if>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>

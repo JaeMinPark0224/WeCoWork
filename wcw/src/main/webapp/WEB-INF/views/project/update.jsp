@@ -20,6 +20,7 @@
 </script>
 	<div id="project_main_wrap">
 		<form name="project_insert_form">
+			<input type="hidden" name="pr_no" value="${project.pr_no }">
 			<div id="project_insert_wrap">
 				<div class="project_insert_text_title">프로젝트 제목</div>
 				<div class="project_input_wrap">
@@ -108,7 +109,7 @@
 			$("#project_insert_textarea").focus();
 			return;
 		}
-		project_insert_form.action = "<%= request.getContextPath()%>/project/insert.do"
+		project_insert_form.action = "<%= request.getContextPath()%>/project/update.do"
 		project_insert_form.method = "post";
 		project_insert_form.submit();
 	});
@@ -140,6 +141,19 @@
 			$(this).next().text('400/400자');
 		}
 	});
+	
+	// 초기값 지정
+	$("#project_insert_text").val("${project.pr_title}");
+	$('#project_insert_textarea').val("${project.pr_content}");
+	$("#project_insert_text").trigger("input");
+	$("#project_insert_textarea").trigger("input");
+	console.log("${project}");
+	if("${project.pr_open_yn}" == 'Y') {
+		$(".project_insert_toggle_btn_wrap").eq(0).trigger("click");
+	}
+	if("${project.pr_join_open}" == 'Y') {
+		$(".project_insert_toggle_btn_wrap").eq(1).trigger("click");
+	}
 </script>
 </body>
 </html>
