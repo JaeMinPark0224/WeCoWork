@@ -77,6 +77,19 @@
 				</c:choose>
 			</c:forEach>
 			</div>
+		<c:if test="${fn:length(workList) != 0 }">
+			<div class="project_list_page_btn_wrap">
+				<c:if test="${startPage > 5}">
+					<div class="project_page_btn_prev"><i class="fa-solid fa-angle-left"></i></div>
+				</c:if>
+				<c:forEach var="index" begin="${startPage }" end="${endPage }">
+					<div class="project_page_btn">${index }</div>
+				</c:forEach>
+				<c:if test="${endPage ne totalPageCnt}">
+					<div class="project_page_btn_next"><i class="fa-solid fa-angle-right"></i></div>
+				</c:if>
+			</div>
+		</c:if>
 		</div>
 	</div>
 </section>
@@ -84,6 +97,32 @@
 	// 프로젝트 번호
 	var js_pr_no = (new URL(location.href).searchParams).get('project');
 	
+	// 페이지 번호
+	var js_page_no = (new URL(location.href).searchParams).get('page');
+
+	// 페이지 번호 url 설정
+	$(".project_page_btn").on("click", function() {
+		location.href = "<%= request.getContextPath()%>/project/work/list?project="+js_pr_no+"&page="+$(this).text();
+	});
+
+	$(".project_page_btn_prev").on("click", function() {
+		location.href = "<%= request.getContextPath()%>/project/work/list?project="+js_pr_no+"&page="+(-1+$(".project_page_btn").eq(0).text());	
+	});
+
+	$(".project_page_btn_next").on("click", function() {
+		location.href = "<%= request.getContextPath()%>/project/work/list?project="+js_pr_no+"&page="+(1+$(".project_page_btn").last().text());	
+	});
+	
+	//페이지 처리
+	for(var i = 0; i < $(".project_page_btn").length; i++) {
+		if($(".project_page_btn").eq(i).text() == js_page_no) {
+			$(".project_page_btn").eq(i).css({
+				"background-color" : "#4B4DB2",
+				color : "white"
+			});
+			break;
+		}
+	}
 	// projectheader에 버튼 추가
 	$("#project_main_tab_wrap").append("<div id='project_work_insert_btn_wrap'><button id='project_work_insert_btn'>업무 추가</button></div>");
 	

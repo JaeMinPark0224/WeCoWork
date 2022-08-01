@@ -269,4 +269,12 @@ public class ProjectDao {
 	public int selectCntBoardProject(int pr_no) {
 		return sqlsession.selectOne("Project.selectCntBoardProject", pr_no);
 	}
+	
+	public int selectCntWorkProject(int pr_no) {
+		return sqlsession.selectOne("Project.selectCntWorkProject", pr_no);
+	}
+	
+	public List<String> selectListUpperWorkProject(int pr_no, RowBounds rowbounds) {
+		return sqlsession.selectList("Project.selectListUpperWorkProject", pr_no, rowbounds);
+	}
 }

@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Project">
-	
+
 	<insert id="insertProject" parameterType="Project">
-		insert all 
+		insert all
 		into tb_project
 		(PR_NO, PR_TITLE
 		, PR_CONTENT , PR_OPEN_YN
-		, PR_JOIN_OPEN, PR_DATE
+		, PR_JOIN_OPEN,
+		PR_DATE
 		, CP_NO, PR_COMPLETE_YN)
 		values
-		((SELECT nvl(max(PR_NO),0)+1 from tb_project), #{pr_title}
+		((SELECT nvl(max(PR_NO),0)+1 from
+		tb_project), #{pr_title}
 		, #{pr_content}, #{pr_open_yn}
-		, #{pr_join_open}, default
+		,
+		#{pr_join_open}, default
 		, (select cp_no
-   			from tb_employee te
-    		join tb_department td
-    		on te.dept_no = td.dept_no
-    		where te.emp_no = #{emp_no})
+		from tb_employee te
+		join tb_department td
+		on te.dept_no = td.dept_no
+		where te.emp_no = #{emp_no})
 		, default)
 		into tb_project_emp
 		(PR_NO, EP_NO
-		, PR_EMP_DATE, PR_EMP_AUTHORITY)
+		,
+		PR_EMP_DATE, PR_EMP_AUTHORITY)
 		values
-		((SELECT nvl(max(PR_NO),0)+1 from tb_project), #{emp_no}
+		((SELECT nvl(max(PR_NO),0)+1 from
+		tb_project), #{emp_no}
 		, default, 'A')
 		into tb_project_file_folder
 		(pff_no, pff_name
@@ -32,302 +37,349 @@
 		values
 		((SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder), 'ROOT'
 		,(SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder), 0,
-		0, (SELECT nvl(max(PR_NO),0)+1 from tb_project))
+		0,
+		(SELECT nvl(max(PR_NO),0)+1 from tb_project))
 		select * from dual
 	</insert>
-	
+
 	<insert id="insertProjectEmp" parameterType="Project">
-		insert into tb_project
+		insert into
+		tb_project
 		(PR_NO, PR_TITLE
 		, PR_CONTENT , PR_OPEN_YN
-		, PR_JOIN_OPEN, PR_DATE
+		, PR_JOIN_OPEN,
+		PR_DATE
 		, CP_NO, PR_COMPLETE_YN)
 		values
-		((SELECT nvl(max(PR_NO),0)+1 from tb_project), #{pr_title}
+		((SELECT nvl(max(PR_NO),0)+1 from
+		tb_project), #{pr_title}
 		, #{pr_content}, #{pr_open_yn}
-		, #{pr_join_open}, default
+		,
+		#{pr_join_open}, default
 		, (select cp_no
-   			from tb_employee te
-    		join tb_department td
-    		on te.dept_no = td.dept_no)
+		from tb_employee te
+		join tb_department td
+		on te.dept_no = td.dept_no)
 		, default)
 	</insert>
-	
+
 	<delete id="deleteProject" parameterType="_int">
 		delete from tb_project
-			where pr_no = #{pr_no}
+		where pr_no = #{pr_no}
 	</delete>
-	
+
 	<update id="updateProject" parameterType="Project">
 		update tb_project
-			set pr_title = #{pr_title},
-				pr_content = #{pr_content},
-				pr_open_yn = #{pr_open_yn},
-				pr_join_open = #{pr_join_open}
-			where pr_no = #{pr_no}
+		set pr_title = #{pr_title},
+		pr_content = #{pr_content},
+		pr_open_yn = #{pr_open_yn},
+		pr_join_open = #{pr_join_open}
+		where pr_no = #{pr_no}
 	</update>
-	
+
 	<update id="completeProject" parameterType="_int">
 		update tb_project
-			set pr_complete_yn = 'Y'
-			where pr_no = #{pr_no}
+		set pr_complete_yn = 'Y'
+		where pr_no = #{pr_no}
 	</update>
-	
-	<select id="selectListProject" parameterType="_int" resultType="Project">
+
+	<select id="selectListProject" parameterType="_int"
+		resultType="Project">
 		select tp.*, ta.pr_fav from tb_project tp
-		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
-		    on tp.pr_no = ta.pr_fav
-		    <if test='option.equals("all")'>
-		    where cp_no = (select cp_no
-                            from tb_department td
-                            join tb_employee te
-                            on td.dept_no = te.dept_no
-                            where te.emp_no = #{emp_no})
-                and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no = tp.pr_no and ep_no = #{emp_no}) is not null)
-			</if>    
-			<if test='option.equals("participant")'>
-		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
-		    </if>            
-		    <if test='option.equals("bookmark")'>
-		    where tp.pr_no in (select pr_no from tb_project_favorite where emp_no = #{emp_no})
-		    </if>
-		    <if test='option.equals("complete")'>
-		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
-    		and pr_complete_yn = 'Y'
-		    </if>
-		    <if test="search != null">
-		    and pr_title like '%'||#{search}||'%'
-		    </if>
-		    order by tp.pr_date desc
+		left outer join (select pr_no pr_fav from tb_project_favorite where emp_no
+		= #{emp_no}) ta
+		on tp.pr_no = ta.pr_fav
+		<if test='option.equals("all")'>
+			where cp_no = (select cp_no
+			from tb_department td
+			join tb_employee te
+			on td.dept_no = te.dept_no
+			where te.emp_no = #{emp_no})
+			and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no =
+			tp.pr_no and ep_no = #{emp_no}) is not null)
+		</if>
+		<if test='option.equals("participant")'>
+			where tp.pr_no in (select pr_no from tb_project_emp where ep_no =
+			#{emp_no})
+		</if>
+		<if test='option.equals("bookmark")'>
+			where tp.pr_no in (select pr_no from tb_project_favorite where emp_no =
+			#{emp_no})
+		</if>
+		<if test='option.equals("complete")'>
+			where tp.pr_no in (select pr_no from tb_project_emp where ep_no =
+			#{emp_no})
+			and pr_complete_yn = 'Y'
+		</if>
+		<if test="search != null">
+			and pr_title like '%'||#{search}||'%'
+		</if>
+		order by tp.pr_date desc
 	</select>
-	
-	<select id="selectCntProject" parameterType="map" resultType="_int">
+
+	<select id="selectCntProject" parameterType="map"
+		resultType="_int">
 		select count(tp.pr_no)
-			from tb_project tp
-		    left outer join (select pr_no pr_fav from tb_project_favorite where emp_no = #{emp_no}) ta
-		    on tp.pr_no = ta.pr_fav
-		    <if test='option.equals("all")'>
-		    where cp_no = (select cp_no
-                            from tb_department td
-                            join tb_employee te
-                            on td.dept_no = te.dept_no
-                            where te.emp_no = #{emp_no})
-                and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no = tp.pr_no and ep_no = #{emp_no}) is not null)
-		    </if>
-		    <if test='option.equals("participant")'>
-		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
-		    </if>
-		    <if test='option.equals("bookmark")'>
-		    where tp.pr_no in (select pr_no from tb_project_favorite where emp_no = #{emp_no})
-		    </if>
-		    <if test='option.equals("complete")'>
-		    where tp.pr_no in (select pr_no from tb_project_emp where ep_no = #{emp_no})
-    		and pr_complete_yn = 'Y'
-		    </if>
-		    <if test="search != null">
-		    and pr_title like '%'||#{search}||'%'
-		    </if>
-		    
-		    order by tp.pr_date desc
+		from tb_project tp
+		left outer join (select pr_no pr_fav from tb_project_favorite where emp_no
+		= #{emp_no}) ta
+		on tp.pr_no = ta.pr_fav
+		<if test='option.equals("all")'>
+			where cp_no = (select cp_no
+			from tb_department td
+			join tb_employee te
+			on td.dept_no = te.dept_no
+			where te.emp_no = #{emp_no})
+			and (pr_open_yn = 'Y' or (select pr_no from tb_project_emp where pr_no =
+			tp.pr_no and ep_no = #{emp_no}) is not null)
+		</if>
+		<if test='option.equals("participant")'>
+			where tp.pr_no in (select pr_no from tb_project_emp where ep_no =
+			#{emp_no})
+		</if>
+		<if test='option.equals("bookmark")'>
+			where tp.pr_no in (select pr_no from tb_project_favorite where emp_no =
+			#{emp_no})
+		</if>
+		<if test='option.equals("complete")'>
+			where tp.pr_no in (select pr_no from tb_project_emp where ep_no =
+			#{emp_no})
+			and pr_complete_yn = 'Y'
+		</if>
+		<if test="search != null">
+			and pr_title like '%'||#{search}||'%'
+		</if>
+
+		order by tp.pr_date desc
 	</select>
-	
+
 	<insert id="insertFavoriteProject" parameterType="Project">
-		insert into tb_project_favorite
-			(pr_no, emp_no)
-			values
-			(#{pr_no}, #{emp_no})
+		insert into
+		tb_project_favorite
+		(pr_no, emp_no)
+		values
+		(#{pr_no}, #{emp_no})
 	</insert>
-	
+
 	<delete id="deleteFavoriteProject" parameterType="Project">
-		delete from tb_project_favorite
-			where pr_no = #{pr_no}
-			and emp_no = #{emp_no}
+		delete from
+		tb_project_favorite
+		where pr_no = #{pr_no}
+		and emp_no = #{emp_no}
 	</delete>
-	
-	<select id="selectProject" parameterType="_int" resultType="Project">
+
+	<select id="selectProject" parameterType="_int"
+		resultType="Project">
 		select tp.*, cp_name from tb_project tp
-        join tb_company tc
-        on tp.cp_no = tc.cp_no
+		join tb_company tc
+		on tp.cp_no = tc.cp_no
 		where pr_no = #{pr_no}
 	</select>
-	
-	<select id="selectEmpProject" parameterType="hashmap" resultType="Project">
+
+	<select id="selectEmpProject" parameterType="hashmap"
+		resultType="Project">
 		select pr_no, ep_no emp_no, pr_emp_authority
-			from tb_project_emp 
-			where pr_no = #{pr_no} and ep_no = #{emp_no}
+		from tb_project_emp
+		where pr_no = #{pr_no} and ep_no = #{emp_no}
 	</select>
-	
-	<select id="selectListParticipantProject" parameterType="hashmap" resultType="Project">
-		<if test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B") or pr_emp_authority.equals("ALL")'>
-		select tpe.pr_no, tpe.ep_no, tpe.pr_emp_authority, te.email
-				, te.name, te.intl_no, te.profile, td.dept_name
-				, tjt.job_title
-		    from tb_project_emp tpe
-		    join tb_employee te
-		    on tpe.ep_no = te.emp_no
-		    join tb_department td
-		    on te.dept_no = td.dept_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-		    where pr_no = #{pr_no} 
-		    <if test='!pr_emp_authority.equals("ALL")'>
-			    and pr_emp_authority = #{pr_emp_authority}
-		    </if>
-		    order by tjt.job_level asc
+
+	<select id="selectListParticipantProject"
+		parameterType="hashmap" resultType="Project">
+		<if
+			test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B") or pr_emp_authority.equals("ALL")'>
+			select tpe.pr_no, tpe.ep_no, tpe.pr_emp_authority, te.email
+			, te.name, te.intl_no, te.profile, td.dept_name
+			, tjt.job_title
+			from tb_project_emp tpe
+			join tb_employee te
+			on tpe.ep_no = te.emp_no
+			join tb_department td
+			on te.dept_no = td.dept_no
+			join tb_job_title tjt
+			on te.job_title_no = tjt.job_title_no
+			where pr_no = #{pr_no}
+			<if test='!pr_emp_authority.equals("ALL")'>
+				and pr_emp_authority = #{pr_emp_authority}
+			</if>
+			order by tjt.job_level asc
 		</if>
 		<if test='pr_emp_authority.equals("C")'>
 			select te.emp_no ep_no, te.name, td.dept_name
-		  		from tb_employee te
-		    	join tb_department td
-		    	on te.dept_no = td.dept_no
-		    	join tb_job_title tjt
-		    	on te.job_title_no = tjt.job_title_no
-		    	where te.emp_no in (select ep_no from tb_project_emp where pr_no = #{pr_no} and pr_emp_authority = 'C')
+			from tb_employee te
+			join tb_department td
+			on te.dept_no = td.dept_no
+			join tb_job_title tjt
+			on te.job_title_no = tjt.job_title_no
+			where te.emp_no in (select ep_no from tb_project_emp where pr_no =
+			#{pr_no} and pr_emp_authority = 'C')
 		</if>
 		<if test='pr_emp_authority.equals("D")'>
-		select te.emp_no ep_no, te.name, td.dept_name
-		    from tb_employee te
-		    join tb_department td
-		    on te.dept_no = td.dept_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-		    where te.dept_no in (select dept_no from tb_department where cp_no = (select cp_no from tb_project where pr_no = #{pr_no}))
-		    and te.emp_no not in (select ep_no from tb_project_emp where pr_no = #{pr_no})	
+			select te.emp_no ep_no, te.name, td.dept_name
+			from tb_employee te
+			join tb_department td
+			on te.dept_no = td.dept_no
+			join tb_job_title tjt
+			on te.job_title_no = tjt.job_title_no
+			where te.dept_no in (select dept_no from tb_department where cp_no =
+			(select cp_no from tb_project where pr_no = #{pr_no}))
+			and te.emp_no not in (select ep_no from tb_project_emp where pr_no =
+			#{pr_no})
 		</if>
 	</select>
-	
-	<select id="selectListDeptProject" parameterType="hashmap" resultType="string">
-		<if test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B") or pr_emp_authority.equals("ALL")'>
-		select DISTINCT td.dept_name
-		    from tb_project_emp tpe
-		    join tb_employee te
-		    on tpe.ep_no = te.emp_no
-		    join tb_department td
-		    on te.dept_no = td.dept_no
-		    where pr_no = #{pr_no} 
-		    <if test='!pr_emp_authority.equals("ALL")'>
-			    and pr_emp_authority = #{pr_emp_authority}
-		    </if>
-	    </if>
-	    <if test='pr_emp_authority.equals("C")'>
+
+	<select id="selectListDeptProject" parameterType="hashmap"
+		resultType="string">
+		<if
+			test='pr_emp_authority.equals("A") or pr_emp_authority.equals("B") or pr_emp_authority.equals("ALL")'>
 			select DISTINCT td.dept_name
-		  		from tb_employee te
-		    	join tb_department td
-		    	on te.dept_no = td.dept_no
-		    	join tb_job_title tjt
-		    	on te.job_title_no = tjt.job_title_no
-		    	where te.emp_no in (select ep_no from tb_project_emp where pr_no = #{pr_no} and pr_emp_authority = 'C')
+			from tb_project_emp tpe
+			join tb_employee te
+			on tpe.ep_no = te.emp_no
+			join tb_department td
+			on te.dept_no = td.dept_no
+			where pr_no = #{pr_no}
+			<if test='!pr_emp_authority.equals("ALL")'>
+				and pr_emp_authority = #{pr_emp_authority}
+			</if>
 		</if>
-	    <if test='pr_emp_authority.equals("D")'>
-	    select DISTINCT td.dept_name
-		    from tb_employee te
-		    join tb_department td
-		    on te.dept_no = td.dept_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-		    where te.dept_no in (select dept_no from tb_department where cp_no = (select cp_no from tb_project where pr_no = #{pr_no}))
-		    and te.emp_no not in (select ep_no from tb_project_emp where pr_no = #{pr_no})
-	    </if>
+		<if test='pr_emp_authority.equals("C")'>
+			select DISTINCT td.dept_name
+			from tb_employee te
+			join tb_department td
+			on te.dept_no = td.dept_no
+			join tb_job_title tjt
+			on te.job_title_no = tjt.job_title_no
+			where te.emp_no in (select ep_no from tb_project_emp where pr_no =
+			#{pr_no} and pr_emp_authority = 'C')
+		</if>
+		<if test='pr_emp_authority.equals("D")'>
+			select DISTINCT td.dept_name
+			from tb_employee te
+			join tb_department td
+			on te.dept_no = td.dept_no
+			join tb_job_title tjt
+			on te.job_title_no = tjt.job_title_no
+			where te.dept_no in (select dept_no from tb_department where cp_no =
+			(select cp_no from tb_project where pr_no = #{pr_no}))
+			and te.emp_no not in (select ep_no from tb_project_emp where pr_no =
+			#{pr_no})
+		</if>
 	</select>
-	
-	<select id="selectListAllParticipantProject" parameterType="_int" resultType="Project">
+
+	<select id="selectListAllParticipantProject"
+		parameterType="_int" resultType="Project">
 		select te.name
-		    from tb_project_emp tpe
-		    join tb_employee te
-		    on tpe.ep_no = te.emp_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-		    where pr_no = #{pr_no} and pr_emp_authority != 'C'
-		    order by job_level asc
+		from tb_project_emp tpe
+		join tb_employee te
+		on tpe.ep_no = te.emp_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		where pr_no = #{pr_no} and pr_emp_authority != 'C'
+		order by job_level asc
 	</select>
-	
-	<select id="selectListBoardProject" parameterType="Project" resultType="Project">
-    select tpb.*, te.name, tjt.job_title, nvl2(ta.pb_no, 'Y', 'N') board_fix
-		    from tb_project_board  tpb
-		    join tb_employee te
-		    on tpb.emp_no = te.emp_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-            left outer join (select pb_no, emp_no from tb_project_board_fix where emp_no = #{emp_no}) ta
-            on tpb.pb_no = ta.pb_no
-		    where pr_no = #{pr_no}
-		    order by pb_date desc
+
+	<select id="selectListBoardProject" parameterType="Project"
+		resultType="Project">
+		select tpb.*, te.name, tjt.job_title, nvl2(ta.pb_no, 'Y', 'N') board_fix
+		from tb_project_board tpb
+		join tb_employee te
+		on tpb.emp_no = te.emp_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		left outer join (select pb_no, emp_no from tb_project_board_fix where
+		emp_no = #{emp_no}) ta
+		on tpb.pb_no = ta.pb_no
+		where pr_no = #{pr_no}
+		order by pb_date desc
 	</select>
-	
-	<select id="selectListBoardFixProject" parameterType="Project" resultType="Project">
-    select tpb.*, te.name, tjt.job_title, nvl2(ta.pb_no, 'Y', 'N') board_fix
-		    from tb_project_board  tpb
-		    join tb_employee te
-		    on tpb.emp_no = te.emp_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-            join (select pb_no, emp_no from tb_project_board_fix where emp_no = #{emp_no}) ta
-            on tpb.pb_no = ta.pb_no
-		    where pr_no = #{pr_no}
+
+	<select id="selectListBoardFixProject" parameterType="Project"
+		resultType="Project">
+		select tpb.*, te.name, tjt.job_title, nvl2(ta.pb_no, 'Y', 'N') board_fix
+		from tb_project_board tpb
+		join tb_employee te
+		on tpb.emp_no = te.emp_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		join (select pb_no, emp_no from tb_project_board_fix where emp_no =
+		#{emp_no}) ta
+		on tpb.pb_no = ta.pb_no
+		where pr_no = #{pr_no}
 	</select>
-	
+
 	<insert id="insertDoBoardProject" parameterType="Project">
 		insert all
 		into tb_project_board
 		(PB_NO, PR_NO
 		, PB_TITLE, PB_CONTENT
-		, EMP_NO, PB_DATE)
+		,
+		EMP_NO, PB_DATE)
 		values
-		((SELECT nvl(max(PB_NO),0)+1 from tb_project_board), #{pr_no}
+		((SELECT nvl(max(PB_NO),0)+1 from
+		tb_project_board), #{pr_no}
 		, #{pb_title}, #{pb_content}
-		, #{emp_no}, default)
+		, #{emp_no},
+		default)
 		<if test="pf_list != null">
 			<foreach collection="pf_list" item="item" index="index">
-				into tb_project_file
+				into
+				tb_project_file
 				(pf_no, pf_url
 				, pf_date, pb_no
 				, pff_no, pf_name)
 				values
-				((SELECT nvl(max(pf_no),0)+(#{index}+1) from tb_project_file), #{item.pf_url}
-				, default, (SELECT nvl(max(PB_NO),0)+1 from tb_project_board)
+				((SELECT nvl(max(pf_no),0)+(#{index}+1) from tb_project_file),
+				#{item.pf_url}
+				, default, (SELECT nvl(max(PB_NO),0)+1 from
+				tb_project_board)
 				, #{item.pff_no}, #{item.pf_name})
 			</foreach>
 		</if>
 		select * from dual
 	</insert>
-	
-	<select id="selectOneBoardProject" parameterType="_int" resultType="Project">
+
+	<select id="selectOneBoardProject" parameterType="_int"
+		resultType="Project">
 		select tpb.*, te.name, tjt.job_title, td.dept_name
-			from tb_project_board tpb
-            join tb_employee te
-            on tpb.emp_no = te.emp_no
-            join tb_job_title tjt
-            on te.job_title_no = tjt.job_title_no
-            join tb_department td
-            on te.dept_no = td.dept_no
-			where pb_no = #{pb_no}
+		from tb_project_board tpb
+		join tb_employee te
+		on tpb.emp_no = te.emp_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		join tb_department td
+		on te.dept_no = td.dept_no
+		where pb_no = #{pb_no}
 	</select>
-	
+
 	<update id="updateBoardProject" parameterType="Project">
-		update tb_project_board
-			set pb_title = #{pb_title}
-				,pb_content = #{pb_content}
-			where pb_no = #{pb_no}
+		update
+		tb_project_board
+		set pb_title = #{pb_title}
+		,pb_content = #{pb_content}
+		where pb_no = #{pb_no}
 	</update>
-	
+
 	<delete id="deleteBoardProject" parameterType="_int">
-		delete from tb_project_board
+		delete from
+		tb_project_board
 		where pb_no = #{pb_no}
 	</delete>
-	
+
 	<insert id="insertBoardFixProject" parameterType="Project">
-		insert into tb_project_board_fix
+		insert into
+		tb_project_board_fix
 		(pb_no, emp_no)
 		values
 		(#{pb_no}, #{emp_no})
 	</insert>
-	
+
 	<delete id="deleteBoardFixProject" parameterType="Project">
-		delete from tb_project_board_fix
+		delete from
+		tb_project_board_fix
 		where pb_no = #{pb_no}
 		and emp_no = #{emp_no}
 	</delete>
-	
+
 	<insert id="insertNoticeProject" parameterType="Project">
 		insert all
 		into tb_project_notice
@@ -335,272 +387,332 @@
 		, pn_content, pn_date
 		, pr_no, emp_no)
 		values
-		((SELECT nvl(max(PN_NO),0)+1 from tb_project_notice), #{pn_title}
+		((SELECT nvl(max(PN_NO),0)+1 from
+		tb_project_notice), #{pn_title}
 		, #{pn_content} , default
-		, #{pr_no}, #{emp_no})
+		, #{pr_no},
+		#{emp_no})
 		<if test="pf_list != null">
 			<foreach collection="pf_list" item="item" index="index">
-				into tb_project_file
+				into
+				tb_project_file
 				(pf_no, pf_url
 				, pf_date, pn_no
 				, pff_no, pf_name)
 				values
-				((SELECT nvl(max(pf_no),0)+(#{index}+1) from tb_project_file), #{item.pf_url}
-				, default, (SELECT nvl(max(PN_NO),0)+1 from tb_project_notice)
+				((SELECT nvl(max(pf_no),0)+(#{index}+1) from tb_project_file),
+				#{item.pf_url}
+				, default, (SELECT nvl(max(PN_NO),0)+1 from
+				tb_project_notice)
 				, #{item.pff_no}, #{item.pf_name})
 			</foreach>
 		</if>
 		select * from dual
 	</insert>
-	
+
 	<delete id="deleteNoticeProject" parameterType="_int">
-		delete from tb_project_notice
-			where pn_no = #{pn_no}
+		delete from
+		tb_project_notice
+		where pn_no = #{pn_no}
 	</delete>
-	
+
 	<update id="updateNoticeProject" parameterType="Project">
-		update tb_project_notice
-			set pn_title = #{pn_title}
-				, pn_content = #{pn_content}
-			where pn_no = #{pn_no}
+		update
+		tb_project_notice
+		set pn_title = #{pn_title}
+		, pn_content = #{pn_content}
+		where pn_no = #{pn_no}
 	</update>
-	
-	<select id="selectListNoticeProject" parameterType="Project" resultType="Project">
+
+	<select id="selectListNoticeProject" parameterType="Project"
+		resultType="Project">
 		select tpn.*, te.name, tjt.job_title
-		    from tb_project_notice  tpn
-		    join tb_employee te
-		    on tpn.emp_no = te.emp_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-		    where pr_no = #{pr_no}
+		from tb_project_notice tpn
+		join tb_employee te
+		on tpn.emp_no = te.emp_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		where pr_no = #{pr_no}
 	</select>
-	
-	<select id="selectOneNoticeProject" parameterType="Project" resultType="Project">
+
+	<select id="selectOneNoticeProject" parameterType="Project"
+		resultType="Project">
 		select tpn.*, te.name, tjt.job_title, td.dept_name
-			from tb_project_notice tpn
-            join tb_employee te
-            on tpn.emp_no = te.emp_no
-            join tb_job_title tjt
-            on te.job_title_no = tjt.job_title_no
-            join tb_department td
-            on te.dept_no = td.dept_no
-			where pn_no = #{pn_no}
+		from tb_project_notice tpn
+		join tb_employee te
+		on tpn.emp_no = te.emp_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		join tb_department td
+		on te.dept_no = td.dept_no
+		where pn_no = #{pn_no}
 	</select>
-	
+
 	<insert id="insertWorkProject" parameterType="Project">
 		insert all
-			 <choose>
-			 	<when test="pw_ref_no == 0">
-					into tb_project_work
-					(pw_no, pw_title, ep_no
-					, pw_status, pw_priority, pw_start_date
-					, pw_end_date, pw_content, pw_tier
-					, pw_ref_no, pw_order, pr_no
-					, pw_date)
-					values
-					((SELECT nvl(max(PW_NO),0)+1 from tb_project_work), #{pw_title}, #{emp_no}
-					, #{pw_status}, #{pw_priority}, #{pw_start_date}
-					, #{pw_end_date}, #{pw_content}, default
-					, (SELECT nvl(max(PW_NO),0)+1 from tb_project_work), default, #{pr_no}
-					, default)
-			 	</when>
-			 	<when test="pw_ref_no != 0">
-					into tb_project_work
-					(pw_no, pw_title, ep_no
-					, pw_status, pw_priority, pw_start_date
-					, pw_end_date, pw_content, pw_tier
-					, pw_ref_no, pw_order, pr_no
-					, pw_date)
-					values
-					((SELECT nvl(max(PW_NO),0)+1 from tb_project_work), #{pw_title}, #{emp_no}
-					, #{pw_status}, #{pw_priority}, #{pw_start_date}
-					, #{pw_end_date}, #{pw_content}, 1
-					, #{pw_ref_no}
-					, 	(select nvl(max(pw_order),0)+1
-					    from tb_project_work
-					    where pw_ref_no = #{pw_ref_no} and pw_tier = 1)
-					, #{pr_no}
-					, default)
-			 	</when>
-			 </choose>
-			<foreach collection="empNoList" item="emp_no_index" index="index">
+		<choose>
+			<when test="pw_ref_no == 0">
+				into tb_project_work
+				(pw_no, pw_title, ep_no
+				, pw_status, pw_priority, pw_start_date
+				, pw_end_date, pw_content, pw_tier
+				, pw_ref_no, pw_order, pr_no
+				, pw_date)
+				values
+				((SELECT nvl(max(PW_NO),0)+1 from tb_project_work), #{pw_title}, #{emp_no}
+				, #{pw_status}, #{pw_priority}, #{pw_start_date}
+				, #{pw_end_date}, #{pw_content}, default
+				, (SELECT nvl(max(PW_NO),0)+1 from tb_project_work), default,
+				#{pr_no}
+				, default)
+			</when>
+			<when test="pw_ref_no != 0">
+				into tb_project_work
+				(pw_no, pw_title, ep_no
+				, pw_status, pw_priority, pw_start_date
+				, pw_end_date, pw_content, pw_tier
+				, pw_ref_no, pw_order, pr_no
+				, pw_date)
+				values
+				((SELECT nvl(max(PW_NO),0)+1 from tb_project_work), #{pw_title}, #{emp_no}
+				, #{pw_status}, #{pw_priority}, #{pw_start_date}
+				, #{pw_end_date}, #{pw_content}, 1
+				, #{pw_ref_no}
+				, (select nvl(max(pw_order),0)+1
+				from tb_project_work
+				where pw_ref_no = #{pw_ref_no} and pw_tier = 1)
+				, #{pr_no}
+				, default)
+			</when>
+		</choose>
+		<foreach collection="empNoList" item="emp_no_index"
+			index="index">
 			into tb_project_work_participant
 			(pwp_no, pw_no
-			, emp_no, pwp_authority)
+			, emp_no,
+			pwp_authority)
 			values
-			((SELECT nvl(max(pwp_no),0)+(#{index}+1) from tb_project_work_participant), (SELECT nvl(max(PW_NO),0)+1 from tb_project_work)
+			((SELECT nvl(max(pwp_no),0)+(#{index}+1) from
+			tb_project_work_participant), (SELECT nvl(max(PW_NO),0)+1 from
+			tb_project_work)
 			, #{emp_no_index}, 'B')
-			</foreach>
-			select * from dual
-	</insert>
-	
-	<select id="selectListWorkProject" parameterType="Project" resultType="Project">
-		select tpw.*, te.name
-		    from tb_project_work tpw
-		    join tb_employee te
-		    on tpw.ep_no = te.emp_no
-		    where pr_no = #{pr_no}
-            order by pw_ref_no desc, (case when pw_order = 0 then 1 else 2 end),pw_order desc
-	</select>
-	
-	<select id="selectListSubWorkProject" parameterType="_int" resultType="Project">
-		select tpw.*, te.name
-		    from tb_project_work tpw
-		    join tb_employee te
-		    on tpw.ep_no = te.emp_no
-		    where pw_ref_no = #{pw_no} and pw_tier != 0
-		    order by pw_order desc
-	</select>
-	
-	<select id="selectOneWorkProject" parameterType="_int" resultType="Project">
-		select tpw.*, te.name, te.profile, td.dept_name, tjt.job_title
-		    from tb_project_work tpw
-		    join tb_employee te
-		    on tpw.ep_no = te.emp_no
-		    join tb_department td
-		    on te.dept_no = td.dept_no
-		    join tb_job_title tjt
-		    on te.job_title_no = tjt.job_title_no
-		    where pw_no = #{pw_no}
-	</select>
-	
-	<delete id="deleteWorkProject" parameterType="_int">
-		delete from tb_project_work
-			where pw_ref_no = #{pw_no}
-	</delete>
-	
-	<update id="updateWorkProject" parameterType="Project">
-		update tb_project_work
-			set pw_title = #{pw_title}
-				, pw_content = #{pw_content}
-				, pw_status = #{pw_status}
-				, pw_priority = #{pw_priority}
-				, pw_start_date = #{pw_start_date}
-				, pw_end_date = #{pw_end_date}
-			where pw_no = #{pw_no}
-	</update>
-	
-	<select id="selectListWorkEmpProject" parameterType="_int" resultType="Project">
-		select tpwp.emp_no, te.name
-		    from tb_project_work_participant tpwp
-		    join tb_employee te
-		    on tpwp.emp_no = te.emp_no
-		    where tpwp.pw_no = #{pw_no}
-	</select>
-	
-	<insert id="insertParticipantProject" parameterType="Project">
-		insert into tb_project_emp
-			(PR_NO, EP_NO
-			, PR_EMP_DATE, PR_EMP_AUTHORITY)
-			values
-			(#{pr_no}, #{emp_no}
-			, default, 
-			<choose>
-				<when test='pr_emp_authority != null and pr_emp_authority.equals("C")'>
-				'C' )
-				</when>
-				<otherwise>
-				'B')
-				</otherwise>
-			</choose>
-	</insert>
-	
-	<delete id="deleteWorkParticipantProject">
-		delete from tb_project_work_participant
-		where pw_no = #{pw_no}
-	</delete>
-	
-	<insert id="insertWorkParticipantProject">
-		insert all
-			<foreach collection="empNoList" item="emp_no_index" index="index">
-			into tb_project_work_participant
-			(pwp_no, pw_no
-			, emp_no, pwp_authority)
-			values
-			((SELECT nvl(max(pwp_no),0)+(#{index}+1) from tb_project_work_participant), #{pw_no}
-			, #{emp_no_index}, 'B')
-			</foreach>
+		</foreach>
 		select * from dual
 	</insert>
-	
-	<update id="updateParticipantProject" parameterType="Project">
-		update tb_project_emp
-		    set pr_emp_authority = #{pr_emp_authority}
-		    where pr_no = #{pr_no} and ep_no = #{emp_no}
+
+	<select id="selectListWorkProject" parameterType="Project"
+		resultType="Project">
+		select tpw.*, te.name
+		from tb_project_work tpw
+		join tb_employee te
+		on tpw.ep_no = te.emp_no
+		where pw_ref_no in
+		<foreach collection="empNoList" item="item" index="index" separator="," open="(" close=")">
+			${item}
+		</foreach>
+		order by pw_ref_no desc, (case when pw_order = 0 then 1 else 2
+		end),pw_order desc
+	</select>
+
+	<select id="selectListUpperWorkProject" parameterType="_int" resultType="string">
+		select pw_no from tb_project_work where pw_tier=0 and pr_no
+		= #{pr_no}
+	</select>
+
+	<select id="selectCntWorkProject" parameterType="_int"
+		resultType="_int">
+		select count(pw_no) from tb_project_work where pw_tier = 0
+		and pr_no = #{pr_no}
+	</select>
+
+	<select id="selectListSubWorkProject" parameterType="_int"
+		resultType="Project">
+		select tpw.*, te.name
+		from tb_project_work tpw
+		join tb_employee te
+		on tpw.ep_no = te.emp_no
+		where pw_ref_no = #{pw_no} and pw_tier != 0
+		order by pw_order desc
+	</select>
+
+	<select id="selectOneWorkProject" parameterType="_int"
+		resultType="Project">
+		select tpw.*, te.name, te.profile, td.dept_name,
+		tjt.job_title
+		from tb_project_work tpw
+		join tb_employee te
+		on tpw.ep_no = te.emp_no
+		join tb_department td
+		on te.dept_no = td.dept_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		where pw_no = #{pw_no}
+	</select>
+
+	<delete id="deleteWorkProject" parameterType="_int">
+		delete from
+		tb_project_work
+		where pw_ref_no = #{pw_no}
+	</delete>
+
+	<update id="updateWorkProject" parameterType="Project">
+		update
+		tb_project_work
+		set pw_title = #{pw_title}
+		, pw_content = #{pw_content}
+		, pw_status = #{pw_status}
+		, pw_priority = #{pw_priority}
+		, pw_start_date = #{pw_start_date}
+		, pw_end_date = #{pw_end_date}
+		where pw_no = #{pw_no}
 	</update>
-	
+
+	<select id="selectListWorkEmpProject" parameterType="_int"
+		resultType="Project">
+		select tpwp.emp_no, te.name
+		from tb_project_work_participant tpwp
+		join tb_employee te
+		on tpwp.emp_no = te.emp_no
+		where tpwp.pw_no = #{pw_no}
+	</select>
+
+	<insert id="insertParticipantProject" parameterType="Project">
+		insert into tb_project_emp
+		(PR_NO, EP_NO
+		, PR_EMP_DATE, PR_EMP_AUTHORITY)
+		values
+		(#{pr_no}, #{emp_no}
+		, default,
+		<choose>
+			<when
+				test='pr_emp_authority != null and pr_emp_authority.equals("C")'>
+				'C' )
+			</when>
+			<otherwise>
+				'B')
+			</otherwise>
+		</choose>
+	</insert>
+
+	<delete id="deleteWorkParticipantProject">
+		delete from tb_project_work_participant
+		where pw_no =
+		#{pw_no}
+	</delete>
+
+	<insert id="insertWorkParticipantProject">
+		insert all
+		<foreach collection="empNoList" item="emp_no_index"
+			index="index">
+			into tb_project_work_participant
+			(pwp_no, pw_no
+			, emp_no,
+			pwp_authority)
+			values
+			((SELECT nvl(max(pwp_no),0)+(#{index}+1) from
+			tb_project_work_participant), #{pw_no}
+			, #{emp_no_index}, 'B')
+		</foreach>
+		select * from dual
+	</insert>
+
+	<update id="updateParticipantProject" parameterType="Project">
+		update
+		tb_project_emp
+		set pr_emp_authority = #{pr_emp_authority}
+		where pr_no = #{pr_no} and ep_no = #{emp_no}
+	</update>
+
 	<delete id="deleteParticipantProject" parameterType="Project">
-		delete tb_project_emp
+		delete
+		tb_project_emp
 		where pr_no = #{pr_no} and ep_no = #{emp_no}
 	</delete>
-	
-	<select id="selectListTodoProject" parameterType="Project" resultType="Project">
+
+	<select id="selectListTodoProject" parameterType="Project"
+		resultType="Project">
 		select *
-		    from tb_project_todo
-		    where emp_no = #{emp_no} and pr_no = #{pr_no}
-		    and to_char(pt_date, 'YYYY-MM-DD') = to_char(#{pt_date}, 'YYYY-MM-DD')
-		    order by pt_date asc
+		from tb_project_todo
+		where emp_no = #{emp_no} and pr_no = #{pr_no}
+		and to_char(pt_date, 'YYYY-MM-DD') = to_char(#{pt_date}, 'YYYY-MM-DD')
+		order by pt_date asc
 	</select>
-	
+
 	<insert id="insertTodoProject" parameterType="Project">
-		insert into tb_project_todo
+		insert into
+		tb_project_todo
 		(pt_no, emp_no, pr_no
-		, pt_date, pt_content, pt_complete_yn)
+		, pt_date, pt_content,
+		pt_complete_yn)
 		values
-		((SELECT nvl(max(pt_no),0)+1 from tb_project_todo), #{emp_no}, #{pr_no}
-		, #{pt_date}, #{pt_content}, default)
+		((SELECT nvl(max(pt_no),0)+1 from
+		tb_project_todo), #{emp_no}, #{pr_no}
+		, #{pt_date}, #{pt_content},
+		default)
 	</insert>
-	
+
 	<update id="updateTodoProject" parameterType="Project">
 		<if test="pt_complete_yn != null">
-		update tb_project_todo
+			update tb_project_todo
 			set pt_complete_yn = #{pt_complete_yn}
-			where pt_no = #{pt_no}
+			where pt_no =
+			#{pt_no}
 		</if>
 		<if test="pt_complete_yn == null">
-		update tb_project_todo
+			update tb_project_todo
 			set pt_content = #{pt_content}
-				, pt_date = #{pt_date} 
+			, pt_date = #{pt_date}
 			where pt_no = #{pt_no}
 		</if>
 	</update>
-	
+
 	<delete id="deleteTodoProject" parameterType="_int">
-		delete from tb_project_todo
-			where pt_no = #{pt_no}
+		delete from
+		tb_project_todo
+		where pt_no = #{pt_no}
 	</delete>
-	
-	<select id="selectListCalendarProject" parameterType="Project" resultType="Project">
-		select tpw.pw_no, tpw.pw_title, tpw.pw_start_date, tpw.pw_end_date, tpw.pw_status, tpw.pw_priority
-		    from tb_project_work tpw
-		    where tpw.pr_no = #{pr_no} 
-		    <if test='emp_no != 0'>
-			    and tpw.pw_no in (select pw_no from tb_project_work_participant where emp_no = #{emp_no})
-		    </if>
+
+	<select id="selectListCalendarProject" parameterType="Project"
+		resultType="Project">
+		select tpw.pw_no, tpw.pw_title, tpw.pw_start_date, tpw.pw_end_date,
+		tpw.pw_status, tpw.pw_priority
+		from tb_project_work tpw
+		where tpw.pr_no = #{pr_no}
+		<if test='emp_no != 0'>
+			and tpw.pw_no in (select pw_no from tb_project_work_participant where
+			emp_no = #{emp_no})
+		</if>
 	</select>
-	
-	<select id="selectListMyCalendarProject" parameterType="_int" resultType="Project">
-		select tpw.pr_no, tpw.pw_no, tpw.pw_title, tpw.pw_start_date, tpw.pw_end_date, tpw.pw_status, tpw.pw_priority
-		    from tb_project_work tpw
-		    where tpw.pw_no in (select pw_no from tb_project_work_participant where emp_no = #{emp_no})
+
+	<select id="selectListMyCalendarProject" parameterType="_int"
+		resultType="Project">
+		select tpw.pr_no, tpw.pw_no, tpw.pw_title,
+		tpw.pw_start_date, tpw.pw_end_date, tpw.pw_status, tpw.pw_priority
+		from tb_project_work tpw
+		where tpw.pw_no in (select pw_no from tb_project_work_participant where
+		emp_no = #{emp_no})
 	</select>
-	
-	<select id="selectListFolderProject" parameterType="_int" resultType="Project">	
+
+	<select id="selectListFolderProject" parameterType="_int"
+		resultType="Project">
 		select *
-			from tb_project_file_folder
-			where pr_no = #{pr_no}
+		from tb_project_file_folder
+		where pr_no = #{pr_no}
 	</select>
-	
+
 	<insert id="insertFolderProject" parameterType="Project">
-	insert into tb_project_file_folder
+		insert into tb_project_file_folder
 		(pff_no, pff_name
-		, pff_ref, pff_level
+		, pff_ref,
+		pff_level
 		, pff_order, pr_no)
 		values
-		((SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder), #{pff_name}
+		((SELECT nvl(max(pff_no),0)+1 from
+		tb_project_file_folder), #{pff_name}
 		<choose>
 			<when test="pff_ref == 0">
-				,(SELECT nvl(max(pff_no),0)+1 from tb_project_file_folder)				
+				,(SELECT nvl(max(pff_no),0)+1 from
+				tb_project_file_folder)
 			</when>
 			<when test="pff_ref != 0">
 				,#{pff_ref}
@@ -609,99 +721,106 @@
 		, #{pff_level}
 		<choose>
 			<when test="pff_ref == 0">
-				, 0				
+				, 0
 			</when>
 			<when test="pff_ref != 0">
 				,(select nvl(max(pff_order),-1)+1
-		    		from tb_project_file_folder
-		    		where pff_ref = #{pff_ref})
+				from tb_project_file_folder
+				where pff_ref = #{pff_ref})
 			</when>
 		</choose>
 		, #{pr_no})
 	</insert>
-	
+
 	<update id="updateFolderProject" parameterType="Project">
-		update tb_project_file_folder
+		update
+		tb_project_file_folder
 		set pff_name = #{pff_name}
-		where pff_no = #{pff_no}
+		where pff_no =
+		#{pff_no}
 	</update>
-	
-	<select id="selectListFileProject" parameterType="map" resultType="Project">
+
+	<select id="selectListFileProject" parameterType="map"
+		resultType="Project">
 		select tpf.*
-			<if test='type.equals("board")'>
-				, tpff.pff_name
-				from tb_project_file tpf
-				join tb_project_file_folder tpff
-				on tpf.pff_no = tpff.pff_no
-				where pb_no = #{no}
-			</if>
-			<if test='type.equals("project")'>
-				, tpff.pr_no
-				from TB_PROJECT_FILE tpf
-			    join TB_PROJECT_FILE_FOLDER tpff
-			    on tpf.pff_no = tpff.pff_no
-				where pr_no = #{no}
-			</if>
-			<if test='type.equals("notice")'>
-				, tpff.pff_name
-				from tb_project_file tpf
-				join tb_project_file_folder tpff
-				on tpf.pff_no = tpff.pff_no
-				where pn_no = #{no}
-			</if>
+		<if test='type.equals("board")'>
+			, tpff.pff_name
+			from tb_project_file tpf
+			join tb_project_file_folder tpff
+			on tpf.pff_no = tpff.pff_no
+			where pb_no = #{no}
+		</if>
+		<if test='type.equals("project")'>
+			, tpff.pr_no
+			from TB_PROJECT_FILE tpf
+			join TB_PROJECT_FILE_FOLDER tpff
+			on tpf.pff_no = tpff.pff_no
+			where pr_no = #{no}
+		</if>
+		<if test='type.equals("notice")'>
+			, tpff.pff_name
+			from tb_project_file tpf
+			join tb_project_file_folder tpff
+			on tpf.pff_no = tpff.pff_no
+			where pn_no = #{no}
+		</if>
 	</select>
-	
+
 	<update id="updateFileProject" parameterType="Project">
-		update tb_project_file
-			set pf_name = #{pf_name}
-			where pf_no = #{pf_no}
+		update
+		tb_project_file
+		set pf_name = #{pf_name}
+		where pf_no = #{pf_no}
 	</update>
-	
+
 	<insert id="insertFileProject" parameterType="Project">
 		<if test="pb_no == 0 and pn_no == 0">
-		insert into tb_project_file
-		(pf_no, pf_url
-		, pf_date
-		, pff_no, pf_name)
-		values
-		((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
-		, default
-		, #{pff_no}, #{pf_name})
+			insert into tb_project_file
+			(pf_no, pf_url
+			, pf_date
+			, pff_no, pf_name)
+			values
+			((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
+			, default
+			, #{pff_no}, #{pf_name})
 		</if>
 		<if test="pb_no != 0 and pn_no == 0">
-		insert into tb_project_file
-		(pf_no, pf_url
-		, pf_date
-		, pff_no, pf_name, pb_no)
-		values
-		((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
-		, default
-		, #{pff_no}, #{pf_name}, #{pb_no})
+			insert into tb_project_file
+			(pf_no, pf_url
+			, pf_date
+			, pff_no, pf_name, pb_no)
+			values
+			((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
+			, default
+			, #{pff_no}, #{pf_name}, #{pb_no})
 		</if>
 		<if test="pb_no == 0 and pn_no != 0">
-		insert into tb_project_file
-		(pf_no, pf_url
-		, pf_date
-		, pff_no, pf_name, pn_no)
-		values
-		((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
-		, default
-		, #{pff_no}, #{pf_name}, #{pn_no})
+			insert into tb_project_file
+			(pf_no, pf_url
+			, pf_date
+			, pff_no, pf_name, pn_no)
+			values
+			((SELECT nvl(max(pf_no),0)+1 from tb_project_file), #{pf_url}
+			, default
+			, #{pff_no}, #{pf_name}, #{pn_no})
 		</if>
 	</insert>
-	
+
 	<delete id="deleteFileProject" parameterType="Project">
-		delete from tb_project_file
+		delete from
+		tb_project_file
 		where pf_no = #{pf_no}
 	</delete>
-	
+
 	<insert id="insertCommentProject" parameterType="Project">
 		insert into tb_project_comment
 		(pc_no, emp_no
 		, pb_no, pw_no, pn_no
-		, pc_content, pc_date)
+		,
+		pc_content, pc_date)
 		values
-		((SELECT nvl(max(pc_no),0)+1 from tb_project_comment), #{emp_no}
+		((SELECT nvl(max(pc_no),0)+1 from
+		tb_project_comment), #{emp_no}
 		<choose>
 			<when test="pb_no != 0">
 				, #{pb_no}
@@ -728,32 +847,37 @@
 		</choose>
 		, #{pc_content}, default)
 	</insert>
-	
-	<select id="selectListCommentProject" parameterType="Project" resultType="Project">
-		select te.profile, pc_no, tpc.emp_no, pb_no, pw_no, pc_content, pc_date, name, job_title
-			from tb_project_comment tpc
-			join tb_employee te
-			on tpc.emp_no = te.emp_no
-			join tb_job_title tjt
-			on te.job_title_no = tjt.job_title_no
-			where (pb_no != 0 and pb_no = #{pb_no}) or (pw_no != 0 and pw_no = #{pw_no}) or (pn_no != 0 and pn_no = #{pn_no})
-			order by pc_date asc
+
+	<select id="selectListCommentProject" parameterType="Project"
+		resultType="Project">
+		select te.profile, pc_no, tpc.emp_no, pb_no, pw_no,
+		pc_content, pc_date, name, job_title
+		from tb_project_comment tpc
+		join tb_employee te
+		on tpc.emp_no = te.emp_no
+		join tb_job_title tjt
+		on te.job_title_no = tjt.job_title_no
+		where (pb_no != 0 and pb_no = #{pb_no}) or (pw_no != 0 and pw_no =
+		#{pw_no}) or (pn_no != 0 and pn_no = #{pn_no})
+		order by pc_date asc
 	</select>
-	
+
 	<delete id="deleteCommentProject" parameterType="_int">
-		delete from tb_project_comment
+		delete from
+		tb_project_comment
 		where pc_no = #{pc_no}
 	</delete>
-	
+
 	<update id="updateCommentProject">
 		update tb_project_comment
-			set pc_content = #{pc_content}
-			where pc_no = #{pc_no}
+		set pc_content = #{pc_content}
+		where pc_no = #{pc_no}
 	</update>
-	
-	<select id="selectCntBoardProject" parameterType="_int" resultType="_int">
+
+	<select id="selectCntBoardProject" parameterType="_int"
+		resultType="_int">
 		select count(pb_no)
-			from tb_project_board
-			where pr_no = #{pr_no}
+		from tb_project_board
+		where pr_no = #{pr_no}
 	</select>
 </mapper>

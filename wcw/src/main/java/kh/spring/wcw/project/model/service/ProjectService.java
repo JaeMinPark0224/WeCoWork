@@ -127,4 +127,8 @@ public interface ProjectService {
 	public List<Project> selectListMyCalendarProject(int emp_no);
 	
 	public int selectCntBoardProject(int pr_no);
+	
+	public List<String> selectListUpperWorkProject(int pr_no, RowBounds rowbounds);
+	
+	public int selectCntWorkProject(int pr_no);
 }

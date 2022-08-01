@@ -1127,7 +1127,7 @@ section {
 	width: 850px;
 	height: 1px;
 	background-color: rgb(224, 224, 224);
-	margin-bottom: 60px;
+	/* margin-bottom: 60px; */
 }
 
 .project_board_read_btn {
@@ -1188,6 +1188,12 @@ section {
 	height: 40px;
 	border-radius: 50%;
 	background-color: rgb(230, 230, 230);
+}
+
+.project_board_read_comemnt_content_profile_img img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;	
 }
 
 .project_board_read_comemnt_content_profile_name {
@@ -1825,6 +1831,13 @@ section {
 	height: 40px;
 	border-radius: 50%;
 	background-color: rgb(230, 230, 230);
+}
+
+.project_work_read_comemnt_content_profile_img img{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	
 }
 
 .project_work_read_comemnt_content_profile_name {

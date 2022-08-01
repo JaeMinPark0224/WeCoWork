@@ -43,7 +43,7 @@
 				</div>
 				<div class="project_main_box_container">
 					<c:forEach items="${noticeList }" var="notice">
-						<div class="project_main_box_content_title">${notice.pn_title }</div>
+						<div class="project_main_box_content_title"><span class="project_notice_title_span" pn_no="${notice.pn_no }">${notice.pn_title }</span></div>
 						<div class="project_main_box_content_date">${fn:substring(notice.pn_date,0,10) }</div>
 					</c:forEach>
 				</div>
@@ -54,7 +54,7 @@
 				</div>
 				<div class="project_main_box_container">
 					<c:forEach items="${boardList }" var="board">
-						<div class="project_main_box_content_title">${board.pb_title}</div>
+						<div class="project_main_box_content_title"><span class="project_board_title_span" pb_no="${board.pb_no }">${board.pb_title}</span></div>
 						<div class="project_main_box_content_date">${fn:substring(board.pb_date,0,10) }</div>
 					</c:forEach>
 				</div>
@@ -62,5 +62,19 @@
 		</div>
 	</div>
 </section>
+<script type="text/javascript">
+//공지사항 읽기 페이지 이동
+$(".project_notice_title_span").on('click', function() {
+	var pn_no = $(this).attr("pn_no");
+	location.href = "<%= request.getContextPath()%>/project/notice/read?project=${pr_no}&no="+pn_no;	
+});
+
+//게시글 읽기 페이지 이동
+$(".project_board_title_span").on("click", function() {
+	var pb_no = $(this).attr("pb_no");
+	location.href = "<%= request.getContextPath()%>/project/board/read?project=${pr_no}&no="+pb_no;
+});
+
+</script>
 </body>
 </html>

@@ -306,4 +306,14 @@ public class ProjectServiceImpl implements ProjectService{
 		return dao.selectCntBoardProject(pr_no);
 	}
 
+	@Override
+	public int selectCntWorkProject(int pr_no) {
+		return dao.selectCntWorkProject(pr_no);
+	}
+
+	@Override
+	public List<String> selectListUpperWorkProject(int pr_no, RowBounds rowbounds) {
+		return dao.selectListUpperWorkProject(pr_no, rowbounds);
+	}
+
 }

@@ -252,7 +252,7 @@ public class ProjectController {
 		}
 
 		// 한 페이지에 보여줄 프로젝트의 수
-		int pageBlock = 2;
+		int pageBlock = 10;
 		// 총 프로젝트의 수
 		int totalCnt = service.selectCntBoardProject(pr_no);
 		// 총 페이지의 수
@@ -445,7 +445,11 @@ public class ProjectController {
 
 	@GetMapping("/work/list")
 	public ModelAndView selectListWorkProject(ModelAndView mv, HttpSession session,
-			@RequestParam(name = "project", defaultValue = "0") int pr_no, Project project) {
+			@RequestParam(name = "project", defaultValue = "0") int pr_no
+			, Project project
+			,@RequestParam(name = "page", required = false) String page 
+			, RedirectAttributes rttr
+			) {
 //		if(!wcwutill.loginChk(session)) {
 //			mv.setViewName("redirect:/login");
 //			return mv;
@@ -457,7 +461,44 @@ public class ProjectController {
 			mv.setViewName("redirect:/project/list");
 			return mv;
 		}
+		
 
+		// 페이지 숫자 판별
+		if (!StringUtils.isNumeric(page)) {
+			page = "0";
+		}
+		// 페이지가 문자이거나 적지 않으면 1로 설정
+		if (page.equals("0")) {
+			rttr.addAttribute("page", "1");
+			rttr.addAttribute("project", pr_no);
+			mv.setViewName("redirect:/project/work/list");
+			return mv;
+		}
+
+		// 한 페이지에 보여줄 프로젝트의 수
+		int pageBlock = 10;
+		// 총 프로젝트의 수
+		int totalCnt = service.selectCntWorkProject(pr_no);
+		// 총 페이지의 수
+		int totalPageCnt = (totalCnt % pageBlock == 0) ? (totalCnt / pageBlock) : (totalCnt / pageBlock + 1);
+		// 페이지의 번호가 총 페이지의 수보다 크다면 마지막 페이지로 이동
+		if (totalPageCnt != 0 && Integer.parseInt(page) > totalPageCnt) {
+			page = String.valueOf(totalPageCnt);
+			rttr.addAttribute("page", page);
+			rttr.addAttribute("project", pr_no);
+			mv.setViewName("redirect:/project/work/list");
+			return mv;
+		}
+		int pageInt = Integer.parseInt(page);
+		int offset = (pageInt - 1) * pageBlock;
+		RowBounds rowbounds = new RowBounds(offset, pageBlock);
+		mv.addObject("startPage", (pageInt % 5 == 0) ? (pageInt - 5 + 1) : (pageInt - pageInt % 5 + 1));
+		int endPage = ((pageInt % 5 == 0) ? (pageInt - 5 + 1) : (pageInt - pageInt % 5 + 1)) + 4;
+		mv.addObject("endPage", ((endPage > totalPageCnt) ? totalPageCnt : endPage));
+		mv.addObject("totalPageCnt", totalPageCnt);
+		
+		List<String> uppderWorkList = service.selectListUpperWorkProject(pr_no, rowbounds);
+		project.setEmpNoList(uppderWorkList);
 		List<Project> workList = service.selectListWorkProject(project);
 
 		// 프로젝트 번호 저장
