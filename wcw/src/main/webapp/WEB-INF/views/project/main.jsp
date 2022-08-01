@@ -42,6 +42,9 @@
 					<div class="project_main_box_title">공지</div>
 				</div>
 				<div class="project_main_box_container">
+					<c:if test="${fn:length(noticeList) == 0 }">
+						<div class="project_board_list_none">등록된 공지사항이 없습니다.</div>
+					</c:if>
 					<c:forEach items="${noticeList }" var="notice">
 						<div class="project_main_box_content_title"><span class="project_notice_title_span" pn_no="${notice.pn_no }">${notice.pn_title }</span></div>
 						<div class="project_main_box_content_date">${fn:substring(notice.pn_date,0,10) }</div>
@@ -53,6 +56,9 @@
 					<div class="project_main_box_title">게시판</div>
 				</div>
 				<div class="project_main_box_container">
+					<c:if test="${fn:length(boardList) == 0 }">
+						<div class="project_board_list_none">등록된 게시물이 없습니다.</div>
+					</c:if>
 					<c:forEach items="${boardList }" var="board">
 						<div class="project_main_box_content_title"><span class="project_board_title_span" pb_no="${board.pb_no }">${board.pb_title}</span></div>
 						<div class="project_main_box_content_date">${fn:substring(board.pb_date,0,10) }</div>

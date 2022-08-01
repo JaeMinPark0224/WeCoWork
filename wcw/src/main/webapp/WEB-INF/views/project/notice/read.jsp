@@ -35,10 +35,12 @@
 			<div id="project_board_read_grid">
 				<div class="project_board_read_title">공지사항 제목</div>
 				<div class="project_board_read_title" id="project_board_read_title">${project.pn_title }</div>
-				<div class="project_board_read_title">작성자</div>
-				<div class="project_board_read_content">${project.name }</div>
 				<div class="project_board_read_title">공지사항 내용</div>
 				<div class="project_board_read_content">${project.pn_content }</div>
+				<div class="project_board_read_title">작성자</div>
+				<div class="project_board_read_content">${project.name }</div>
+				<div class="project_board_read_title">작성일</div>
+				<div class="project_board_read_content">${fn:substring(project.pb_date,0,19) }</div>
 				<c:if test="${not empty fileList }">
 				<div class="project_board_read_title">파일 업로드</div>
 				<div class="project_board_read_file_wrap">

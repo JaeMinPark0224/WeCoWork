@@ -479,6 +479,13 @@ public class ProjectController {
 		int pageBlock = 10;
 		// 총 프로젝트의 수
 		int totalCnt = service.selectCntWorkProject(pr_no);
+		if(totalCnt == 0) {
+			// 프로젝트 번호 저장
+			mv.addObject("pr_no", pr_no);
+			// 프로젝트 업무 list 페이지 이동
+			mv.setViewName("project/work/list");
+			return mv;
+		}
 		// 총 페이지의 수
 		int totalPageCnt = (totalCnt % pageBlock == 0) ? (totalCnt / pageBlock) : (totalCnt / pageBlock + 1);
 		// 페이지의 번호가 총 페이지의 수보다 크다면 마지막 페이지로 이동
