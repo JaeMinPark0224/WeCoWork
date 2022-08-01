@@ -145,8 +145,8 @@
     			<option value="${list}">${list}</option>
     		</c:forEach>
     	</c:if>
-    	<c:if test="${empty deptList}">
-    		<option>부서 없음</option>
+    	<c:if test="${empty deptNameList}">
+    		<option selected>부서 없음</option>
     	</c:if>
     </select>
     <div class="content">
@@ -377,13 +377,13 @@ $('#modal_cancel2').click(function(){
 	$('#select_dept').on("change", function(){
 		var option = $('#select_dept').val();
 		location.href="<%= request.getContextPath() %>/hr/department/list?option="+option;
-	})
 	
-	if('${option}' == null || '${option}' == ""){
-		$('#select_dept').val('${first_dept_name}').prop('selected', true);
-	} else{
-		$('#select_dept').val('${option}').prop('selected', true);
-	}
+		if('${option}' == null || '${option}' == ""){
+			$('#select_dept').val('${first_dept_name}').prop('selected', true);
+		} else{
+			$('#select_dept').val('${option}').prop('selected', true);
+		}
+	})
 </script>
 
 </body>

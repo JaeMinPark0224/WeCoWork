@@ -101,22 +101,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="left_menu_wrap_1depth">
-					<div class="left_menu_1depth_title" open_chk="f">
-					알림
-					<i class="fa-solid fa-chevron-right dpeth_arrow"></i></div>
-					<div class="left_menu_2depth_content_wrap">
-						<div class="left_menu_2depth_content">
-						<a href="<%= request.getContextPath() %>/notification/list" target="_blank">
-							알림리스트
-						</a>
-						</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-						<div class="left_menu_2depth_content">2depth content</div>
-					</div>
-				</div>
+				
 			</div>
 			<div class="left_menu_wrap">
 				<div class="left_menu_title">

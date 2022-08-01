@@ -64,7 +64,7 @@
             		</c:forEach>
             	</c:if>
             	<c:if test="${empty deptList}">
-            		<option class="deptList">생성된 부서 없음</option>
+            		<option class="deptList" value="none_dept" selected>생성된 부서 없음</option>
             	</c:if>	
             </select>
         </div>
@@ -80,7 +80,12 @@
 // 관리자 설정 버튼 클릭 시
 $("#edit_btn").click(function(){
 	console.log("${adminList[0].dept_name}");
-	$('#modal_select_dept').val("${adminList[0].dept_name}").prop('selected', true);
+	if("${adminList[0].dept_name}" != ""){
+		$('#modal_select_dept').val("${adminList[0].dept_name}").prop('selected', true);
+	}
+	else {
+		$('.deptList').val("#none_dept").prop('selected', true);
+	}
 	$("#modal").show();
 })
 // 모달 내 취소 버튼 클릭 시

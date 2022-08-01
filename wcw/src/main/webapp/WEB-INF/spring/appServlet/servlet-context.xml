@@ -38,4 +38,34 @@
    </beans:bean>
 	
 	<task:annotation-driven/>
+	
+	<!--인터셉터 객체 생성 -->
+	 <beans:bean id="LoginInterceptor"
+		class="kh.spring.wcw.security.LoginInterceptor"></beans:bean>
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/resources/**" />
+			<exclude-mapping path="/main/intro" />
+			<exclude-mapping path="/login" />
+			<exclude-mapping path="/login.do" />
+			<exclude-mapping path="/logout" />
+			<exclude-mapping path="/find/pwd" />
+			<exclude-mapping path="/find/pwd.do" />
+			<exclude-mapping path="/checkEmail" />
+			<exclude-mapping path="/insertRandomNum" />
+			<exclude-mapping path="/deleteRandomNum" />
+			<exclude-mapping path="updatePwd" />
+			<exclude-mapping path="/join" />
+			<exclude-mapping path="/join.do" />
+			<exclude-mapping path="/" />
+			<exclude-mapping path="/dp/login" />
+			<exclude-mapping path="/dp/login.do" />
+			<exclude-mapping path="/dp/main" />
+			<exclude-mapping path="/dp/updateCompany" />
+			<beans:ref bean="LoginInterceptor" />
+		</interceptor>
+	</interceptors>
+	
 </beans:beans>

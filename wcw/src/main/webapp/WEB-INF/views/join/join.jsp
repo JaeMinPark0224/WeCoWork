@@ -102,7 +102,7 @@
 	        
 			$("#cp_join_name").focusout(function(){
 				var nameVal = $("#cp_join_name").val();
-				var name = /^[가-힣]{2,20}$/;
+				var name = /^[가-힣]{2,10}$/;
 		    		
 		    	if(!name.test(nameVal)){
 		    		chkName = false;
@@ -243,7 +243,7 @@
 			return rt = false;
 		}
 		if(chkName == false){
-			alert("담장(관리)자 성명을 형식에 맞게 입력해 주세요. (영문 대소문자, 한글 2~20자)");
+			alert("담당(관리)자 성명을 형식에 맞게 입력해 주세요. (한글 2~10자)");
 			return rt = false;
 		}
 		if(chkPhone == false){

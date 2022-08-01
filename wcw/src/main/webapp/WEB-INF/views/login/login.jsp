@@ -112,7 +112,6 @@ $(function(){
 	                <input type="password" placeholder=" 비밀번호" name="pwd" id="pwd" required></input><br>
 	            </div>
 	            <div id="m_section">
-	                <input type="checkbox" name="autoLogin" id="autoLogin"><label for="autoLogin"> 자동 로그인</label>
 	                <input type="checkbox" name="saveId" id="saveId"><label for="saveId"> 아이디 저장</label>
 	                <span id="findPwd">비밀번호 찾기</span>
 	            </div>
