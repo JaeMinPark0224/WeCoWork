@@ -356,7 +356,7 @@
 
 <select id="selectApprovalAttendance" parameterType="Attendance" resultType="Attendance">
 	select appr.att_appr_req_date, att.emp_no, att.att_clock_in, att.att_clock_out, appr.att_appr_clock_in, appr.att_appr_clock_out, appr.att_appr_result
-		, d.dept_name, e.name, appr.ATT_APPR_CONTENT
+		, d.dept_name, e.name, appr.ATT_APPR_CONTENT, appr.att_no, appr.att_appr_no
 	from tb_attendance_approval appr
 	join tb_attendance att on att.att_no = appr.att_no
 	join tb_employee e on e.emp_no = att.emp_no
@@ -376,13 +376,17 @@
 	att_appr_date = sysdate,
 	att_appr_result = #{att_appr_result},
 	EMP_NO = #{emp_no}
+	where att_appr_no = #{att_appr_no}
 </update>
 <update id="updateAttendance" parameterType="Attendance">
 	update tb_attendance set
 	att_status = 'U',
 	att_clock_in = #{att_appr_clock_in},
 	att_clock_out = #{att_appr_clock_out}
+	where att_no = #{att_no}
 </update>
+
+<!-- 주간근태 조회 -->
 <select id="selectWeeklyAttendance" parameterType="Attendance" resultType="Attendance">
 	select att.*, d.dept_name, e.name from tb_attendance att
 	join tb_employee e on e.emp_no = att.emp_no

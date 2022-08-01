@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kh.spring.wcw.dept.domain.Dept;
 import kh.spring.wcw.attendance.domain.Attendance;
@@ -187,11 +188,10 @@ public class HrServiceImpl implements HrService {
 	}
 	//근태 조정 신청 결재
 	@Override
+	@Transactional
 	public int updateApprovalAttendance(Attendance attendance) {
 		int result =  dao.updateApprovalAttendance(attendance);
-		/*
-		 * if(result>0) { result = dao.updateAttendance(attendance); }
-		 */
+		result += dao.updateAttendance(attendance);
 		return result;
 	}
 	

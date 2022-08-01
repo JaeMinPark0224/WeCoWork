@@ -337,20 +337,28 @@ function openModal(data) {
 	$("#modal").css("display", "block");
 	$('#att_appr_content').text(vo[temp_index-1].att_appr_content);
 	$("#modal_edit").off("click");
-	$("#modal_edit").on("click",{att_appr_clock_in : vo[temp_index-1].att_appr_clock_in}
-	, {att_appr_clock_out : vo[temp_index-1].att_appr_clock_out}
+	$("#modal_edit").on("click",
+			{att_appr_clock_in : vo[temp_index-1].att_appr_clock_in,
+			att_appr_clock_out : vo[temp_index-1].att_appr_clock_out,
+			att_no : vo[temp_index-1].att_no,
+			att_appr_no : vo[temp_index-1].att_appr_no,}
 	, function updateVaca(data){
 		let att_appr_clock_in = data.data.att_appr_clock_in;
 		let att_appr_clock_out = data.data.att_appr_clock_out;
+		let att_no = data.data.att_no;
+		let att_appr_no = data.data.att_appr_no;
 		$.ajax({
-			url: "<%=request.getContextPath()%>/hr/attendance/vacation/update",
+			url: "<%=request.getContextPath()%>/hr/attendance/approval/update",
 			type: "post",
 			data: {att_appr_result: $('#modal_att_confirm').val()
-				,att_appr_clock_in: att_appr_clock_in
-				,att_appr_clock_out: att_appr_clock_out
+				,att_appr_clock_in_str: att_appr_clock_in
+				,att_appr_clock_out_str: att_appr_clock_out
+				,att_no: att_no
+				,att_appr_no: att_appr_no
 			},
 			success: function(result){
 				alert("요청이 완료되었습니다. result = " + result);
+				location.reload();
 			},
 			error: function(error){
 				alert("요청 실패") ;
