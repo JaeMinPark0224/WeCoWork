@@ -299,7 +299,7 @@ $('#modal_edit').click(function(){
 				dept_no : js_dept_no // 수정할 부서 번호
 				},
 		success: function(result){
-			if(result = 1){
+			if(result == 1){
 				alert("부서가 수정되었습니다.");
 			}else{
 				alert("부서 수정에 실패했습니다.");
@@ -354,7 +354,7 @@ $('#modal_edit2').click(function(){
 				dept_upper_no:$('#modal2_select_dept').val()
 				},
 		success: function(result){
-			if(result = 1){
+			if(result == 1){
 				alert("부서가 생성되었습니다.");
 			}else{
 				alert("부서 생성에 실패했습니다.");
@@ -384,7 +384,7 @@ $('#modal_cancel2').click(function(){
 	} else{
 		$('#select_dept').val('${option}').prop('selected', true);
 	}
-
 </script>
+
 </body>
 </html>

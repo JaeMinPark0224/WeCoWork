@@ -185,6 +185,15 @@ public class HrServiceImpl implements HrService {
 	public List<Attendance> selectApprovalAttendance(Attendance attendance){
 		return dao.selectApprovalAttendance(attendance);
 	}
+	//근태 조정 신청 결재
+	@Override
+	public int updateApprovalAttendance(Attendance attendance) {
+		int result =  dao.updateApprovalAttendance(attendance);
+		/*
+		 * if(result>0) { result = dao.updateAttendance(attendance); }
+		 */
+		return result;
+	}
 	
 	//주간근태조회
 	@Override
@@ -224,6 +233,7 @@ public class HrServiceImpl implements HrService {
 	public String selectCpJoinDate(int cp_no) {
 		return dao.selectCpJoinDate(cp_no);
 	}
+
 	
 	
 }

@@ -131,11 +131,11 @@ select {
 	$(".page").on('click', function() {
 		var option = $('#select_pi').val();
 		if($(this).hasClass('page_prev')) {
-			location.href="<%= request.getContextPath() %>/hr/employee/list?page=${startPage-1}&option="+option;
+			location.href="<%= request.getContextPath() %>/pi/employeeList?page=${startPage-1}&option="+option;
 		} else if($(this).hasClass('page_num')) {
-			location.href="<%= request.getContextPath() %>/hr/employee/list?page="+$(this).text()+"&option="+option;
+			location.href="<%= request.getContextPath() %>/pi/employeeList?page="+$(this).text()+"&option="+option;
 		} else if($(this).hasClass('page_post')) {
-			location.href="<%= request.getContextPath() %>/hr/employee/list?page=${endPage+1}&option="+option;
+			location.href="<%= request.getContextPath() %>/pi/employeeList?page=${endPage+1}&option="+option;
 		}
 	});
 	

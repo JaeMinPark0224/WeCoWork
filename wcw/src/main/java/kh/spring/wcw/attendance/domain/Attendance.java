@@ -33,6 +33,7 @@ public class Attendance {
 	private Timestamp att_clock_out;
 	private String ip_clock_in;
 	private String ip_clock_out;
+	private String att_status;
 	
 	private int att_appr_no;
 	private String att_appr_content;
@@ -58,8 +59,8 @@ public class Attendance {
 	public String toString() {
 		return "Attendance [att_no=" + att_no + ", emp_no=" + emp_no + ", att_date=" + att_date + ", att_clock_in="
 				+ att_clock_in + ", att_clock_out=" + att_clock_out + ", ip_clock_in=" + ip_clock_in + ", ip_clock_out="
-				+ ip_clock_out + ", att_appr_no=" + att_appr_no + ", att_appr_content=" + att_appr_content
-				+ ", att_appr_result=" + att_appr_result + ", att_appr_clock_in=" + att_appr_clock_in
+				+ ip_clock_out + ", att_status=" + att_status + ", att_appr_no=" + att_appr_no + ", att_appr_content="
+				+ att_appr_content + ", att_appr_result=" + att_appr_result + ", att_appr_clock_in=" + att_appr_clock_in
 				+ ", att_appr_clock_out=" + att_appr_clock_out + ", att_appr_date=" + att_appr_date
 				+ ", att_appr_req_date=" + att_appr_req_date + ", att_date_start=" + att_date_start + ", att_date_end="
 				+ att_date_end + ", name=" + name + ", dept_name=" + dept_name + ", cp_no=" + cp_no + ", vaca_confirm="
@@ -241,6 +242,12 @@ public class Attendance {
 	}
 	public void setAtt_month(String att_month) {
 		this.att_month = att_month;
+	}
+	public String getAtt_status() {
+		return att_status;
+	}
+	public void setAtt_status(String att_status) {
+		this.att_status = att_status;
 	}
 	
 	

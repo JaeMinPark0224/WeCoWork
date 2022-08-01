@@ -77,7 +77,7 @@
 	d.dept_upper_no,
 	(select dept_name from tb_department where d.dept_upper_no = dept_no) dept_upper_name
     from tb_department d join tb_department d2 on d.dept_no = d2.dept_no
-	where d.cp_no = 1
+	where d.cp_no = #{cp_no}
     group by d.dept_name, d.dept_no, d.dept_date, d.active_yn, d.emp_no, d.dept_upper_no
 	order by d.dept_no
 </select>
@@ -356,7 +356,7 @@
 
 <select id="selectApprovalAttendance" parameterType="Attendance" resultType="Attendance">
 	select appr.att_appr_req_date, att.emp_no, att.att_clock_in, att.att_clock_out, appr.att_appr_clock_in, appr.att_appr_clock_out, appr.att_appr_result
-		, d.dept_name, e.name
+		, d.dept_name, e.name, appr.ATT_APPR_CONTENT
 	from tb_attendance_approval appr
 	join tb_attendance att on att.att_no = appr.att_no
 	join tb_employee e on e.emp_no = att.emp_no
@@ -370,6 +370,19 @@
 	and d.dept_name = #{dept_name}
 	</if>
 </select>
+<!-- 근태조정 신청 결재 -->
+<update id="updateApprovalAttendance" parameterType="Attendance">
+	update tb_attendance_approval set
+	att_appr_date = sysdate,
+	att_appr_result = #{att_appr_result},
+	EMP_NO = #{emp_no}
+</update>
+<update id="updateAttendance" parameterType="Attendance">
+	update tb_attendance set
+	att_status = 'U',
+	att_clock_in = #{att_appr_clock_in},
+	att_clock_out = #{att_appr_clock_out}
+</update>
 <select id="selectWeeklyAttendance" parameterType="Attendance" resultType="Attendance">
 	select att.*, d.dept_name, e.name from tb_attendance att
 	join tb_employee e on e.emp_no = att.emp_no
@@ -397,7 +410,7 @@
 
 <!-- 휴가신청내역조회 -->
 <select id="selectVacation" parameterType="Vacation" resultType="Vacation">
-	select v.emp_no, name, v.vaca_req_date, v.vaca_sort, v.vaca_allday, v.vaca_start, v.vaca_end, v.vaca_cnt, v.vaca_confirm, d.dept_name 
+	select v.emp_no, name, v.vaca_no, v.vaca_req_date, v.vaca_sort, v.vaca_allday, v.vaca_start, v.vaca_end, v.vaca_cnt, v.vaca_confirm, v.vaca_comment, d.dept_name 
 	from tb_vacation v 
 	left outer join tb_vacation_use u on v.emp_no = u.emp_no
 	join tb_employee e on v.emp_no = e.emp_no
