@@ -27,8 +27,15 @@
 			<div id="project_main_box_title">
 				<div id="project_main_box_title_title">${project.pr_title }</div>
 				<div id="project_main_box_title_content">${project.pr_content }</div>
-				<div id="project_main_box_title_company">${project.cp_name }</div>
-				<div id="project_main_box_title_participant"></div>
+				<div id="project_main_box_title_wrap">
+					<div id="project_main_box_title_company">${project.cp_name }</div>
+					<c:if test="${participant_cnt ne 0}">
+						<div id="project_main_box_title_participant">${participant_name } 외${participant_cnt }명</div>
+					</c:if>
+					<c:if test="${participant_cnt eq 0}">
+						<div id="project_main_box_title_participant">${participant_name }</div>
+					</c:if>
+				</div>
 			</div>
 			<div class="project_main_box">
 				<div class="project_main_box_top">

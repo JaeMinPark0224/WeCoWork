@@ -198,6 +198,7 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 				else {
 					console.log(result);
 					createCommentList(result);
+					alert("댓글이 삭제되었습니다.");
 				}
 			},
 			error: function(request, status, error) {
@@ -237,6 +238,7 @@ $("#project_board_sub_btn_wrap").append("<button id='project_board_delete_btn' c
 				else {
 					console.log(result);
 					createCommentList(result);
+					alert("댓글이 수정되었습니다.");
 				}
 			},
 			error: function(request, status, error) {

@@ -534,6 +534,7 @@ function employeAccept() {
 		dataType: "json",
 		success: function(result) {
 			if(result == 1) {
+				alert("참여 승인을 완료했습니다.");
 				location.reload();
 			}
 		},

@@ -230,6 +230,17 @@
 	    </if>
 	</select>
 	
+	<select id="selectListAllParticipantProject" parameterType="_int" resultType="Project">
+		select te.name
+		    from tb_project_emp tpe
+		    join tb_employee te
+		    on tpe.ep_no = te.emp_no
+		    join tb_job_title tjt
+		    on te.job_title_no = tjt.job_title_no
+		    where pr_no = #{pr_no} and pr_emp_authority != 'C'
+		    order by job_level asc
+	</select>
+	
 	<select id="selectListBoardProject" parameterType="Project" resultType="Project">
     select tpb.*, te.name, tjt.job_title, nvl2(ta.pb_no, 'Y', 'N') board_fix
 		    from tb_project_board  tpb
@@ -240,6 +251,7 @@
             left outer join (select pb_no, emp_no from tb_project_board_fix where emp_no = #{emp_no}) ta
             on tpb.pb_no = ta.pb_no
 		    where pr_no = #{pr_no}
+		    order by pb_date desc
 	</select>
 	
 	<select id="selectListBoardFixProject" parameterType="Project" resultType="Project">
@@ -738,4 +750,10 @@
 			set pc_content = #{pc_content}
 			where pc_no = #{pc_no}
 	</update>
+	
+	<select id="selectCntBoardProject" parameterType="_int" resultType="_int">
+		select count(pb_no)
+			from tb_project_board
+			where pr_no = #{pr_no}
+	</select>
 </mapper>

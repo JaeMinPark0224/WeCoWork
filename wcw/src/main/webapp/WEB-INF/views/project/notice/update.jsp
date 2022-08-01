@@ -168,6 +168,8 @@
 		for(var i = tempLength - 1; i > -1; i--) {
 			if($(".project_board_file_insert").eq(i).val() == '') {
 				$(".project_board_file_insert").eq(i).remove();
+				$(".project_board_parent_no_insert").eq(i).remove();
+				$(".project_board_file_name_insert").eq(i).remove();
 			}
 		}
 		

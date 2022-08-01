@@ -40,6 +40,8 @@ public interface ProjectService {
 	
 	public List<Project> selectListBoardProject(Project project);
 	
+	public List<Project> selectListBoardProject(Project project, RowBounds rowbounds);
+	
 	public List<Project> selectListBoardFixProject(Project project);
 	
 	public int insertDoBoardProject(Project project);
@@ -79,6 +81,8 @@ public interface ProjectService {
 	public List<Project> selectListWorkEmpProject(int pw_no);
 	
 	public List<Project> selectListParticipantProject(int pr_no, String authority);
+	
+	public List<Project> selectListParticipantProject(int pr_no);
 	
 	public int insertParticipantProject(Project project);
 	
@@ -121,4 +125,6 @@ public interface ProjectService {
 	public int updateCommentProject(Project project);
 	
 	public List<Project> selectListMyCalendarProject(int emp_no);
+	
+	public int selectCntBoardProject(int pr_no);
 }

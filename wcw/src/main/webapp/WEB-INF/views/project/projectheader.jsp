@@ -167,7 +167,11 @@
 			}
 		});
 		
-		$("#project_main_menu_title, #project_main_title").on("click", function() {
+		$("#project_main_menu_title").on("click", function() {
+			location.href = "<%= request.getContextPath()%>/project/list";
+		});
+		
+		$("#project_main_title").on("click", function() {
 			location.href = "<%= request.getContextPath()%>/project/main?project="+js_pr_no;
 		});
 	</script>

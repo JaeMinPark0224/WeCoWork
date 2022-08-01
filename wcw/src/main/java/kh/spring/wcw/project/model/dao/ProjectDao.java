@@ -77,6 +77,10 @@ public class ProjectDao {
 		return sqlsession.selectList("Project.selectListBoardProject", project);
 	}
 	
+	public List<Project> selectListBoardProject(Project project, RowBounds rowbounds) {
+		return sqlsession.selectList("Project.selectListBoardProject", project, rowbounds);
+	}
+	
 	public List<Project> selectListBoardFixProject(Project project) {
 		return sqlsession.selectList("Project.selectListBoardFixProject", project);
 	}
@@ -168,6 +172,10 @@ public class ProjectDao {
 		return sqlsession.selectList("Project.selectListParticipantProject", map);
 	}
 	
+	public List<Project> selectListParticipantProject(int pr_no) {
+		return sqlsession.selectList("Project.selectListAllParticipantProject", pr_no);
+	}
+	
 	public List<String> selectListDeptProject(int pr_no, String authority) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("pr_no", pr_no);
@@ -256,5 +264,9 @@ public class ProjectDao {
 	
 	public List<Project> selectListMyCalendarProject(int emp_no) {
 		return sqlsession.selectList("Project.selectListMyCalendarProject", emp_no);
+	}
+	
+	public int selectCntBoardProject(int pr_no) {
+		return sqlsession.selectOne("Project.selectCntBoardProject", pr_no);
 	}
 }

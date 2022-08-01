@@ -168,6 +168,8 @@
 		for(var i = tempLength - 1; i > -1; i--) {
 			if($(".project_board_file_insert").eq(i).val() == '') {
 				$(".project_board_file_insert").eq(i).remove();
+				$(".project_board_parent_no_insert").eq(i).remove();
+				$(".project_board_file_name_insert").eq(i).remove();
 			}
 		}
 		
@@ -212,8 +214,8 @@
 		$(".project_board_parent_no_insert").last().val(js_pff_no);
 		console.log($(".project_board_file_name_insert"));
 		console.log($(".project_board_parent_no_insert"));
-		console.log($(".project_board_file_name_insert").val());
-		console.log($(".project_board_parent_no_insert").val());
+		console.log($(".project_board_file_name_insert").last().val());
+		console.log($(".project_board_parent_no_insert").last().val());
 		let fullName = $('#project_file_tree').jstree(true).get_path(js_pff_no,"/")+"/"+$(this).get(0).files[0].name;
 		$(".project_board_file_list").append('<div class="project_board_file_list_content">'+fullName+'</div>');
 		$(".project_board_file_list").append('<i class="fa-solid fa-xmark file_delete_btn"></i>');
@@ -224,6 +226,8 @@
 		$(".file_delete_btn").on("click", deleteBtn);
 		$(".project_board_file_insert").off("change");
 		$(".project_board_file_insert").on("change", changeHandler);
+		console.log($(".project_board_file_name_insert"));
+		console.log($(".project_board_parent_no_insert"));
 	}
 	
 	// 파일 삭제 기능

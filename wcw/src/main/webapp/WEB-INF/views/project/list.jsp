@@ -285,6 +285,11 @@
 		console.log($("#project_list_text_box").val());
 		location.href="<%= request.getContextPath()%>/project/list?page=1&option="+js_option+"&search="+$('#project_list_text_box').val();
 	});
+	
+	// 검색어 유지 기능
+	if(js_search != null) {
+		$("#project_list_text_box").val(js_search);	
+	}
 </script>
 </body>
 </html>

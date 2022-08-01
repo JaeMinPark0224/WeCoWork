@@ -313,6 +313,11 @@ section {
 	color: rgb(94, 94, 94);
 	font-family: NotoSansB;
 	margin: auto;
+	width: 280px;
+	padding-left: 30px;
+    padding-right: 30px;
+    line-height: 18px;
+	box-sizing: border-box; 
 }
 
 #project_list_modal_people {
@@ -375,7 +380,42 @@ section {
 	line-height: 30px;
 }
 
+.project_page_btn_prev {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+	text-align: center;
+	line-height: 30px;
+}
+
+.project_page_btn_next {
+	font-size: 13px;
+	font-family: NotoSansR;
+	color: rgb(94, 94, 94);
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	background-color: rgb(224, 224, 224);
+	cursor: pointer;
+	text-align: center;
+	line-height: 30px;
+}
+
+
 .project_page_btn i {
+	line-height: 30px !important;
+}
+
+.project_page_btn_prev i {
+	line-height: 30px !important;
+}
+
+.project_page_btn_next i {
 	line-height: 30px !important;
 }
 
@@ -476,7 +516,7 @@ section {
 
 .project_main_box {
 	width: 1070px;
-	height: 255px;
+	min-height: 255px;
 	background-color: rgb(244, 244, 244);
 }
 
@@ -531,6 +571,11 @@ section {
 	margin-top: 26px;
 }
 
+#project_main_box_title_wrap {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
 #project_main_box_title_company {
 	font-size: 14px;
 	font-family: NotoSansB;
@@ -538,7 +583,10 @@ section {
 }
 
 #project_main_box_title_participant {
-	
+	font-size: 14px;
+	font-family: NotoSansB;
+	color: white;
+	justify-self: end;
 }
 
 /* 프로젝트 글 리스트 */
@@ -1156,6 +1204,7 @@ section {
 	color: rgb(94, 94, 94);
 	justify-self: start;
 	line-height: 40px;
+	margin-left: 10px;
 }
 
 .project_board_read_comemnt_content_date {

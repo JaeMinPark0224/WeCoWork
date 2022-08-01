@@ -19,7 +19,7 @@
 	
 	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
 		<property name="driverClassName" value="${db.driverClassName}"/>
- 		<property name="url" value="${db.url}"/>
+ 		<property name="url" value="${db.urlpclass}"/>
  		<property name="username" value="${db.username}"/>
  		<property name="password" value="${db.password}"/>
 	</bean>

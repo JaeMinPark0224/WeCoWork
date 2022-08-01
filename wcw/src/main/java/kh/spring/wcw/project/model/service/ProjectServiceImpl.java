@@ -82,6 +82,11 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 	
 	@Override
+	public List<Project> selectListBoardProject(Project project, RowBounds rowbounds) {
+		return dao.selectListBoardProject(project, rowbounds);
+	}
+	
+	@Override
 	public List<Project> selectListBoardFixProject(Project project) {
 		return dao.selectListBoardFixProject(project);
 	}
@@ -183,6 +188,11 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public List<Project> selectListParticipantProject(int pr_no, String authority) {
 		return dao.selectListParticipantProject(pr_no, authority);
+	}
+	
+	@Override
+	public List<Project> selectListParticipantProject(int pr_no) {
+		return dao.selectListParticipantProject(pr_no);
 	}
 
 	@Override
@@ -289,6 +299,11 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public List<Project> selectListMyCalendarProject(int emp_no) {
 		return dao.selectListMyCalendarProject(emp_no);
+	}
+
+	@Override
+	public int selectCntBoardProject(int pr_no) {
+		return dao.selectCntBoardProject(pr_no);
 	}
 
 }

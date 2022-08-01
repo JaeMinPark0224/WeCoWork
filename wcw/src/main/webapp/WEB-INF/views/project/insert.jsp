@@ -29,7 +29,7 @@
 				<div class="project_insert_text_title">프로젝트 내용</div>
 				<div class="project_input_wrap">
 					<textarea id="project_insert_textarea" name="pr_content" rows="" cols="" placeholder="프로젝트 내용을 입력해 주세요. (최대 400자)"></textarea>
-					<div class="project_input_count">0/400자</div>
+					<div class="project_input_count">0/300자</div>
 				</div>
 				<div class="project_insert_menu_wrap">
 					<div class="project_insert_text_title">프로젝트 공개 설정</div>
@@ -130,14 +130,14 @@
 	$('#project_insert_textarea').on('input', function() {
 		let contentCount = $(this).val();
 		if(contentCount.length == 0 || contentCount == '') {
-			$(this).next().text('0/400자');
+			$(this).next().text('0/300자');
 		} else {
-			$(this).next().text(contentCount.length+'/400자');
+			$(this).next().text(contentCount.length+'/300자');
 		}
-		if(contentCount.length > 400) {
-			$(this).val($(this).val().substring(0, 400));
-			alert('내용은 400자까지 입력 가능합니다.')
-			$(this).next().text('400/400자');
+		if(contentCount.length > 300) {
+			$(this).val($(this).val().substring(0, 300));
+			alert('내용은 300자까지 입력 가능합니다.')
+			$(this).next().text('300/300자');
 		}
 	});
 </script>

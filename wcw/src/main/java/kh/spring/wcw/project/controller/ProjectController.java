@@ -8,11 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +37,6 @@ import kh.spring.wcw.common.WCWUtill;
 import kh.spring.wcw.employee.domain.Employee;
 import kh.spring.wcw.project.domain.Project;
 import kh.spring.wcw.project.model.service.ProjectService;
-import oracle.jdbc.proxy.annotation.Pre;
 
 @Controller
 @RequestMapping("/project")
@@ -108,8 +105,8 @@ public class ProjectController {
 		int pageInt = Integer.parseInt(page);
 		int offset = (pageInt - 1) * pageBlock;
 		RowBounds rowbounds = new RowBounds(offset, pageBlock);
-		mv.addObject("startPage", (pageInt % pageBlock == 0)?(pageInt-pageBlock+1):(pageInt - pageInt % pageBlock + 1));
-		int endPage = (pageInt +(pageBlock - ((pageInt % pageBlock == 0)?pageBlock:pageInt % pageBlock)));
+		mv.addObject("startPage", (pageInt % 5 == 0)?(pageInt-5+1):(pageInt - pageInt % 5 + 1));
+		int endPage = ((pageInt % 5 == 0)?(pageInt-5+1):(pageInt - pageInt % 5 + 1)) + 4;
 		mv.addObject("endPage", ((endPage > totalPageCnt)?totalPageCnt:endPage));
 		mv.addObject("totalPageCnt", totalPageCnt);
 		
@@ -139,9 +136,13 @@ public class ProjectController {
 		}
 		project.setPr_no(pr_no);
 		mv.addObject("project", service.selectProject(pr_no));
+		List<Project> participantList = service.selectListParticipantProject(pr_no);
+		mv.addObject("participant_name", participantList.get(0).getName());
+		mv.addObject("participant_cnt", participantList.size()-1);
 		mv.addObject("pr_no", pr_no);
+		RowBounds rowBounds = new RowBounds(0, 10);
 		mv.addObject("noticeList", service.selectListNoticeProject(project));
-		mv.addObject("boardList", service.selectListBoardProject(project));
+		mv.addObject("boardList", service.selectListBoardProject(project, rowBounds));
 		mv.setViewName("project/main");
 		return mv;
 	}
@@ -264,6 +265,8 @@ public class ProjectController {
 			, HttpSession session
 			, @RequestParam(name = "project") int pr_no
 			, Project project
+			, @RequestParam(name= "page", required = false) String page
+			, RedirectAttributes rttr
 			) {
 		if(!wcwutill.loginChk(session)) {
 			mv.setViewName("redirect:/login");
@@ -272,9 +275,47 @@ public class ProjectController {
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");
 		project.setPr_no(pr_no);
 		project.setEmp_no(loginSSInfo.getEmp_no());
+		
+		
+		// 페이지 숫자 판별
+		if(!StringUtils.isNumeric(page)) {
+			page = "0";
+		}
+		// 페이지가 문자이거나 적지 않으면 1로 설정
+		if(page.equals("0")) {
+			rttr.addAttribute("page", "1");
+			rttr.addAttribute("project", pr_no);
+			mv.setViewName("redirect:/project/board/list");
+			return mv;
+		}
+		
+		
+		// 한 페이지에 보여줄 프로젝트의 수
+		int pageBlock = 2;
+		// 총 프로젝트의 수
+		int totalCnt = service.selectCntBoardProject(pr_no);
+		// 총 페이지의 수
+		int totalPageCnt = (totalCnt % pageBlock == 0)?(totalCnt / pageBlock):(totalCnt / pageBlock + 1);
+		// 페이지의 번호가 총 페이지의 수보다 크다면 마지막 페이지로 이동
+		if(totalPageCnt != 0 && Integer.parseInt(page) > totalPageCnt) {
+			page = String.valueOf(totalPageCnt);
+			rttr.addAttribute("page", page);
+			rttr.addAttribute("project", pr_no);
+			mv.setViewName("redirect:/project/board/list");
+			return mv;
+		}
+		int pageInt = Integer.parseInt(page);
+		int offset = (pageInt - 1) * pageBlock;
+		RowBounds rowbounds = new RowBounds(offset, pageBlock);
+		mv.addObject("startPage", (pageInt % 5 == 0)?(pageInt-5+1):(pageInt - pageInt % 5 + 1));
+		int endPage = ((pageInt % 5 == 0)?(pageInt-5+1):(pageInt - pageInt % 5 + 1)) + 4;
+		mv.addObject("endPage", ((endPage > totalPageCnt)?totalPageCnt:endPage));
+		mv.addObject("totalPageCnt", totalPageCnt);
+		
 		List<Project> noticeList = service.selectListNoticeProject(project);
-		List<Project> boardList = service.selectListBoardProject(project);
+		List<Project> boardList = service.selectListBoardProject(project, rowbounds);
 		List<Project> boardFixList = service.selectListBoardFixProject(project);
+		
 		mv.addObject("pr_no", pr_no);
 		mv.addObject("noticeList", noticeList);
 		mv.addObject("boardList", boardList);

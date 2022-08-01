@@ -284,6 +284,7 @@
 				else {
 					console.log(result);
 					createCommentList(result);
+					alert("댓글이 삭제되었습니다.");
 				}
 			},
 			error: function(request, status, error) {
@@ -323,6 +324,7 @@
 				else {
 					console.log(result);
 					createCommentList(result);
+					alert("댓글이 수정되었습니다.");
 				}
 			},
 			error: function(request, status, error) {
@@ -354,6 +356,11 @@
 		$(".project_work_read_comemnt_content_update_btn").off("click");
 		$(".project_work_read_comemnt_content_update_btn").on("click", updateBtnFnc);
 	}
+	
+	$(".project_work_read_sub_work_title_span").on("click", function() {
+		window.open("<%= request.getContextPath()%>/project/work/read?project="+js_pr_no+"&no="+$(this).attr('pw_no'));
+	});
+	
 </script>
 </body>
 </html>
