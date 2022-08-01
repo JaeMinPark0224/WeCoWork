@@ -69,7 +69,7 @@ public class MainController {
 	public ModelAndView readMain(ModelAndView mv
 			, HttpSession session) {
 		if(session.getAttribute("loginSSInfo") == null) {
-			mv.setViewName("main/intro"); //TODO 첫화면으로
+			mv.setViewName("main/intro");
 			return mv;
 		}
 		Employee loginSSInfo = (Employee) session.getAttribute("loginSSInfo");

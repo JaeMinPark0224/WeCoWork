@@ -378,10 +378,13 @@ public class HrController {
 				System.out.println("회사 번호: " + cp_no);
 		
 		// 회사가 가진 부서 전체 정보 가져오기
+		String first_dept_name = "";
 		List<Dept> deptList = hrService.selectDeptAllList(cp_no);
-		String first_dept_name = deptList.get(0).getDept_name();
-		System.out.println("부서 목록: " + deptList);
-		System.out.println("1번 부서: " + first_dept_name);
+		if (deptList.size() != 0) {
+			first_dept_name = deptList.get(0).getDept_name();
+			System.out.println("부서 목록: " + deptList);
+			System.out.println("1번 부서: " + first_dept_name);
+		}
 		
 		// 회사가 가진 부서 이름 전부 가져오기
 		List<String> deptNameList = hrService.selectDeptList(cp_no);
