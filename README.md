@@ -95,9 +95,9 @@
 + **WCW용 페이지**  
 1.test
 <p align="center">
-    <img src = "readmeImg/슬라이드1.png", width="100%">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C1.PNG", width="100%">
 </p>
-  
+
 2.test  
 3.test
 + **회사용 페이지**  
