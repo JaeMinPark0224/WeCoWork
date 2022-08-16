@@ -6,8 +6,8 @@
 [3. 구현 기능](#구현-기능)  
 [4. 팀원 및 주 담당 기능](#팀원-및-주-담당-기능)  
 [5. 프로젝트 화면](#프로젝트-화면)  
-[6. 스토리보드](#https://github.com/JaeMinPark0224/WeCoWork/blob/main/WeCoWork_%EC%B5%9C%EC%A2%85.pdf)  
-[7. 최종발표자료](#https://github.com/JaeMinPark0224/WeCoWork/blob/main/WeCoWork_%EC%B5%9C%EC%A2%85.pdf)  
+[6. 스토리보드(pdf링크)](https://github.com/JaeMinPark0224/WeCoWork/blob/main/WeCoWork_%EC%B5%9C%EC%A2%85.pdf)  
+[7. 최종발표자료(pdf링크)](https://github.com/JaeMinPark0224/WeCoWork/blob/main/WeCoWork_%EC%B5%9C%EC%A2%85.pdf)  
 
 ## 개발환경
 + **Language**
