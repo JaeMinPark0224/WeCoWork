@@ -231,5 +231,5 @@
 
 **16. 프로젝트 참여자 조회 / 설정 / 초대 / 승인**  
 <p align="center" style="border:1px solid gray">
-    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C26.PNG", width="100%">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C26.PNG", width="50%">
 </p> 
