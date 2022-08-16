@@ -6,6 +6,8 @@
 [3. 구현 기능](#구현-기능)  
 [4. 팀원 및 주 담당 기능](#팀원-및-주-담당-기능)  
 [5. 프로젝트 화면](#프로젝트-화면)  
+[6. 스토리보드](#)  
+[7. 최종발표자료](#https://github.com/JaeMinPark0224/WeCoWork/blob/main/WeCoWork_%EC%B5%9C%EC%A2%85.pdf)  
 
 ## 개발환경
 + **Language**
@@ -233,3 +235,8 @@
 <p align="center" style="border:1px solid gray">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C26.PNG", width="100%">
 </p> 
+
+## 스토리보드
+[스토리보드(pdf링크)](https://github.com/JaeMinPark0224/MuscleTalkTalk/blob/main/muscleTalkTalk_%EC%8A%A4%ED%86%A0%EB%A6%AC%EB%B3%B4%EB%93%9C.pdf)  
+## 최종발표자료
+[최종발표자료(pdf링크)](https://github.com/JaeMinPark0224/WeCoWork/blob/main/WeCoWork_%EC%B5%9C%EC%A2%85.pdf)
