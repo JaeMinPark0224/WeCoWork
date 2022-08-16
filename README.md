@@ -100,6 +100,7 @@
 
 
 + **회사용 / 직원(관리자 부서)용 페이지**  
+
 **1. 로그인**  
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C2.PNG", width="100%">
