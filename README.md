@@ -93,6 +93,7 @@
     + 조직도 사원 명부
 ## 프로젝트 화면
 + **WCW용 페이지**  
+
 **1.회원가입 승인 및 반려**  
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C1.PNG", width="100%">
@@ -136,22 +137,23 @@
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C8.PNG", width="100%">
 </p>
 
-**7. 공지사항 상세 / 수정 및 삭제**  
+**8. 공지사항 상세 / 수정 및 삭제**  
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C9.PNG", width="100%">
 </p>
 
-**8. 일일 근태 / 주간 근태 관리 - 관리자**  
+**9. 일일 근태 / 주간 근태 관리 - 관리자**  
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C16.PNG", width="100%">
 </p>
 
-**8. 월간 근태 / 휴가 관리 - 관리자**  
+**10. 월간 근태 / 휴가 관리 - 관리자**  
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C17.PNG", width="100%">
 </p>
 
 + **직원용 페이지**  
+
 **1. 로그인**  
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C2.PNG", width="100%">
