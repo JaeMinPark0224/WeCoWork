@@ -92,15 +92,18 @@
     + 관리자 근태 관리
     + 조직도 사원 명부
 ## 프로젝트 화면
-+ **WCW용 페이지**
++ **WCW용 페이지**  
+1.test
+<p align="center">
+    <img src = "readmeImg/슬라이드1.png", width="100%">
+</p>  
+2.test  
+3.test
++ **회사용 페이지**  
 1.test  
 2.test  
 3.test
-+ **회사용 페이지**
-1.test  
-2.test  
-3.test
-+ **사원용 페이지**
++ **사원용 페이지**  
 1.test  
 2.test  
 3.test
