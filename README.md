@@ -93,18 +93,46 @@
     + 조직도 사원 명부
 ## 프로젝트 화면
 + **WCW용 페이지**  
-1.test
+1.회원가입 승인 및 반려
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C1.PNG", width="100%">
 </p>
 
 2.test  
 3.test
-+ **회사용 페이지**  
-1.test  
-2.test  
-3.test
-+ **사원용 페이지**  
-1.test  
++ **회사용 / 직원(관리자 부서)용 페이지**  
+1.로그인  
+<p align="center">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C2.PNG", width="100%">
+</p>
+
+2.회원가입(회사용 단독 기능)  
+<p align="center">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C3.PNG", width="100%">
+</p>
+
+3.직원 리스트 / 직원 상세 정보 및 수정  
+<p align="center">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C4.PNG", width="100%">
+</p>
+
+4.직원 계정 생성  
+<p align="center">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C5.PNG", width="100%">
+</p>
+
+4. 
+    + 부서 리스트 / 부서별 직원 리스트
+    + 부서 생성 / 부서 상세 조회 및 수정
+<p align="center">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C6.PNG", width="100%">
+</p>
+
++ **직원용 페이지**  
+1.로그인  
+<p align="center">
+    <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C2.PNG", width="100%">
+</p>
+
 2.test  
 3.test
