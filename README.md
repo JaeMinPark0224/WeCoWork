@@ -121,7 +121,7 @@
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C5.PNG", width="100%">
 </p>
 
-5. 부서 리스트 / 부서별 직원 리스트 부서 생성 / 부서 상세 조회 및 수정
+**5. 부서 리스트 / 부서별 직원 리스트/ 부서 생성 / 부서 상세 조회 및 수정**
 <p align="center">
     <img src = "https://github.com/JaeMinPark0224/WeCoWork/blob/main/readmeImg/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C6.PNG", width="100%">
 </p>
