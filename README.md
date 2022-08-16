@@ -96,7 +96,8 @@
 1.test
 <p align="center">
     <img src = "readmeImg/슬라이드1.png", width="100%">
-</p>  
+</p>
+  
 2.test  
 3.test
 + **회사용 페이지**  
